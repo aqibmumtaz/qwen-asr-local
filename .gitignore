@@ -1,0 +1,16 @@
+# Model files — too large for git (use HuggingFace Hub instead)
+models/*.gguf
+models/*.bin
+models/*.safetensors
+
+# HuggingFace download cache
+models/.cache/
+
+# Build output
+llama.cpp/build/
+
+# Audio samples (regenerate with gTTS)
+samples/
+
+# macOS
+.DS_Store
