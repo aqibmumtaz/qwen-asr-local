@@ -1,0 +1,3 @@
+Transcript: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
+English: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
+Urdu: سلاम. ایک ٹیسٹ کا ایک قینائی کے بولنے کے سystم کا ہے۔ تیز کن رنگ کا فox جمع ہوئی ہے۔
