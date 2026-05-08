@@ -14,15 +14,14 @@ INPUT_CSV = RESULTS / "final_benchmark_sheet.csv"
 OUT_XLSX = RESULTS / "final_benchmark_sheet.xlsx"
 GPU_USAGE = "N/A (CPU-only, Metal OFF)"
 
-ASR_MODEL = ROOT / "models/Qwen3-ASR-1.7B-Q8_0-new.gguf"
 MMPROJ = ROOT / "models/mmproj-Qwen3-ASR-1.7B-bf16-new.gguf"
 LLAMA_MTMD = ROOT / "llama.cpp/build/bin/llama-mtmd-cli"
 TRANSCRIBE_SCRIPT = ROOT / "transcribe_and_translate.sh"
 
 PROMPT = "<|im_start|>user\\n<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\\n<|im_start|>assistant\\n"
 HINDI_HIGHLIGHT_MODELS = {
-    "Qwen3-8B-Q5_K_M", "Qwen3-8B-Q8_0", "Qwen3-8B-Q4_K_M",
-    "Qwen3-4B-Q8_0", "Qwen3-4B-Q4_K_M",
+    "Qwen3-8B-Q5_K_M", "Qwen3-8B-Q8_0", "Qwen3-8B-Q4_K_M", "Qwen3-8B-BF16",
+    "Qwen3-4B-Q8_0", "Qwen3-4B-Q4_K_M", "Qwen3-4B-BF16",
 }
 
 
@@ -86,35 +85,50 @@ for row in base_rows:
     if model not in models:
         models.append(model)
 
+asr_models = []
+for row in base_rows:
+    asr = row["asr_model"]
+    if asr not in asr_models:
+        asr_models.append(asr)
+
 audio_secs = {
     audio: audio_duration_seconds(ROOT / "samples" / audio) for audio in sample_names
 }
-print("Measuring peak RAM usage...")
+
+print("Measuring peak RAM usage for translation models...")
 rss_by_model = {}
 for model in models:
     print(f"  Measuring {model}...")
-    cmd = f"bash '{TRANSCRIBE_SCRIPT}' --model '{model}' '{ROOT / 'samples' / sample_names[0]}' >/dev/null 2>&1"
+    first_asr = asr_models[0]
+    cmd = f"bash '{TRANSCRIBE_SCRIPT}' --asr-model '{first_asr}' --model '{model}' '{ROOT / 'samples' / sample_names[0]}' >/dev/null 2>&1"
     rss = measure_peak_rss_bytes(cmd)
     rss_by_model[model] = rss
     print(f"    {fmt_gb(rss)} GB")
 
-print("Measuring ASR peak RAM...")
-asr_cmd = f"'{LLAMA_MTMD}' -m '{ASR_MODEL}' --mmproj '{MMPROJ}' --image '{ROOT / 'samples' / sample_names[0]}' -p '{PROMPT}' -n 256 --no-warmup >/dev/null 2>&1"
-asr_rss = measure_peak_rss_bytes(asr_cmd)
-print(f"  ASR: {fmt_gb(asr_rss)} GB")
+print("Measuring ASR peak RAM for each decoder...")
+asr_rss_by_model = {}
+for asr_model in asr_models:
+    print(f"  Measuring {asr_model}...")
+    asr_model_path = ROOT / "models" / f"{asr_model}.gguf"
+    asr_cmd = f"'{LLAMA_MTMD}' -m '{asr_model_path}' --mmproj '{MMPROJ}' --image '{ROOT / 'samples' / sample_names[0]}' -p '{PROMPT}' -n 256 --no-warmup >/dev/null 2>&1"
+    asr_rss = measure_peak_rss_bytes(asr_cmd)
+    asr_rss_by_model[asr_model] = asr_rss
+    print(f"    {fmt_gb(asr_rss)} GB")
 
 print("Building extended rows with all columns...")
 extended_rows = []
 for row in base_rows:
     audio = row["audio"]
+    asr_model = row["asr_model"]
     asr_s = float(row.get("asr_seconds", 0))
     urdu_s = float(row.get("urdu_seconds", 0))
-    total_s = asr_s + urdu_s  # ASR + Urdu translation only
+    total_s = asr_s + urdu_s
     audio_dur = audio_secs.get(audio, 1.0)
     sec_per_min = (total_s / audio_dur) * 60.0 if audio_dur > 0 else 0.0
 
     extended_rows.append(
         {
+            "asr_model": asr_model,
             "model": row["model"],
             "audio": audio,
             "audio_seconds": f"{audio_dur:.2f}",
@@ -122,7 +136,7 @@ for row in base_rows:
             "translation_seconds_est": f"{urdu_s:.2f}",
             "total_inference_seconds": f"{total_s:.2f}",
             "total_seconds_per_min_audio": f"{sec_per_min:.2f}",
-            "asr_peak_ram_gb": fmt_gb(asr_rss),
+            "asr_peak_ram_gb": fmt_gb(asr_rss_by_model.get(asr_model, 0)),
             "pipeline_peak_ram_gb": fmt_gb(rss_by_model.get(row["model"], 0)),
             "gpu_usage": GPU_USAGE,
             "status": row["status"],
@@ -173,7 +187,7 @@ HEADERS = [
     "GPU Usage", "Run Status", "ASR Transcript", "Translated English", "Translated Urdu",
 ]
 FIELDS = [
-    "_asr_model", "model", "audio", "audio_seconds", "asr_seconds",
+    "asr_model", "model", "audio", "audio_seconds", "asr_seconds",
     "translation_seconds_est", "total_inference_seconds", "total_seconds_per_min_audio",
     "asr_peak_ram_gb", "pipeline_peak_ram_gb", "gpu_usage", "status", "transcript",
     "english_translation", "urdu_translation",
@@ -191,9 +205,9 @@ info_font = Font(bold=True)
 thin = Side(style="thin", color="CCCCCC")
 border = Border(left=thin, right=thin, top=thin, bottom=thin)
 
-ws.append(["ASR Model:", "Qwen3-ASR-1.7B-Q8_0"])
+ws.append(["ASR Models:", ", ".join(asr_models)])
 ws["A1"].font = info_font
-ws.append(["Translation Model:", ", ".join(models)])
+ws.append(["Translation Models:", ", ".join(models)])
 ws["A2"].font = info_font
 ws.append([])
 
@@ -206,7 +220,6 @@ for cell in ws[4]:
 ws.row_dimensions[4].height = 24
 
 for row in extended_rows:
-    row["_asr_model"] = "Qwen3-ASR-1.7B-Q8_0"
     values = [row.get(f, "") for f in FIELDS]
     ws.append(values)
     excel_row = ws.max_row

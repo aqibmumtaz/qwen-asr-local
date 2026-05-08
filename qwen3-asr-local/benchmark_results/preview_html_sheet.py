@@ -10,12 +10,10 @@ INPUT_CSV = RESULTS / "final_benchmark_full_sheet.csv"
 OUT_XLSX = RESULTS / "final_benchmark_sheet.xlsx"
 
 HINDI_HIGHLIGHT_MODELS = {
-    "Qwen3-8B-Q5_K_M", "Qwen3-8B-Q8_0", "Qwen3-8B-Q4_K_M",
-    "Qwen3-4B-Q8_0", "Qwen3-4B-Q4_K_M",
+    "Qwen3-8B-Q5_K_M", "Qwen3-8B-Q8_0", "Qwen3-8B-Q4_K_M", "Qwen3-8B-BF16",
+    "Qwen3-4B-Q8_0", "Qwen3-4B-Q4_K_M", "Qwen3-4B-BF16",
 }
 URDU_AUDIOS = {"sample_ur1.wav", "sample_ur2.wav"}
-
-ASR_MODEL_NAME = "Qwen3-ASR-1.7B-Q8_0"
 
 HEADERS = [
     "ASR Model", "Translation Model", "Audio", "Audio Duration (s)", "ASR Time (s)",
@@ -24,7 +22,7 @@ HEADERS = [
     "GPU Usage", "Run Status", "ASR Transcript", "Translated English", "Translated Urdu",
 ]
 FIELDS = [
-    "_asr_model", "model", "audio", "audio_seconds", "asr_seconds",
+    "asr_model", "model", "audio", "audio_seconds", "asr_seconds",
     "translation_seconds_est", "total_inference_seconds", "total_seconds_per_min_audio",
     "asr_peak_ram_gb", "pipeline_peak_ram_gb", "gpu_usage", "status", "transcript",
     "english_translation", "urdu_translation",
@@ -37,6 +35,7 @@ except Exception:
     print(f"Error reading {INPUT_CSV}")
     raise SystemExit(1)
 
+asr_models = sorted({r["asr_model"] for r in rows})
 trans_models = sorted({r["model"] for r in rows})
 
 wb = Workbook()
@@ -51,9 +50,9 @@ info_font = Font(bold=True)
 thin = Side(style="thin", color="CCCCCC")
 border = Border(left=thin, right=thin, top=thin, bottom=thin)
 
-ws.append(["ASR Model:", "Qwen3-ASR-1.7B-Q8_0"])
+ws.append(["ASR Models:", ", ".join(asr_models)])
 ws["A1"].font = info_font
-ws.append(["Translation Model:", ", ".join(trans_models)])
+ws.append(["Translation Models:", ", ".join(trans_models)])
 ws["A2"].font = info_font
 ws.append([])
 
@@ -66,7 +65,6 @@ for cell in ws[4]:
 ws.row_dimensions[4].height = 24
 
 for row in rows:
-    row["_asr_model"] = ASR_MODEL_NAME
     values = [row.get(f, "") for f in FIELDS]
     ws.append(values)
     excel_row = ws.max_row

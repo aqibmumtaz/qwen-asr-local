@@ -1,0 +1,5 @@
+# Hashes of file build rules.
+539306f97778898fd8b842abb02112f1 tools/server/bundle.css.hpp
+f11593cb6904659b8a7c776c2cb4064e tools/server/bundle.js.hpp
+edec7fad6eaf3ca75a17756964e8f77a tools/server/index.html.hpp
+9dd9fe1cc1e56c9b9f75c6c764011b51 tools/server/loading.html.hpp
