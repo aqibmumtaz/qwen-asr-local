@@ -1,0 +1,22 @@
+sample_en1.wav: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog. → ہیلو۔ یہ کوئنے کے بول ہر اکثر نظام کا ایک ٹیسٹ ہے۔ تیز خالی فox پھنسی ہوئی کچھڑی کے اوپر لپٹ جاتا ہے۔
+
+╔════════════════════════════════════════════════════════════════╗
+║        ASR + Urdu Translation Pipeline (Multi-Model)          ║
+╠════════════════════════════════════════════════════════════════╣
+║ ASR Model: Qwen3-ASR-1.7B (Q8_0, 2.2GB)                       ║
+║ Translator Model: Qwen3-8B-Q5_K_M
+║                                                                ║
+║ Configuration:                                                 ║
+║   - Temperature: 0.6                                           ║
+║   - Top-k: 20, Top-p: 0.95                                     ║
+║   - Context length: 512 tokens                                 ║
+╚════════════════════════════════════════════════════════════════╝
+
+========================================
+Processing: samples/sample_en1.wav
+========================================
+=== Step 1: Transcribing audio ===
+Transcript: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
+=== Step 2: Translating to Urdu ===
+  Saved to: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/transcriptions/sample_en1_translated.txt
+

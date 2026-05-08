@@ -1,3 +1,3 @@
 Transcript: Good morning. Today we are testing automatic speech recognition. My name is Eve, and I am testing the system.
 English: Good morning. Today we are testing automatic speech recognition. My name is Eve, and I am testing the system.
-Urdu: صبح کی تاریخ ہے۔ آج ہم اتomatic سپیچ رکھنے کی تشہید کر رہے ہیں۔ میرا نام ایوہ ہے، اور میں نظام کی تشہید کر رہا ہوں۔
+Urdu: صبح کا خیر۔ آج ہم آٹو میٹک سپیچ رکognition کا اسٹیج کر رہے ہیں۔ میرا نام ایو ہے، اور میں نظام کا ٹیسٹ کر رہا ہوں۔

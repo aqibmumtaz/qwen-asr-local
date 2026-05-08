@@ -11,14 +11,19 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Parse arguments for model selection
+# Parse arguments
 TRANSLATOR_MODEL_NAME="Qwen3-8B-Q5_K_M"  # default
+ASR_MODEL_NAME="Qwen3-ASR-1.7B-Q8_0-new"  # default
 AUDIO_FILE=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --model)
             TRANSLATOR_MODEL_NAME="$2"
+            shift 2
+            ;;
+        --asr-model)
+            ASR_MODEL_NAME="$2"
             shift 2
             ;;
         *)
@@ -28,7 +33,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-ASR_MODEL="$SCRIPT_DIR/models/Qwen3-ASR-1.7B-Q8_0-new.gguf"
+ASR_MODEL="$SCRIPT_DIR/models/${ASR_MODEL_NAME}.gguf"
 MMPROJ="$SCRIPT_DIR/models/mmproj-Qwen3-ASR-1.7B-bf16-new.gguf"
 TRANSLATOR_MODEL="$SCRIPT_DIR/models/${TRANSLATOR_MODEL_NAME}.gguf"
 LLAMA_MTMD="$SCRIPT_DIR/llama.cpp/build/bin/llama-mtmd-cli"

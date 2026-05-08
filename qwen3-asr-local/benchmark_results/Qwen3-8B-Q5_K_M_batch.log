@@ -1,0 +1,51 @@
+╔════════════════════════════════════════════════════════════════╗
+║        ASR + Urdu Translation Pipeline (Multi-Model)          ║
+╠════════════════════════════════════════════════════════════════╣
+║ ASR Model: Qwen3-ASR-1.7B (Q8_0, 2.2GB)                       ║
+║ Translator Model: Qwen3-8B-Q5_K_M
+║                                                                ║
+║ Configuration:                                                 ║
+║   - Temperature: 0.6                                           ║
+║   - Top-k: 20, Top-p: 0.95                                     ║
+║   - Context length: 512 tokens                                 ║
+╚════════════════════════════════════════════════════════════════╝
+
+Transcribing & translating all files in samples/ ...
+
+========================================
+Processing: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/samples/sample_en1.wav
+========================================
+=== Step 1: Transcribing audio ===
+Transcript: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
+=== Step 2: Translating to Urdu ===
+sample_en1.wav: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog. → سلام۔ یہ کوئنے کے بول چال تسلی کی سیستم کا ایک ٹسٹ ہے۔ تیز پیلی گرچی نیند لگی ہوئی کچھری کے اوپر اتار دیتی ہے۔
+  Saved to: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/transcriptions/sample_en1_translated.txt
+
+========================================
+Processing: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/samples/sample_en2.wav
+========================================
+=== Step 1: Transcribing audio ===
+Transcript: Good morning. Today we are testing automatic speech recognition. My name is Eve, and I am testing the system.
+=== Step 2: Translating to Urdu ===
+sample_en2.wav: Good morning. Today we are testing automatic speech recognition. My name is Eve, and I am testing the system. → صبح کا خیر۔ آج ہم ایویکسیون سپیچ ریکognition کا ٹیسٹ کر رہے ہیں۔ میرا نام ایور ہے، اور میں نظام کا ٹیسٹ کر رہا ہوں۔
+  Saved to: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/transcriptions/sample_en2_translated.txt
+
+========================================
+Processing: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/samples/sample_ur1.wav
+========================================
+=== Step 1: Transcribing audio ===
+Transcript: मेरा नाम अकीब है। ये कोर्डुज़बान में आवाज की शनात का दैस है।
+=== Step 2: Translating to Urdu ===
+sample_ur1.wav: मेरा नाम अकीब है। ये कोर्डुज़बान में आवाज की शनात का दैस है। → میرا نام اکیب ہے۔ یہ کورڈوچان میں آواز کی شناٹ کا دیس ہے۔
+  Saved to: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/transcriptions/sample_ur1_translated.txt
+
+========================================
+Processing: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/samples/sample_ur2.wav
+========================================
+=== Step 1: Transcribing audio ===
+Transcript: आज का मौसम बहुत अच्छा है। हम एक नई तेज़ नदी को आसमा रहे हैं।
+=== Step 2: Translating to Urdu ===
+sample_ur2.wav: आज का मौसम बहुत अच्छा है। हम एक नई तेज़ नदी को आसमा रहे हैं। → آج کا موسم بہت اچھا ہے۔ ہم ایک نئی تیز ندی کو آسمان رہے ہیں۔
+  Saved to: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/transcriptions/sample_ur2_translated.txt
+
+Results saved to: /Users/AqibMumtaz/Aqib Mumtaz/BitLogix/qwen-asr-local/qwen3-asr-local/transcriptions/

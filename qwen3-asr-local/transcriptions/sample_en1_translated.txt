@@ -1,3 +1,3 @@
 Transcript: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
 English: Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
-Urdu: ہیلو۔ یہ کوئنے کی بول ڈیٹا تشخیص نظام کا ایک ٹیسٹ ہے۔ تیز سیاہ گھوڑا معمور کرکے لاتا ہے۔
+Urdu: ہیلو۔ یہ کوئنے کی بول ہے ا Recognize سسٹم کا ٹیسٹ ہے۔ تیز کالا چھپکلی اچھال کر مالا گیا ہے۔
