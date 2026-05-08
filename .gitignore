@@ -1,5 +1,9 @@
 # Model files — too large for git (use HuggingFace Hub instead)
 models/*.gguf
+*.gguf
+*.guf
+**/*.gguf
+**/*.guf
 models/*.bin
 models/*.safetensors
 
@@ -14,3 +18,4 @@ samples/
 
 # macOS
 .DS_Store
+.history/
