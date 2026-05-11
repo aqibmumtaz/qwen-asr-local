@@ -1,2 +1,3 @@
-Hindi (ASR): Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
-Urdu (transliterated): Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
+Hindi (ASR)          : Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
+Urdu Nastaliq        : Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.
+Roman Urdu           : Hello. This is a test of the Quenae's speech recognition system. The quick brown fox jumps over the lazy dog.

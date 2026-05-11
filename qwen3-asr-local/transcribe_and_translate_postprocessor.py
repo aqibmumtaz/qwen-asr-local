@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """
-Test script: ASR + post-processor transliteration (Hindi→Urdu via GokulNC rules)
-Replaces the 5–8B LLM translation step with a deterministic rule-based converter.
+ASR + post-processor transliteration pipeline
+Replaces the 5–8B LLM translation step with deterministic rule-based converters.
+
+Outputs three forms from a single ASR pass:
+  1. Hindi Devanagari  — raw ASR output
+  2. Urdu Nastaliq     — GokulNC rule-based (Hindi → Arabic script)
+  3. Roman Urdu        — custom phoneme map (Hindi → Latin script, direct)
 
 Usage:
-    python3 test_post_processor.py [audio.wav]
-    python3 test_post_processor.py                  # runs all samples/
+    python3 transcribe_and_translate_postprocessor.py [audio.wav]
+    python3 transcribe_and_translate_postprocessor.py        # batch: all samples/
 """
 
 import subprocess
@@ -14,12 +19,12 @@ import time
 import os
 import warnings
 
-# Suppress TensorFlow noise
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 warnings.filterwarnings("ignore")
 
 from pathlib import Path
 from indo_arabic_transliteration.hindustani import HindustaniTransliterator
+from hindi_to_roman_urdu import transliterate as to_roman_urdu
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 ASR_MODEL  = SCRIPT_DIR / "models/Qwen3-ASR-1.7B-Q8_0-new.gguf"
@@ -35,11 +40,10 @@ ASR_PROMPT = (
     "<|im_start|>assistant\n"
 )
 
-transliterator = HindustaniTransliterator()
+_nastaliq = HindustaniTransliterator()
 
 
 def run_asr(audio_path: Path) -> tuple[str, float]:
-    """Run Qwen3-ASR and return (transcript, seconds)."""
     t0 = time.time()
     result = subprocess.run(
         [
@@ -62,36 +66,49 @@ def run_asr(audio_path: Path) -> tuple[str, float]:
     return transcript, elapsed
 
 
-def transliterate(hindi_text: str) -> tuple[str, float]:
-    """Convert Hindi Devanagari → Urdu Nastaliq. Returns (urdu, seconds)."""
+def to_nastaliq(hindi_text: str) -> tuple[str, float]:
     t0 = time.time()
-    urdu = transliterator.transliterate_from_hindi_to_urdu(hindi_text)
-    elapsed = time.time() - t0
-    return urdu, elapsed
+    urdu = _nastaliq.transliterate_from_hindi_to_urdu(hindi_text)
+    return urdu, time.time() - t0
+
+
+def to_roman(hindi_text: str) -> tuple[str, float]:
+    t0 = time.time()
+    roman = to_roman_urdu(hindi_text)
+    return roman, time.time() - t0
 
 
 def process_file(audio_path: Path):
     print(f"\n{'─'*60}")
-    print(f"File   : {audio_path.name}")
+    print(f"File        : {audio_path.name}")
 
     transcript, asr_time = run_asr(audio_path)
     if not transcript:
-        print("ERROR  : ASR returned empty transcript")
+        print("ERROR       : ASR returned empty transcript")
         return
 
-    urdu, trans_time = transliterate(transcript)
-    total = asr_time + trans_time
+    nastaliq, nastaliq_ms = to_nastaliq(transcript)
+    roman, roman_ms = to_roman(transcript)
+    total = asr_time + nastaliq_ms + roman_ms
 
-    print(f"Hindi  : {transcript}")
-    print(f"Urdu   : {urdu}")
-    print(f"Timing : ASR={asr_time:.1f}s  Transliteration={trans_time*1000:.1f}ms  Total={total:.1f}s")
+    print(f"Hindi       : {transcript}")
+    print(f"Urdu        : {nastaliq}")
+    print(f"Roman Urdu  : {roman}")
+    print(
+        f"Timing      : ASR={asr_time:.1f}s  "
+        f"Nastaliq={nastaliq_ms*1000:.1f}ms  "
+        f"Roman={roman_ms*1000:.1f}ms  "
+        f"Total={total:.1f}s"
+    )
 
     out_file = OUT_DIR / f"{audio_path.stem}_post_processor.txt"
     out_file.write_text(
-        f"Hindi (ASR): {transcript}\nUrdu (transliterated): {urdu}\n",
+        f"Hindi (ASR)          : {transcript}\n"
+        f"Urdu Nastaliq        : {nastaliq}\n"
+        f"Roman Urdu           : {roman}\n",
         encoding="utf-8"
     )
-    print(f"Saved  : {out_file}")
+    print(f"Saved       : {out_file}")
 
 
 def main():
