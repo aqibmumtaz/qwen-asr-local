@@ -103,28 +103,45 @@ CORRECTIONS = {
     'wahaan':      'wahan',
     'yahaan':      'yahan',
 
+    # pronouns / common function words
+    'ham':         'hum',      # हम — phonetic 'a' but Urdu convention is 'u'
+    'wah':         'woh',      # वह
+    'yeh':         'yeh',
+
     # consonant cluster overcorrections
-    'achcha':      'acha',     # अच्छा: च्छ cluster → double ch → normalise
+    'achcha':      'acha',     # अच्छा: च्छ cluster → double ch
     'achch':       'ach',
     'pachchha':    'pacha',
     'kachcha':     'kacha',
 
-    # ज्ञ conjunct (via special-case code → 'gy', but 'aan'→'an' not caught by word-final rule)
+    # ज्ञ conjunct (special-case code emits 'gy', but internal 'aa' not caught by ending rule)
     'gyaan':       'gyan',
     'gyaani':      'gyani',
     'wigyaan':     'vigyan',
-    'jnaan':       'gyan',     # fallback if special-case missed
+    'jnaan':       'gyan',
 
-    # Urdu vs phonetic Hindi spellings (common words spelt differently in Roman Urdu)
+    # ड़ cluster schwa overcorrection (lड़ + क produces 'laraki' not 'larki')
+    'laraki':      'larki',
+    'larakee':     'larki',
+    'laraka':      'larka',
+    'larakaa':     'larka',
+
+    # common words: internal aa before final consonant (not caught by aa+CV rule)
+    'pyaar':       'pyar',
+    'aasamaan':    'aasman',
+    'aasmaan':     'aasman',
+    'inaaam':      'inaam',
+
+    # Urdu vs phonetic Hindi spellings
     'zabaan':      'zaban',
     'zaabaan':     'zaban',
     'aawaaz':      'awaz',
     'aawaz':       'awaz',
+    'aawaaj':      'awaz',    # ASR without nukta on ज
     'shinaakht':   'shanakht',
     'shinaakhat':  'shanakht',
     'waqat':       'waqt',
     'mausaam':     'mausam',
-    'duniyaa':     'duniya',    # fallback (should be caught by aa→a rule)
     'zindagii':    'zindagi',
     'khushii':     'khushi',
     'nahin':       'nahi',
@@ -266,13 +283,21 @@ def _transliterate_raw(text: str) -> str:
 
 def _normalize_endings(text: str) -> str:
     """
-    Normalise word-final long vowels to natural Roman Urdu conventions:
-      - word-final 'aa' → 'a'  (meraa→mera, kaa→ka, shukriyaa→shukriya)
-      - word-final 'ee' → 'i'  (nadee→nadi, zindagee→zindagi)
-    Does NOT affect mid-word vowels (naam, aaj, school stay unchanged).
+    Normalise long vowels to natural Roman Urdu conventions.
+
+    Rules applied in order:
+      1. word-final 'ee' → 'i'   (paanee→paani, nadee→nadi)
+      2. word-final 'aa' → 'a'   (khaanaa→khaana, meraa→mera)
+      3. aa + consonant + vowel at word-end → a + consonant + vowel
+         Runs AFTER rules 1+2 so it sees 'paani'/'khaana' not 'paanee'/'khaanaa'
+         Handles: paani→pani, khaana→khana, bataana→batana
+         Does NOT affect: naam ('m' not followed by vowel), pyaar (corrected separately)
     """
-    text = re.sub(r'aa\b', 'a', text)
+    _C = '[bcdfghjklmnpqrstvwxyz]'
+    _V = '[aeiouy]'
     text = re.sub(r'ee\b', 'i', text)
+    text = re.sub(r'aa\b', 'a', text)
+    text = re.sub(rf'aa({_C}{_V})\b', r'a\1', text)
     return text
 
 
@@ -307,24 +332,39 @@ if __name__ == '__main__':
 
     tests = [
         # (input, expected)
-        ("मेरा नाम اکیب ہے۔",           "mera naam اکیب ہے۔"),
-        ("आज का मौसम بہت اچھا ہے۔",     "aaj ka mausam بہت اچھا ہے۔"),
-        ("बहुत अच्छा है।",               "bahut acha hai."),
+        ("मेरा नाम اکیب ہے۔",            "mera naam اکیب ہے۔"),
+        ("आज का मौसम بہت اچھا ہے۔",      "aaj ka mausam بہت اچھا ہے۔"),
+        ("बहुत अच्छा है।",                "bahut acha hai."),
         ("यह कोड की ज़बान में आवाज़ की शिनाख़्त का टेस्ट है।",
-                                          "yeh kod ki zaban mein awaz ki shanakht ka test hai."),
-        ("ज़बान", "zaban"),
-        ("आवाज़",  "awaz"),
-        ("नदी",    "nadi"),
-        ("ज़िंदगी", "zindagi"),
-        ("बड़ा",   "bara"),
-        ("छोटा",   "chota"),
-        ("ज्ञान",  "gyan"),
-        ("नाम",    "naam"),
-        ("हूँ",    "hoon"),
-        ("हैं",    "hain"),
-        ("नाम123", "naam123"),
-        ("धर्म",   "dharm"),
+                                           "yeh kod ki zaban mein awaz ki shanakht ka test hai."),
+        # vowel ending normalisation
+        ("नदी",      "nadi"),
+        ("ज़िंदगी",  "zindagi"),
+        ("बड़ा",     "bara"),
+        ("छोटा",     "chota"),
+        ("पानी",     "pani"),
+        ("खाना",     "khana"),
+        ("बताना",    "batana"),
+        ("लड़की",    "larki"),
+        ("प्यार",    "pyar"),
+        ("आसमान",    "aasman"),
+        # conjuncts / clusters
+        ("ज्ञान",    "gyan"),
+        ("धर्म",     "dharm"),
         ("शुक्रिया", "shukriya"),
+        # function words
+        ("हम",       "hum"),
+        ("आवाज",     "awaz"),
+        ("आवाज़",    "awaz"),
+        ("ज़बान",    "zaban"),
+        # stable words that must NOT change
+        ("नाम",      "naam"),
+        ("हूँ",      "hoon"),
+        ("हैं",      "hain"),
+        ("रात",      "raat"),
+        ("काम",      "kaam"),
+        # digits + mixed
+        ("नाम123",   "naam123"),
     ]
 
     if len(sys.argv) > 1:
