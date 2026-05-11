@@ -13,8 +13,6 @@ models/.cache/
 # Build output
 llama.cpp/build/
 
-# Audio samples (regenerate with gTTS)
-samples/
 
 # macOS
 .DS_Store
