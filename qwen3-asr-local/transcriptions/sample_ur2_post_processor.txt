@@ -1,3 +1,3 @@
 Hindi (ASR)          : आज का मौसम बहुत अच्छा है। हम एक नई तेज़ नदी को आसमा रहे हैं।
 Urdu Nastaliq        : آج کا موسم بہت اچْچھا ہے۔ ہم ایک نئی تیج़ ندی کو آسما رہے ہیں۔
-Roman Urdu           : aaj ka mausam bahut acha hai. ham ek nai tez nadi ko aasama rahe hain.
+Roman Urdu           : aaj ka mausam bahut acha hai. hum ek nai tez nadi ko aasama rahe hain.
