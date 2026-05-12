@@ -221,8 +221,8 @@ CORRECTIONS = {
     'aaoonga':     'aonga',
     'kaaoge':      'kaoge',
     'aae':         'aaye',
-    'aaen':        'ayen',
-    'aaenge':      'ayenge',
+    'aaen':        'aayen',
+    'aaenge':      'aayenge',
     'gaae':        'gaye',
     'jaae':        'jaaye',
     'jaaen':       'jayen',
@@ -797,8 +797,7 @@ CORRECTIONS = {
     'jaaega':      'jayega',
     'aaegi':       'aayegi',
     'aaega':       'aayega',
-    'aaenge':      'ayenge',   # already
-    'jaaenge':     'jayenge',  # already
+    # 'aaenge' and 'jaaenge' canonical entries are above (preserve long aa)
     'suwidha':     'suvidha',
     'wid':         'vid',
     'widya':       'vidya',
@@ -914,6 +913,12 @@ CORRECTIONS = {
     'karoonga':    'karunga',
     'jata':        'jaata',       # जाता हूँ — verb form preserves long ā
     'ata':         'aata',        # आता — keep long ā (rarely needs override; safe)
+    # causative future (-वाऊँगा/वाऊँगी): drop schwa between C-C, shorten oo→o
+    'karawaaoonga':'karwaaonga',  # करवाऊँगा — will get done
+    'karawaaoongi':'karwaaongi',
+    'dikhaaoonga': 'dikhaaonga',
+    'mangaaoonga': 'mangwaaonga',
+    'paaoonga':    'paaonga',
     'aaoongi':     'aaongi',
     'jaaoongi':    'jaongi',
     'karoongi':    'karungi',
@@ -1142,6 +1147,202 @@ CORRECTIONS = {
     'andaaza':     'andaza',
     'taklif':      'taklif',
     'paresh':      'pareshan',     # incomplete word fallback
+
+    # ── Lab test names (compound words & profiles) ──────────────────────
+    'lipid':       'lipid',
+    'prophaail':   'profile',
+    'prophail':    'profile',
+    'profile':     'profile',
+    'lipid prophaail': 'lipid profile',
+    'thyroid prophaail':'thyroid profile',
+    'raindam':     'random',
+    'random':      'random',
+    'peepi':       'PP',           # post-prandial
+    'fasting':     'fasting',
+    'pp':          'PP',
+    'heemoglobin': 'hemoglobin',
+    'pletalets':   'platelets',
+    'whaait sale': 'white cell',
+    'whaait':      'white',
+    'red sale':    'red cell',
+    'sale':        'sale',         # might conflict — re-add
+    'cell':        'cell',
+    'grup':        'group',
+    'group':       'group',
+
+    # ── Test names (extended) ───────────────────────────────────────────
+    'urine rooteen':'urine routine',
+    'rooteen':     'routine',
+    'urin':        'urine',        # already, but for compound use
+    'preganensi':  'pregnancy',
+    'pregnensi':   'pregnancy',
+    'beeta':       'beta',
+    'yoorik':      'uric',
+    'esid':        'acid',
+    'yoorik esid': 'uric acid',
+    'ilektrolaaits':'electrolytes',
+    'esajeeoti':   'SGOT',         # fallback if not caught by PROPER_NOUNS
+    'esajeepeeti': 'SGPT',
+    'echaseeji':   'HCG',
+
+    # ── Imaging / radiology ─────────────────────────────────────────────
+    'eks re':      'X-ray',
+    'eksre':       'X-ray',
+    'altraasaaund':'ultrasound',
+    'eeko':        'echo',
+    'enjiyograaphi':'angiography',
+    'maimograam':  'mammogram',
+    'bon densiti': 'bone density',
+    'bon':         'bone',
+    'densiti':     'density',
+    'endoskopi':   'endoscopy',
+    'kolonoskopi': 'colonoscopy',
+
+    # ── Infectious diseases ─────────────────────────────────────────────
+    'kowid':       'COVID',
+    'enteejan':    'antigen',
+    'antigen':     'antigen',
+    'enteebodi':   'antibody',
+    'antibody':    'antibody',
+    'dengoo':      'dengue',
+    'maleriya':    'malaria',
+    'taaiphaaid':  'typhoid',
+    'tayphaaid':   'typhoid',
+    'widaal':      'Widal',
+    'hepatitis':   'hepatitis',
+    'kowid test':  'COVID test',
+    'kowid peeseeaar':'COVID PCR',
+
+    # ── Specialists (English -ologist suffix) ───────────────────────────
+    'kaardiyolojist':'cardiologist',
+    'endokraainolojist':'endocrinologist',
+    'nephrolojist':'nephrologist',
+    'gaistroentrolojist':'gastroenterologist',
+    'gaainokolojist':'gynecologist',
+    'gynekolojist':'gynecologist',
+    'peediyaatrishiyan':'pediatrician',
+    'darmatolojist':'dermatologist',
+    'nyoorolojist':'neurologist',
+    'onkolojist':  'oncologist',
+    'yoorolojist': 'urologist',
+    'orthopeedik': 'orthopedic',
+    'phizeeshiyan':'physician',
+    'sarjan':      'surgeon',
+    'dentist':     'dentist',
+    'saaikiyaatrist':'psychiatrist',
+    'raidiyolojist':'radiologist',
+    'pathalojist':'pathologist',
+
+    # ── Reasons for tests / categories ──────────────────────────────────
+    'enual':       'annual',
+    'annual':      'annual',
+    'rooteen checkup':'routine checkup',
+    'weeza':       'visa',
+    'medikal':     'medical',
+    'pri':         'pre',
+    'pri employament':'pre-employment',
+    'employament': 'employment',
+    'pri mairej':  'pre-marriage',
+    'mairej':      'marriage',
+    'inshyorens':  'insurance',
+    'helth':       'health',
+    'helth check': 'health check',
+    'pholo':       'follow',
+    'pholo up':    'follow up',
+    'konsalteshan':'consultation',
+    'kanphidenshal':'confidential',
+    'imrejensi':   'emergency',
+    'eemarjency':  'emergency',
+    'imarjensi':   'emergency',
+
+    # ── Payment / pricing (more) ────────────────────────────────────────
+    'ret':         'rate',
+    'paikej':      'package',
+    'onalaain':    'online',
+    'onlaain':     'online',
+    'eezeepaisa':  'EasyPaisa',     # also in PROPER_NOUNS for cap
+    'jaizakaish':  'JazzCash',
+    'repharal':    'referral',
+    'referral':    'referral',
+    'panel':       'panel',
+    'korporet':    'corporate',
+    'subsidi':     'subsidy',
+
+    # ── Reports / delivery ──────────────────────────────────────────────
+    'haard':       'hard',
+    'sopht':       'soft',
+    'haard copy':  'hard copy',
+    'sopht copy':  'soft copy',
+    'whaatsaep':   'WhatsApp',
+    'whaatsaep par':'WhatsApp par',
+    'peedeeeph':   'PDF',
+    'pidiephi':    'PDF',
+    'portal':      'portal',
+    'mil gai':     'mil gai',
+    'mil gaya':    'mil gaya',
+
+    # ── Patient info ────────────────────────────────────────────────────
+    'umr':         'umar',
+    'umra':        'umar',
+    'waalid':      'walid',
+    'ilaka':       'ilaqa',
+    'makaan':      'makaan',
+    'kunaan':      'koonayn',
+    'cnic':        'CNIC',
+    'siene':       'CNIC',
+
+    # ── Logistics (more) ────────────────────────────────────────────────
+    'home sarwis': 'home service',
+    'sarwis':      'service',
+    'phleebotomist':'phlebotomist',
+    'phlebotomist':'phlebotomist',
+    'teknishiyan': 'technician',
+    'technishiyan':'technician',
+    'lab teknishiyan':'lab technician',
+    'ayenge':      'aayenge',      # कब आएँगे — when will (they) come
+    'aayenge':     'aayenge',
+    'aaengey':     'aayenge',
+    'ja sakte':    'ja sakte',
+
+    # ── Fasting / preparation (more) ────────────────────────────────────
+    'khali':       'khaali',
+    'khali pet':   'khaali pet',
+    'brash':       'brush',
+    'roza':        'roza',
+    'naashta':     'naashta',
+
+    # ── Symptoms (more from complaints) ─────────────────────────────────
+    'nind':        'neend',
+    'bhookh':      'bhookh',
+    'wazan':       'wazan',
+    'sugar barh gai':'sugar barh gai',
+    'barh gai':    'barh gai',
+    'barh raha':   'barh raha',
+    'kam ho raha': 'kam ho raha',
+
+    # ── Specialty test fragments ────────────────────────────────────────
+    'paip smiyar': 'Pap smear',
+    'paipsmiyar':  'Pap smear',
+    'paip':        'Pap',
+    'smiyar':      'smear',
+    'rapid test':  'rapid test',
+    'aagri':       'angry',
+
+    # ── Multi-word phrases (keys with spaces — handled by phrase pass) ───
+    # Format: raw phonetic phrase → corrected form (hyphens, caps, etc.)
+    'eks re':            'X-ray',
+    'eksare':            'X-ray',
+    'pre employment':    'pre-employment',
+    'pre marriage':      'pre-marriage',
+    'pri employament':   'pre-employment',
+    'pri mairej':        'pre-marriage',
+    'hepatitis si':      'hepatitis C',
+    'hepatitis bi':      'hepatitis B',
+    'hepatitis e':       'hepatitis A',
+    'vitamin di':        'vitamin D',
+    'vitamin bi':        'vitamin B',
+    'vitamin si':        'vitamin C',
+    'vitamin e':         'vitamin E',
 }
 
 
@@ -1394,8 +1595,6 @@ PROPER_NOUNS = {
     'rakhi':       'Rakhi',
     'eed':         'Eid',
     'ramazaan':    'Ramzan',
-    'baqra eed':   'Bakra Eid',
-    'shab e baraat':'Shab-e-Barat',
     'meelaad':     'Milad',
 
     # ── More acronyms ───────────────────────────────────────────────────
@@ -1426,6 +1625,71 @@ PROPER_NOUNS = {
     'aautlook':    'Outlook',
     'yaahoo':      'Yahoo',
     'binga':       'Bing',
+
+    # ── Lab test acronyms (Chughtai Lab specific) ───────────────────────
+    'seebeesi':    'CBC',
+    'sibisee':     'CBC',
+    'cbc':         'CBC',
+    'elaephti':    'LFT',
+    'lft':         'LFT',
+    'aaraephti':   'RFT',
+    'rft':         'RFT',
+    'keephti':     'KFT',
+    'kft':         'KFT',
+    'echbi':       'Hb',
+    'hb':          'Hb',
+    'echbi a one si':'HbA1c',
+    'echaaaeewi':  'HIV',
+    'hiv':         'HIV',
+    'aids':        'AIDS',
+    'eeseeji':     'ECG',
+    'emaaaraaai':  'MRI',
+    'eemaaraaee':  'MRI',
+    'mri':         'MRI',
+    'seeti':       'CT',
+    'seeti scan':  'CT scan',
+    'esajeeoti':   'SGOT',
+    'esajeepeeti': 'SGPT',
+    'sgot':        'SGOT',
+    'sgpt':        'SGPT',
+    'peeseeaar':   'PCR',
+    'psa':         'PSA',
+    'tsh':         'TSH',
+    'hcg':         'HCG',
+    'beeta echaseeji':'beta HCG',
+    'kovid':       'COVID',
+    'covid':       'COVID',
+    'di':          'D',           # used with vitamin D
+    'bi':          'B',           # used with vitamin B
+    'bee12':       'B12',
+    'b12':         'B12',
+    'opd':         'OPD',
+    'ipd':         'IPD',
+    'icu':         'ICU',
+    'er':          'ER',
+    'cnic':        'CNIC',
+
+    # ── Pakistani fintech / brand names ─────────────────────────────────
+    'eezeepaisa':  'EasyPaisa',
+    'easypaisa':   'EasyPaisa',
+    'jaizakaish':  'JazzCash',
+    'jazzcash':    'JazzCash',
+    'sadapay':     'SadaPay',
+    'nayapay':     'NayaPay',
+    'jazz':        'Jazz',
+    'zong':        'Zong',
+    'telenor':     'Telenor',
+    'ufone':       'Ufone',
+    'paktel':      'Paktel',
+    'mobilink':    'Mobilink',
+
+    # ── Imaging / Diagnostic procedure acronyms ─────────────────────────
+    'eeeeji':      'EEG',
+    'eeji':        'EG',
+    'eelteepi':    'LTP',
+    'paiseepeesee':'PCP',
+    'aiiv':        'IV',
+
 }
 
 
@@ -1616,27 +1880,43 @@ def _normalize_endings(text: str) -> str:
 def _apply_corrections(text: str) -> str:
     """
     Layer 3: replace known wrong phonetic words with natural Roman Urdu.
-    Two lookup tables:
-      - PROPER_NOUNS: names / places — capitalisation taken from dict value
-      - CORRECTIONS:  common words — preserves original word's capitalisation
-    PROPER_NOUNS wins when the same key exists in both.
+
+    Two lookup tables (both held in CORRECTIONS unless capitalisation matters):
+      - PROPER_NOUNS: names / places / acronyms — explicit caps from dict value
+      - CORRECTIONS:  common words AND multi-word phrases
+                      - keys without spaces → word-level lookup
+                      - keys with spaces    → phrase-level regex replacement
+                        (runs after word-level so phrases see corrected words)
     """
+    # Single-word pass first (so multi-word patterns can match the corrected forms)
     def fix_word(m):
         w = m.group(0)
         lower = w.lower()
-        # Proper nouns: explicit capitalisation in the mapping
         if lower in PROPER_NOUNS:
             return PROPER_NOUNS[lower]
-        # Common-word corrections: keep original capitalisation
         corrected = CORRECTIONS.get(lower)
-        if not corrected:
+        if not corrected or ' ' in lower:  # skip phrase keys
             return w
         if w[0].isupper():
             return corrected[0].upper() + corrected[1:]
         return corrected
 
-    # include digits in word match so acronyms like 'HbA1c', 'T3' resolve
-    return re.sub(r'[A-Za-z0-9]+', fix_word, text)
+    text = re.sub(r'[A-Za-z0-9]+', fix_word, text)
+
+    # Phrase pass: any CORRECTIONS key containing a space.
+    # Longest keys first so 'hepatitis B' beats 'hepatitis' if both existed.
+    phrase_keys = sorted(
+        (k for k in CORRECTIONS if ' ' in k),
+        key=lambda k: -len(k),
+    )
+    for phrase in phrase_keys:
+        text = re.sub(
+            rf'\b{re.escape(phrase)}\b',
+            CORRECTIONS[phrase],
+            text,
+            flags=re.IGNORECASE,
+        )
+    return text
 
 
 def transliterate(text: str) -> str:
