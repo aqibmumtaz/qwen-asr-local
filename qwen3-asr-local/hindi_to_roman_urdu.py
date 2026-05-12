@@ -448,7 +448,7 @@ CORRECTIONS = {
     'chaahiye':    'chahiye',
     'aaie':        'aaiye',       # आइए — please come
     'baithie':     'baithiye',    # बैठिए — please sit
-    'jaaie':       'jaaiye',      # जाइए — please go
+    'jaaie':       'jaiye',       # जाइए — please go (shorter Urdu convention)
     'kahie':       'kahiye',      # कहिए — please say
     'sunie':       'suniye',      # सुनिए — please listen
     'dekhie':      'dekhiye',     # देखिए — please look
@@ -461,7 +461,7 @@ CORRECTIONS = {
     'sunijie':     'suniye',      # सुनिए (variants)
     'kahijie':     'kahiye',      # कहिए (variants)
     'dekhijie':    'dekhiye',     # देखिए (variants)
-    'jaaijie':     'jaaiye',      # जाइए (variants)
+    'jaaijie':     'jaiye',       # जाइए (variants)
 
     # ── फ in Urdu loan words → 'f' not 'ph' ──────────────────────────────
     'tarph':       'taraf',
@@ -805,6 +805,162 @@ CORRECTIONS = {
     'widyaalay':   'vidyalay',
     'wakt':        'waqt',
     'naheen':      'nahi',     # belt-and-suspenders fallback
+
+    # ── Numbers (extended — internal aa shortening) ──────────────────────
+    'athaarah':    'atharah',
+    'ikkees':      'ikkis',
+    'baaees':      'baees',
+    'chaalees':    'chalees',
+    'pachaas':     'pachas',
+    'paintaalees': 'paintalees',
+    'pachchees':   'pacchees',
+    'paitees':     'paintees',
+    'pahla':       'pehla',
+    'paanchawaan': 'panchwan',
+    'dhaai':       'dhai',
+    'doosra':      'doosra',
+    'teesra':      'teesra',
+    'aadha':       'aadha',
+    'pauna':       'pauna',
+    'sawa':        'sawa',
+    'derh':        'derh',
+
+    # ── Medical conditions / symptoms ───────────────────────────────────
+    'zukaam':      'zukam',
+    'khaansi':     'khansi',
+    'saradard':    'sardard',
+    'petadard':    'petdard',
+    'kamaradard':  'kamardard',
+    'kamazori':    'kamzori',
+    'gais':        'gas',
+    'esiditi':     'acidity',
+    'preshar':     'pressure',
+    'daayabiteez': 'diabetes',
+    'haaiparatenshan': 'hypertension',
+    'asthama':     'asthma',
+    'hepataaitis': 'hepatitis',
+    'elarji':      'allergy',
+    'inphekshan':  'infection',
+    'waayaral':    'viral',
+    'baikteeriyal':'bacterial',
+    'strok':       'stroke',
+    'kainsar':     'cancer',
+    'tyoomar':     'tumor',
+    'dawaai':      'dawai',
+    'injekshan':   'injection',
+    'sirap':       'syrup',
+    'daura':       'daura',
+
+    # ── Lab tests (mostly acronyms — see PROPER_NOUNS for caps) ─────────
+    'krietinin':   'creatinine',
+    'yooriya':     'urea',
+    'bileeroobin': 'bilirubin',
+    'aayaran':     'iron',
+    'kailshiyam':  'calcium',
+    'maigneeshiyam':'magnesium',
+    'sodiyam':     'sodium',
+    'potaishiyam': 'potassium',
+    'proteen':     'protein',
+    'elbumin':     'albumin',
+    'glookoz':     'glucose',
+    'prolaiktin':  'prolactin',
+
+    # ── Banking / money ─────────────────────────────────────────────────
+    'khata':       'khaata',
+    'akaaunt':     'account',
+    'kaish':       'cash',
+    'chek':        'check',
+    'kredit':      'credit',
+    'bailens':     'balance',
+    'traansaphar': 'transfer',
+    'withadro':    'withdraw',
+    'dipozit':     'deposit',
+    'lon':         'loan',
+    'bil':         'bill',
+    'pement':      'payment',
+    'riphand':     'refund',
+    'byaaj':       'byaaj',
+    'keemat':      'keemat',
+    'daam':        'daam',
+
+    # ── Pronouns (extra forms) ──────────────────────────────────────────
+    'hamen':       'hamein',
+    'tumhen':      'tumhein',
+    'inhen':       'inhein',
+    'unhen':       'unhein',
+
+    # ── Location / direction ────────────────────────────────────────────
+    'peeche':      'peechhe',
+    'daaen':       'daayen',
+    'baaen':       'baayen',
+    'aage':        'aage',
+    'andar':       'andar',
+    'baahar':      'baahar',
+
+    # ── Verb forms (more) ───────────────────────────────────────────────
+    'aonga':       'aaonga',
+    'karoonga':    'karunga',
+    'jata':        'jaata',       # जाता हूँ — verb form preserves long ā
+    'ata':         'aata',        # आता — keep long ā (rarely needs override; safe)
+    'aaoongi':     'aaongi',
+    'jaaoongi':    'jaongi',
+    'karoongi':    'karungi',
+    'mainne':      'maine',
+    'kar raha':    'kar raha',
+    'kar rahi':    'kar rahi',
+    'jaao':        'jao',
+    'aao':         'aao',
+
+    # ── Phrases / religious expressions ─────────────────────────────────
+    'meharabani':  'meharbani',
+    'haafiz':      'hafiz',
+    'alhamdulillaah':'Alhamdulillah',
+    'alhamdullah': 'Alhamdulillah',
+    'maasha':      'Masha',
+    'insha':       'Insha',
+    'bismillaah':  'Bismillah',
+    'subhaanallaah':'SubhanAllah',
+    'astaghfirullaah':'Astaghfirullah',
+
+    # ── Office / business English loans ─────────────────────────────────
+    'projekt':     'project',
+    'teem':        'team',
+    'bos':         'boss',
+    'klaaint':     'client',
+    'prezenteshan':'presentation',
+    'intarawyoo':  'interview',
+    'sailri':      'salary',
+    'bonas':       'bonus',
+    'kanpani':     'company',
+    'bizanes':     'business',
+    'staartaap':   'startup',
+    'maarketing':  'marketing',
+    'sels':        'sales',
+    'bajat':       'budget',
+    'prophit':     'profit',
+    'meeting':     'meeting',
+
+    # ── Tech / internet English loans ───────────────────────────────────
+    'intaranet':   'internet',
+    'waaeephaai':  'wifi',
+    'mobaail':     'mobile',
+    'laipatop':    'laptop',
+    'kanpyootar':  'computer',
+    'skreen':      'screen',
+    'keebord':     'keyboard',
+    'chaarjar':    'charger',
+    'baitri':      'battery',
+    'richaarj':    'recharge',
+    'deta':        'data',
+    'kibord':      'keyboard',
+    'amaaunt':     'amount',
+    'haai':        'high',
+    'lo':          'low',
+    'paasaward':   'password',
+    'aanlaaeen':   'online',
+    'aaphalaaeen': 'offline',
+    'oke':         'okay',
+    'okay':        'okay',
 }
 
 
@@ -978,6 +1134,75 @@ PROPER_NOUNS = {
     'edisepi':     'ESR',
     'lit':         'LDL',
     'edichali':    'HDL',
+
+    # ── More lab test acronyms ──────────────────────────────────────────
+    'echabeee1si': 'HbA1c',
+    'esjeeoti':    'SGOT',
+    'esjeepeeti':  'SGPT',
+    'teeesaech':   'TSH',
+    'tee3':        'T3',
+    'tee4':        'T4',
+    'echaseeji':   'HCG',
+    'peeesae':     'PSA',
+    'beepi':       'BP',
+    'teebi':       'TB',
+    'esaemaes':    'SMS',
+
+    # ── Pakistani cities ────────────────────────────────────────────────
+    'laahaur':     'Lahore',
+    'peshaawar':   'Peshawar',
+    'kweta':       'Quetta',
+    'raawalapindi':'Rawalpindi',
+    'rawalapindi': 'Rawalpindi',
+    'multaan':     'Multan',
+    'phaisalaabaad':'Faisalabad',
+    'haidaraabaad':'Hyderabad',
+    'siyaalkot':   'Sialkot',
+    'gujraat':     'Gujrat',
+    'sargodha':    'Sargodha',
+    'baahaawalpur':'Bahawalpur',
+
+    # ── Indian cities ───────────────────────────────────────────────────
+    'munbai':      'Mumbai',
+    'kalakatta':   'Kolkata',
+    'kolkata':     'Kolkata',
+    'chennai':     'Chennai',
+    'bangalor':    'Bangalore',
+    'haidaraabaad':'Hyderabad',
+
+    # ── Countries ───────────────────────────────────────────────────────
+    'indiya':      'India',
+    'amerika':     'America',
+    'kanada':      'Canada',
+    'landan':      'London',
+    'dubai':       'Dubai',
+    'saoodi':      'Saudi',
+    'engaland':    'England',
+    'ostreliya':   'Australia',
+    'jarmani':     'Germany',
+    'phraans':     'France',
+    'jaapaan':     'Japan',
+    'cheen':       'China',
+
+    # ── Tech brand names ────────────────────────────────────────────────
+    'aaeephon':    'iPhone',
+    'aiphon':      'iPhone',
+    'endroid':     'Android',
+    'googal':      'Google',
+    'phesabuk':    'Facebook',
+    'instaagraam': 'Instagram',
+    'yootyoob':    'YouTube',
+    'teleegraam':  'Telegram',
+    'zoom':        'Zoom',
+    'maaikrosoft': 'Microsoft',
+    'aiapal':      'Apple',
+    'samsang':     'Samsung',
+
+    # ── Banks / orgs ────────────────────────────────────────────────────
+    'chughtaaee':  'Chughtai',
+    'chughtai':    'Chughtai',
+    'esso':        'SSO',
+    'naadra':      'NADRA',
 }
 
 
@@ -1157,7 +1382,9 @@ def _normalize_endings(text: str) -> str:
     # word-final 'aa' → 'a' ONLY when preceded by a consonant
     # (otherwise standalone आ would wrongly shorten: "कब आ" → "kab a")
     text = re.sub(rf'(?<={_C})aa\b', 'a', text)
-    text = re.sub(rf'aa({_C}{_V})\b', r'a\1', text)
+    # aa+CV at word-end → a+CV ONLY when preceded by a consonant
+    # Prevents wrongly shortening word-initial 'aa' (आता→ata, आगे→age)
+    text = re.sub(rf'(?<={_C})aa({_C}{_V})\b', r'a\1', text)
     return text
 
 
@@ -1183,7 +1410,8 @@ def _apply_corrections(text: str) -> str:
             return corrected[0].upper() + corrected[1:]
         return corrected
 
-    return re.sub(r'[A-Za-z]+', fix_word, text)
+    # include digits in word match so acronyms like 'HbA1c', 'T3' resolve
+    return re.sub(r'[A-Za-z0-9]+', fix_word, text)
 
 
 def transliterate(text: str) -> str:
