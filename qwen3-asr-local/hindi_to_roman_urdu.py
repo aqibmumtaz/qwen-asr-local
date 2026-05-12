@@ -97,18 +97,235 @@ _PUNCT_BOUNDARY = set(' \t\n.,!?;:।॥"\'()[]{}')
 # values = natural Roman Urdu spelling
 CORRECTIONS = {
     # grammar particles
-    'men':         'mein',
-    'meen':        'mein',
+    # See ard/roman-urdu-convention.md for the full convention this dict enforces.
+
+    # ── Pronouns ─────────────────────────────────────────────────────────
+    'ham':         'hum',
+    'wah':         'woh',
+    'wo':          'woh',
     'yah':         'yeh',
+    'ye':          'yeh',
+    'too':         'tu',
+    'mae':         'main',
+    'me':          'main',
+    'meraa':       'mera',
+    'teraa':       'tera',
+    'hamaaraa':    'hamara',
+    'hamaara':     'hamara',
+    'tumhaaraa':   'tumhara',
+    'tumhaara':    'tumhara',
+    'aapakaa':     'aapka',
+    'aapaki':      'aapki',
+    'unakaa':      'unka',
+    'unaki':       'unki',
+    'isakaa':      'iska',
+    'usakaa':      'uska',
+    'apanaa':      'apna',
+    'apana':       'apna',
+    'apanee':      'apni',
+    'apani':       'apni',
+
+    # ── Question words ───────────────────────────────────────────────────
+    'kyaa':        'kya',
+    'kaun':        'kaun',
+    'kahaan':      'kahan',
     'wahaan':      'wahan',
     'yahaan':      'yahan',
+    'kab':         'kab',
+    'kaise':       'kaise',
+    'kyon':        'kyon',
+    'kyonki':      'kyonki',
+    'kitanaa':     'kitna',
+    'kitnaa':      'kitna',
+    'kitanee':     'kitni',
+    'kitnee':      'kitni',
+    'kahin':       'kahin',
 
-    # pronouns / common function words
-    'ham':         'hum',      # हम — phonetic 'a' but Urdu convention is 'u'
-    'wah':         'woh',      # वह
-    'yeh':         'yeh',
+    # ── Conjunctions / connectors ────────────────────────────────────────
+    'aur':         'aur',
+    'lekin':       'lekin',
+    'magar':       'magar',
+    'agar':        'agar',
+    'warna':       'warna',
+    'phir':        'phir',
+    'isalie':      'isliye',
+    'isliye':      'isliye',
+    'kelye':       'keliye',
+    'kelie':       'keliye',
+    'jab':         'jab',
+    'tab':         'tab',
+    'taki':        'taki',
+    'taa':         'ta',
 
-    # consonant cluster overcorrections (च्छ → 'chch' should be 'ch')
+    # ── Postpositions ────────────────────────────────────────────────────
+    'men':         'mein',
+    'meen':        'mein',
+    'tak':         'tak',
+    'pae':         'pe',
+
+    # ── Negation / affirmation ───────────────────────────────────────────
+    'nahin':       'nahi',
+    'nahiin':      'nahi',
+    'mat':         'mat',
+    'haan':        'haan',
+    'ji':          'ji',
+
+    # ── Numbers ──────────────────────────────────────────────────────────
+    'chhah':       'chhe',
+    'chhe':        'chhe',
+    'paanch':      'panch',
+    'chaar':       'char',
+    'gyaarah':     'gyarah',
+    'baarah':      'barah',
+    'tairah':      'terah',
+    'chaudaa':     'chaudah',
+    'pandrah':     'pandrah',
+    'solah':       'solah',
+    'satarah':     'satrah',
+    'atharah':     'atharah',
+    'unnees':      'unnees',
+    'bees':        'bees',
+    'pachas':      'pachas',
+    'sau':         'sau',
+    'hazaar':      'hazar',
+    'laakh':       'lakh',
+    'karor':       'crore',
+
+    # ── Common verbs (-ना infinitives mostly handled by schwa rule;
+    #     these are the irregular ones) ───────────────────────────────────
+    'peena':       'pina',
+    'jeena':       'jina',
+    'seekhna':     'seekhna',
+    'siikhana':    'seekhna',
+    'paaonga':     'paonga',
+    'denaa':       'dena',
+    'denee':       'deni',
+    'lenaa':       'lena',
+    'lenee':       'leni',
+    'aanaa':       'aana',
+    'ulati':       'ulti',
+
+    # ── Verb tense fragments / vowel hiatus (aa+e, ee+o, etc.) ───────────
+    'jaaoge':      'jaoge',
+    'aaoge':       'aoge',
+    'jaaoonga':    'jaonga',
+    'aaoonga':     'aonga',
+    'kaaoge':      'kaoge',
+    'aae':         'aaye',
+    'aaen':        'ayen',
+    'aaenge':      'ayenge',
+    'gaae':        'gaye',
+    'jaae':        'jaaye',
+    'jaaen':       'jayen',
+    'jaaenge':     'jayenge',
+    'kaaenge':     'kayenge',
+    'peeoge':      'peoge',
+    'peeo':        'peo',
+    'jeeoge':      'jeoge',
+    'leeoge':      'loge',
+    'deeoge':      'doge',
+    'huaa':        'hua',
+    'huee':        'hui',
+    'huve':        'hue',
+
+    # ── Family ───────────────────────────────────────────────────────────
+    'maan':        'maa',
+    'baap':        'baap',
+    'ammee':       'ammi',
+    'abbu':        'abbu',
+    'beti':        'beti',
+    'beta':        'beta',
+    'bhaaee':      'bhai',
+    'bhaai':       'bhai',
+    'behan':       'behan',
+    'bahan':       'behan',
+    'daadaa':      'dada',
+    'daadi':       'dadi',
+    'naanaa':      'nana',
+    'naani':       'nani',
+    'chachaa':     'chacha',
+    'chachi':      'chachi',
+    'maamaa':      'mama',
+    'maami':       'mami',
+    'mausi':       'mausi',
+    'phuphi':      'phuphi',
+
+    # ── Body parts ───────────────────────────────────────────────────────
+    'sir':         'sir',
+    'aankh':       'aankh',
+    'naak':        'naak',
+    'kaan':        'kaan',
+    'munh':        'munh',
+    'daant':       'daant',
+    'haath':       'haath',
+    'paer':        'paer',
+    'paaer':       'paer',
+    'ungalee':     'ungli',
+    'dil':         'dil',
+    'peet':        'peet',
+
+    # ── Food / drink ─────────────────────────────────────────────────────
+    'roti':        'roti',
+    'daal':        'daal',
+    'chaawal':     'chawal',
+    'sabzee':      'sabzi',
+    'gosht':       'gosht',
+    'machhalee':   'machhli',
+    'andaa':       'anda',
+    'doodh':       'doodh',
+    'pani':        'pani',
+    'chaae':       'chai',
+    'chaay':       'chai',
+    'qahwaa':      'qahwa',
+
+    # ── Household ────────────────────────────────────────────────────────
+    'ghar':        'ghar',
+    'kamaraa':     'kamra',
+    'darawaazaa':  'darwaza',
+    'darwaazaa':   'darwaza',
+    'khirakee':    'khirki',
+    'chhat':       'chhat',
+    'deewaar':     'deewar',
+    'kursee':      'kursi',
+    'mez':         'mez',
+    'palang':      'palang',
+
+    # ── Time ─────────────────────────────────────────────────────────────
+    'waqat':       'waqt',
+    'din':         'din',
+    'raat':        'raat',
+    'subah':       'subah',
+    'subaah':      'subah',
+    'dopahar':     'dopahar',
+    'shaam':       'shaam',
+    'mahinaa':     'mahina',
+    'saal':        'saal',
+    'aaj':         'aaj',
+    'kal':         'kal',
+    'paraso':      'parso',
+    'parason':     'parson',
+    'abhee':       'abhi',
+    'kabhee':      'kabhi',
+    'haameshaa':   'hamesha',
+    'hameshaa':    'hamesha',
+    'kabhi':       'kabhi',
+
+    # ── Nature / world ───────────────────────────────────────────────────
+    'aasamaan':    'aasman',
+    'aasmaan':     'aasman',
+    'dharatee':    'dharti',
+    'sooraj':      'sooraj',
+    'chaand':      'chand',
+    'sitaaraa':    'sitara',
+    'hawaa':       'hawa',
+    'baadal':      'baadal',
+    'baarish':     'baarish',
+    'samandar':    'samandar',
+    'pahaar':      'pahar',
+
+    # ── Adjectives — qualities ───────────────────────────────────────────
+    'achhaa':      'acha',
+    'achchhaa':    'acha',
     'achcha':      'acha',
     'achch':       'ach',
     'bachcha':     'bacha',
@@ -117,17 +334,102 @@ CORRECTIONS = {
     'pachchha':    'pacha',
     'kachcha':     'kacha',
     'sachcha':     'sacha',
+    'buraa':       'bura',
+    'sundar':      'sundar',
+    'khoob':       'khoob',
+    'kharaab':     'kharab',
+    'aasaan':      'aasan',
+    'mushkil':     'mushkil',
+    'nayaa':       'naya',
+    'puraanaa':    'purana',
+    'garm':        'garam',
+    'thandaa':     'thanda',
+    'garmee':      'garmi',
+    'sardee':      'sardi',
+    'pyaar':       'pyar',
+    'pyaaraa':     'pyara',
+    'taazaa':      'taza',
+    'meethaa':     'mitha',
+    'meetha':      'mitha',
+    'kadawaa':     'karwa',
+    'tikhaa':      'tikha',
 
-    # ि + ए (independent vowel) glide → 'iye' not 'ie'
-    'isalie':      'isliye',
-    'kelie':       'keliye',
-    'kelye':       'keliye',
+    # ── Adjectives — sizes ───────────────────────────────────────────────
+    'baraa':       'bara',
+    'baree':       'bari',
+    'chhotaa':     'chota',
+    'chhotee':     'choti',
+    'lambaa':      'lamba',
+    'lambee':      'lambi',
+    'motaa':       'mota',
+    'patalaa':     'patla',
+    'gehraa':      'gehra',
+
+    # ── Adjectives — colors ──────────────────────────────────────────────
+    'kaalaa':      'kala',
+    'safed':       'safed',
+    'laal':        'laal',
+    'peelaa':      'peela',
+    'neelaa':      'neela',
+    'haraa':       'hara',
+    'naarangee':   'narangi',
+    'jaamuni':     'jamuni',
+
+    # ── Adverbs / quantifiers ────────────────────────────────────────────
+    'bahut':       'bahut',
+    'thoraa':      'thora',
+    'thoree':      'thori',
+    'zyaadaa':     'zyada',
+    'zyaada':      'zyada',
+    'kam':         'kam',
+    'saaraa':      'sara',
+    'kuchh':       'kuch',
+    'koi':         'koi',
+    'kuchhh':      'kuch',
+    'sab':         'sab',
+    'har':         'har',
+    'sirph':       'sirf',
+    'jaldee':      'jaldi',
+    'dheere':      'dheere',
+    'achaanak':    'achanak',
+
+    # ── Religious / cultural ─────────────────────────────────────────────
+    'salaam':      'salam',
+    'duaa':        'dua',
+    'namaaz':      'namaz',
+    'masjid':      'masjid',
+    'mandir':      'mandir',
+    'khudaa':      'khuda',
+    'allaah':      'Allah',
+    'bhagawaan':   'bhagwan',
+    'eed':         'Eid',
+    'ramazaan':    'Ramzan',
+    'shukariyaa':  'shukriya',
+    'mehrabaani':  'meharbani',
+    'mehrabaanee': 'meharbani',
+    'insaaaan':    'insaan',
+    'inshaalla':   'inshaAllah',
+    'maashalla':   'mashaAllah',
+
+    # ── ज्ञ conjunct fallback ─────────────────────────────────────────────
+    'gyaan':       'gyan',
+    'gyaani':      'gyani',
+    'wigyaan':     'vigyan',
+    'jnaan':       'gyan',
+
+    # ── ड़ cluster overcorrection ─────────────────────────────────────────
+    'laraki':      'larki',
+    'larakee':     'larki',
+    'laraka':      'larka',
+    'larakaa':     'larka',
+
+    # ── ि + ए glide → 'iye' not 'ie' ─────────────────────────────────────
     'die':         'diye',
     'lie':         'liye',
     'kie':         'kiye',
+    'pie':         'piye',
 
-    # फ in Urdu loan words → 'f' not 'ph'
-    'sirph':       'sirf',
+    # ── फ in Urdu loan words → 'f' not 'ph' ──────────────────────────────
     'tarph':       'taraf',
     'pharq':       'farq',
     'pharaq':      'farq',
@@ -138,51 +440,129 @@ CORRECTIONS = {
     'phaisla':     'faisla',
     'philam':      'film',
     'phon':        'fon',
+    'phaisalaa':   'faisla',
 
-    # word-initial 'aa' shortening in common words
+    # ── word-initial 'aa' shortening in common words ─────────────────────
     'aadaab':      'adaab',
     'aazaad':      'azaad',
     'aakhir':      'akhir',
-    'aagaz':       'aagaz',
+    'aagaaz':      'aagaz',
+    'aasaaan':     'aasan',
+    'aaeeen':      'aaeen',
 
-    # vowel hiatus: 'aa' before another vowel often shortened in Roman Urdu
-    'jaaoge':      'jaoge',
-    'aaoge':       'aoge',
-    'jaaoonga':    'jaonga',
-    'aaoonga':     'aonga',
-    'kaaoge':      'kaoge',
-
-    # ज्ञ conjunct (special-case code emits 'gy', but internal 'aa' not caught by ending rule)
-    'gyaan':       'gyan',
-    'gyaani':      'gyani',
-    'wigyaan':     'vigyan',
-    'jnaan':       'gyan',
-
-    # ड़ cluster schwa overcorrection (lड़ + क produces 'laraki' not 'larki')
-    'laraki':      'larki',
-    'larakee':     'larki',
-    'laraka':      'larka',
-    'larakaa':     'larka',
-
-    # common words: internal aa before final consonant (not caught by aa+CV rule)
-    'pyaar':       'pyar',
-    'aasamaan':    'aasman',
-    'aasmaan':     'aasman',
-    'inaaam':      'inaam',
-
-    # Urdu vs phonetic Hindi spellings
+    # ── ASR-prone Urdu vs phonetic Hindi spellings ───────────────────────
     'zabaan':      'zaban',
     'zaabaan':     'zaban',
     'aawaaz':      'awaz',
     'aawaz':       'awaz',
-    'aawaaj':      'awaz',    # ASR without nukta on ज
+    'aawaaj':      'awaz',
     'shinaakht':   'shanakht',
     'shinaakhat':  'shanakht',
-    'waqat':       'waqt',
     'mausaam':     'mausam',
     'zindagii':    'zindagi',
     'khushii':     'khushi',
-    'nahin':       'nahi',
+    'duniyaa':     'duniya',
+    'tabiyat':     'tabiyat',
+    'tabeeyat':    'tabiyat',
+    'aramaan':     'arman',
+    'imaan':       'imaan',
+    'shahar':      'shehr',
+    'mulk':        'mulk',
+    'jangal':      'jangal',
+    'rasta':       'rasta',
+    'raastaa':     'rasta',
+    'rasataa':     'rasta',
+
+    # ── greetings / phrases ──────────────────────────────────────────────
+    'aadaab':      'adaab',
+    'salaam':      'salam',
+    'namaste':     'namaste',
+    'khudaa hafiz':'khuda hafiz',
+    'alavidaa':    'alvida',
+    'theek':       'theek',
+    'teek':        'theek',
+    'maaph':       'maaf',
+    'maaf':        'maaf',
+}
+
+
+# ── Proper nouns dict (names — preserve / add capitalisation) ───────────────
+# ASR transcribes names phonetically in Devanagari, so we need explicit mapping
+# back to conventional Roman Urdu/English spellings.
+PROPER_NOUNS = {
+    # Common Muslim/Urdu names
+    'akeeb':       'Aqeeb',
+    'aqeeb':       'Aqeeb',
+    'akib':        'Aqib',
+    'aqib':        'Aqib',
+    'aaqib':       'Aqib',
+    'ali':         'Ali',
+    'alee':        'Ali',
+    'omar':        'Omar',
+    'umar':        'Umar',
+    'usman':       'Usman',
+    'usmaan':      'Usman',
+    'mohammad':    'Mohammad',
+    'muhammad':    'Muhammad',
+    'mohammed':    'Mohammed',
+    'ahmad':       'Ahmad',
+    'ahamad':      'Ahmad',
+    'ahmed':       'Ahmed',
+    'ahamed':      'Ahmed',
+    'hassan':      'Hassan',
+    'hasan':       'Hasan',
+    'hussain':     'Hussain',
+    'husain':      'Husain',
+    'ayesha':      'Ayesha',
+    'aaisha':      'Aisha',
+    'aisha':       'Aisha',
+    'faatima':     'Fatima',
+    'fatima':      'Fatima',
+    'khadija':     'Khadija',
+    'maryam':      'Maryam',
+    'mariyam':     'Maryam',
+    'zainab':      'Zainab',
+    'zaynab':      'Zainab',
+    'naeem':       'Naeem',
+    'yousaf':      'Yousaf',
+    'yusuf':       'Yusuf',
+    'ibrahim':     'Ibrahim',
+    'ismail':      'Ismail',
+    'tariq':       'Tariq',
+    'taariq':      'Tariq',
+    'imran':       'Imran',
+    'imraan':      'Imran',
+    'kamran':      'Kamran',
+    'salman':      'Salman',
+    'arif':        'Arif',
+    'asif':        'Asif',
+    'kashif':      'Kashif',
+    'shahid':      'Shahid',
+    'rashid':      'Rashid',
+    'khalid':      'Khalid',
+    'majeed':      'Majeed',
+    'rashid':      'Rashid',
+    'sadia':       'Sadia',
+    'saadia':      'Sadia',
+    'amna':        'Amna',
+    'amnaa':       'Amna',
+    'sara':        'Sara',
+    'saaraa':      'Sara',
+
+    # Place names
+    'karaachee':   'Karachi',
+    'karachee':    'Karachi',
+    'karaanchi':   'Karachi',
+    'karaachi':    'Karachi',
+    'lahaur':      'Lahore',
+    'islaamaabaad':'Islamabad',
+    'islamabad':   'Islamabad',
+    'paakistaan':  'Pakistan',
+    'hindustaan':  'Hindustan',
+    'dilli':       'Delhi',
+    'dillee':      'Delhi',
+    'mumbaee':     'Mumbai',
+    'mumbai':      'Mumbai',
 }
 
 
@@ -360,15 +740,25 @@ def _normalize_endings(text: str) -> str:
 
 
 def _apply_corrections(text: str) -> str:
-    """Layer 3: replace known wrong phonetic words with natural Roman Urdu."""
+    """
+    Layer 3: replace known wrong phonetic words with natural Roman Urdu.
+    Two lookup tables:
+      - PROPER_NOUNS: names / places — capitalisation taken from dict value
+      - CORRECTIONS:  common words — preserves original word's capitalisation
+    PROPER_NOUNS wins when the same key exists in both.
+    """
     def fix_word(m):
         w = m.group(0)
         lower = w.lower()
+        # Proper nouns: explicit capitalisation in the mapping
+        if lower in PROPER_NOUNS:
+            return PROPER_NOUNS[lower]
+        # Common-word corrections: keep original capitalisation
         corrected = CORRECTIONS.get(lower)
         if not corrected:
             return w
         if w[0].isupper():
-            return corrected.capitalize()
+            return corrected[0].upper() + corrected[1:]
         return corrected
 
     return re.sub(r'[A-Za-z]+', fix_word, text)
@@ -444,6 +834,28 @@ if __name__ == '__main__':
         ("क्या तुम जाओगे?", "kya tum jaoge?"),
         # CC word-final without matra (must keep schwa)
         ("जगह",      "jagah"),
+        # ── Proper nouns (PROPER_NOUNS dict) ─────────────────────────────
+        ("अकीब",     "Aqeeb"),
+        ("अली",      "Ali"),
+        ("मोहम्मद",  "Mohammad"),
+        ("अहमद",     "Ahmad"),
+        ("करांची",   "Karachi"),
+        ("मेरा नाम अकीब है।", "mera naam Aqeeb hai."),
+        # ── Comprehensive corrections (CORRECTIONS dict) ─────────────────
+        ("चार",      "char"),
+        ("पाँच",     "panch"),
+        ("कितना",    "kitna"),
+        ("कितनी",    "kitni"),
+        ("बेटा",     "beta"),
+        ("बेटी",     "beti"),
+        ("भाई",      "bhai"),
+        ("बहन",      "behan"),
+        ("नया",      "naya"),
+        ("ठंडा",     "thanda"),
+        ("गरम",      "garam"),
+        # ── Vowel hiatus (aa+e, ee+o) ────────────────────────────────────
+        ("क्या तुम पानी पीओगे?", "kya tum pani peoge?"),
+        ("हम कल जाएंगे।",        "hum kal jayenge."),
     ]
 
     if len(sys.argv) > 1:
