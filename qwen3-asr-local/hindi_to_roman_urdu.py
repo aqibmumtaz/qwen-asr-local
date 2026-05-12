@@ -165,6 +165,15 @@ CORRECTIONS = {
 
     # ── Negation / affirmation ───────────────────────────────────────────
     'nahin':       'nahi',
+
+    # Urdu wait/patience words (Hindi उ→i common in Urdu speech)
+    'intazaar':    'intezar',
+    'intazar':     'intezar',
+    'intzaar':     'intezar',
+    'sabra':       'sabar',
+    'jaldee':      'jaldi',
+    'foran':       'foran',
+    'aakhirakaar': 'aakhirkar',
     'nahiin':      'nahi',
     'mat':         'mat',
     'haan':        'haan',
@@ -435,6 +444,24 @@ CORRECTIONS = {
     'lie':         'liye',
     'kie':         'kiye',
     'pie':         'piye',
+    'chaahie':     'chahiye',     # चाहिए — need / want
+    'chaahiye':    'chahiye',
+    'aaie':        'aaiye',       # आइए — please come
+    'baithie':     'baithiye',    # बैठिए — please sit
+    'jaaie':       'jaaiye',      # जाइए — please go
+    'kahie':       'kahiye',      # कहिए — please say
+    'sunie':       'suniye',      # सुनिए — please listen
+    'dekhie':      'dekhiye',     # देखिए — please look
+
+    # -ीजिए polite imperative pattern: keejie→kijiye, dijie→dijiye, etc.
+    'keejie':      'kijiye',      # कीजिए — please do
+    'dijie':       'dijiye',      # दीजिए — please give
+    'lijie':       'lijiye',      # लीजिए — please take
+    'pijie':       'pijiye',      # पीजिए — please drink
+    'sunijie':     'suniye',      # सुनिए (variants)
+    'kahijie':     'kahiye',      # कहिए (variants)
+    'dekhijie':    'dekhiye',     # देखिए (variants)
+    'jaaijie':     'jaaiye',      # जाइए (variants)
 
     # ── फ in Urdu loan words → 'f' not 'ph' ──────────────────────────────
     'tarph':       'taraf',
@@ -490,6 +517,164 @@ CORRECTIONS = {
     'teek':        'theek',
     'maaph':       'maaf',
     'maaf':        'maaf',
+
+    # ── English loan words — call center / customer service ─────────────
+    # ASR transcribes English phonetically in Devanagari, transliterator
+    # converts back to phonetic Roman; these map back to original English.
+    'hello':       'hello',
+    'helo':        'hello',
+    'haelo':       'hello',
+    'haay':        'hi',
+    'hai':         'hai',           # native 'hai' (है) wins; English 'hi' is rarely written as 'hai' in Hindi
+    'pleez':       'please',
+    'plij':        'please',
+    'sori':        'sorry',
+    'sory':        'sorry',
+    'okae':        'okay',
+    'oke':         'okay',
+    'ok':          'ok',
+    'thank you':   'thank you',
+    'thaink yoo':  'thank you',
+    'thaink':      'thank',
+    'wailkam':     'welcome',
+    'yes':         'yes',
+    'no':          'no',
+
+    # ── Roles / titles ──────────────────────────────────────────────────
+    'doktar':      'doctor',
+    'daakatar':    'doctor',
+    'naras':       'nurse',
+    'stafa':       'staff',
+    'staaf':       'staff',
+    'maenejar':    'manager',
+    'eajent':      'agent',
+    'kastamar':    'customer',
+    'sar':         'sir',           # 'sir' usually retained as English
+    'maaeem':      'madam',
+    'madam':       'madam',
+
+    # ── Appointment / scheduling ────────────────────────────────────────
+    'apointament': 'appointment',
+    'apoinatement':'appointment',
+    'apoyentament':'appointment',
+    'buking':      'booking',
+    'bookking':    'booking',
+    'kainsal':     'cancel',
+    'kainsil':     'cancel',
+    'kainsel':     'cancel',
+    'kanfarm':     'confirm',
+    'kanphirm':    'confirm',
+    'shedyool':    'schedule',
+    'shedyul':     'schedule',
+    'reshedyool':  'reschedule',
+    'rishedyul':   'reschedule',
+    'pik ap':      'pick up',
+    'pikaap':      'pick up',
+    'pik':         'pick',
+    'ap':          'up',           # 'अप' English prefix; conflicts rare
+    'kalekt':      'collect',
+    'kolekt':      'collect',
+    'drap':        'drop',
+    'dileewari':   'delivery',
+    'deliwari':    'delivery',
+
+    # ── Lab / medical procedures ────────────────────────────────────────
+    'blad':        'blood',
+    'blud':        'blood',
+    'sainpal':     'sample',
+    'sampal':      'sample',
+    'sample':      'sample',
+    'riport':      'report',
+    'reepart':     'report',
+    'rizalt':      'result',
+    'reesalt':     'result',
+    'laib':        'lab',
+    'leb':         'lab',
+    'kalekshan':   'collection',
+    'colection':   'collection',
+    'chekaap':     'checkup',
+    'cheekap':     'checkup',
+    'skain':       'scan',
+    'sken':        'scan',
+    'eksaray':     'x-ray',
+    'ksray':       'x-ray',
+    'eemaaraaee':  'MRI',
+    'seetee skain':'CT scan',
+    'eesheejee':   'ECG',
+    'aalterasaaund':'ultrasound',
+    'alterasaund': 'ultrasound',
+    'baiopasi':    'biopsy',
+
+    # ── Tests / lab parameters ──────────────────────────────────────────
+    'shugar':      'sugar',
+    'kolestrol':   'cholesterol',
+    'koleestrol':  'cholesterol',
+    'thaayaroid':  'thyroid',
+    'thayaroid':   'thyroid',
+    'witaamin':    'vitamin',
+    'vitamin':     'vitamin',
+    'faasting':    'fasting',
+    'phaasting':   'fasting',
+    'yoorin':      'urine',
+    'urin':        'urine',
+    'haymoglobin': 'hemoglobin',
+    'hemoglobin':  'hemoglobin',
+    'eemyoon':     'immune',
+    'liwar':       'liver',
+    'kidanee':     'kidney',
+    'haart':       'heart',
+    'lang':        'lung',
+
+    # ── Contact info / logistics ────────────────────────────────────────
+    'fon':         'phone',
+    'phon':        'phone',
+    'nanbar':      'number',
+    'nambar':      'number',
+    'edres':       'address',
+    'aidres':      'address',
+    'imaaeel':     'email',
+    'eemel':       'email',
+    'iemel':       'email',
+    'taaim':       'time',
+    'time':        'time',
+    'det':         'date',
+    'deet':        'date',
+    'eria':        'area',
+    'area':        'area',
+    'rod':         'road',
+    'satriit':     'street',
+    'striit':      'street',
+    'haaus':       'house',
+    'eparteement': 'apartment',
+    'flait':       'flat',
+
+    # ── Payment / money ─────────────────────────────────────────────────
+    'paese':       'paise',         # native paise stays
+    'rupye':       'rupaye',        # रुपये — both used, 'rupaye' is fuller
+    'rupayaa':     'rupaya',
+    'paisaa':      'paisa',
+    'kaiash':      'cash',
+    'kaesh':       'cash',
+    'kraidit kaard':'credit card',
+    'kard':        'card',
+    'aanlaain':    'online',
+    'pemement':    'payment',
+
+    # ── Common conversational English loans ─────────────────────────────
+    'taim':        'time',
+    'haam':        'home',
+    'hom':         'home',
+    'aafis':       'office',
+    'ophis':       'office',
+    'shap':        'shop',
+    'maarket':     'market',
+    'mobaaeel':    'mobile',
+    'mobile':      'mobile',
+    'kaal':        'call',
+    'masej':       'message',
+    'mesaej':      'message',
+    'wats ap':     'WhatsApp',
+    'whatsaap':    'WhatsApp',
 }
 
 
@@ -816,7 +1001,9 @@ def _normalize_endings(text: str) -> str:
     _C = '[bcdfghjklmnpqrstvwxyz]'
     _V = '[aeiouy]'
     text = re.sub(r'ee\b', 'i', text)
-    text = re.sub(r'aa\b', 'a', text)
+    # word-final 'aa' → 'a' ONLY when preceded by a consonant
+    # (otherwise standalone आ would wrongly shorten: "कब आ" → "kab a")
+    text = re.sub(rf'(?<={_C})aa\b', 'a', text)
     text = re.sub(rf'aa({_C}{_V})\b', r'a\1', text)
     return text
 
