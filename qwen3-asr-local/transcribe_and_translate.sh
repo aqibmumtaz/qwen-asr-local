@@ -41,11 +41,9 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-ASR_MODEL="$SCRIPT_DIR/models/${ASR_MODEL_NAME}.gguf"
-MMPROJ="$SCRIPT_DIR/models/mmproj-Qwen3-ASR-1.7B-bf16-new.gguf"
 TRANSLATOR_MODEL="$SCRIPT_DIR/models/${TRANSLATOR_MODEL_NAME}.gguf"
-LLAMA_MTMD="$SCRIPT_DIR/llama.cpp/build/bin/llama-mtmd-cli"
 LLAMA_CLI="$SCRIPT_DIR/llama.cpp/build/bin/llama-cli"
+TRANSCRIBE_SH="$SCRIPT_DIR/transcribe.sh"
 
 TRANSCRIPT_DIR="$SCRIPT_DIR/transcriptions"
 mkdir -p "$TRANSCRIPT_DIR"
@@ -82,13 +80,11 @@ transcribe_and_translate_file() {
     local asr_start asr_end
     asr_start=$(date +%s)
     local TRANSCRIPT
-    TRANSCRIPT=$("$LLAMA_MTMD" \
-        -m "$ASR_MODEL" \
-        --mmproj "$MMPROJ" \
-        --image "$AUDIO" \
-        -p "<|im_start|>system\n<|im_end|>\n<|im_start|>user\n<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n<|im_start|>assistant\nlanguage ${ASR_LANGUAGE}<asr_text>" \
-        -n 256 --no-warmup \
-        2>/dev/null | grep '<asr_text>' | sed 's/.*<asr_text>//' | tr -d '\n')
+    TRANSCRIPT=$(bash "$TRANSCRIBE_SH" \
+        --language "$ASR_LANGUAGE" \
+        --asr-model "$ASR_MODEL_NAME" \
+        "$AUDIO" \
+        | tr -d '\n')
     asr_end=$(date +%s)
 
     if [[ -z "$TRANSCRIPT" ]]; then
