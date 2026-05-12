@@ -17,3 +17,8 @@ llama.cpp/build/
 # macOS
 .DS_Store
 .history/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo

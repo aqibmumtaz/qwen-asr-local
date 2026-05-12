@@ -93,9 +93,15 @@ MATRAS = {
 _PUNCT_BOUNDARY = set(' \t\n.,!?;:।॥"\'()[]{}')
 
 
-# ── Lexicon (CORRECTIONS + PROPER_NOUNS dicts) ───────────────────────────────
-# Maintained separately in data/lexicon.py — grows from real-world audio.
-from data.lexicon import CORRECTIONS, PROPER_NOUNS  # noqa: E402
+# ── Lexicon (CORRECTIONS + PROPER_NOUNS) — loaded from data/lexicon.json ─────
+# Plain JSON data file, no Python. Edit directly to add/remove entries.
+import json as _json
+from pathlib import Path as _Path
+
+_LEXICON_PATH = _Path(__file__).resolve().parent / 'data' / 'lexicon.json'
+_lex = _json.loads(_LEXICON_PATH.read_text(encoding='utf-8'))
+CORRECTIONS  = _lex['corrections']
+PROPER_NOUNS = _lex['proper_nouns']
 
 
 
