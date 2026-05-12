@@ -1009,6 +1009,139 @@ CORRECTIONS = {
     'aagepeeche':  'aage peechhe',
     'idharaudhar': 'idhar udhar',
     'yahaanwahaan':'yahan wahan',
+
+    # ── Weather ──────────────────────────────────────────────────────────
+    'barph':       'barf',          # बर्फ — snow/ice
+    'toophaan':    'toofan',        # तूफान — storm
+    'kohra':       'kohra',
+    'aandhi':      'aandhi',
+
+    # ── Clothing (English loans + Urdu shortening) ───────────────────────
+    'shart':       'shirt',
+    'paint':       'pant',
+    'shalawaar':   'shalwar',
+    'taai':        'tie',
+    'belt':        'belt',
+    'kapre':       'kapre',
+    'rumaal':      'rumaal',
+
+    # ── Transport ────────────────────────────────────────────────────────
+    'gari':        'gaadi',         # गाड़ी — vehicle
+    'bas':         'bus',           # बस — bus (overrides 'bas'=enough; risk noted)
+    'tren':        'train',
+    'hawaai':      'hawai',         # हवाई — air (long ā shortening)
+    'riksha':      'rickshaw',
+    'motarasaaikil':'motorcycle',
+    'saaikil':     'cycle',
+    'steshan':     'station',
+    'eyaraport':   'airport',
+    'raasta':      'rasta',         # रास्ता — way/road
+    'chauk':       'chowk',         # चौक — intersection
+    'tikat':       'ticket',
+    'seet':        'seat',
+    'jahaaz':      'jahaaz',
+    'paidal':      'paidal',
+
+    # ── Shopping ────────────────────────────────────────────────────────
+    'baazaar':     'bazaar',        # बाज़ार
+    'mol':         'mall',
+    'diskaaunt':   'discount',
+    'ophar':       'offer',
+    'sel':         'sale',
+    'paik':        'pack',
+    'boks':        'box',
+    'baig':        'bag',
+    'raseed':      'raseed',
+    'jhola':       'jhola',
+    'dukaan':      'dukaan',
+    'haalmaark':   'hallmark',
+
+    # ── Education ───────────────────────────────────────────────────────
+    'skool':       'school',
+    'kolej':       'college',
+    'yooniwarsiti':'university',
+    'klaas':       'class',
+    'stoodent':    'student',
+    'homawark':    'homework',
+    'egzaam':      'exam',
+    'pepar':       'paper',
+    'kitaab':      'kitab',
+    'pensil':      'pencil',
+    'laaibreri':   'library',
+    'prinsipal':   'principal',
+    'klaasameet':  'classmate',
+    'gradeshan':   'graduation',
+    'degri':       'degree',
+
+    # ── Sports / recreation ─────────────────────────────────────────────
+    'kriket':      'cricket',
+    'phutabol':    'football',
+    'hoki':        'hockey',
+    'baidamintan': 'badminton',
+    'tenis':       'tennis',
+    'gem':         'game',
+    'maich':       'match',
+    'skor':        'score',
+    'wiket':       'wicket',
+    'philm':       'film',
+    'myoozik':     'music',
+    'daans':       'dance',
+    'paarti':      'party',
+    'pikanik':     'picnic',
+    'gem oowar':   'game over',
+
+    # ── Religion / festivals (additional + corrected) ───────────────────
+    'juma':        'jumma',
+    'quraan':      'Quran',
+    'maulwi':      'maulvi',
+    'imaam':       'imam',
+    'hadees':      'hadees',
+    'qaazi':       'qazi',
+    'charch':      'church',
+    'sheikh':      'sheikh',
+    'maulaana':    'maulana',
+    'haaji':       'haji',
+    'tasbih':      'tasbih',
+    'zikr':        'zikr',
+    'iftaar':      'iftar',
+    'sehri':       'sehri',
+    'fitra':       'fitra',
+    'zakaat':      'zakaat',
+
+    # ── Past tense + double-n corrections ───────────────────────────────
+    'hamne':       'humne',
+    'unhonne':     'unhone',
+    'inhonne':     'inhone',
+    'kisine':      'kisi ne',
+    'maine':       'maine',     # already
+    'tumne':       'tumne',     # already
+
+    # ── Future tense (more) ──────────────────────────────────────────────
+    # 'aonga' → 'aaonga' already in dict; verify works
+
+    # ── Urdu religious phrases (capitalisation) ─────────────────────────
+    'aameen':      'Ameen',
+    'jazaak':      'Jazak',
+    'baarak':      'Barak',
+
+    # ── Symptoms (additional) ───────────────────────────────────────────
+    'lali':        'laali',         # लाली — redness (single l is wrong)
+    'maror':       'marod',         # मरोड़ — cramp (ड़ should be 'd' here colloquially)
+    'soojan':      'soojan',
+    'khujli':      'khujli',
+    'phunsi':      'phunsi',
+    'phora':       'phora',
+    'zakhm':       'zakhm',
+    'chot':        'chot',
+    'tees':        'tees',
+
+    # ── Misc adjustments ────────────────────────────────────────────────
+    'dhanyawaad':  'dhanyawad',
+    'tabiyat':     'tabiyat',
+    'sehat':       'sehat',
+    'andaaza':     'andaza',
+    'taklif':      'taklif',
+    'paresh':      'pareshan',     # incomplete word fallback
 }
 
 
@@ -1119,6 +1252,7 @@ PROPER_NOUNS = {
     # فاطمہ
     'fatima':      'Fatima',
     'faatima':     'Fatima',
+    'phaatima':    'Fatima',     # फातिमा without nuqta on फ
     # مریم
     'maryam':      'Maryam',
     'mariyam':     'Maryam',
@@ -1251,6 +1385,47 @@ PROPER_NOUNS = {
     'chughtai':    'Chughtai',
     'esso':        'SSO',
     'naadra':      'NADRA',
+
+    # ── Festivals (caps required) ───────────────────────────────────────
+    'holi':        'Holi',
+    'diwali':      'Diwali',
+    'krisamas':    'Christmas',
+    'navratri':    'Navratri',
+    'rakhi':       'Rakhi',
+    'eed':         'Eid',
+    'ramazaan':    'Ramzan',
+    'baqra eed':   'Bakra Eid',
+    'shab e baraat':'Shab-e-Barat',
+    'meelaad':     'Milad',
+
+    # ── More acronyms ───────────────────────────────────────────────────
+    'aaivee':      'IV',
+    'oti':         'OT',
+    'aaisiyoo':    'ICU',
+    'eemarjency':  'emergency',
+    'opd':         'OPD',
+    'eepiji':      'APGI',
+    'sti':         'STI',
+    'std':         'STD',
+    'hivi':        'HIV',
+    'aaids':       'AIDS',
+    'kovid':       'COVID',
+    'pisior':      'PCR',
+    'rapid':       'rapid',
+    'aaiq':        'IQ',
+
+    # ── Tech brands (more) ──────────────────────────────────────────────
+    'twitar':      'Twitter',
+    'snaepchat':   'Snapchat',
+    'linkdin':     'LinkedIn',
+    'aaolu':       'Olu',
+    'oolu':        'Olu',
+    'oochalu':     'Olu',
+    'pintarest':   'Pinterest',
+    'gmaail':      'Gmail',
+    'aautlook':    'Outlook',
+    'yaahoo':      'Yahoo',
+    'binga':       'Bing',
 }
 
 
@@ -1433,6 +1608,8 @@ def _normalize_endings(text: str) -> str:
     # aa+CV at word-end → a+CV ONLY when preceded by a consonant
     # Prevents wrongly shortening word-initial 'aa' (आता→ata, आगे→age)
     text = re.sub(rf'(?<={_C})aa({_C}{_V})\b', r'a\1', text)
+    # word-final 'aao' → 'ao' after consonant (imperatives: लगाओ→lagao, खाओ→khao)
+    text = re.sub(rf'(?<={_C})aao\b', 'ao', text)
     return text
 
 
