@@ -34,10 +34,19 @@ SAMPLES    = SCRIPT_DIR / "samples"
 OUT_DIR    = SCRIPT_DIR / "transcriptions"
 OUT_DIR.mkdir(exist_ok=True)
 
+# Force ASR to transcribe in Hindi Devanagari script.
+# Qwen3-ASR's official language-forcing convention is to append
+# 'language <Language>' + the literal '<asr_text>' tag right after the
+# assistant prompt. The model then emits the transcription directly.
+# Supported languages incl: Chinese, English, Hindi, Arabic, Persian, etc.
+# Source: https://github.com/QwenLM/Qwen3-ASR — qwen_asr/inference/utils.py
 ASR_PROMPT = (
+    "<|im_start|>system\n"
+    "<|im_end|>\n"
     "<|im_start|>user\n"
     "<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n"
     "<|im_start|>assistant\n"
+    "language Hindi<asr_text>"
 )
 
 _nastaliq = HindustaniTransliterator()
