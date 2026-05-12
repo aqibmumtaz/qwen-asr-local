@@ -167,7 +167,7 @@ so names need explicit mapping:
 
 | ASR Hindi | Phonetic | Proper Roman |
 |---|---|---|
-| अकीब | akeeb | **Aqeeb** (or Aqib) |
+| अकीब | akeeb | **Aqib** (or Aqib) |
 | आक़िब | aaqib | **Aqib** |
 | अली | ali | **Ali** |
 | मोहम्मद | mohammad | **Mohammad** |

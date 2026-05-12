@@ -277,6 +277,13 @@ CORRECTIONS = {
     'chaae':       'chai',
     'chaay':       'chai',
     'qahwaa':      'qahwa',
+    'mithaaee':    'mithai',
+    'mithaai':     'mithai',
+    'meethaai':    'mithai',
+    'halwaa':      'halwa',
+    'kheer':       'kheer',
+    'biryaani':    'biryani',
+    'pulaao':      'pulao',
 
     # ── Household ────────────────────────────────────────────────────────
     'ghar':        'ghar',
@@ -490,64 +497,134 @@ CORRECTIONS = {
 # ASR transcribes names phonetically in Devanagari, so we need explicit mapping
 # back to conventional Roman Urdu/English spellings.
 PROPER_NOUNS = {
-    # Common Muslim/Urdu names
-    'akeeb':       'Aqeeb',
-    'aqeeb':       'Aqeeb',
+    # ── Common Muslim/Urdu male names ────────────────────────────────────
+    # عاقب — the user's name; ASR mishears as 'akeeb', 'aqeeb', 'aakib' etc.
+    'akeeb':       'Aqib',
+    'aqeeb':       'Aqib',
     'akib':        'Aqib',
     'aqib':        'Aqib',
     'aaqib':       'Aqib',
+    'aakib':       'Aqib',
+    # علی
     'ali':         'Ali',
     'alee':        'Ali',
-    'omar':        'Omar',
+    # عمر
     'umar':        'Umar',
+    'omar':        'Umar',
+    # عثمان
     'usman':       'Usman',
     'usmaan':      'Usman',
-    'mohammad':    'Mohammad',
+    'uthman':      'Usman',
+    # محمد
     'muhammad':    'Muhammad',
-    'mohammed':    'Mohammed',
+    'mohammad':    'Muhammad',
+    'mohammed':    'Muhammad',
+    'muhammed':    'Muhammad',
+    # احمد
     'ahmad':       'Ahmad',
     'ahamad':      'Ahmad',
-    'ahmed':       'Ahmed',
-    'ahamed':      'Ahmed',
+    'ahmed':       'Ahmad',
+    'ahamed':      'Ahmad',
+    # حسن
     'hassan':      'Hassan',
-    'hasan':       'Hasan',
+    'hasan':       'Hassan',
+    # حسین
     'hussain':     'Hussain',
-    'husain':      'Husain',
-    'ayesha':      'Ayesha',
-    'aaisha':      'Aisha',
-    'aisha':       'Aisha',
-    'faatima':     'Fatima',
-    'fatima':      'Fatima',
-    'khadija':     'Khadija',
-    'maryam':      'Maryam',
-    'mariyam':     'Maryam',
-    'zainab':      'Zainab',
-    'zaynab':      'Zainab',
+    'husain':      'Hussain',
+    'husein':      'Hussain',
+    # نعیم
     'naeem':       'Naeem',
+    'naieem':      'Naeem',
+    # یوسف
     'yousaf':      'Yousaf',
     'yusuf':       'Yusuf',
+    # ابراہیم
     'ibrahim':     'Ibrahim',
+    'ibraheem':    'Ibrahim',
+    # اسماعیل
     'ismail':      'Ismail',
+    'ismaeel':     'Ismail',
+    # طارق
     'tariq':       'Tariq',
     'taariq':      'Tariq',
+    # عمران
     'imran':       'Imran',
     'imraan':      'Imran',
+    # کامران
     'kamran':      'Kamran',
+    'kaamran':     'Kamran',
+    # سلمان
     'salman':      'Salman',
+    'salmaan':     'Salman',
+    # عارف
     'arif':        'Arif',
+    'aarif':       'Arif',
+    # آصف
     'asif':        'Asif',
+    'aasif':       'Asif',
+    # کاشف
     'kashif':      'Kashif',
+    'kaashif':     'Kashif',
+    # شاہد
     'shahid':      'Shahid',
+    'shaahid':     'Shahid',
+    # راشد
     'rashid':      'Rashid',
+    'raashid':     'Rashid',
+    # خالد
     'khalid':      'Khalid',
+    'khaalid':     'Khalid',
+    # مجید
     'majeed':      'Majeed',
-    'rashid':      'Rashid',
+    'majid':       'Majeed',
+    # بلال
+    'bilal':       'Bilal',
+    'bilaal':      'Bilal',
+    # عبداللہ
+    'abdullah':    'Abdullah',
+    'abdulla':     'Abdullah',
+    # ندیم
+    'nadeem':      'Nadeem',
+    # وسیم
+    'waseem':      'Waseem',
+    'wasim':       'Waseem',
+    # فیصل
+    'faisal':      'Faisal',
+    'phaisal':     'Faisal',
+
+    # ── Common Muslim/Urdu female names ──────────────────────────────────
+    # عائشہ
+    'ayesha':      'Ayesha',
+    'aisha':       'Ayesha',
+    'aaisha':      'Ayesha',
+    # فاطمہ
+    'fatima':      'Fatima',
+    'faatima':     'Fatima',
+    # مریم
+    'maryam':      'Maryam',
+    'mariyam':     'Maryam',
+    # خدیجہ
+    'khadija':     'Khadija',
+    'khadijah':    'Khadija',
+    # زینب
+    'zainab':      'Zainab',
+    'zaynab':      'Zainab',
+    # سعدیہ
     'sadia':       'Sadia',
     'saadia':      'Sadia',
+    'sadiya':      'Sadia',
+    # آمنہ
     'amna':        'Amna',
     'amnaa':       'Amna',
-    'sara':        'Sara',
-    'saaraa':      'Sara',
+    'aamna':       'Amna',
+    # سارہ — name removed from auto-mapping: conflicts with adjective सारा ("all/whole")
+    # If you need the female name, capitalise manually after transliteration.
+    # صفیہ
+    'safia':       'Safia',
+    'safiya':      'Safia',
+    # رابعہ
+    'rabia':       'Rabia',
+    'raabia':      'Rabia',
 
     # Place names
     'karaachee':   'Karachi',
@@ -835,12 +912,12 @@ if __name__ == '__main__':
         # CC word-final without matra (must keep schwa)
         ("जगह",      "jagah"),
         # ── Proper nouns (PROPER_NOUNS dict) ─────────────────────────────
-        ("अकीब",     "Aqeeb"),
+        ("अकीब",     "Aqib"),
         ("अली",      "Ali"),
-        ("मोहम्मद",  "Mohammad"),
+        ("मोहम्मद",  "Muhammad"),
         ("अहमद",     "Ahmad"),
         ("करांची",   "Karachi"),
-        ("मेरा नाम अकीब है।", "mera naam Aqeeb hai."),
+        ("मेरा नाम अकीब है।", "mera naam Aqib hai."),
         # ── Comprehensive corrections (CORRECTIONS dict) ─────────────────
         ("चार",      "char"),
         ("पाँच",     "panch"),
