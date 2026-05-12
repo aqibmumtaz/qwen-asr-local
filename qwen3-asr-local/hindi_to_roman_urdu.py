@@ -93,13 +93,14 @@ MATRAS = {
 _PUNCT_BOUNDARY = set(' \t\n.,!?;:।॥"\'()[]{}')
 
 
-# ── Lexicon (CORRECTIONS + PROPER_NOUNS) — loaded from data/lexicon.json ─────
+# ── Lexicons — loaded from data/lexicons.json ────────────────────────────────
 # Plain JSON data file, no Python. Edit directly to add/remove entries.
+# Top-level structure: { "lexicons": { "corrections": {...}, "proper_nouns": {...} } }
 import json as _json
 from pathlib import Path as _Path
 
-_LEXICON_PATH = _Path(__file__).resolve().parent / 'data' / 'lexicon.json'
-_lex = _json.loads(_LEXICON_PATH.read_text(encoding='utf-8'))
+_LEXICONS_PATH = _Path(__file__).resolve().parent / 'data' / 'lexicons.json'
+_lex = _json.loads(_LEXICONS_PATH.read_text(encoding='utf-8'))['lexicons']
 CORRECTIONS  = _lex['corrections']
 PROPER_NOUNS = _lex['proper_nouns']
 
