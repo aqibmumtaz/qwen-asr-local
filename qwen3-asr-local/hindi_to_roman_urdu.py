@@ -679,6 +679,132 @@ CORRECTIONS = {
     'mesaej':      'message',
     'wats ap':     'WhatsApp',
     'whatsaap':    'WhatsApp',
+
+    # ── More English loan words ──────────────────────────────────────────
+    'buk':         'book',
+    'kol':         'call',
+    'maisej':      'message',
+    'weediyo':     'video',
+    'aip':         'app',
+    'phaail':      'file',
+    'phaarm':      'form',
+    'kaard':       'card',
+    'paasaward':   'password',
+    'pasawarda':   'password',
+    'saain':       'sign',
+    'aproow':      'approve',
+    'sabamit':     'submit',
+    'apalod':      'upload',
+    'daaunalod':   'download',
+    'sheyar':      'share',
+    'kopi':        'copy',
+    'pest':        'paste',
+    'phaiks':      'fax',
+    'baaik':       'bike',
+    'taiksi':      'taxi',
+    'hotal':       'hotel',
+    'restaraan':   'restaurant',
+    'baink':       'bank',
+    'kophi':       'coffee',
+    'joos':        'juice',
+    'injeeniyar':  'engineer',
+    'teechar':     'teacher',
+    'pulis':       'police',
+    'draaiwar':    'driver',
+    'kuk':         'cook',
+    'kook':        'cook',
+
+    # ── Food words (Roman Urdu conventional shortening) ──────────────────
+    'machli':      'machhli',   # मछली — fish, conventionally written 'machhli'
+    'pulaaw':      'pulao',
+    'kabaab':      'kabab',
+    'chatni':      'chutney',
+    'achaar':      'achar',
+    'birayani':    'biryani',
+
+    # ── Body parts ───────────────────────────────────────────────────────
+    'baazoo':      'baazu',
+    'ungali':      'ungli',
+    'pair':        'paer',
+    'eri':         'edi',
+    'jeebh':       'jeebh',
+
+    # ── Emotions / feelings (long → short) ───────────────────────────────
+    'pareshaan':   'pareshan',
+    'napharat':    'nafrat',
+    'hairaan':     'hairan',
+    'phakhr':      'fakhr',
+    'beemaar':     'bimar',
+    'kamazor':     'kamzor',
+    'majaboot':    'majboot',
+    'akasar':      'aksar',
+
+    # ── Time word shortening ─────────────────────────────────────────────
+    'haphte':      'hafte',
+    'maheene':     'mahine',
+    'mahinaa':     'mahina',
+
+    # ── Family (long ā→a, double consonant retained) ─────────────────────
+    'abboo':       'abbu',
+    'chaacha':     'chacha',
+    'chaachi':     'chachi',
+    'beewi':       'biwi',
+    'daamaad':     'damad',
+
+    # ── Professions (Urdu native + English loan) ─────────────────────────
+    'phauji':      'fauji',
+    'kisaan':      'kisan',
+    'mazadoor':    'mazdoor',
+    'chaparasi':   'chaprasi',
+    'hajjaam':     'hajjam',
+    'halawaai':    'halwai',
+    'darazi':      'darzi',
+    'wakeel':      'wakeel',
+
+    # ── Colors ───────────────────────────────────────────────────────────
+    'saphed':      'safed',
+    'naarangi':    'narangi',
+    'bhoora':      'bhura',
+    'sunahra':     'sunehra',
+    'baingani':    'baingani',
+
+    # ── Adjectives (size, quality) ───────────────────────────────────────
+    'lanba':       'lamba',     # लंबा — ं before ब prefers 'm' in Roman Urdu
+    'gahra':       'gehra',     # गहरा — schwa→e in Urdu speech
+    'phaaltoo':    'faltu',
+    'mahanga':     'mehnga',    # महंगा — same schwa→e pattern
+    'basi':        'baasi',     # बासी — internal aa kept
+    'oonchaa':     'ooncha',
+    'neechaa':     'neecha',
+    'ameer':       'ameer',
+    'gareeb':      'gareeb',
+
+    # ── Verbs (schwa→e in Urdu speech; long ā→a in colloquial) ───────────
+    'kahna':       'kehna',
+    'jaanna':      'janna',     # जानना — long aa→a colloquial
+    'maanna':      'manna',
+    'daurna':      'daudna',
+    'kaatna':      'katna',
+    'maarna':      'marna',
+    'haarna':      'harna',
+    'gaana':       'gaana',     # already kept (singing/song)
+
+    # ── Sentence-level patterns ──────────────────────────────────────────
+    'jaaiye':      'jaiye',
+    'taiyaar':     'tayyar',
+    'taiyaaree':   'tayyari',
+    'jaaegi':      'jayegi',
+    'jaaega':      'jayega',
+    'aaegi':       'aayegi',
+    'aaega':       'aayega',
+    'aaenge':      'ayenge',   # already
+    'jaaenge':     'jayenge',  # already
+    'suwidha':     'suvidha',
+    'wid':         'vid',
+    'widya':       'vidya',
+    'widyaalay':   'vidyalay',
+    'wakt':        'waqt',
+    'naheen':      'nahi',     # belt-and-suspenders fallback
 }
 
 
@@ -829,6 +955,29 @@ PROPER_NOUNS = {
     'dillee':      'Delhi',
     'mumbaee':     'Mumbai',
     'mumbai':      'Mumbai',
+
+    # ── Acronyms (need explicit capitalisation) ─────────────────────────
+    'aaeedi':      'ID',
+    'pin':         'PIN',
+    'eteeem':      'ATM',
+    'piincode':    'PIN code',
+    'seebeesee':   'CBC',
+    'elaphti':     'LFT',
+    'aaraphti':    'RFT',
+    'eemaaraaee':  'MRI',
+    'eesheejee':   'ECG',
+    'eeeejee':     'EEG',
+    'tibi':        'TB',
+    'aaeevi':      'IV',
+    'eedee':       'AD',
+    'pisiar':      'PCR',
+    'sionemkri':   'CT',
+    'sndi':        'STD',
+    'aaivi':       'IV',
+    'hpv':         'HPV',
+    'edisepi':     'ESR',
+    'lit':         'LDL',
+    'edichali':    'HDL',
 }
 
 
