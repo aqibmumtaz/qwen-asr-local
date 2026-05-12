@@ -34,20 +34,49 @@ SAMPLES    = SCRIPT_DIR / "samples"
 OUT_DIR    = SCRIPT_DIR / "transcriptions"
 OUT_DIR.mkdir(exist_ok=True)
 
-# Force ASR to transcribe in Hindi Devanagari script.
-# Qwen3-ASR's official language-forcing convention is to append
-# 'language <Language>' + the literal '<asr_text>' tag right after the
-# assistant prompt. The model then emits the transcription directly.
-# Supported languages incl: Chinese, English, Hindi, Arabic, Persian, etc.
+# ── ASR language config ──────────────────────────────────────────────────────
+# Qwen3-ASR's official language-forcing convention: append 'language <Language>'
+# + literal '<asr_text>' tag right after the assistant prompt. Equivalent to
+# `model.transcribe(..., language="Hindi")` in the qwen_asr Python API.
 # Source: https://github.com/QwenLM/Qwen3-ASR — qwen_asr/inference/utils.py
-ASR_PROMPT = (
-    "<|im_start|>system\n"
-    "<|im_end|>\n"
-    "<|im_start|>user\n"
-    "<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n"
-    "<|im_start|>assistant\n"
-    "language Hindi<asr_text>"
-)
+#
+# Supported languages (case-sensitive): Chinese, English, Cantonese, Arabic,
+# German, French, Spanish, Portuguese, Indonesian, Italian, Korean, Russian,
+# Thai, Vietnamese, Japanese, Turkish, Hindi, Malay, Dutch, Swedish, Danish,
+# Finnish, Polish, Czech, Filipino, Persian, Greek, Romanian, Hungarian,
+# Macedonian. (Urdu NOT supported — use 'Hindi' to bias toward Devanagari.)
+
+# ISO code → full language name (matches app.py / qwen_asr conventions)
+LANG_MAP = {
+    "en": "English",  "hi": "Hindi",     "ar": "Arabic",   "fa": "Persian",
+    "zh": "Chinese",  "yue": "Cantonese","ja": "Japanese", "ko": "Korean",
+    "de": "German",   "fr": "French",    "es": "Spanish",  "pt": "Portuguese",
+    "id": "Indonesian","ms": "Malay",    "th": "Thai",     "vi": "Vietnamese",
+    "tr": "Turkish",  "ru": "Russian",   "it": "Italian",  "nl": "Dutch",
+    "sv": "Swedish",  "da": "Danish",    "fi": "Finnish",  "pl": "Polish",
+    "cs": "Czech",    "fil": "Filipino", "el": "Greek",    "ro": "Romanian",
+    "hu": "Hungarian","mk": "Macedonian",
+}
+
+# Default to Hindi (best for Urdu speech given our Devanagari→Roman pipeline).
+# Override via env: ASR_LANGUAGE=Hindi  or  ASR_LANGUAGE=hi
+_lang_raw = os.getenv("ASR_LANGUAGE", "Hindi")
+LANGUAGE = LANG_MAP.get(_lang_raw.lower(), _lang_raw)
+
+
+def build_asr_prompt(language: str = LANGUAGE) -> str:
+    """Build Qwen3-ASR prompt with language forcing."""
+    return (
+        "<|im_start|>system\n"
+        "<|im_end|>\n"
+        "<|im_start|>user\n"
+        "<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n"
+        "<|im_start|>assistant\n"
+        f"language {language}<asr_text>"
+    )
+
+
+ASR_PROMPT = build_asr_prompt(LANGUAGE)
 
 _nastaliq = HindustaniTransliterator()
 
@@ -121,8 +150,20 @@ def process_file(audio_path: Path):
 
 
 def main():
-    if len(sys.argv) > 1:
-        audio = Path(sys.argv[1])
+    global ASR_PROMPT
+    args = sys.argv[1:]
+
+    # Optional --language / -l override (CLI > env var > default 'Hindi')
+    if args and args[0] in ('--language', '-l') and len(args) >= 2:
+        override = LANG_MAP.get(args[1].lower(), args[1])
+        ASR_PROMPT = build_asr_prompt(override)
+        print(f"ASR language: {override}")
+        args = args[2:]
+    else:
+        print(f"ASR language: {LANGUAGE} (override via --language <name|iso> or ASR_LANGUAGE env)")
+
+    if args:
+        audio = Path(args[0])
         if not audio.exists():
             print(f"Error: file not found: {audio}")
             sys.exit(1)
