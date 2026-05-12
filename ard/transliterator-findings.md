@@ -168,3 +168,131 @@ improvements come from upgrading the ASR layer, not the post-processor.
 Same input → same output, every time. Zero randomness, no ML in the
 transliterator. Fully reproducible across runs and machines.
 Safe to embed in a deterministic Rust pipeline later.
+
+---
+
+## 9. Pipeline architecture — how CORRECTIONS works
+
+CORRECTIONS does **not** run on Hindi input. It runs on the **raw Roman
+output** after Steps 1 and 2 of the transliteration pipeline.
+
+### The 3-stage pipeline
+
+```
+Hindi Devanagari
+   मुझे ब्लड टेस्ट का अपॉइंटमेंट चाहिए।
+       │
+       ▼
+  Step 1: _transliterate_raw()
+       │  character-by-character phoneme mapping
+       │  + schwa syncope rule (2-char lookahead)
+       │  + nuqta + virama + matra handling
+       │  + special conjuncts (ज्ञ → gy)
+       ▼
+   'mujhe blad test kaa apointament chaahie.'
+       │
+       ▼
+  Step 2: _normalize_endings()
+       │  regex on Roman output:
+       │  - ee\b → i        (paanee → paani)
+       │  - (C)aa\b → a     (meraa → mera, but standalone 'aa' stays)
+       │  - aa+CV\b → a+CV  (khaana → khana, paani → pani)
+       ▼
+   'mujhe blad test ka apointament chaahie.'
+       │
+       ▼
+  Step 3: _apply_corrections()
+       │  walk each [A-Za-z]+ word, look up in dicts:
+       │    1. PROPER_NOUNS (explicit capitalisation)
+       │    2. CORRECTIONS  (preserves original case)
+       │  replace if match
+       ▼
+   'mujhe blood test ka appointment chahiye.'
+```
+
+### Key consequence
+
+**CORRECTIONS keys are the raw Roman output, NOT the Hindi input.**
+
+| Hindi input | Raw Step 1+2 output | CORRECTIONS key | Correct Roman |
+|---|---|---|---|
+| ब्लड | `blad` | `'blad'` | `blood` |
+| अपॉइंटमेंट | `apointament` | `'apointament'` | `appointment` |
+| चाहिए | `chaahie` | `'chaahie'` | `chahiye` |
+| डॉक्टर | `doktar` | `'doktar'` | `doctor` |
+| अकीब (name) | `akeeb` | `'akeeb'` | `Aqib` (via PROPER_NOUNS) |
+
+Multiple Hindi spellings of the same word can all converge on the same
+raw Roman output, which means one CORRECTIONS entry can cover many ASR
+variants.
+
+### Why this design
+
+1. **Stable keys** — The raw transliterator output is deterministic, so
+   the key is stable regardless of how creatively ASR spells the Hindi.
+2. **Fast** — Dict lookup is O(1); regex scan is linear in text length.
+3. **Maintainable** — No code changes when adding new words. Just edit
+   the dict.
+4. **Decoupled** — The transliteration algorithm is generic; the dict
+   captures language conventions separately.
+
+---
+
+## 10. How to add new corrections — workflow
+
+When you find a wrong word in real-world audio output:
+
+### Step 1: Identify the wrong output
+Run the audio through `transcribe_and_transliterate.py` and note the
+incorrect Roman word.
+
+```
+Audio:        "doctor मेरा रिपोर्ट कब आएगा"
+Pipeline out: "doctor mera report kab aaega"
+Wrong word:   "aaega"  (should be "aayega")
+```
+
+### Step 2: Find the raw Roman key
+Run just that word through the transliterator to see Step 1+2 output:
+
+```python
+from hindi_to_roman_urdu import _transliterate_raw, _normalize_endings
+raw = _normalize_endings(_transliterate_raw("आएगा"))
+print(raw)   # → 'aaega'
+```
+
+### Step 3: Add to CORRECTIONS
+```python
+CORRECTIONS = {
+    ...
+    'aaega': 'aayega',   # आएगा — will come (future tense)
+    ...
+}
+```
+
+### Step 4: Verify
+```bash
+python3 hindi_to_roman_urdu.py     # should pass all 62 self-tests
+```
+
+That word is now permanently correct for every future audio that
+contains it. **The dict is the institutional memory** — every wrong
+output you fix becomes a permanent gain.
+
+---
+
+## 11. Coverage today vs. potential coverage
+
+| State | Coverage |
+|---|---|
+| Current dict (498 corrections + 99 proper nouns) | 97.5% on 118-item test |
+| After 1 month of real audio + dict growth | est. 99%+ for the domain |
+| Maximum theoretical (rule-based) | ~99.5% — Roman Urdu has no single standard |
+| Beyond that | requires neural transliteration (loses determinism) |
+
+The transliterator is **mature** for the current ASR. Further gains
+come from:
+1. Growing the dict from real production audio (free, incremental)
+2. Switching ASR layer to Urdu-tuned Whisper (eliminates ASR-side errors)
+
+Not from changing the transliterator algorithm.
