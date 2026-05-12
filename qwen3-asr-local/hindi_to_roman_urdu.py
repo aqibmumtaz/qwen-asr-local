@@ -552,6 +552,10 @@ CORRECTIONS = {
     'sar':         'sir',           # 'sir' usually retained as English
     'maaeem':      'madam',
     'madam':       'madam',
+    'saahib':      'sahib',         # साहिब — conventional shorter form
+    'saahab':      'sahab',
+    'saaheb':      'sahib',
+    'janaab':      'janab',
 
     # ── Appointment / scheduling ────────────────────────────────────────
     'apointament': 'appointment',
