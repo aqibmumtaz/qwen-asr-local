@@ -1,3 +1,3 @@
-Hindi (ASR)          : السلام علیکم شوایل من خوش آمدید من کیامده از کیوون
-Urdu Nastaliq        : السلام علیکم شوایل من خوش آمدید من کیامده از کیوون
-Roman Urdu           : السلام علیکم شوایل من خوش آمدید من کیامده از کیوون
+Hindi (ASR)          : Assalam Alekum. Shukriya. Mel khush amde. Mel aikya mde.
+Urdu Nastaliq        : Assalam Alekum. Shukriya. Mel khush amde. Mel aikya mde.
+Roman Urdu           : Assalam Alekum. Shukriya. Mel khush amde. Mel aikya mde.

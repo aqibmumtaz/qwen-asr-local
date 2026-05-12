@@ -78,7 +78,7 @@ transcribe_and_translate_file() {
         -m "$ASR_MODEL" \
         --mmproj "$MMPROJ" \
         --image "$AUDIO" \
-        -p "<|im_start|>user\n<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n<|im_start|>assistant\n" \
+        -p "<|im_start|>system\n<|im_end|>\n<|im_start|>user\n<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n<|im_start|>assistant\nlanguage Hindi<asr_text>" \
         -n 256 --no-warmup \
         2>/dev/null | grep '<asr_text>' | sed 's/.*<asr_text>//' | tr -d '\n')
     asr_end=$(date +%s)
