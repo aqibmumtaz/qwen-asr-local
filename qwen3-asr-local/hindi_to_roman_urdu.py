@@ -828,9 +828,21 @@ CORRECTIONS = {
     # ── Medical conditions / symptoms ───────────────────────────────────
     'zukaam':      'zukam',
     'khaansi':     'khansi',
-    'saradard':    'sardard',
-    'petadard':    'petdard',
-    'kamaradard':  'kamardard',
+    # Body part + दर्द compounds — split with space (Roman Urdu convention)
+    'saradard':    'sir dard',     # सरदर्द — head pain
+    'siradard':    'sir dard',     # सिरदर्द (variant)
+    'sardard':     'sir dard',     # already-corrected form maps too
+    'petadard':    'pet dard',     # पेटदर्द — stomach pain
+    'petdard':     'pet dard',
+    'kamaradard':  'kamar dard',   # कमरदर्द — back pain
+    'kamardard':   'kamar dard',
+    'daantadard':  'daant dard',   # दाँतदर्द — tooth pain
+    'daantdard':   'daant dard',
+    'galedard':    'gale dard',    # गलेदर्द — throat pain
+    'seenedard':   'seene dard',   # सीनेदर्द — chest pain
+    'aankhadard':  'aankh dard',   # आँखदर्द — eye pain
+    'kaanadard':   'kaan dard',    # कानदर्द — ear pain
+    'kaandard':    'kaan dard',
     'kamazori':    'kamzori',
     'gais':        'gas',
     'esiditi':     'acidity',
@@ -961,6 +973,42 @@ CORRECTIONS = {
     'aaphalaaeen': 'offline',
     'oke':         'okay',
     'okay':        'okay',
+
+    # ── Compound words — split with space (Roman Urdu convention) ────────
+    # Time + bhar (whole/throughout)
+    'dinabhar':    'din bhar',     # दिनभर — all day
+    'dinbhar':     'din bhar',
+    'raatabhar':   'raat bhar',    # रातभर — all night
+    'raatbhar':    'raat bhar',
+    'saalabhar':   'saal bhar',    # सालभर — all year
+    'saalbhar':    'saal bhar',
+    'haphtebhar':  'hafte bhar',   # हफ्तेभर — all week
+    'mahinebhar':  'mahine bhar',
+    'umrabhar':    'umar bhar',    # उम्रभर — lifelong
+
+    # Compound nouns (commonly joined in Devanagari, split in Roman Urdu)
+    'haathapair':  'haath paer',   # हाथपैर — hands & feet
+    'haathpair':   'haath paer',
+    'maanbaap':    'maa baap',     # मांबाप — parents
+    'maabaap':     'maa baap',
+    'bhaaeebahan': 'bhai behan',   # भाईबहन — brothers & sisters
+    'bhaaibahan':  'bhai behan',
+    'betaabeti':   'beta beti',    # बेटाबेटी — sons & daughters
+
+    # Compound medical (already partially handled)
+    'bladapreshar':'blood pressure',  # ब्लडप्रेशर
+    'bladpreshar': 'blood pressure',
+    'bladpressure':'blood pressure',
+    'dilakeebeemari':'dil ki bimari', # दिलकीबीमारी
+    'sheetabukhaar':'sheet bukhaar',  # शीतबुखार
+    'khaansijukam':'khansi zukam',    # खांसीज़ुकाम
+    'galekharaash':'gale kharaash',   # गलेखराश
+
+    # Directional compounds
+    'oopaneeche':  'oopar neeche',
+    'aagepeeche':  'aage peechhe',
+    'idharaudhar': 'idhar udhar',
+    'yahaanwahaan':'yahan wahan',
 }
 
 
