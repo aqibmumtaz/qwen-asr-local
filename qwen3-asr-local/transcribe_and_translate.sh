@@ -14,6 +14,10 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Parse arguments
 TRANSLATOR_MODEL_NAME="Qwen3-8B-Q5_K_M"  # default
 ASR_MODEL_NAME="Qwen3-ASR-1.7B-Q8_0-new"  # default
+# Qwen3-ASR language forcing (matches qwen_asr Python API's language= param).
+# Default: Hindi (Devanagari output). Override via env or --language flag.
+# Supported: Hindi, English, Arabic, Persian, Chinese, etc. (see Python script for full list)
+ASR_LANGUAGE="${ASR_LANGUAGE:-Hindi}"
 AUDIO_FILE=""
 
 while [[ $# -gt 0 ]]; do
@@ -24,6 +28,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --asr-model)
             ASR_MODEL_NAME="$2"
+            shift 2
+            ;;
+        --language|-l)
+            ASR_LANGUAGE="$2"
             shift 2
             ;;
         *)
@@ -78,7 +86,7 @@ transcribe_and_translate_file() {
         -m "$ASR_MODEL" \
         --mmproj "$MMPROJ" \
         --image "$AUDIO" \
-        -p "<|im_start|>system\n<|im_end|>\n<|im_start|>user\n<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n<|im_start|>assistant\nlanguage Hindi<asr_text>" \
+        -p "<|im_start|>system\n<|im_end|>\n<|im_start|>user\n<|audio_start|><|audio_pad|><|audio_end|><|im_end|>\n<|im_start|>assistant\nlanguage ${ASR_LANGUAGE}<asr_text>" \
         -n 256 --no-warmup \
         2>/dev/null | grep '<asr_text>' | sed 's/.*<asr_text>//' | tr -d '\n')
     asr_end=$(date +%s)
