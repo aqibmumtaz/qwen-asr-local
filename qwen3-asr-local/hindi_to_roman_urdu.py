@@ -108,11 +108,49 @@ CORRECTIONS = {
     'wah':         'woh',      # वह
     'yeh':         'yeh',
 
-    # consonant cluster overcorrections
-    'achcha':      'acha',     # अच्छा: च्छ cluster → double ch
+    # consonant cluster overcorrections (च्छ → 'chch' should be 'ch')
+    'achcha':      'acha',
     'achch':       'ach',
+    'bachcha':     'bacha',
+    'bachchi':     'bachi',
+    'pachcha':     'pacha',
     'pachchha':    'pacha',
     'kachcha':     'kacha',
+    'sachcha':     'sacha',
+
+    # ि + ए (independent vowel) glide → 'iye' not 'ie'
+    'isalie':      'isliye',
+    'kelie':       'keliye',
+    'kelye':       'keliye',
+    'die':         'diye',
+    'lie':         'liye',
+    'kie':         'kiye',
+
+    # फ in Urdu loan words → 'f' not 'ph'
+    'sirph':       'sirf',
+    'tarph':       'taraf',
+    'pharq':       'farq',
+    'pharaq':      'farq',
+    'pharz':       'farz',
+    'pharaz':      'farz',
+    'phaur':       'faur',
+    'phauj':       'fauj',
+    'phaisla':     'faisla',
+    'philam':      'film',
+    'phon':        'fon',
+
+    # word-initial 'aa' shortening in common words
+    'aadaab':      'adaab',
+    'aazaad':      'azaad',
+    'aakhir':      'akhir',
+    'aagaz':       'aagaz',
+
+    # vowel hiatus: 'aa' before another vowel often shortened in Roman Urdu
+    'jaaoge':      'jaoge',
+    'aaoge':       'aoge',
+    'jaaoonga':    'jaonga',
+    'aaoonga':     'aonga',
+    'kaaoge':      'kaoge',
 
     # ज्ञ conjunct (special-case code emits 'gy', but internal 'aa' not caught by ending rule)
     'gyaan':       'gyan',
@@ -199,6 +237,26 @@ def _emit_vowel(chars: list, i: int, n: int, roman_c: str, result: list) -> int:
     if not _is_deva(ch):
         result.append(roman_c)
         return i
+
+    # ── Schwa syncope before a final consonant+matra cluster ─────────────
+    # Pattern: C + C + matra + (boundary)  →  delete C's inherent schwa
+    # Fires on verb infinitives and similar: करना→karna, आदमी→aadmi, बोलना→bolna
+    # Guard: only fires when a vowel has already been emitted in this word.
+    # Otherwise it would over-delete first-syllable schwas (नदी→ndi, बड़ा→bra).
+    # Does NOT fire when:
+    #   - we're at the first consonant of the word (no vowel before)
+    #   - next consonant has no matra (जगह→jagah stays with schwas)
+    #   - matra is not word-final (मनाना: first matra has another consonant after)
+    if (ch in CONSONANTS or ch in EXTENDED) \
+            and result and result[-1] and result[-1][-1] in 'aeiouy':
+        j = i + 1
+        if j < n and chars[j] == NUKTA:
+            j += 1
+        if j < n and chars[j] in MATRAS:
+            k = j + 1
+            if k >= n or chars[k] in _PUNCT_BOUNDARY or not _is_deva(chars[k]):
+                result.append(roman_c)
+                return i
 
     # medial position within Devanagari word — keep inherent 'a'
     result.append(roman_c + 'a')
@@ -365,6 +423,27 @@ if __name__ == '__main__':
         ("काम",      "kaam"),
         # digits + mixed
         ("नाम123",   "naam123"),
+        # schwa syncope (verb infinitives + CCV-matra word-end)
+        ("करना",     "karna"),
+        ("देखना",    "dekhna"),
+        ("सुनना",    "sunna"),
+        ("बोलना",    "bolna"),
+        ("लिखना",    "likhna"),
+        ("समझना",    "samajhna"),
+        ("आदमी",     "aadmi"),
+        # first-syllable schwa MUST NOT delete (regression guard)
+        ("नदी",      "nadi"),
+        ("बड़ा",     "bara"),
+        ("गली",      "gali"),
+        # consonant cluster cleanup
+        ("बच्चा",    "bacha"),
+        # corrections
+        ("इसलिए",    "isliye"),
+        ("सिर्फ",    "sirf"),
+        ("आदाब",     "adaab"),
+        ("क्या तुम जाओगे?", "kya tum jaoge?"),
+        # CC word-final without matra (must keep schwa)
+        ("जगह",      "jagah"),
     ]
 
     if len(sys.argv) > 1:
