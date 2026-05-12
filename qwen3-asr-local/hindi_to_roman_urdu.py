@@ -675,7 +675,12 @@ def _emit_vowel(chars: list, i: int, n: int, roman_c: str, result: list) -> int:
         vowel = MATRAS[ch]
         i += 1
         if i < n and chars[i] in (ANUSVARA, CHANDRABINDU):
-            result.append(roman_c + vowel + 'n')
+            # ī + nasalisation → 'in' (नहीं→nahin, कहीं→kahin, यहीं→yahin)
+            # other long vowels keep their length (हाँ→haan, हूँ→hoon, हैं→hain)
+            if vowel == 'ee':
+                result.append(roman_c + 'in')
+            else:
+                result.append(roman_c + vowel + 'n')
             return i + 1
         result.append(roman_c + vowel)
         return i
