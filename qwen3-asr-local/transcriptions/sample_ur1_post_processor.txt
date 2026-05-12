@@ -1,3 +1,3 @@
 Hindi (ASR)          : मेरा नाम अकीब है। ये कोर्डुज़बान में आवाज की शनात का दैस है।
 Urdu Nastaliq        : میرا نام اکیب ہے۔ یے کورْڈج़بان میں آواج کی شنات کا دیس ہے۔
-Roman Urdu           : mera naam akeeb hai. ye korduzabaan mein aawaaj ki shanaat ka dais hai.
+Roman Urdu           : mera naam akeeb hai. ye korduzabaan mein awaz ki shanaat ka dais hai.

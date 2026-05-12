@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
-ASR + post-processor transliteration pipeline
+ASR + transliteration pipeline (Qwen3-ASR → Hindi → Urdu Nastaliq + Roman Urdu)
 Replaces the 5–8B LLM translation step with deterministic rule-based converters.
 
 Outputs three forms from a single ASR pass:
   1. Hindi Devanagari  — raw ASR output
   2. Urdu Nastaliq     — GokulNC rule-based (Hindi → Arabic script)
-  3. Roman Urdu        — custom phoneme map (Hindi → Latin script, direct)
+  3. Roman Urdu        — hindi_to_roman_urdu module (Hindi → Latin script, direct)
 
 Usage:
-    python3 transcribe_and_translate_postprocessor.py [audio.wav]
-    python3 transcribe_and_translate_postprocessor.py        # batch: all samples/
+    python3 transcribe_and_transliterate.py [audio.wav]
+    python3 transcribe_and_transliterate.py        # batch: all samples/
 """
 
 import subprocess
