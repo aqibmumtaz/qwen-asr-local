@@ -268,6 +268,17 @@ come from:
 
 ---
 
+## Related — ASR backend comparison
+
+For why the same Qwen3-ASR-1.7B model produces different Hindi transcriptions
+across GPU vLLM, CPU transformers, and llama.cpp GGUF backends (and why
+matching dtype doesn't fix it), see [`asr-backend-comparison.md`](asr-backend-comparison.md).
+
+Key takeaway: ASR errors stay at the ASR layer; the lexicon stays clean for
+legitimate transliteration spelling variants only.
+
+---
+
 ## 9. Determinism guarantee
 
 Same input → same output, every time. Zero randomness, no ML in the
