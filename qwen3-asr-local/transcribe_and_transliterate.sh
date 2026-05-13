@@ -41,7 +41,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 TRANSCRIBE_SH="$SCRIPT_DIR/transcribe.sh"
-TRANSLITERATE_SH="$SCRIPT_DIR/transliterate.sh"
+HINDI_TO_ROMAN_URDU_SH="$SCRIPT_DIR/hindi_to_roman_urdu.sh"
 TRANSCRIPT_DIR="$SCRIPT_DIR/transcriptions"
 mkdir -p "$TRANSCRIPT_DIR"
 
@@ -88,9 +88,9 @@ process_file() {
     local NASTALIQ
     NASTALIQ=$(nastaliq_for "$HINDI")
 
-    # Step 3: Roman Urdu — call transliterate.sh (.sh calls .sh only)
+    # Step 3: Roman Urdu — call hindi_to_roman_urdu.sh (.sh calls .sh only)
     local ROMAN
-    ROMAN=$(bash "$TRANSLITERATE_SH" "$HINDI")
+    ROMAN=$(bash "$HINDI_TO_ROMAN_URDU_SH" "$HINDI")
 
     echo "Urdu        : $NASTALIQ"
     echo "Roman Urdu  : $ROMAN"

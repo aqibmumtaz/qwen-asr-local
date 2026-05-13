@@ -24,12 +24,12 @@ warnings.filterwarnings("ignore")
 
 from pathlib import Path
 from indo_arabic_transliteration.hindustani import HindustaniTransliterator
-from transliterate import transliterate as to_roman_urdu   # wraps transliterate.sh
 
-SCRIPT_DIR    = Path(__file__).resolve().parent
-TRANSCRIBE_SH = SCRIPT_DIR / "transcribe.sh"
-SAMPLES       = SCRIPT_DIR / "samples"
-OUT_DIR       = SCRIPT_DIR / "transcriptions"
+SCRIPT_DIR             = Path(__file__).resolve().parent
+TRANSCRIBE_SH          = SCRIPT_DIR / "transcribe.sh"
+HINDI_TO_ROMAN_URDU_SH = SCRIPT_DIR / "hindi_to_roman_urdu.sh"
+SAMPLES                = SCRIPT_DIR / "samples"
+OUT_DIR                = SCRIPT_DIR / "transcriptions"
 OUT_DIR.mkdir(exist_ok=True)
 
 # Default language (matches transcribe.sh default and app.py env var convention)
@@ -57,9 +57,13 @@ def to_nastaliq(hindi_text: str) -> tuple[str, float]:
 
 
 def to_roman(hindi_text: str) -> tuple[str, float]:
+    """Call hindi_to_roman_urdu.sh and return (roman_urdu, elapsed_seconds)."""
     t0 = time.time()
-    roman = to_roman_urdu(hindi_text)
-    return roman, time.time() - t0
+    result = subprocess.run(
+        ["bash", str(HINDI_TO_ROMAN_URDU_SH), hindi_text],
+        capture_output=True, text=True, check=True,
+    )
+    return result.stdout.rstrip('\n'), time.time() - t0
 
 
 def process_file(audio_path: Path, language: str = DEFAULT_LANGUAGE):
