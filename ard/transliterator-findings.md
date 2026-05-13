@@ -275,6 +275,10 @@ transliterator. Fully reproducible across runs and machines.
 Safe to embed in a deterministic Rust pipeline later — the entire
 `lexicons.json` can be embedded as a Rust `HashMap` literal.
 
+See [`rust-architecture-plan.md`](rust-architecture-plan.md) for the
+deferred Rust port plan, concrete trigger conditions, and the 4-week
+migration path when production hardening needs it.
+
 ---
 
 ## 10. Coverage growth across rounds
