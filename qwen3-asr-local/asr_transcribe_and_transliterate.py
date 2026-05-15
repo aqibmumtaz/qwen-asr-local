@@ -243,32 +243,55 @@ def _aggregate_tokens_to_words(token_pieces: list[str],
 
 def hf_asr(audio_path: Path,
            language: str | None = None,
-           ) -> tuple[str, float, list[WordConf]]:
+           ) -> tuple[str, float]:
+    """
+    Native HF Qwen3-ASR — plain transcription, no confidence.
+    Returns (transcript, elapsed_s). Uses the standard high-level
+    Qwen3ASRModel.transcribe() call (no monkey-patching).
+    """
+    model = get_asr_model()
+    lang = language or LANGUAGE
+
+    t0 = time.time()
+    results = model.transcribe(
+        audio=[str(audio_path)],
+        language=[lang] if lang else None,
+    )
+    elapsed = time.time() - t0
+
+    text = results[0].text if results else ""
+    if text and _is_hallucination(text):
+        log.warning(f"Filtered hallucination: '{text}'")
+        text = ""
+    return text, elapsed
+
+
+def hf_asr_with_confidence(audio_path: Path,
+                           language: str | None = None,
+                           ) -> tuple[str, float, list[WordConf]]:
     """
     Native HF Qwen3-ASR with per-word confidence extraction.
     Returns (transcript, elapsed_s, word_confidences).
 
     Mechanism: monkey-patch model.model.generate to enable output_scores so the
     high-level transcribe() still works but we capture the score tensor.
-    The patch is local to this call (restored in finally).
+    The patch is local to this call (restored in finally) — no global state.
+
+    Use this when you need to flag low-confidence words for human review.
+    Use hf_asr() for the cheaper plain transcription path.
+
+    Only works on the transformers backend. vLLM backend would need a different
+    mechanism (SamplingParams.logprobs=N) — not yet implemented.
     """
     model = get_asr_model()
     lang = language or LANGUAGE
 
-    captured: dict = {"outputs": None, "input_len": None}
-
-    # Only the transformers backend exposes scores this way. vLLM has a
-    # different mechanism (SamplingParams.logprobs) which we'd patch instead.
+    captured: dict = {"outputs": None}
     orig_generate = model.model.generate
 
     def patched_generate(*args, **kwargs):
         kwargs["output_scores"] = True
         kwargs["return_dict_in_generate"] = True
-        # Record input length so we can slice generated tokens later
-        if args and hasattr(args[0], "shape"):
-            captured["input_len"] = args[0].shape[1]
-        elif "input_ids" in kwargs:
-            captured["input_len"] = kwargs["input_ids"].shape[1]
         result = orig_generate(*args, **kwargs)
         captured["outputs"] = result
         # Return just the sequences tensor (qwen-asr expects this)
@@ -306,7 +329,6 @@ def hf_asr(audio_path: Path,
                 logprobs.append(lp)
             # Decode each token individually so we can find whitespace boundaries
             pieces = [tok.decode([tid], skip_special_tokens=False) for tid in gen_ids]
-            # Drop any pieces beyond the EOS (stopped generation)
             word_confs = _aggregate_tokens_to_words(pieces, logprobs)
         except Exception as e:
             log.warning(f"Could not extract token confidences: {e}")
@@ -371,7 +393,7 @@ def process_one(audio: Path, language: str = LANGUAGE, compare: bool = False,
     print(f"  {audio.name}")
     print(f"{'═' * 72}")
 
-    hindi_hf, hf_t, word_confs = hf_asr(audio, language=language)
+    hindi_hf, hf_t, word_confs = hf_asr_with_confidence(audio, language=language)
     if not hindi_hf:
         log.error(f"HF ASR returned empty for {audio.name}")
         return
