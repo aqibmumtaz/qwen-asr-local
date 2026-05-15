@@ -1,3 +1,21 @@
-Hindi (ASR)          : मेरा नाम अकीब है। ये कोर्डुज़बान में आवाज की शनात का दैस है।
-Urdu Nastaliq        : میرا نام اکیب ہے۔ یے کورْڈج़بان میں آواج کی شنات کا دیس ہے۔
-Roman Urdu           : mera naam Aqib hai. yeh korduzabaan mein awaz ki shanaat ka dais hai.
+Hindi (ASR)          : मेरा नाम अपीब है। ये उर्दू ज़बान में आवाज़ की शनाख्त का टेस्ट है।
+Urdu Nastaliq        : میرا نام اپیب ہے۔ یے ارْدو ج़بان میں آواج़ کی شناکھْت کا ٹیسْٹ ہے۔
+Roman Urdu           : mera naam apeeb hai. yeh urdoo zaban mein awaz ki shanaakht ka test hai.
+
+Per-word confidence (min token prob, geo-mean prob):
+  Word                  Min Conf  Geo Conf  Tokens  Flag
+  -------------------- --------- --------- -------  ----
+  मेरा                     0.999     0.999       4  
+  नाम                      1.000     1.000       4  
+  अपीब                     0.649     0.866       5  LOW
+  है।                      0.688     0.910       4  LOW
+  ये                       0.991     0.997       3  
+  उर्दू                    0.814     0.962       7  
+  ज़बान                    0.453     0.833       7  LOW
+  में                      0.998     0.999       3  
+  आवाज़                    0.725     0.954       7  
+  की                       0.996     0.998       2  
+  शनाख्त                   0.560     0.901       7  LOW
+  का                       1.000     1.000       2  
+  टेस्ट                    0.997     0.999       6  
+  है।                      0.979     0.994       4  

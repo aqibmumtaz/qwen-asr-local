@@ -33,7 +33,7 @@ OUT_DIR                = SCRIPT_DIR / "transcriptions"
 OUT_DIR.mkdir(exist_ok=True)
 
 # Default language (matches transcribe.sh default and app.py env var convention)
-DEFAULT_LANGUAGE = os.getenv("ASR_LANGUAGE", "Hindi")
+DEFAULT_LANGUAGE = os.getenv("ASR_LANGUAGE", "English")
 
 _nastaliq = HindustaniTransliterator()
 

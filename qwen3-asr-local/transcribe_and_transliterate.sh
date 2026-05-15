@@ -15,7 +15,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-ASR_LANGUAGE="${ASR_LANGUAGE:-Hindi}"
+ASR_LANGUAGE="${ASR_LANGUAGE:-English}"
 ASR_MODEL_NAME="Qwen3-ASR-1.7B-Q8_0-new"
 AUDIO_FILE=""
 

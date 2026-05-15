@@ -5,7 +5,7 @@
 #   bash transcribe.sh [--language LANG] [--asr-model MODEL] audio.wav
 #
 # Examples:
-#   bash transcribe.sh audio.wav                            # default Hindi
+#   bash transcribe.sh audio.wav                            # default English
 #   bash transcribe.sh --language Persian audio.wav         # different language
 #   bash transcribe.sh --language hi audio.wav              # ISO code accepted
 #   bash transcribe.sh --asr-model Qwen3-ASR-1.7B-BF16-new audio.wav
@@ -17,7 +17,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Defaults (matches transcribe.py / app.py conventions)
 ASR_MODEL_NAME="Qwen3-ASR-1.7B-Q8_0-new"
-ASR_LANGUAGE="${ASR_LANGUAGE:-Hindi}"
+ASR_LANGUAGE="${ASR_LANGUAGE:-English}"
 AUDIO_FILE=""
 
 # Parse args
