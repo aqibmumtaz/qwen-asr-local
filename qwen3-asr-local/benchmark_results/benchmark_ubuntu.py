@@ -394,8 +394,10 @@ def main():
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--samples", nargs="*",
                    help="Specific audio files. Default: all samples/*.wav")
-    p.add_argument("--language", default="Hindi",
-                   help="Language hint (default: Hindi)")
+    p.add_argument("--language", default="English",
+                   help="Language hint (default: English — empirically gives "
+                        "better nukta-emission than 'Hindi' on Mac CPU; "
+                        "see ard/word-level-confidence.md §6.1)")
     p.add_argument("--reference", default="hf_vllm_bf16",
                    help="Reference backend for match% scoring "
                         "(default: hf_vllm_bf16)")

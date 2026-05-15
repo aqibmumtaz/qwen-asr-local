@@ -38,7 +38,7 @@ Env vars (all optional):
     TORCH_DEVICE        auto / cuda:0 / mps / cpu
     DTYPE               bfloat16 / float16 / float32 / auto
     MAX_NEW_TOKENS      default: 1024
-    LANGUAGE            default: Hindi
+    LANGUAGE            default: English (gives better nukta-emission on Mac CPU)
     LOW_CONF_THRESHOLD  default: 0.7 (below this, word is flagged)
 """
 
@@ -82,7 +82,7 @@ OUT_DIR                = SCRIPT_DIR / "transcriptions"
 MODEL_ID               = os.getenv("MODEL_ID", "Qwen/Qwen3-ASR-1.7B")
 GPU_MEMORY_UTILIZATION = float(os.getenv("GPU_MEMORY_UTILIZATION", "0.90"))
 MAX_NEW_TOKENS         = int(os.getenv("MAX_NEW_TOKENS", "1024"))
-LANGUAGE               = os.getenv("LANGUAGE", "Hindi")
+LANGUAGE               = os.getenv("LANGUAGE", "English")
 DEVICE_OVERRIDE        = os.getenv("TORCH_DEVICE")  # explicit override
 DTYPE_OVERRIDE         = os.getenv("DTYPE")         # bfloat16 / float16 / float32 / auto
 
@@ -423,7 +423,7 @@ def _format_conf_table(word_confs: list[WordConf]) -> str:
     Min Conf = exp(min token logprob)   — minimum sub-token confidence; flagging metric
     Geo Conf = exp(mean token logprob)  — geometric mean confidence; sortable score
     Tokens   = number of BPE sub-tokens
-    Flag     = "LOW" if Min Conf < LOW_CONF_THRESHOLD (default 0.5)
+    Flag     = "LOW" if Min Conf < LOW_CONF_THRESHOLD (default 0.7)
     """
     if not word_confs:
         return "  (no per-word confidence captured)"
@@ -434,6 +434,63 @@ def _format_conf_table(word_confs: list[WordConf]) -> str:
         rows.append(f"  {wc.text[:20]:<20} {wc.min_conf:>9.3f} "
                     f"{wc.geo_conf:>9.3f} {wc.n_tokens:>7}  {flag}")
     return "\n".join(rows)
+
+
+def _format_full_table(word_confs: list[WordConf]) -> str:
+    """
+    Rich per-word table with transliteration columns:
+      Hindi | Raw Roman | Roman Urdu | Nastaliq | Min Conf | Geo Conf | Tokens | Flag
+
+    Raw Roman  = pre-lexicon-correction output (phonetic mapping + endings only)
+    Roman Urdu = final corrected output (PROPER_NOUNS + CORRECTIONS applied)
+    """
+    if not word_confs:
+        return "  (no per-word data captured)"
+
+    # Import here so the basic confidence table doesn't pull these in
+    from hindi_to_roman_urdu import (
+        _transliterate_raw, _normalize_endings,
+        transliterate as _to_roman_urdu,
+    )
+
+    def _raw_roman(h: str) -> str:
+        return _normalize_endings(_transliterate_raw(h))
+
+    nastaliq = _nastaliq_engine
+
+    headers = ("Hindi", "Raw Roman", "Roman Urdu", "Nastaliq",
+               "Min Conf", "Geo Conf", "Tokens", "Flag")
+    rows_text: list[tuple[str, ...]] = []
+    for wc in word_confs:
+        rows_text.append((
+            wc.text,
+            _raw_roman(wc.text),
+            _to_roman_urdu(wc.text),
+            nastaliq.transliterate_from_hindi_to_urdu(wc.text),
+            f"{wc.min_conf:.2f}",
+            f"{wc.geo_conf:.2f}",
+            str(wc.n_tokens),
+            "LOW" if wc.is_low else "",
+        ))
+
+    # Column widths via max of header + cells
+    widths = [
+        max(len(h), max((len(r[i]) for r in rows_text), default=0))
+        for i, h in enumerate(headers)
+    ]
+    sep = "  "
+
+    def fmt_row(cells):
+        return "  " + sep.join(
+            (c.rjust(w) if i >= 4 and i <= 6 else c.ljust(w))
+            for i, (c, w) in enumerate(zip(cells, widths))
+        )
+
+    lines = [fmt_row(headers)]
+    lines.append(fmt_row(tuple("-" * w for w in widths)))
+    for r in rows_text:
+        lines.append(fmt_row(r))
+    return "\n".join(lines)
 
 
 def process_one(audio: Path, language: str = LANGUAGE, compare: bool = False,
@@ -465,7 +522,7 @@ def process_one(audio: Path, language: str = LANGUAGE, compare: bool = False,
         print(f"             {conf_summary}")
         if show_conf_table:
             print()
-            print(_format_conf_table(word_confs))
+            print(_format_full_table(word_confs))
 
     # Save full output + per-word confidence to disk
     out_file = OUT_DIR / f"{audio.stem}_post_processor.txt"

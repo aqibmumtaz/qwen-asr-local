@@ -162,72 +162,95 @@ The single `is_low` boolean is just the simplest form of "review or skip".
 
 ---
 
-## 6. Examples — Hindi + Roman Urdu + Nastaliq + Confidence
+## 6. Examples — Hindi + Raw Roman + Roman Urdu + Nastaliq + Confidence
 
-Two real audio samples processed through the full pipeline. The point of
-showing both is to demonstrate the confidence numbers are **not random** —
-they correlate predictably with word properties (length, rarity, native
-vs foreign, borderline phonetic decisions).
+Both samples were run with **`language="English"`** as the ASR hint
+(empirically gives output closer to GPU bf16 reference on Mac CPU —
+the model emits the nukta marks correctly that get dropped under `Hindi`
+hint). The point of showing both samples is to demonstrate the
+confidence numbers are **not random** — they correlate predictably with
+word properties (length, rarity, native vs foreign, borderline phonetic
+decisions).
+
+The **Raw Roman** column shows the phonetic transliteration produced by
+`_transliterate_raw + _normalize_endings` in `hindi_to_roman_urdu.py`,
+**before** the lexicon corrections are applied. The **Roman Urdu**
+column shows the final output after `_apply_corrections` (CORRECTIONS +
+PROPER_NOUNS lookups). Comparing the two reveals which words the
+lexicon is actively fixing.
 
 ### Example 1 — `sample_ur1.wav`
 
 ```
-Hindi:    मेरा नाम अपीब है। ये उर्दू जान में आवाज की शनाख्त का टेस्ट है।
-Roman:    mera naam apeeb hai. yeh urdoo jaan mein awaz ki shanaakht ka test hai.
-Nastaliq: میرا نام اپیب ہے۔ یے ارْدو جان میں آواج کی شناکھْت کا ٹیسْٹ ہے۔
+ASR (Hindi):     मेरा नाम अपीब है। ये उर्दू ज़बान में आवाज़ की शनाख्त का टेस्ट है।
+Roman Urdu:      mera naam apeeb hai. yeh urdoo zaban mein awaz ki shanaakht ka test hai.
+Nastaliq:        میرا نام اپیب ہے۔ یے ارْدو ج़بان میں آواج़ کی شناکھْت کا ٹیسْٹ ہے۔
 ```
 
-| # | Hindi | Roman Urdu | Nastaliq | Min Conf | Geo Conf | Tokens | Notes |
-|---:|---|---|---|---:|---:|---:|---|
-| 1 | मेरा | mera | میرا | 1.00 | 1.00 | 4 | native function |
-| 2 | नाम | naam | نام | 1.00 | 1.00 | 4 | native function |
-| 3 | अपीब | apeeb | اپیب | **0.68** | 0.85 | 5 | **proper name** |
-| 4 | है। | hai. | ہے۔ | 0.71 | 0.92 | 4 | sentence-end variant |
-| 5 | ये | yeh | یے | 0.98 | 0.99 | 3 | native pronoun |
-| 6 | उर्दू | urdoo | ارْدو | 0.84 | 0.96 | 7 | long, includes nukta |
-| 7 | जान | jaan | جان | **0.55** | 0.71 | 4 | **near-tied with ज़बान (zaban)** |
-| 8 | में | mein | میں | 0.95 | 0.98 | 3 | native postposition |
-| 9 | आवाज | awaz | آواج | 0.99 | 1.00 | 5 | borderline nukta dropped |
-| 10 | की | ki | کی | 0.95 | 0.97 | 2 | native postposition |
-| 11 | शनाख्त | shanaakht | شناکھْت | **0.53** | 0.89 | 7 | **rare cluster ख्त** |
-| 12 | का | ka | کا | 1.00 | 1.00 | 2 | native function |
-| 13 | टेस्ट | test | ٹیسْٹ | 1.00 | 1.00 | 6 | English loan |
-| 14 | है। | hai. | ہے۔ | 0.99 | 1.00 | 4 | native function |
+| # | Hindi (ASR) | Raw Roman | Roman Urdu | Nastaliq | Min Conf | Geo Conf | Tokens | Flag | Notes |
+|---:|---|---|---|---|---:|---:|---:|:---:|---|
+| 1 | मेरा | mera | mera | میرا | 1.00 | 1.00 | 4 | | native function |
+| 2 | नाम | naam | naam | نام | 1.00 | 1.00 | 4 | | native function |
+| 3 | अपीब | apeeb | apeeb | اپیب | 0.65 | 0.87 | 5 | **LOW** | proper name |
+| 4 | है। | hai. | hai. | ہے۔ | 0.69 | 0.91 | 4 | **LOW** | sentence-end variant |
+| 5 | ये | ye | yeh | یے | 0.99 | 1.00 | 3 | | lexicon: ye → yeh |
+| 6 | उर्दू | urdoo | urdoo | ارْدو | 0.81 | 0.96 | 7 | | long, includes nukta |
+| 7 | ज़बान | zabaan | zaban | ج़بان | **0.45** | 0.83 | 7 | **LOW** | **with nukta — matches GPU output!** |
+| 8 | में | men | mein | میں | 1.00 | 1.00 | 3 | | lexicon: men → mein |
+| 9 | आवाज़ | aawaaz | awaz | آواج़ | 0.73 | 0.95 | 7 | | lexicon: aawaaz → awaz |
+| 10 | की | ki | ki | کی | 1.00 | 1.00 | 2 | | native postposition |
+| 11 | शनाख्त | shanaakht | shanaakht | شناکھْت | 0.56 | 0.90 | 7 | **LOW** | rare cluster ख्त |
+| 12 | का | ka | ka | کا | 1.00 | 1.00 | 2 | | native function |
+| 13 | टेस्ट | test | test | ٹیسْٹ | 1.00 | 1.00 | 6 | | English loan |
+| 14 | है। | hai. | hai. | ہے۔ | 0.98 | 0.99 | 4 | | native function |
 
-**Lowest-confidence words and why:**
+**Flagged words (Min Conf < 0.7) — exactly the words that deserve human review:**
 
-- **`अपीब (0.68)`** — proper name "Aqib". Model is genuinely unsure how to spell an Arabic name in Devanagari — there's no canonical convention.
-- **`जान (0.55)`** — borderline between `जान` (life) and `ज़बान` (language). The exact word where the GPU bf16 path produces `ज़बान` instead. **The confidence number directly surfaces the near-tied logit decision discussed in `asr-backend-comparison.md`.**
-- **`शनाख्त (0.53)`** — uncommon Devanagari cluster `ख्त`. Model is borderline between `शनाख्त` and `शनात`.
+- **`अपीब (0.65)`** — proper name "Aqib"; model unsure how to spell an Arabic name in Devanagari
+- **`है। (0.69)`** — sentence-end variant of है; model chooses between `है` and `है।` form
+- **`ज़बान (0.45)`** — *the lowest confidence in the sample.* Note the **lexicon corrects `zabaan` → `zaban`**. Model's uncertainty here is genuine because Devanagari nukta `़` is rare in Hindi training data but essential in Urdu loanwords.
+- **`शनाख्त (0.56)`** — rare cluster `ख्त`; borderline between `शनाख्त` and `शनात`
+
+**Lexicon corrections visible by comparing Raw Roman vs Roman Urdu:**
+
+- `ye → yeh` — function-word convention
+- `men → mein` — function-word convention
+- `aawaaz → awaz` — drops phonetic length
 
 ### Example 2 — `sample_ur2.wav`
 
 ```
-Hindi:    आज का मौसम बहुत अच्छा है। हम एक नई टेक्नोलॉजी को आजमा रहे हैं।
-Roman:    aaj ka mausam bahut acha hai. hum ek nai teknoloji ko aajma rahe hain.
-Nastaliq: آج کا موسم بہت اچْچھا ہے۔ ہم ایک نئی ٹیکْنولاجی کو آجما رہے ہیں۔
+ASR (Hindi):     आज का मौसम बहुत अच्छा है। हम एक नई टेक्नोलॉजी को आजमा रहे हैं।
+Roman Urdu:      aaj ka mausam bahut acha hai. hum ek nai teknoloji ko aajma rahe hain.
+Nastaliq:        آج کا موسم بہت اچْچھا ہے۔ ہم ایک نئی ٹیکْنولاجی کو آجما رہے ہیں۔
 ```
 
-| # | Hindi | Roman Urdu | Nastaliq | Min Conf | Geo Conf | Tokens | Notes |
-|---:|---|---|---|---:|---:|---:|---|
-| 1 | आज | aaj | آج | 1.00 | 1.00 | 2 | native (today) |
-| 2 | का | ka | کا | 1.00 | 1.00 | 2 | native function |
-| 3 | मौसम | mausam | موسم | 1.00 | 1.00 | 5 | common (weather) |
-| 4 | बहुत | bahut | بہت | 1.00 | 1.00 | 5 | common (very) |
-| 5 | अच्छा | acha | اچْچھا | 1.00 | 1.00 | 6 | common (good) |
-| 6 | है। | hai. | ہے۔ | 0.72 | 0.92 | 4 | sentence-end variant |
-| 7 | हम | hum | ہم | 1.00 | 1.00 | 2 | native pronoun |
-| 8 | एक | ek | ایک | 1.00 | 1.00 | 3 | native (one) |
-| 9 | नई | nai | نئی | 0.97 | 0.99 | 3 | native (new) |
-| 10 | टेक्नोलॉजी | teknoloji | ٹیکْنولاجی | **0.57** | 0.93 | **12** | **English loan, 12 tokens** |
-| 11 | को | ko | کو | 1.00 | 1.00 | 2 | native postposition |
-| 12 | आजमा | aajma | آجما | 0.96 | 0.99 | 5 | uncommon verb form |
-| 13 | रहे | rahe | رہے | 0.99 | 1.00 | 4 | native aux verb |
-| 14 | हैं। | hain. | ہیں۔ | 0.99 | 1.00 | 5 | native function |
+| # | Hindi (ASR) | Raw Roman | Roman Urdu | Nastaliq | Min Conf | Geo Conf | Tokens | Flag | Notes |
+|---:|---|---|---|---|---:|---:|---:|:---:|---|
+| 1 | आज | aaj | aaj | آج | 1.00 | 1.00 | 2 | | native (today) |
+| 2 | का | ka | ka | کا | 1.00 | 1.00 | 2 | | native function |
+| 3 | मौसम | mausam | mausam | موسم | 1.00 | 1.00 | 5 | | common (weather) |
+| 4 | बहुत | bahut | bahut | بہت | 1.00 | 1.00 | 5 | | common (very) |
+| 5 | अच्छा | achcha | acha | اچْچھا | 1.00 | 1.00 | 6 | | lexicon: achcha → acha |
+| 6 | है। | hai. | hai. | ہے۔ | 0.70 | 0.92 | 4 | **LOW** | sentence-end variant |
+| 7 | हम | ham | hum | ہم | 1.00 | 1.00 | 2 | | lexicon: ham → hum |
+| 8 | एक | ek | ek | ایک | 1.00 | 1.00 | 3 | | native (one) |
+| 9 | नई | nai | nai | نئی | 0.98 | 0.99 | 3 | | native (new) |
+| 10 | टेक्नोलॉजी | teknoloji | teknoloji | ٹیکْنولاجی | **0.61** | 0.94 | **12** | **LOW** | **English loan, 12 tokens** |
+| 11 | को | ko | ko | کو | 1.00 | 1.00 | 2 | | native postposition |
+| 12 | आजमा | aajma | aajma | آجما | 0.94 | 0.98 | 5 | | uncommon verb form |
+| 13 | रहे | rahe | rahe | رہے | 0.99 | 1.00 | 4 | | native aux verb |
+| 14 | हैं। | hain. | hain. | ہیں۔ | 0.97 | 0.99 | 5 | | native function |
 
-**Lowest-confidence word and why:**
+**Flagged words (Min Conf < 0.7):**
 
-- **`टेक्नोलॉजी (0.57)`** — English word "technology" phonetically transliterated. **12 BPE sub-tokens** (longest word in either sample). Foreign loan + length = many chances for one borderline sub-token. The system correctly identifies this as the least-confident word.
+- **`है। (0.70)`** — sentence-end variant ambiguity (same as ur1)
+- **`टेक्नोलॉजी (0.61)`** — *the lowest confidence in the sample.* "Technology" phonetically transliterated; 12 BPE tokens (longest word in either sample). Foreign loan + length = many chances for one borderline sub-token.
+
+**Lexicon corrections visible by comparing Raw Roman vs Roman Urdu:**
+
+- `achcha → acha` — drops redundant ch
+- `ham → hum` — function-word convention
 
 ---
 
@@ -237,35 +260,53 @@ Look at what the confidence numbers cluster around across both samples:
 
 | Word category | Examples | Typical Min Conf |
 |---|---|---|
-| **Native function words** (1-3 chars) | मेरा, नाम, का, हम, एक, आज, में | **0.95–1.00** |
-| **Common content words** (4-6 chars) | मौसम, बहुत, अच्छा, टेस्ट, आवाज, आजमा | **0.95–1.00** |
-| **Long native words** (5-7 chars, no rare clusters) | उर्दू, नई | **0.84–0.97** |
-| **Borderline phonetic decisions** | जान/ज़बान, शनाख्त/शनात | **0.53–0.55** |
-| **Proper nouns / foreign names** | अपीब | **0.65–0.70** |
-| **Long foreign loan words** | टेक्नोलॉजी (12 tokens) | **0.57** |
-| **Sentence-end punctuation** (है।) | है।, हैं। | **0.71–0.99** (variant choice) |
+| **Native function words** (1-3 chars) | मेरा, नाम, का, हम, एक, आज, में | **0.98–1.00** |
+| **Common content words** (4-6 chars) | मौसम, बहुत, अच्छा, टेस्ट, की, रहे | **0.95–1.00** |
+| **Long native words** (5-7 chars) | उर्दू, नई, आजमा | **0.81–0.98** |
+| **Borderline phonetic / nukta decisions** | ज़बान (with nukta), शनाख्त | **0.45–0.56** |
+| **Proper nouns / foreign names** | अपीब (Aqib) | **0.65** |
+| **Long foreign loan words** | टेक्नोलॉजी (12 tokens) | **0.61** |
+| **Sentence-end variants** (है।, हैं।) | है।, हैं। | **0.69–0.99** (variant choice) |
 
 **The signal is real:**
 
-1. **Word length matters but isn't everything.** `अच्छा` (6 tokens, native) scores 1.00; `टेक्नोलॉजी` (12 tokens, English loan) scores 0.57. The model is more confident about long-but-common words than short-but-foreign ones.
+1. **Word length matters but isn't everything.** `अच्छा` (6 tokens, native) scores 1.00; `टेक्नोलॉजी` (12 tokens, English loan) scores 0.61. The model is more confident about long-but-common words than short-but-foreign ones.
 
 2. **Foreign loans get lower scores.** English words written in Devanagari (`टेक्नोलॉजी`, `अपीब`/Aqib) are systematically less confident because the model has to choose between multiple plausible phonetic spellings.
 
-3. **Borderline phonetic decisions stand out.** `जान` (0.55) is the exact word where GPU and CPU produce different output — the model knows it's unsure, and the confidence number reflects that.
+3. **Borderline phonetic / nukta decisions stand out.** `ज़बान` (0.45) is the *lowest confidence in ur1* — the model is genuinely unsure between emitting the nukta `़` or dropping it. This is the same near-tied logit decision discussed in `asr-backend-comparison.md` — the confidence number directly surfaces it.
 
-4. **Sentence-end variants** (`है।` vs `है`) score a bit lower (0.71-0.92) than mid-sentence variants (0.99) because the model has to decide whether to emit the period before EOS.
+4. **Sentence-end variants** (`है।` vs `है`) score lower (0.69-0.92) than mid-sentence variants (0.99) because the model has to decide whether to emit the period before EOS.
 
 If the numbers were random, native function words and long foreign loans would have similar scores. They don't. The model is genuinely tracking its own uncertainty, and the per-word aggregation surfaces it cleanly.
+
+### `language="English"` vs `language="Hindi"` — which to use on Mac CPU
+
+Both samples in Section 6 were run with `language="English"` as the ASR
+hint. This is empirically better on Mac CPU than `language="Hindi"`
+because the model emits **the nukta marks correctly** that the Hindi
+hint drops:
+
+| Word | `language="Hindi"` (Mac CPU) | `language="English"` (Mac CPU) | GPU bf16 reference |
+|---|---|---|---|
+| ज़बान / जान | जान (no nukta) ✗ | **ज़बान** (with nukta) ✓ | ज़बान ✓ |
+| आवाज़ / आवाज | आवाज (no nukta) ~ | **आवाज़** (with nukta) ✓ | आवाज़ ✓ |
+| अच्छा / अपीब / etc. | same | same | same |
+
+**Recommendation:** use `language="English"` on Mac CPU until the
+project moves to GPU/vLLM. The Qwen3-ASR `language` hint isn't a strict
+constraint — it's a bias — and "English" surprisingly biases the model
+toward a more careful nukta-emission path on this hardware.
 
 ### Threshold tuning observation
 
 At the default `LOW_CONF_THRESHOLD=0.7`, both samples flag exactly the
 right words — perfect signal-to-noise on this corpus:
 
-- ur1: `अपीब` (0.68), `जान` (0.55), `शनाख्त` (0.53)
-- ur2: `टेक्नोलॉजी` (0.57)
+- ur1: `अपीब` (0.65), `है।` (0.69), `ज़बान` (0.45), `शनाख्त` (0.56)
+- ur2: `है।` (0.70), `टेक्नोलॉजी` (0.61)
 
-These are exactly the four words a human reviewer should look at. The
+These are exactly the words a human reviewer should look at. The
 0.7 default was chosen empirically; you can tune via env:
 
 ```bash

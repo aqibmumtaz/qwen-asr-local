@@ -1,3 +1,21 @@
-Hindi (ASR)          : आज का मौसम बहुत अच्छा है। हम एक नई तेज़ नदी को आसमा रहे हैं।
-Urdu Nastaliq        : آج کا موسم بہت اچْچھا ہے۔ ہم ایک نئی تیج़ ندی کو آسما رہے ہیں۔
-Roman Urdu           : aaj ka mausam bahut acha hai. hum ek nai tez nadi ko aasma rahe hain.
+Hindi (ASR)          : आज का मौसम बहुत अच्छा है। हम एक नई टेक्नोलॉजी को आजमा रहे हैं।
+Urdu Nastaliq        : آج کا موسم بہت اچْچھا ہے۔ ہم ایک نئی ٹیکْنولاجی کو آجما رہے ہیں۔
+Roman Urdu           : aaj ka mausam bahut acha hai. hum ek nai teknoloji ko aajma rahe hain.
+
+Per-word confidence (min token prob, geo-mean prob):
+  Word                  Min Conf  Geo Conf  Tokens  Flag
+  -------------------- --------- --------- -------  ----
+  आज                       1.000     1.000       2  
+  का                       0.998     0.999       2  
+  मौसम                     1.000     1.000       5  
+  बहुत                     1.000     1.000       5  
+  अच्छा                    0.999     1.000       6  
+  है।                      0.702     0.915       4  
+  हम                       1.000     1.000       2  
+  एक                       1.000     1.000       3  
+  नई                       0.984     0.995       3  
+  टेक्नोलॉजी               0.614     0.943      12  LOW
+  को                       1.000     1.000       2  
+  आजमा                     0.938     0.982       5  
+  रहे                      0.993     0.998       4  
+  हैं।                     0.971     0.994       5  
