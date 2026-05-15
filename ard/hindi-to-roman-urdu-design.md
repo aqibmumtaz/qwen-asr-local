@@ -3,7 +3,7 @@
 **Module:** `qwen3-asr-local/hindi_to_roman_urdu.py`
 **Lexicon:** `qwen3-asr-local/data/lexicons.json`
 **Convention spec:** `ard/roman-urdu-convention.md`
-**Status:** production, 62/62 self-tests passing, 100% on Chughtai Lab corpus
+**Status:** production-ready, self-tests passing on Chughtai Lab corpus
 
 ---
 
@@ -411,23 +411,23 @@ Full convention spec in `ard/roman-urdu-convention.md`.
 
 ---
 
-## 8. Accuracy
+## 8. Test coverage
 
-Tested on a 129-item realistic Chughtai Lab call-centre corpus:
+Validated against a realistic Chughtai Lab call-centre corpus spanning all
+common word categories:
 
-| Category | Accuracy |
-|---|---|
-| Function words | 100% |
-| Nouns | 100% |
-| Lab/medical terms | 100% |
-| Realistic sentences | 100% |
-| Verbs | 100% |
-| Numbers | 100% |
-| Proper nouns | 100% |
-| **OVERALL** | **100%** |
+- Function words (kya, hai, mein, ka, ki, ke, …)
+- Common nouns (ghar, naam, kaam, raat, …)
+- Lab / medical terms (test, sample, report, sugar, …)
+- Verbs (karna, jana, dekhna, bolna, …)
+- Numbers and quantifiers
+- Proper nouns (names, places, acronyms)
+- Realistic full-sentence call-centre dialogues
 
-Plus 62/62 embedded self-tests covering edge cases (schwa syncope guards,
-nukta handling, conjuncts, vowel hiatus, etc.).
+An embedded self-test suite in `hindi_to_roman_urdu.py` exercises every
+edge case (schwa syncope guards, nukta handling, conjuncts, vowel hiatus,
+ī + nasalisation, polite imperatives, compound splits, etc.). Run with
+`python3 hindi_to_roman_urdu.py` — used as a regression gate.
 
 ---
 
@@ -493,7 +493,7 @@ Safe to embed in a deterministic Rust pipeline later — the entire
 | `hindi_to_roman_urdu.sh` | 33 | Shell CLI wrapper for the engine |
 | `data/lexicons.json` | ~35 KB | Layer 3 data: 1166 corrections + 265 proper nouns |
 | `ard/roman-urdu-convention.md` | — | Full convention spec |
-| `ard/transliterator-findings.md` | — | Findings & accuracy report |
+| `ard/transliterator-findings.md` | — | Implementation findings & maintenance workflow |
 | `ard/asr-backend-comparison.md` | — | Why same model gives different Hindi on different backends |
 | `ard/deployment-plan.md` | — | Rust handover plan with deliverables |
 
