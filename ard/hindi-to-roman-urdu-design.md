@@ -3,7 +3,7 @@
 **Module:** `qwen3-asr-local/hindi_to_roman_urdu.py`
 **Lexicon:** `qwen3-asr-local/data/lexicons.json`
 **Convention spec:** `ard/roman-urdu-convention.md`
-**Status:** production-ready, self-tests passing on Chughtai Lab corpus
+**Status:** production-ready, self-tests passing on the realistic test corpus
 
 ---
 
@@ -413,7 +413,7 @@ Full convention spec in `ard/roman-urdu-convention.md`.
 
 ## 8. Test coverage
 
-Validated against a realistic Chughtai Lab call-centre corpus spanning all
+Validated against a realistic call-centre vocabulary corpus spanning all
 common word categories:
 
 - Function words (kya, hai, mein, ka, ki, ke, …)
