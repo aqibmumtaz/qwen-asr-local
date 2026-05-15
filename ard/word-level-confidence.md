@@ -184,15 +184,15 @@ lexicon is actively fixing.
 
 ```
 ASR (Hindi):     मेरा नाम अपीब है। ये उर्दू ज़बान में आवाज़ की शनाख्त का टेस्ट है।
-Roman Urdu:      mera naam apeeb hai. yeh Urdu zaban mein awaz ki shanaakht ka test hai.
+Roman Urdu:      mera naam Aqib hai. yeh Urdu zaban mein awaz ki shanaakht ka test hai.
 Nastaliq:        میرا نام اپیب ہے۔ یے ارْدو ج़بان میں آواج़ کی شناکھْت کا ٹیسْٹ ہے۔
 ```
 
 | # | Hindi (ASR) | Raw Roman | Roman Urdu | Nastaliq | Min Conf | Geo Conf | Tokens | Flag | Notes |
 |---:|---|---|---|---|---:|---:|---:|:---:|---|
-| 1 | मेरा | mera | mera | میرا | 1.00 | 1.00 | 4 | | native function |
+| 1 | मेरा | meraa | mera | میرا | 1.00 | 1.00 | 4 | | lexicon: meraa → mera |
 | 2 | नाम | naam | naam | نام | 1.00 | 1.00 | 4 | | native function |
-| 3 | अपीब | apeeb | apeeb | اپیب | 0.65 | 0.87 | 5 | **LOW** | proper name |
+| 3 | अपीब | apeeb | **Aqib** | اپیب | 0.65 | 0.87 | 5 | **LOW** | PROPER_NOUNS: apeeb → Aqib (proper name) |
 | 4 | है। | hai. | hai. | ہے۔ | 0.69 | 0.91 | 4 | | sentence-end variant (above 0.65 threshold) |
 | 5 | ये | ye | yeh | یے | 0.99 | 1.00 | 3 | | lexicon: ye → yeh |
 | 6 | उर्दू | urdoo | **Urdu** | ارْدو | 0.81 | 0.96 | 7 | | PROPER_NOUNS: urdoo → Urdu (language name) |
@@ -207,7 +207,7 @@ Nastaliq:        میرا نام اپیب ہے۔ یے ارْدو ج़بان م�
 
 **Flagged words (Min Conf ≤ 0.65) — exactly the words that deserve human review:**
 
-- **`अपीब (0.65)`** — proper name "Aqib"; model unsure how to spell an Arabic name in Devanagari
+- **`अपीब (0.65)`** — proper name "Aqib"; model unsure how to spell an Arabic name in Devanagari. **Lexicon corrects `apeeb` → `Aqib`** via PROPER_NOUNS.
 - **`ज़बान (0.45)`** — *the lowest confidence in the sample.* Note the **lexicon corrects `zabaan` → `zaban`**. Model's uncertainty here is genuine because Devanagari nukta `़` is rare in Hindi training data but essential in Urdu loanwords.
 - **`शनाख्त (0.56)`** — rare cluster `ख्त`; borderline between `शनाख्त` and `शनात`
 
@@ -233,11 +233,11 @@ Nastaliq:        آج کا موسم بہت اچْچھا ہے۔ ہم ایک نئ�
 | 2 | का | ka | ka | کا | 1.00 | 1.00 | 2 | | native function |
 | 3 | मौसम | mausam | mausam | موسم | 1.00 | 1.00 | 5 | | common (weather) |
 | 4 | बहुत | bahut | bahut | بہت | 1.00 | 1.00 | 5 | | common (very) |
-| 5 | अच्छा | achcha | acha | اچْچھا | 1.00 | 1.00 | 6 | | lexicon: achcha → acha |
+| 5 | अच्छा | achchaa | acha | اچْچھا | 1.00 | 1.00 | 6 | | lexicon: achchaa → acha |
 | 6 | है। | hai. | hai. | ہے۔ | 0.70 | 0.92 | 4 | | sentence-end variant (above 0.65 threshold) |
 | 7 | हम | ham | hum | ہم | 1.00 | 1.00 | 2 | | lexicon: ham → hum |
 | 8 | एक | ek | ek | ایک | 1.00 | 1.00 | 3 | | native (one) |
-| 9 | नई | nai | nai | نئی | 0.98 | 0.99 | 3 | | native (new) |
+| 9 | नई | naee | nai | نئی | 0.98 | 0.99 | 3 | | lexicon: naee → nai |
 | 10 | टेक्नोलॉजी | teknoloji | **technology** | ٹیکْنولاجی | **0.61** | 0.94 | **12** | **LOW** | English loan; lexicon: teknoloji → technology |
 | 11 | को | ko | ko | کو | 1.00 | 1.00 | 2 | | native postposition |
 | 12 | आजमा | aajma | **aazma** | آجما | 0.94 | 0.98 | 5 | | lexicon: aajma → aazma |
@@ -410,21 +410,27 @@ with `▓▓▓` instead of `मेरा` because we were decoding token-by-tok
 ## 9. Performance — running with vs without confidence
 
 Measured on `sample_ur1.wav` (~12s of audio), Mac CPU, model pre-loaded
-once, 3 alternating runs each (`hf_asr` ↔ `hf_asr_with_confidence`) to
-average out variance:
+once + 1 warmup, **5 strictly-alternating runs each** (`hf_asr`
+↔ `hf_asr_with_confidence`) to fairly distribute thermal/scheduler
+drift across both variants:
 
 | Run | `hf_asr()` (plain) | `hf_asr_with_confidence()` |
 |---:|---:|---:|
-| 1 | 29.58s | 26.07s |
-| 2 | 24.83s | 24.13s |
-| 3 | 24.91s | 24.84s |
-| **Min** | **24.83s** | **24.13s** |
-| **Max** | **29.58s** | **26.07s** |
-| **Avg** | **26.44s** | **25.01s** |
+| 1 | 26.87s | 26.38s |
+| 2 | 28.05s | 28.32s |
+| 3 | 27.03s | 25.61s |
+| 4 | 24.36s | 26.70s |
+| 5 | 25.05s | 25.28s |
+| **Min**    | **24.36s** | **25.28s** |
+| **Max**    | **28.05s** | **28.32s** |
+| **Median** | **26.87s** | **26.38s** |
+| **Mean**   | **26.27s** | **26.46s** |
 
-**Overhead: -1.43s (-5.4%)** — i.e. **confidence extraction was actually
-faster on average**, because run-to-run jitter on a busy Mac CPU is
-larger than the cost of reading already-computed tensors.
+**Overhead: mean +0.19s (+0.7%), median −0.50s (−1.8%)** — i.e.
+indistinguishable from noise. The variance between consecutive plain
+runs (24.36s → 28.05s = 3.69s spread) is **20× larger** than the mean
+difference between the two variants (0.19s), so any "confidence
+extraction overhead" is hidden inside normal run-to-run jitter.
 
 ### Why the cost is essentially zero
 
@@ -444,25 +450,28 @@ performance.
 
 ---
 
-## 9.1 Token-level math worked example — `ज़बान`
+## 9.1 Token-level math worked example — `अपीब` (Aqib)
 
-The lowest-confidence word in ur1 was `ज़बान` (Min Conf = 0.45, Geo Conf
-= 0.83). Here is exactly how those numbers come out of the model's
-logits, sub-token by sub-token:
+The proper-noun `अपीब` in ur1 was flagged at the threshold boundary
+(Min Conf = 0.65, Geo Conf = 0.87). Here are the *actual* per-token
+logprobs the model emitted — straight from `log_softmax(logits)`
+at each decoding step:
 
 ```
-Word: ज़बान   (BPE splits into 7 sub-tokens)
+Word: अपीब   (BPE splits into 5 sub-tokens)
 
-  #  Sub-token   raw BPE         logprob     prob = exp(logprob)
-  ─  ──────────  ─────────────   ─────────   ───────────────────
-  1  ' ज'        'Ġà¤'           -0.0019     0.9981
-  2  '़'         'ľ'             -0.2585     0.7722
-  3  ' '         'à¤'            -0.7930     0.4525   ← weakest link
-  4  '़'         '¼'             -0.0000     1.0000
-  5  'ब'         'à¤¬'           -0.2206     0.8020
-  6  'ा'         'à¤¾à¤'         -0.0007     0.9993
-  7  'न'         '¨'             -0.0002     0.9998
+  #  Sub-token   raw BPE     decoded   logprob     prob = exp(logprob)
+  ─  ──────────  ──────────  ────────  ─────────   ───────────────────
+  1  ' अ' (a)    'Ġà¤'       ' �'      -0.0003     0.9997
+  2  ' अ' (b)    'ħ'         '�'       -0.0332     0.9673
+  3  'प'         'à¤ª'       'प'       -0.4321     0.6492   ← weakest link
+  4  'ी'         'à¥Ģ'       'ी'       -0.0827     0.9206
+  5  'ब'         'à¤¬'       'ब'       -0.1695     0.8440
 ```
+
+(Tokens 1 and 2 are the two ByteLevel-BPE bytes that together encode
+the leading Devanagari character `अ`. Decoded singly they show as
+`�` placeholders, but joined they form one valid codepoint.)
 
 Each probability comes from one softmax + index lookup:
 
@@ -474,37 +483,37 @@ prob_i    = exp(logprob_i)
 ### Computing Min Conf
 
 ```
-Min Conf = min(0.9981, 0.7722, 0.4525, 1.0000, 0.8020, 0.9993, 0.9998)
-         = 0.4525
+Min Conf = min(0.9997, 0.9673, 0.6492, 0.9206, 0.8440)
+         = 0.6492
 ```
 
-The 3rd sub-token (the byte that completes the nukta-modified `ज़`)
-was only 45% certain. That's the model's near-tied logit decision
-between emitting the nukta or not — visible directly as a low
-probability on this specific sub-token.
+The 3rd sub-token (the consonant `प` after `अ`) was only ~65%
+certain. That's the model genuinely undecided between several
+plausible spellings of the Arabic name "Aqib" written in Devanagari
+(`अकीब`, `अकिब`, `अपीब`, etc.) — visible directly as the dip on
+this specific sub-token.
 
 ### Computing Geo Conf (geometric mean)
 
 Method 1 — direct geometric-mean formula:
 
 ```
-Product = 0.9981 × 0.7722 × 0.4525 × 1.0000 × 0.8020 × 0.9993 × 0.9998
-        = 0.2795                                    (the joint probability)
+Product = 0.9997 × 0.9673 × 0.6492 × 0.9206 × 0.8440
+        = 0.4878                                    (the joint probability)
 
-Geo Conf = Product^(1/7)
-         = 0.2795^(0.1429)
-         = 0.8335
+Geo Conf = Product^(1/5)
+         = 0.4878^(0.2)
+         = 0.8663
 ```
 
 Method 2 — log-space (what the code actually does, to avoid float underflow):
 
 ```
-mean_logprob = mean(-0.0019, -0.2585, -0.7930, -0.0000,
-                    -0.2206, -0.0007, -0.0002)
-             = -0.1821
+mean_logprob = mean(-0.0003, -0.0332, -0.4321, -0.0827, -0.1695)
+             = -0.14356
 
-Geo Conf = exp(-0.1821)
-         = 0.8335
+Geo Conf = exp(-0.14356)
+         = 0.8663
 ```
 
 Both methods give the same answer. The log-space version is what the
@@ -514,17 +523,17 @@ direct product can underflow in float32.
 ### Why is_low fires here
 
 ```
-LOW_CONF_THRESHOLD = 0.7
-is_low = (min_conf < 0.7)
-       = (0.4525 < 0.7)
+LOW_CONF_THRESHOLD = 0.65
+is_low = (min_conf <= 0.65)
+       = (0.6492 <= 0.65)
        = True   →  FLAG LOW
 ```
 
 If we had used Geo Conf instead, this word would NOT be flagged:
 
 ```
-Wrong policy: is_low = (geo_conf < 0.7)
-                     = (0.8335 < 0.7)
+Wrong policy: is_low = (geo_conf <= 0.65)
+                     = (0.8663 <= 0.65)
                      = False   →  no flag (would silently emit)
 ```
 
@@ -556,7 +565,7 @@ For the Rust handover, the recommended path is:
 
 | Knob | Default | Effect |
 |---|---|---|
-| `LOW_CONF_THRESHOLD` env | `0.7` | Cutoff for `is_low` flag; raise to be stricter |
+| `LOW_CONF_THRESHOLD` env | `0.65` | Cutoff for `is_low` flag (inclusive: `min_conf <= threshold`); raise to be stricter |
 | Use `geo_conf` instead of `min_conf` for flag | — | Edit `is_low` property; less sensitive (fewer flags) |
 | Combine both | — | `is_low = min_conf < 0.5 OR geo_conf < 0.85` for belt-and-suspenders |
 
