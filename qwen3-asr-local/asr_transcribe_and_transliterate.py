@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
 """
-ASR + transliteration — native HuggingFace path (no llama.cpp).
+ASR + transliteration with per-word confidence — native HuggingFace path.
 
-Mirrors the architecture of the production app.py (vLLM streaming server) but
-adapted for a local CLI run on Mac/Linux without GPU:
-  - transformers backend (instead of vLLM, which needs CUDA)
+Mirrors the architecture of the production app.py (vLLM streaming server)
+adapted for a local CLI:
+  - transformers backend (vLLM optional via BACKEND env)
   - thread-safe singleton model loader with readiness Event
   - smart dtype selection (cuda+SM>=80 → bf16, cuda<80 → fp16, cpu → fp32)
-  - all knobs overridable via env vars (MODEL_ID, DEVICE, DTYPE, …)
+  - all knobs overridable via env vars
   - hallucination filter on output
   - structured logging with timestamps
   - startup config + system info dump
+
+Per-word confidence extraction:
+  - Monkey-patches model.model.generate to enable output_scores=True
+  - Computes per-token logprobs from greedy logits
+  - Aggregates sub-tokens to words by whitespace
+  - Reports two scores per word:
+      conf_min  = exp(min logprob)  — flags any uncertain sub-token (review-trigger)
+      conf_geo  = exp(mean logprob) — geometric mean (sortable score)
+  - Words with conf_min < LOW_CONF_THRESHOLD (default 0.5) are flagged
 
 After ASR, the Hindi Devanagari text is fed to our transliteration pipeline:
   - Urdu Nastaliq via GokulNC HindustaniTransliterator
@@ -19,25 +28,29 @@ After ASR, the Hindi Devanagari text is fed to our transliteration pipeline:
 Usage:
     python3 asr_transcribe_and_transliterate.py                       # all samples
     python3 asr_transcribe_and_transliterate.py audio.wav             # one file
+    python3 asr_transcribe_and_transliterate.py --conf-table audio.wav # full per-word table
     python3 asr_transcribe_and_transliterate.py --compare audio.wav   # HF vs llama.cpp
     python3 asr_transcribe_and_transliterate.py --language English audio.wav
 
 Env vars (all optional):
-    MODEL_ID           default: Qwen/Qwen3-ASR-1.7B
-    TORCH_DEVICE       auto / cuda:0 / mps / cpu
-    DTYPE              bfloat16 / float16 / float32 / auto
-    MAX_NEW_TOKENS     default: 1024
-    LANGUAGE           default: Hindi
+    MODEL_ID            default: Qwen/Qwen3-ASR-1.7B
+    TORCH_DEVICE        auto / cuda:0 / mps / cpu
+    DTYPE               bfloat16 / float16 / float32 / auto
+    MAX_NEW_TOKENS      default: 1024
+    LANGUAGE            default: Hindi
+    LOW_CONF_THRESHOLD  default: 0.5 (below this, word is flagged)
 """
 
 import argparse
 import logging
+import math
 import os
 import sys
 import threading
 import time
 import subprocess
 import warnings
+from dataclasses import dataclass, field
 from pathlib import Path
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -62,6 +75,7 @@ SCRIPT_DIR             = Path(__file__).resolve().parent
 TRANSCRIBE_SH          = SCRIPT_DIR / "transcribe.sh"          # llama.cpp path
 HINDI_TO_ROMAN_URDU_SH = SCRIPT_DIR / "hindi_to_roman_urdu.sh"
 SAMPLES_DIR            = SCRIPT_DIR / "samples"
+OUT_DIR                = SCRIPT_DIR / "transcriptions"
 
 # ── Config (env-overridable, mirrors app.py) ─────────────────────────────────
 MODEL_ID               = os.getenv("MODEL_ID", "Qwen/Qwen3-ASR-1.7B")
@@ -175,25 +189,129 @@ def get_asr_model():
     return _asr_model
 
 
-# ── ASR functions ────────────────────────────────────────────────────────────
-def hf_asr(audio_path: Path, language: str | None = None) -> tuple[str, float]:
-    """Native HF Qwen3-ASR. Returns (transcript, elapsed_s)."""
+# ── Word-level confidence extraction ─────────────────────────────────────────
+# Qwen3-ASR's high-level transcribe() discards token logprobs. We monkey-patch
+# model.model.generate to capture output_scores=True, return_dict_in_generate=True
+# on a single call, then aggregate per-token logprobs into per-word confidence.
+# See ard/hindi-to-roman-urdu-design.md and the research report for details.
+
+LOW_CONF_THRESHOLD = float(os.getenv("LOW_CONF_THRESHOLD", "0.5"))
+
+
+@dataclass
+class WordConf:
+    """A word + its confidence (both min-token and geometric-mean variants)."""
+    text:        str
+    conf_min:    float   # min token prob — surfaces "any sub-token was unsure" → flag for review
+    conf_geo:    float   # exp(mean(logprobs)) — well-calibrated joint prob → sortable score
+    n_tokens:    int = 1
+
+    @property
+    def is_low(self) -> bool:
+        return self.conf_min < LOW_CONF_THRESHOLD
+
+
+def _aggregate_tokens_to_words(token_pieces: list[str],
+                               logprobs: list[float]) -> list[WordConf]:
+    """Group sub-tokens into words by whitespace. Computes min + geo-mean confidence."""
+    words: list[WordConf] = []
+    cur_text: str = ""
+    cur_lps:  list[float] = []
+
+    def _flush():
+        if cur_text:
+            words.append(WordConf(
+                text=cur_text,
+                conf_min=math.exp(min(cur_lps)),
+                conf_geo=math.exp(sum(cur_lps) / len(cur_lps)),
+                n_tokens=len(cur_lps),
+            ))
+
+    for piece, lp in zip(token_pieces, logprobs):
+        if not piece:
+            continue
+        # A leading space means "new word starts here"
+        if piece.startswith(" ") and cur_text:
+            _flush()
+            cur_text, cur_lps = "", []
+        cur_text += piece.lstrip(" ")
+        cur_lps.append(lp)
+    _flush()
+
+    return words
+
+
+def hf_asr(audio_path: Path,
+           language: str | None = None,
+           ) -> tuple[str, float, list[WordConf]]:
+    """
+    Native HF Qwen3-ASR with per-word confidence extraction.
+    Returns (transcript, elapsed_s, word_confidences).
+
+    Mechanism: monkey-patch model.model.generate to enable output_scores so the
+    high-level transcribe() still works but we capture the score tensor.
+    The patch is local to this call (restored in finally).
+    """
     model = get_asr_model()
     lang = language or LANGUAGE
 
+    captured: dict = {"outputs": None, "input_len": None}
+
+    # Only the transformers backend exposes scores this way. vLLM has a
+    # different mechanism (SamplingParams.logprobs) which we'd patch instead.
+    orig_generate = model.model.generate
+
+    def patched_generate(*args, **kwargs):
+        kwargs["output_scores"] = True
+        kwargs["return_dict_in_generate"] = True
+        # Record input length so we can slice generated tokens later
+        if args and hasattr(args[0], "shape"):
+            captured["input_len"] = args[0].shape[1]
+        elif "input_ids" in kwargs:
+            captured["input_len"] = kwargs["input_ids"].shape[1]
+        result = orig_generate(*args, **kwargs)
+        captured["outputs"] = result
+        # Return just the sequences tensor (qwen-asr expects this)
+        return result.sequences
+
     t0 = time.time()
-    # List form matches app.py's batch transcribe signature
-    results = model.transcribe(
-        audio=[str(audio_path)],
-        language=[lang] if lang else None,
-    )
+    try:
+        model.model.generate = patched_generate
+        results = model.transcribe(
+            audio=[str(audio_path)],
+            language=[lang] if lang else None,
+        )
+    finally:
+        model.model.generate = orig_generate
     elapsed = time.time() - t0
 
     text = results[0].text if results else ""
     if text and _is_hallucination(text):
         log.warning(f"Filtered hallucination: '{text}'")
-        text = ""
-    return text, elapsed
+        return "", elapsed, []
+
+    # Pull token logprobs out of the captured outputs
+    word_confs: list[WordConf] = []
+    out = captured["outputs"]
+    if out is not None and getattr(out, "scores", None):
+        try:
+            tok = model.processor.tokenizer
+            # scores[i] = logits over vocab for generated token i, shape (1, vocab)
+            # gen_ids are the LAST len(scores) tokens of sequences
+            n_gen = len(out.scores)
+            gen_ids = out.sequences[0, -n_gen:].tolist()
+            logprobs = []
+            for s, tid in zip(out.scores, gen_ids):
+                lp = torch.log_softmax(s[0].float(), dim=-1)[tid].item()
+                logprobs.append(lp)
+            # Decode each token individually so we can find whitespace boundaries
+            pieces = [tok.decode([tid], skip_special_tokens=False) for tid in gen_ids]
+            # Drop any pieces beyond the EOS (stopped generation)
+            word_confs = _aggregate_tokens_to_words(pieces, logprobs)
+        except Exception as e:
+            log.warning(f"Could not extract token confidences: {e}")
+
+    return text, elapsed, word_confs
 
 
 def llamacpp_asr(audio_path: Path, language: str = LANGUAGE) -> tuple[str, float]:
@@ -225,12 +343,35 @@ def to_roman_urdu(hindi: str) -> str:
 
 
 # ── Pipeline orchestration ───────────────────────────────────────────────────
-def process_one(audio: Path, language: str = LANGUAGE, compare: bool = False):
+def _format_conf_inline(word_confs: list[WordConf]) -> str:
+    """One line: each word with its min-confidence in parentheses, low-conf marked."""
+    parts = []
+    for wc in word_confs:
+        flag = "*" if wc.is_low else ""
+        parts.append(f"{wc.text}({wc.conf_min:.2f}{flag})")
+    return " ".join(parts)
+
+
+def _format_conf_table(word_confs: list[WordConf]) -> str:
+    """Multi-line table: word | min | geo | n_tokens | flag."""
+    if not word_confs:
+        return "  (no per-word confidence captured)"
+    rows = [f"  {'Word':<20} {'min':>6} {'geo':>6} {'tok':>4}  {'flag'}"]
+    rows.append(f"  {'-' * 20} {'-' * 6} {'-' * 6} {'-' * 4}  {'-' * 4}")
+    for wc in word_confs:
+        flag = "LOW" if wc.is_low else ""
+        rows.append(f"  {wc.text[:20]:<20} {wc.conf_min:>6.3f} "
+                    f"{wc.conf_geo:>6.3f} {wc.n_tokens:>4}  {flag}")
+    return "\n".join(rows)
+
+
+def process_one(audio: Path, language: str = LANGUAGE, compare: bool = False,
+                show_conf_table: bool = False):
     print(f"\n{'═' * 72}")
     print(f"  {audio.name}")
     print(f"{'═' * 72}")
 
-    hindi_hf, hf_t = hf_asr(audio, language=language)
+    hindi_hf, hf_t, word_confs = hf_asr(audio, language=language)
     if not hindi_hf:
         log.error(f"HF ASR returned empty for {audio.name}")
         return
@@ -238,16 +379,43 @@ def process_one(audio: Path, language: str = LANGUAGE, compare: bool = False):
     nastaliq_hf = to_nastaliq(hindi_hf)
     roman_hf    = to_roman_urdu(hindi_hf)
 
+    n_low = sum(1 for w in word_confs if w.is_low)
+    conf_summary = (
+        f"  ({len(word_confs)} words, {n_low} flagged <{LOW_CONF_THRESHOLD:.2f})"
+        if word_confs else ""
+    )
+
     print(f"\n  ─── HF native (qwen-asr / transformers) — {hf_t:.1f}s ───")
     print(f"  Hindi      │ {hindi_hf}")
     print(f"  Nastaliq   │ {nastaliq_hf}")
     print(f"  Roman Urdu │ {roman_hf}")
+    if word_confs:
+        print(f"  Confidence │ {_format_conf_inline(word_confs)}")
+        print(f"             {conf_summary}")
+        if show_conf_table:
+            print()
+            print(_format_conf_table(word_confs))
+
+    # Save full output + per-word confidence to disk
+    out_file = OUT_DIR / f"{audio.stem}_post_processor.txt"
+    OUT_DIR.mkdir(exist_ok=True)
+    out_lines = [
+        f"Hindi (ASR)          : {hindi_hf}",
+        f"Urdu Nastaliq        : {nastaliq_hf}",
+        f"Roman Urdu           : {roman_hf}",
+        "",
+    ]
+    if word_confs:
+        out_lines.append("Per-word confidence (min token prob, geo-mean prob):")
+        out_lines.append(_format_conf_table(word_confs))
+    out_file.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
+    print(f"  Saved      │ {out_file}")
 
     if compare:
         hindi_cpp, cpp_t = llamacpp_asr(audio, language=language)
         nastaliq_cpp     = to_nastaliq(hindi_cpp)
         roman_cpp        = to_roman_urdu(hindi_cpp)
-        print(f"\n  ─── llama.cpp (transcribe.sh) — {cpp_t:.1f}s ───")
+        print(f"\n  ─── llama.cpp (transcribe.sh — no logprobs) — {cpp_t:.1f}s ───")
         print(f"  Hindi      │ {hindi_cpp}")
         print(f"  Nastaliq   │ {nastaliq_cpp}")
         print(f"  Roman Urdu │ {roman_cpp}")
@@ -295,6 +463,8 @@ def main():
                              "Use 'None' or empty for auto-detect.")
     parser.add_argument("--compare", "-c", action="store_true",
                         help="Also run llama.cpp path and show side-by-side comparison")
+    parser.add_argument("--conf-table", action="store_true",
+                        help="Show full per-word confidence table (min/geo/n_tokens/flag)")
     parser.add_argument("--max-new-tokens", type=int, default=MAX_NEW_TOKENS,
                         help=f"Max output tokens (default: {MAX_NEW_TOKENS}).")
     args = parser.parse_args()
@@ -320,7 +490,8 @@ def main():
         if not audio.exists():
             log.warning(f"Skipping (not found): {audio}")
             continue
-        process_one(audio, language=lang, compare=args.compare)
+        process_one(audio, language=lang, compare=args.compare,
+                    show_conf_table=args.conf_table)
 
     print(f"\n{'─' * 72}")
     log.info(f"Total wall time: {time.time() - total_start:.1f}s for {len(targets)} file(s)")
