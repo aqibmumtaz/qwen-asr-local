@@ -211,33 +211,57 @@ class WordConf:
         return self.conf_min < LOW_CONF_THRESHOLD
 
 
-def _aggregate_tokens_to_words(token_pieces: list[str],
-                               logprobs: list[float]) -> list[WordConf]:
-    """Group sub-tokens into words by whitespace. Computes min + geo-mean confidence."""
-    words: list[WordConf] = []
-    cur_text: str = ""
-    cur_lps:  list[float] = []
+def _aggregate_tokens_to_words(tokenizer,
+                               gen_ids: list[int],
+                               logprobs: list[float],
+                               raw_tokens: list[str] | None = None,
+                               ) -> list[WordConf]:
+    """
+    Group BPE sub-tokens into Devanagari/Latin words.
 
-    def _flush():
-        if cur_text:
-            words.append(WordConf(
-                text=cur_text,
-                conf_min=math.exp(min(cur_lps)),
-                conf_geo=math.exp(sum(cur_lps) / len(cur_lps)),
-                n_tokens=len(cur_lps),
-            ))
+    Qwen3 uses GPT-style ByteLevel BPE where a leading space is encoded as
+    the special character 'Ġ' (U+0120) at the start of a token. We use that
+    as the word-boundary marker, then decode each group together so multi-byte
+    Devanagari characters reassemble correctly.
 
-    for piece, lp in zip(token_pieces, logprobs):
-        if not piece:
+    Special / EOS tokens (e.g. <|im_end|>) are excluded from words.
+    """
+    if raw_tokens is None:
+        raw_tokens = tokenizer.convert_ids_to_tokens(gen_ids)
+
+    # Find indices of special tokens to exclude
+    special_ids = set(getattr(tokenizer, "all_special_ids", []) or [])
+
+    # Group token indices into words: a new word starts when raw token has 'Ġ' prefix
+    groups: list[list[int]] = []
+    current: list[int] = []
+    for i, (tid, raw) in enumerate(zip(gen_ids, raw_tokens)):
+        if tid in special_ids:
+            # close current word, drop the special token itself
+            if current:
+                groups.append(current)
+            current = []
             continue
-        # A leading space means "new word starts here"
-        if piece.startswith(" ") and cur_text:
-            _flush()
-            cur_text, cur_lps = "", []
-        cur_text += piece.lstrip(" ")
-        cur_lps.append(lp)
-    _flush()
+        if raw.startswith("Ġ") and current:
+            groups.append(current)
+            current = []
+        current.append(i)
+    if current:
+        groups.append(current)
 
+    words: list[WordConf] = []
+    for group in groups:
+        word_ids = [gen_ids[i] for i in group]
+        word_text = tokenizer.decode(word_ids, skip_special_tokens=False).strip()
+        if not word_text:
+            continue
+        lps = [logprobs[i] for i in group]
+        words.append(WordConf(
+            text=word_text,
+            conf_min=math.exp(min(lps)),
+            conf_geo=math.exp(sum(lps) / len(lps)),
+            n_tokens=len(lps),
+        ))
     return words
 
 
@@ -286,26 +310,37 @@ def hf_asr_with_confidence(audio_path: Path,
     model = get_asr_model()
     lang = language or LANGUAGE
 
+    # Patch the INNER thinker.generate (the LLM that emits tokens), not the
+    # outer Qwen3ASR.generate — the outer one already hardcodes
+    # return_dict_in_generate=True when it calls thinker.generate, so
+    # adding it from outside causes a duplicate-kwarg TypeError.
     captured: dict = {"outputs": None}
-    orig_generate = model.model.generate
+    target = getattr(model.model, "thinker", None)
+    if target is None or not hasattr(target, "generate"):
+        log.warning("Inner thinker.generate not found; using plain transcribe.")
+        text, elapsed = hf_asr(audio_path, language=language)
+        return text, elapsed, []
+
+    orig_generate = target.generate
 
     def patched_generate(*args, **kwargs):
         kwargs["output_scores"] = True
-        kwargs["return_dict_in_generate"] = True
+        # return_dict_in_generate is already passed by qwen-asr; do not set it
+        # here, only ensure it's True (idempotent)
+        kwargs.setdefault("return_dict_in_generate", True)
         result = orig_generate(*args, **kwargs)
         captured["outputs"] = result
-        # Return just the sequences tensor (qwen-asr expects this)
-        return result.sequences
+        return result
 
     t0 = time.time()
     try:
-        model.model.generate = patched_generate
+        target.generate = patched_generate
         results = model.transcribe(
             audio=[str(audio_path)],
             language=[lang] if lang else None,
         )
     finally:
-        model.model.generate = orig_generate
+        target.generate = orig_generate
     elapsed = time.time() - t0
 
     text = results[0].text if results else ""
@@ -323,13 +358,11 @@ def hf_asr_with_confidence(audio_path: Path,
             # gen_ids are the LAST len(scores) tokens of sequences
             n_gen = len(out.scores)
             gen_ids = out.sequences[0, -n_gen:].tolist()
-            logprobs = []
-            for s, tid in zip(out.scores, gen_ids):
-                lp = torch.log_softmax(s[0].float(), dim=-1)[tid].item()
-                logprobs.append(lp)
-            # Decode each token individually so we can find whitespace boundaries
-            pieces = [tok.decode([tid], skip_special_tokens=False) for tid in gen_ids]
-            word_confs = _aggregate_tokens_to_words(pieces, logprobs)
+            logprobs = [
+                torch.log_softmax(s[0].float(), dim=-1)[tid].item()
+                for s, tid in zip(out.scores, gen_ids)
+            ]
+            word_confs = _aggregate_tokens_to_words(tok, gen_ids, logprobs)
         except Exception as e:
             log.warning(f"Could not extract token confidences: {e}")
 
