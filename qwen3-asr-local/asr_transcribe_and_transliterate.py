@@ -13,13 +13,14 @@ adapted for a local CLI:
   - startup config + system info dump
 
 Per-word confidence extraction:
-  - Monkey-patches model.model.generate to enable output_scores=True
+  - Monkey-patches model.model.thinker.generate to enable output_scores=True
   - Computes per-token logprobs from greedy logits
-  - Aggregates sub-tokens to words by whitespace
-  - Reports two scores per word:
-      conf_min  = exp(min logprob)  — flags any uncertain sub-token (review-trigger)
-      conf_geo  = exp(mean logprob) — geometric mean (sortable score)
-  - Words with conf_min < LOW_CONF_THRESHOLD (default 0.5) are flagged
+  - Aggregates sub-tokens to words by BPE space-marker ('Ġ' prefix)
+  - Reports two confidence scores per word:
+      Min Conf = exp(min logprob)   — surfaces any uncertain sub-token (FLAG metric)
+      Geo Conf = exp(mean logprob)  — geometric mean confidence (sort metric)
+  - Words with Min Conf < LOW_CONF_THRESHOLD (default 0.5) are flagged LOW
+  - See ard/word-level-confidence.md for the full design + rationale.
 
 After ASR, the Hindi Devanagari text is fed to our transliteration pipeline:
   - Urdu Nastaliq via GokulNC HindustaniTransliterator
@@ -38,7 +39,7 @@ Env vars (all optional):
     DTYPE               bfloat16 / float16 / float32 / auto
     MAX_NEW_TOKENS      default: 1024
     LANGUAGE            default: Hindi
-    LOW_CONF_THRESHOLD  default: 0.5 (below this, word is flagged)
+    LOW_CONF_THRESHOLD  default: 0.7 (below this, word is flagged)
 """
 
 import argparse
@@ -195,20 +196,29 @@ def get_asr_model():
 # on a single call, then aggregate per-token logprobs into per-word confidence.
 # See ard/hindi-to-roman-urdu-design.md and the research report for details.
 
-LOW_CONF_THRESHOLD = float(os.getenv("LOW_CONF_THRESHOLD", "0.5"))
+LOW_CONF_THRESHOLD = float(os.getenv("LOW_CONF_THRESHOLD", "0.7"))
 
 
 @dataclass
 class WordConf:
-    """A word + its confidence (both min-token and geometric-mean variants)."""
+    """
+    Per-word confidence record. Two confidence summaries:
+
+      min_conf  — minimum confidence across the word's sub-tokens.
+                  Captures "any sub-token was uncertain" — best for flagging.
+      geo_conf  — geometric mean of sub-token confidences = exp(mean(logprobs)).
+                  Length-normalised joint confidence — best for sorting/ranking.
+
+    Flagging uses `min_conf`. See ard/word-level-confidence.md for rationale.
+    """
     text:        str
-    conf_min:    float   # min token prob — surfaces "any sub-token was unsure" → flag for review
-    conf_geo:    float   # exp(mean(logprobs)) — well-calibrated joint prob → sortable score
+    min_conf:    float   # min sub-token confidence (used for flagging)
+    geo_conf:    float   # geometric mean — exp(mean(logprobs))
     n_tokens:    int = 1
 
     @property
     def is_low(self) -> bool:
-        return self.conf_min < LOW_CONF_THRESHOLD
+        return self.min_conf < LOW_CONF_THRESHOLD
 
 
 def _aggregate_tokens_to_words(tokenizer,
@@ -258,8 +268,8 @@ def _aggregate_tokens_to_words(tokenizer,
         lps = [logprobs[i] for i in group]
         words.append(WordConf(
             text=word_text,
-            conf_min=math.exp(min(lps)),
-            conf_geo=math.exp(sum(lps) / len(lps)),
+            min_conf=math.exp(min(lps)),
+            geo_conf=math.exp(sum(lps) / len(lps)),
             n_tokens=len(lps),
         ))
     return words
@@ -403,20 +413,26 @@ def _format_conf_inline(word_confs: list[WordConf]) -> str:
     parts = []
     for wc in word_confs:
         flag = "*" if wc.is_low else ""
-        parts.append(f"{wc.text}({wc.conf_min:.2f}{flag})")
+        parts.append(f"{wc.text}({wc.min_conf:.2f}{flag})")
     return " ".join(parts)
 
 
 def _format_conf_table(word_confs: list[WordConf]) -> str:
-    """Multi-line table: word | min | geo | n_tokens | flag."""
+    """Per-word table: word | Min Conf | Geo Conf | Tokens | Flag.
+
+    Min Conf = exp(min token logprob)   — minimum sub-token confidence; flagging metric
+    Geo Conf = exp(mean token logprob)  — geometric mean confidence; sortable score
+    Tokens   = number of BPE sub-tokens
+    Flag     = "LOW" if Min Conf < LOW_CONF_THRESHOLD (default 0.5)
+    """
     if not word_confs:
         return "  (no per-word confidence captured)"
-    rows = [f"  {'Word':<20} {'min':>6} {'geo':>6} {'tok':>4}  {'flag'}"]
-    rows.append(f"  {'-' * 20} {'-' * 6} {'-' * 6} {'-' * 4}  {'-' * 4}")
+    rows = [f"  {'Word':<20} {'Min Conf':>9} {'Geo Conf':>9} {'Tokens':>7}  Flag"]
+    rows.append(f"  {'-' * 20} {'-' * 9} {'-' * 9} {'-' * 7}  ----")
     for wc in word_confs:
         flag = "LOW" if wc.is_low else ""
-        rows.append(f"  {wc.text[:20]:<20} {wc.conf_min:>6.3f} "
-                    f"{wc.conf_geo:>6.3f} {wc.n_tokens:>4}  {flag}")
+        rows.append(f"  {wc.text[:20]:<20} {wc.min_conf:>9.3f} "
+                    f"{wc.geo_conf:>9.3f} {wc.n_tokens:>7}  {flag}")
     return "\n".join(rows)
 
 
