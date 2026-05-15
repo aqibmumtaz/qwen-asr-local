@@ -1,6 +1,6 @@
 Hindi (ASR)          : आज का मौसम बहुत अच्छा है। हम एक नई टेक्नोलॉजी को आजमा रहे हैं।
 Urdu Nastaliq        : آج کا موسم بہت اچْچھا ہے۔ ہم ایک نئی ٹیکْنولاجی کو آجما رہے ہیں۔
-Roman Urdu           : aaj ka mausam bahut acha hai. hum ek nai teknoloji ko aajma rahe hain.
+Roman Urdu           : aaj ka mausam bahut acha hai. hum ek nai technology ko aazma rahe hain.
 
 Per-word confidence (min token prob, geo-mean prob):
   Word                  Min Conf  Geo Conf  Tokens  Flag

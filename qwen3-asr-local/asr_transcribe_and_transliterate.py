@@ -39,7 +39,7 @@ Env vars (all optional):
     DTYPE               bfloat16 / float16 / float32 / auto
     MAX_NEW_TOKENS      default: 1024
     LANGUAGE            default: English (gives better nukta-emission on Mac CPU)
-    LOW_CONF_THRESHOLD  default: 0.7 (below this, word is flagged)
+    LOW_CONF_THRESHOLD  default: 0.65 (below this, word is flagged)
 """
 
 import argparse
@@ -196,7 +196,7 @@ def get_asr_model():
 # on a single call, then aggregate per-token logprobs into per-word confidence.
 # See ard/hindi-to-roman-urdu-design.md and the research report for details.
 
-LOW_CONF_THRESHOLD = float(os.getenv("LOW_CONF_THRESHOLD", "0.7"))
+LOW_CONF_THRESHOLD = float(os.getenv("LOW_CONF_THRESHOLD", "0.65"))
 
 
 @dataclass
@@ -218,7 +218,7 @@ class WordConf:
 
     @property
     def is_low(self) -> bool:
-        return self.min_conf < LOW_CONF_THRESHOLD
+        return self.min_conf <= LOW_CONF_THRESHOLD
 
 
 def _aggregate_tokens_to_words(tokenizer,
@@ -423,7 +423,7 @@ def _format_conf_table(word_confs: list[WordConf]) -> str:
     Min Conf = exp(min token logprob)   — minimum sub-token confidence; flagging metric
     Geo Conf = exp(mean token logprob)  — geometric mean confidence; sortable score
     Tokens   = number of BPE sub-tokens
-    Flag     = "LOW" if Min Conf < LOW_CONF_THRESHOLD (default 0.7)
+    Flag     = "LOW" if Min Conf < LOW_CONF_THRESHOLD (default 0.65)
     """
     if not word_confs:
         return "  (no per-word confidence captured)"
@@ -509,7 +509,7 @@ def process_one(audio: Path, language: str = LANGUAGE, compare: bool = False,
 
     n_low = sum(1 for w in word_confs if w.is_low)
     conf_summary = (
-        f"  ({len(word_confs)} words, {n_low} flagged <{LOW_CONF_THRESHOLD:.2f})"
+        f"  ({len(word_confs)} words, {n_low} flagged ≤{LOW_CONF_THRESHOLD:.2f})"
         if word_confs else ""
     )
 
