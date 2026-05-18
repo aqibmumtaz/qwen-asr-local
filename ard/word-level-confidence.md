@@ -583,4 +583,35 @@ of just the inline summary.
 - [`hindi-to-roman-urdu-design.md`](hindi-to-roman-urdu-design.md) — the
   downstream transliteration step that runs after ASR.
 - [`deployment-plan.md`](deployment-plan.md) — Rust handover plan
-  (production stack will use vLLM backend for confidence extraction).
+    (production stack will use vLLM backend for confidence extraction).
+
+---
+
+## 13. Latest Example Output (May 2026)
+
+**Roman Urdu transcription (low-confidence words marked with *):**
+
+mera naam Aqib* hai. yeh Urdu zaban* mein awaz ki shanaakht* ka test hai.
+
+(* = low-confidence word)
+
+**Word-by-word confidence table:**
+
+| Hindi      | Roman Urdu | Min Conf | Geo Conf | Flag |
+|------------|------------|----------|----------|------|
+| मेरा       | mera       | 1.00     | 1.00     |      |
+| नाम        | naam       | 1.00     | 1.00     |      |
+| अपीब       | Aqib       | 0.65     | 0.87     | LOW  |
+| है।        | hai.       | 0.69     | 0.91     |      |
+| ये         | yeh        | 0.99     | 1.00     |      |
+| उर्दू      | Urdu       | 0.81     | 0.96     |      |
+| ज़बान      | zaban      | 0.45     | 0.83     | LOW  |
+| में        | mein       | 1.00     | 1.00     |      |
+| आवाज़      | awaz       | 0.73     | 0.95     |      |
+| की         | ki         | 1.00     | 1.00     |      |
+| शनाख्त     | shanaakht  | 0.56     | 0.90     | LOW  |
+| का         | ka         | 1.00     | 1.00     |      |
+| टेस्ट      | test       | 1.00     | 1.00     |      |
+| है।        | hai.       | 0.98     | 0.99     |      |
+
+---
