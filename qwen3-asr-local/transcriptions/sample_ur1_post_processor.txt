@@ -1,6 +1,6 @@
 Hindi (ASR)          : मेरा नाम अपीब है। ये उर्दू ज़बान में आवाज़ की शनाख्त का टेस्ट है।
 Urdu Nastaliq        : میرا نام اپیب ہے۔ یے ارْدو ج़بان میں آواج़ کی شناکھْت کا ٹیسْٹ ہے۔
-Roman Urdu           : mera naam apeeb hai. yeh Urdu zaban mein awaz ki shanaakht ka test hai.
+Roman Urdu           : mera naam Aqib hai. yeh Urdu zaban mein awaz ki shanaakht ka test hai.
 
 Per-word confidence (min token prob, geo-mean prob):
   Word                  Min Conf  Geo Conf  Tokens  Flag
