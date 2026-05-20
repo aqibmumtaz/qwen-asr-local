@@ -1,0 +1,63 @@
+Loading Qwen/Qwen3-ASR-1.7B...
+vLLM not available; falling back to transformers backend (Qwen3ASRModel.from_pretrained).
+
+=================================================================
+Upsample Comparison: 8 kHz original vs 16 kHz WavePad
+=================================================================
+
+[Prep] Converting / caching audio...
+  Using pre-extracted last-20s clips.
+
+[ASR] Loading model (language='English')...
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.72s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.79s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:05<00:00,  2.93s/it]
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Model loaded in 15.4s (transformers backend, device=cpu, dtype=float32)
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+
+── Running ASR: 8kHz_original ──
+    chunk 01/2   25.0s   17w  avg_conf=0.726  →  November booking confirmed. November sir, November till. आपका visit हो
+    chunk 02/2   28.3s   21w  avg_conf=0.668  →  Okay. Call transfer के जारी किंतु के साथ से के जरूरत पैरे call करने का
+  Done in 53.6s | words=38 flagged=16 avg_conf=0.694 min_conf=0.283
+
+── Running ASR: 16kHz_wavepad ──
+    chunk 01/2   19.1s   17w  avg_conf=0.747  →  November booking confirmed. November sir, November till. आपका visit हो
+    chunk 02/2   27.0s   21w  avg_conf=0.707  →  okay call transfer के जारी किंतु के साथ जो के जो पहले call करने का शिफ
+  Done in 46.5s | words=38 flagged=15 avg_conf=0.724 min_conf=0.366
+
+=================================================================
+COMPARISON SUMMARY
+=================================================================
+Metric                            8kHz_orig  16kHz_WavePad         Δ
+--------------------------------------------------------------------
+Words transcribed                        38             38        +0  
+Low-conf words                           16             15        -1  lower=better
+Avg confidence                        0.694          0.724    +0.031  higher=better
+Min confidence                        0.283          0.366    +0.083  higher=better
+ASR wall-time (s)                    53.312         46.162    -7.150  
+
+────────────────────────────────────────────────────────────────────
+Word-level diff (Hindi tokens):
+  Common words        : 30
+  Added in 16k        : 8
+  Removed in 16k      : 8
+  Sequence similarity : 78.9%
+
+────────────────────────────────────────────────────────────────────
+Transcripts:
+
+  [8kHz_original]
+  Hindi    : November booking confirmed. November sir, November till. आपका visit हो जाएगा. ओके ओके. Thank you. जी मास्टर Okay. Call transfer के जारी किंतु के साथ से के जरूरत पैरे call करने का शिफ्ट या देखिए अलाव म...
+  Nastaliq : November booking confirmed. November sir، November till. آپکا visit ہو جائےگا. اوکے اوکے. Thank you. جی ماسْٹر Okay. Call transfer کے جاری کںت کے ساتھ سے کے جرورت پیرے call کرنے کا شپھْٹ یا دیکھئے الا...
+  Roman    : November booking confirmed. November sir, November till. aapka visit ho jayega. okay okay. thank you. ji maastar Okay. Call transfer ke jari kintu ke saath se ke jaroorat paire call karne ka shipht ya...
+
+  [16kHz_wavepad]
+  Hindi    : November booking confirmed. November sir, November till. आपका visit हो जाएगा. Oh, oh. Thank you. जी मास्टर okay call transfer के जारी किंतु के साथ जो के जो पहले call करने का शिफ्ट या देखिए अलाव पे अला...
+  Nastaliq : November booking confirmed. November sir، November till. آپکا visit ہو جائےگا. Oh، oh. Thank you. جی ماسْٹر okay call transfer کے جاری کںت کے ساتھ جو کے جو پہلے call کرنے کا شپھْٹ یا دیکھئے الاو پے ال...
+  Roman    : November booking confirmed. November sir, November till. aapka visit ho jayega. Oh, oh. thank you. ji maastar okay call transfer ke jari kintu ke saath jo ke jo pahle call karne ka shipht ya dekhiye a...
+
+Saved: optimization/results/in-4234500300-+923000308246-20260502-195955-1777733995.999525.upsample_comparison.json
+=================================================================
+

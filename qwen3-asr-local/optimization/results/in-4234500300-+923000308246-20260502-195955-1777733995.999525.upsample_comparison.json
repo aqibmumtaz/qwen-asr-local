@@ -1,0 +1,37 @@
+{
+  "stem": "in-4234500300-+923000308246-20260502-195955-1777733995.999525",
+  "language": "English",
+  "chunk_s": 12,
+  "results": {
+    "8kHz_original": {
+      "tag": "8kHz_original",
+      "duration_s": 20.0,
+      "asr_seconds": 53.31206488609314,
+      "n_words": 38,
+      "n_flagged": 16,
+      "avg_conf": 0.6936100818999236,
+      "min_conf": 0.2834278010578403,
+      "hyp_hindi": "November booking confirmed. November sir, November till. आपका visit हो जाएगा. ओके ओके. Thank you. जी मास्टर Okay. Call transfer के जारी किंतु के साथ से के जरूरत पैरे call करने का शिफ्ट या देखिए अलाव में. Hello.",
+      "hyp_nastaliq": "November booking confirmed. November sir، November till. آپکا visit ہو جائےگا. اوکے اوکے. Thank you. جی ماسْٹر Okay. Call transfer کے جاری کںت کے ساتھ سے کے جرورت پیرے call کرنے کا شپھْٹ یا دیکھئے الاو میں. Hello.",
+      "hyp_roman": "November booking confirmed. November sir, November till. aapka visit ho jayega. okay okay. thank you. ji maastar Okay. Call transfer ke jari kintu ke saath se ke jaroorat paire call karne ka shipht ya dekhiye alaaw mein. Hello."
+    },
+    "16kHz_wavepad": {
+      "tag": "16kHz_wavepad",
+      "duration_s": 20.0,
+      "asr_seconds": 46.16204881668091,
+      "n_words": 38,
+      "n_flagged": 15,
+      "avg_conf": 0.7244520880581051,
+      "min_conf": 0.36626410372659723,
+      "hyp_hindi": "November booking confirmed. November sir, November till. आपका visit हो जाएगा. Oh, oh. Thank you. जी मास्टर okay call transfer के जारी किंतु के साथ जो के जो पहले call करने का शिफ्ट या देखिए अलाव पे अलाव",
+      "hyp_nastaliq": "November booking confirmed. November sir، November till. آپکا visit ہو جائےگا. Oh، oh. Thank you. جی ماسْٹر okay call transfer کے جاری کںت کے ساتھ جو کے جو پہلے call کرنے کا شپھْٹ یا دیکھئے الاو پے الاو",
+      "hyp_roman": "November booking confirmed. November sir, November till. aapka visit ho jayega. Oh, oh. thank you. ji maastar okay call transfer ke jari kintu ke saath jo ke jo pahle call karne ka shipht ya dekhiye alaaw pe alaaw"
+    }
+  },
+  "diff": {
+    "common": 30,
+    "added_in_16k": 8,
+    "removed_in_16k": 8,
+    "similarity": 0.7894736842105263
+  }
+}

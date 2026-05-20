@@ -1,0 +1,46 @@
+{
+  "audio_stem": "in-4234500300-+923000754715-20260501-221336-1777655616.988465",
+  "language": "English",
+  "asr_seconds": 328.5676233768463,
+  "audio_info": {
+    "src_rate": 8000,
+    "src_channels": 1,
+    "duration_s": 96.072
+  },
+  "n_turns_gt": 22,
+  "n_words_asr": 219,
+  "n_words_flagged": 74,
+  "chunks": 9,
+  "chunk_seconds": 12,
+  "hyp_hindi": "Assalamualaikum. Look, Taile, I will start the conversation. Please, sing. Waalaikum salam, Hasan. How are you? Hello, Mr. Hasan. I hope you are doing well. Please, sing. अच्छा मैंने ना वो दो टेस्ट करवाए थे अगर आपके पास मेरे इसी नंबर से डिटेल आ रही हो तो मुझे कैंडल ये बता सकते हैं मुझे उसके रिजल्ट्स कब तक मिल जाएंगे हम्म बिल्कुल आपको क्या कह दूँ सर आपका नाम जानना Muhammad Hanzala Alvi. Sir Hanzala Alvi, Lahore. Sir, बात कर रहे हैं सर आप? जिलाहार से बात कर रहे हैं हम। Number यही provide किया तरफ बोर्ड के लिए जैसे कि आपको नेक्स्ट रिकॉर्ड करेंगे। यही यही provide किया था। I check it. Report says Naseem Mumtaz Ali's name. I check it. Please wait a little. Yes, yes, sure, sure. Okay. बिल्कुल एक दोटा साफ़ने करवाए थे भी लेकिन अब एंड ब्लड शुगर एंड आपको गाइड करना सैंपल का आपका सैंपल मशीन में रन नहो रहे हैं प्रोसेस में लगे हुए तो जारी जैसे रिपोर्ट तैयार होगी आपको ये रिपोर्ट शेयर करेंगे जी कॉपी लेटने तक आपकी रिपोर्ट तैयार हो जाएगी sir. चले late night में आते चले ठीक है thank you thank you समझ समझ सकते माफ़ करो आप भी call को transfer करो कितने के लेटर का इलाफ़ call करने का शायद शायद अब आप बता Yeah.",
+  "hyp_nastaliq": "Assalamualaikum. Look، Taile، I will start the conversation. Please، sing. Waalaikum salam، Hasan. How are you؟ Hello، Mr. Hasan. I hope you are doing well. Please، sing. اچْچھا میںنے نا وو دو ٹیسْٹ کروائے تھے اگر آپکے پاس میرے اسی نںبر سے ڈٹیل آ رہی ہو تو مجھے کیںڈل یے بتا سکتے ہیں مجھے اسکے رجلْٹْس کب تک مل جائےںگے ہمّ بلْکل آپکو کْیا کہ دوں سر آپکا نام جاننا Muhammad Hanzala Alvi. Sir Hanzala Alvi، Lahore. Sir، بات کر رہے ہیں سر آپ؟ جلاہار سے بات کر رہے ہیں ہم۔ Number یہی provide کیا ترپھ بورْڈ کے لئے جیسے ک آپکو نیکْسْٹ رکارْڈ کریںگے۔ یہی یہی provide کیا تھا۔ I check it. Report says Naseem Mumtaz Ali's name. I check it. Please wait a little. Yes، yes، sure، sure. Okay. بلْکل ایک دوٹا ساپھ़نے کروائے تھے بھی لیکن اب ایںڈ بْلڈ شگر ایںڈ آپکو گاإڈ کرنا سیںپل کا آپکا سیںپل مشین میں رن نہو رہے ہیں پْروسیس میں لگے ہوئے تو جاری جیسے رپورْٹ تییار ہوگی آپکو یے رپورْٹ شییر کریںگے جی کاپی لیٹنے تک آپکی رپورْٹ تییار ہو جائےگی sir. چلے late night میں آتے چلے ٹھیک ہے thank you thank you سمجھ سمجھ سکتے ماپھ़ کرو آپ بھی call کو transfer کرو کتنے کے لیٹر کا الاپھ़ call کرنے کا شاید شاید اب آپ بتا Yeah.",
+  "hyp_roman": "Assalamualaikum. Look, Taile, I will start the conversation. Please, sing. Waalaikum salam, Hassan. How are you? Hello, Mr. Hassan. I hope you are doing well. Please, sing. acha maine na woh do test karawaae the agar aapke paas mere isi number se ditel aa rahi ho to mujhe kaindal yeh bata sakte hain mujhe uske rijalts kab tak mil jayenge hamm bilkul aapko kya kah doon sir aapka naam janna Muhammad Hanzala Alvi. Sir Hanzala Alvi, Lahore. Sir, baat kar rahe hain sir aap? jilaahaar se baat kar rahe hain hum. Number yahi provide kiya taraph bord ke liye jaise ki aapko nekst rikord karenge. yahi yahi provide kiya tha. I check it. Report says Naseem Mumtaz Ali's name. I check it. Please wait a little. Yes, yes, sure, sure. Okay. bilkul ek dota saafne karawaae the bhi lekin ab end blood sugar end aapko gaaid karna sample ka aapka sample masheen mein ran naho rahe hain proses mein lage hue to jari jaise report tayyar hogi aapko yeh report share karenge ji copy letne tak aapki report tayyar ho jayegi sir. chale late night mein aate chale theek hai thank you thank you samajh samajh sakte maaf karo aap bhi call ko transfer karo kitne ke letar ka ilaaf call karne ka shaayad shaayad ab aap bata Yeah.",
+  "gt_codeswitched": "اسلام علیکم چغتائی لیب سے حسن بات کر رہا ہوں please بتائیے گا وعلیکم اسلام حسن کیسے ہیں آپ ؟ الحمداللہ فرمائیے آپ بھی ٹھیک ٹھاک ہونگے سر خیریت سے ہونگے please بتائے گا جی خیریت اچھا میں نے نا وہ دو test کروائے تھے اگر آپ کے پاس میری اسی نمبر سے detail آرہی ہو تو مجھے Guide یہ بتا سکتے ہے مجھے اسکے results کب تک مل جائنگے ؟ میں بلکل آپ کو Guide کر رہا ہو سر آپ کا name جاننا چاہو گا sir مخاطب کرنے کے لیے محمد ہنزلہ علوی sir  ہنزلہ  علوی لاہور سے بات کر رہے ہیں سر آپ ؟ جی لاہور سے بات کررہا ہوں نمبر یہی provide کیا تھا رپورٹس کے لیے جس سے ابھی آپ contect کر رہے ہیں جی جی call کر رہے ہیں جی یہی provide تھا جی میں check کر رہا ہوں reports ہیں نسیم ممتاز علوی کے نام سے میں چیک کر رہا ہوں sir please wait کیجیے گا جی ٹھیک Sure Sure بلکل ایک دو test آپ نے کروائے تھے ابھی اے like HBA1C and blood suger rendom جی جی بلکل آپ کو guide کرنا سمجھلے کے آپ کا sample machine میں run ہو رہے ہیں process میں لگے ہوئے  انشاءاللہ جسے ہی report ready ہوگی آپ کو share کر دیجئے گا hopefully late night تک آپ کی report ready ہو جائے گی سر اچھا late night میں آ جائے گی چلیں ٹھیک ہے thank you thank you so much so nice of you most wellcomeآپ کی کال کو transfer کر رہا ہوں feed back کے لیے چغتائی لیب call کرنے کا شکریہ اپنا خیال رکھیے گا اللہ حافظ sure sure اللہ حافظ",
+  "gt_pure_urdu": "اسلام علیکم چغتائی لیب سے حسن بات کر رہا ہوں پلیز بتائیے گا وعلیکم اسلام حسن کیسے ہیں آپ ؟ الحمداللہ فرمائیے آپ بھی ٹھیک ٹھاک ہونگے سر خیریت سے ہونگے پلیز بتائے گا جی خیریت اچھا میں نے نا وہ دو ٹیسٹ کروائے تھے اگر آپ کے پاس میری اسی نمبر سے ڈیٹیل آرہی ہو تو مجھے کائنڈلی یہ بتا سکتے ہے مجھے اسکے رزلٹس کب تک مل جائنگے ؟ میں بلکل آپ کو گائیڈ کر رہا ہو سر آپ کا نایم جاننا چاہو گا سر مخاطب کرنے کے لیے محمد ہنزلہ علوی سر  ہنزلہ  علوی لاہور سے بات کر رہے ہیں سر آپ ؟ جی لاہور سے بات کررہا ہوں نمبر یہی پروائیڈ کیا تھا رپورٹس کے لیے جس سے ابھی آپ کنٹیکٹ کر رہے ہیں جی جی کال کر رہے ہیں جی یہی پروائیڈ تھا جی میں چیک کر رہا ہوں رپورٹس ہیں نسیم ممتاز علوی کے نام سے میں چیک کر رہا ہوں سر پلیز ویٹ کیجیے گا جی ٹھیک شور شور بلکل ایک دو ٹیسٹ آپ نے کروائے تھے ابھی اے لائیک ایچ بی اے ون سی این بلڈ شوگر رینڈم جی جی بلکل آپ کو گائیڈ کرنا سمجھلے کے آپ کا سیمپل مشین میں رن ہو رہے ہیں پروسیس میں لگے ہوئے  انشاءاللہ جسے ہی رپورٹ ریڈی ہوگی آپ کو شئیر کر دیجئے گا ہوپ فولی لیٹ نائیٹ تک آپ کی رپورٹ ریڈی ہو جائے گی سر اچھا لیٹ نائیٹ میں آ جائے گی چلیں ٹھیک ہے تھینک یو تھینک یو سو مچ سو نائس آف یو موسٹ ویلکم سر آپ کی کال کو ٹرانسفر کر رہا ہوں فیڈ بیک کے لیے چغتائی لیب کال کرنے کا شکریہ اپنا خیال رکھیے گا اللہ حافظ شور شور اللہ حافظ",
+  "scores": {
+    "nastaliq_vs_codeswitched": {
+      "wer": 0.7591240875912408,
+      "cer": 0.5602893890675241,
+      "hyp_words": 220,
+      "ref_words": 274
+    },
+    "nastaliq_vs_pure_urdu": {
+      "wer": 0.8149466192170819,
+      "cer": 0.5690653432588917,
+      "hyp_words": 220,
+      "ref_words": 281
+    },
+    "hindi_vs_codeswitched": {
+      "wer": 0.9306569343065694,
+      "cer": 0.7861736334405145,
+      "hyp_words": 220,
+      "ref_words": 274
+    },
+    "hindi_vs_pure_urdu": {
+      "wer": 1.0,
+      "cer": 0.8444995864350703,
+      "hyp_words": 220,
+      "ref_words": 281
+    }
+  }
+}
