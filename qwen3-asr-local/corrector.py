@@ -78,8 +78,8 @@ Known domain entities and common ASR corrections for this call-center:
   - es + romalikoom = assalam o alaikum   (Islamic greeting, often split/garbled)
   - assalam / assalaam = assalam o alaikum
   - walekum / waalekum = walaikum
-  - daanishli / danishli = danish ali     (agent name)
-  - chukaai / chugai / chukkai = chughtai (Chughtai Lab — medical lab)
+  - daanishli / danishli = danish ali     (person name — TWO words: first + last name)
+  - chukaai / chugai / chukkai = chughtai (LAB name — ONE word, always before "lab"; NOT a person name)
   - karun / karun. = kar raha hoon        (verb: "am talking/doing")
   - kontoon = kya                         (question word)
   - aisan / aise men = aise mein
@@ -107,30 +107,31 @@ class QwenBackend:
     # System prompt: role + domain glossary + output format rules
     _SYSTEM = (
         "/no_think\n"
-        "You are an Urdu ASR post-corrector for a medical call-center transcription system.\n\n"
+        "You are an Urdu ASR post-corrector for a medical call-center transcription system.\n"
+        "Words marked [FIX:word] are low-confidence and likely garbled or wrong.\n"
+        "Unmarked words are correct — copy them exactly as-is.\n\n"
         f"{DOMAIN_GLOSSARY}\n"
-        "You will receive garbled word groups labeled GROUP_1, GROUP_2, etc.\n"
-        "For each group output the correct Roman Urdu replacement — pipe-separated.\n"
         "Rules:\n"
-        "  1. Use the glossary above and your Urdu knowledge.\n"
-        "  2. A group may be one garbled word or multiple consecutive garbled words "
-        "that together form one phrase (e.g. 'es romalikoom' = 'assalam o alaikum').\n"
+        "  1. Fix [FIX:...] words using the glossary above and your Urdu knowledge.\n"
+        "  2. Multiple consecutive [FIX:] words may together form one phrase "
+        "(e.g. [FIX:es] [FIX:romalikoom] = assalam o alaikum).\n"
         "  3. A single garbled word may expand to multiple words.\n"
-        "  4. Output ONLY the pipe-separated corrections in order. Nothing else.\n"
-        "  5. If a group cannot be corrected, repeat it unchanged."
+        "  4. Output ONLY the corrected Roman Urdu sentence. Nothing else."
     )
 
     def __init__(
         self,
-        model_id:   str          = MODEL_ID,
-        max_tokens: int          = 512,
-        device:     Optional[str] = None,
+        model_id:     str          = MODEL_ID,
+        max_tokens:   int          = 512,
+        device:       Optional[str] = None,
+        use_guardrail: bool         = True,   # re-inserts dropped high-conf words
     ):
-        self.model_id   = model_id
-        self.max_tokens = max_tokens  # 512 needed — 0.6B uses think block before answering
-        self._tok       = None
-        self._model     = None
-        self._device    = device or self._pick_device()
+        self.model_id      = model_id
+        self.max_tokens    = max_tokens  # 512 needed — 0.6B uses think block before answering
+        self.use_guardrail = use_guardrail
+        self._tok          = None
+        self._model        = None
+        self._device       = device or self._pick_device()
         self._load()
 
     @staticmethod
@@ -154,116 +155,116 @@ class QwenBackend:
         self._model.eval()
         log.info(f"QwenBackend ready — {self.model_id} on {self._device}.")
 
-    def _build_groups(self, words: List[WordEntry]):
-        """
-        Split words into alternating high-conf and flagged segments.
-        Returns list of (is_flagged, [words]) tuples.
-        High-conf words are code-controlled — never touched by LLM.
-        Consecutive flagged words form one group (one LLM correction).
-        """
-        segments = []
-        i = 0
-        while i < len(words):
-            if not words[i].needs_fix:
-                # collect consecutive high-conf words
-                run = []
-                while i < len(words) and not words[i].needs_fix:
-                    run.append(words[i])
-                    i += 1
-                segments.append((False, run))
-            else:
-                # collect consecutive flagged words as one group
-                run = []
-                while i < len(words) and words[i].needs_fix:
-                    run.append(words[i])
-                    i += 1
-                segments.append((True, run))
-        return segments
+    def _annotate(self, words: List[WordEntry]) -> str:
+        """Build annotated sentence: low-conf → [FIX:word], high-conf → plain."""
+        return " ".join(
+            f"[FIX:{w.roman}]" if w.needs_fix else w.roman
+            for w in words
+        )
 
-    def _build_prompt(self, segments) -> str:
-        """
-        Ask LLM to output only pipe-separated corrections for each flagged group.
-        High-conf words are not shown to LLM as output targets.
-        """
-        flagged_groups = [grp for is_fix, grp in segments if is_fix]
-        if not flagged_groups:
-            return ""
+    # Few-shot examples — show the model exactly how to apply glossary entries.
+    # Required for small models (0.6B) to disambiguate similar-sounding proper nouns.
+    _EXAMPLES = [
+        (
+            "ji [FIX:es] [FIX:romalikoom] [FIX:chukaai] lab se [FIX:daanishli] baat [FIX:karun]",
+            "ji assalam o alaikum chughtai lab se danish ali baat kar raha hoon"
+        ),
+        (
+            "[FIX:kontoon] [FIX:maine] Muhammad [FIX:aisan] baat kar raha hoon",
+            "kya assalam o alaikum Muhammad aise mein baat kar raha hoon"
+        ),
+    ]
 
-        lines = []
-        for i, grp in enumerate(flagged_groups, 1):
-            garbled = " ".join(w.roman for w in grp)
-            lines.append(f"GROUP_{i}: {garbled}")
-
-        groups_text = "\n".join(lines)
-        expected    = " | ".join(f"correction_{i}" for i in range(1, len(flagged_groups)+1))
-
+    def _build_prompt(self, annotated: str) -> str:
+        few_shot = ""
+        for ex_in, ex_out in self._EXAMPLES:
+            few_shot += (
+                f"<|im_start|>user\n"
+                f"ASR text: {ex_in}\n"
+                f"Corrected:<|im_end|>\n"
+                f"<|im_start|>assistant\n"
+                f"{ex_out}<|im_end|>\n"
+            )
         return (
             f"<|im_start|>system\n{self._SYSTEM}<|im_end|>\n"
+            f"{few_shot}"
             f"<|im_start|>user\n"
-            f"Correct these garbled Roman Urdu word groups:\n"
-            f"{groups_text}\n\n"
-            f"Output format: {expected}<|im_end|>\n"
+            f"ASR text: {annotated}\n"
+            f"Corrected:<|im_end|>\n"
             f"<|im_start|>assistant\n"
         )
 
-    def _parse_fixes(self, raw: str, segments) -> List[str]:
-        """
-        Parse pipe-separated LLM output into a list of n_groups corrections.
-        Falls back to original garbled words if parsing fails.
-        """
-        # Strip think block
+    def _parse_output(self, raw: str) -> str:
+        """Strip think block, prompt echoes, non-Latin script. Return first clean line."""
         raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL)
         raw = re.sub(r"<think>.*",          "", raw, flags=re.DOTALL).strip()
-        # Strip Nastaliq/Devanagari lines
+        raw = re.sub(r"^corrected:\s*", "", raw, flags=re.IGNORECASE)
+        raw = re.sub(r"^output:\s*",    "", raw, flags=re.IGNORECASE)
+        raw = re.sub(r"\[FIX:([^\]]+)\]", r"\1", raw)
         lines = [
             l.strip() for l in raw.splitlines()
             if l.strip() and all(ord(c) < 0x0600 or c.isspace() for c in l)
         ]
-        raw = lines[0] if lines else ""
+        return lines[0] if lines else ""
 
-        fixes = [f.strip() for f in raw.split("|")]
-
-        # Fallback: if wrong number, use original garbled words per group
-        flagged_groups = [grp for is_fix, grp in segments if is_fix]
-        result = []
-        for i, grp in enumerate(flagged_groups):
-            original = " ".join(w.roman for w in grp)
-            result.append(fixes[i] if i < len(fixes) and fixes[i] else original)
-        return result
-
-    def _reconstruct(self, segments, fixes: List[str]) -> str:
+    def _reinsert_dropped(self, corrected: str, words: List[WordEntry]) -> str:
         """
-        Assemble final sentence — code-controlled, not model-controlled:
-          - High-conf segments → ALWAYS original words verbatim (LLM output ignored)
-          - Flagged segments   → LLM correction from fixes list (with fallback)
+        Guardrail: re-insert any high-conf word the LLM dropped.
 
-        This guarantees no unmarked word can ever be dropped, moved, or altered
-        regardless of what the LLM outputs.
+        Uses the original word order as a guide:
+        - If a dropped word had no high-conf word before it (i.e. it was first
+          or only preceded by flagged words) → prepend it.
+        - Otherwise → insert it immediately after the nearest preceding
+          high-conf word that IS present in the output.
+
+        This preserves the original relative order of clean words without
+        touching the LLM's corrections.
         """
-        result = []
-        fix_idx = 0
-        for is_fix, grp in segments:
-            if not is_fix:
-                # HIGH CONF — code writes these, not the LLM
-                result.extend(w.roman for w in grp)
+        out_tokens = corrected.split()
+        out_lower  = [t.lower() for t in out_tokens]
+
+        # Build ordered list of (original_index, roman) for high-conf words only
+        clean_indexed = [
+            (i, w.roman) for i, w in enumerate(words) if not w.needs_fix
+        ]
+
+        for idx, word in clean_indexed:
+            if word.lower() in out_lower:
+                continue  # already present — nothing to do
+
+            # Find the closest preceding high-conf word that IS in the output
+            prev_anchor = None
+            for _, prev_word in reversed(
+                [(j, w) for j, w in clean_indexed if j < idx]
+            ):
+                if prev_word.lower() in out_lower:
+                    prev_anchor = prev_word
+                    break
+
+            if prev_anchor is None:
+                # No preceding anchor → this word belongs at the very start
+                out_tokens.insert(0, word)
             else:
-                # FLAGGED — use LLM fix; fall back to original if empty/invalid
-                fix = fixes[fix_idx] if fix_idx < len(fixes) else ""
-                if not fix or not fix.strip():
-                    fix = " ".join(w.roman for w in grp)  # safe fallback
-                result.append(fix.strip())
-                fix_idx += 1
-        return " ".join(result)
+                # Insert immediately AFTER the last occurrence of prev_anchor
+                anchor_pos = max(
+                    i for i, t in enumerate(out_tokens)
+                    if t.lower() == prev_anchor.lower()
+                )
+                out_tokens.insert(anchor_pos + 1, word)
+
+            out_lower = [t.lower() for t in out_tokens]  # refresh
+
+        return " ".join(out_tokens)
 
     def correct(self, words: List[WordEntry]) -> str:
         if not any(w.needs_fix for w in words):
             return " ".join(w.roman for w in words)
 
         import torch
-        segments = self._build_groups(words)
-        prompt   = self._build_prompt(segments)
+        annotated = self._annotate(words)
+        prompt    = self._build_prompt(annotated)
+        inputs    = self._tok(prompt, return_tensors="pt").to(self._device)
 
-        inputs = self._tok(prompt, return_tensors="pt").to(self._device)
         with torch.no_grad():
             out = self._model.generate(
                 **inputs,
@@ -274,9 +275,16 @@ class QwenBackend:
                 eos_token_id=self._tok.eos_token_id,
             )
         new_tokens = out[0][inputs["input_ids"].shape[-1]:]
-        raw   = self._tok.decode(new_tokens, skip_special_tokens=True).strip()
-        fixes = self._parse_fixes(raw, segments)
-        return self._reconstruct(segments, fixes)
+        raw       = self._tok.decode(new_tokens, skip_special_tokens=True).strip()
+        corrected = self._parse_output(raw)
+
+        if not corrected:
+            return " ".join(w.roman for w in words)   # full fallback
+
+        if self.use_guardrail:
+            corrected = self._reinsert_dropped(corrected, words)
+
+        return corrected
 
 
 # ── mT5 backend — one call per flagged word ───────────────────────────────────
@@ -346,11 +354,12 @@ class Corrector:
         model_path: .gguf path for qwen, HF id or local dir for mt5
     """
 
-    def __init__(self, backend: str = "qwen", model_path: Optional[str] = None):
+    def __init__(self, backend: str = "qwen", model_path: Optional[str] = None,
+                 use_guardrail: bool = True):
         self.backend_name = backend
         if backend == "qwen":
             mid = model_path if model_path else QwenBackend.MODEL_ID
-            self._backend = QwenBackend(model_id=mid)
+            self._backend = QwenBackend(model_id=mid, use_guardrail=use_guardrail)
         elif backend == "mt5":
             mp = model_path or DEFAULT_MT5_MODEL
             self._backend = MT5Backend(model_path=mp)

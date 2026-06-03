@@ -74,7 +74,8 @@ def main():
     data = rows[1:] if max_rows == 0 else rows[1:max_rows+1]
 
     # Load corrector once — model stays in memory for all turns
-    corrector = Corrector(backend="qwen")
+    corrector_with    = Corrector(backend="qwen", use_guardrail=True)
+    corrector_without = corrector_with  # reuse same model, toggle per-call below
 
     total_before = total_after = 0
     improved = same = degraded = 0
@@ -89,28 +90,36 @@ def main():
         if not isinstance(roman_model, str) or not isinstance(reference, str):
             continue
 
-        words      = parse_words(roman_model, word_scores)
-        n_flagged  = sum(1 for w in words
+        words     = parse_words(roman_model, word_scores)
+        n_flagged = sum(1 for w in words
                         if w.min_conf < CONF_THR or w.geo_conf < GEO_THR)
-        corrected  = corrector.fix(words) if words else roman_model
 
-        acc_before = wer_accuracy(roman_model, reference)
-        acc_after  = wer_accuracy(corrected,   reference)
+        # Run with and without guardrail
+        corrector_with._backend.use_guardrail = True
+        out_with    = corrector_with.fix(words) if words else roman_model
+        corrector_with._backend.use_guardrail = False
+        out_without = corrector_with.fix(words) if words else roman_model
+        corrector_with._backend.use_guardrail = True  # restore default
+
+        acc_before   = wer_accuracy(roman_model, reference)
+        acc_with     = wer_accuracy(out_with,    reference)
+        acc_without  = wer_accuracy(out_without, reference)
         total_before += acc_before
-        total_after  += acc_after
+        total_after  += acc_with
 
-        delta  = acc_after - acc_before
+        delta  = acc_with - acc_before
         status = "↑ improved" if delta > 0.01 else ("↓ degraded" if delta < -0.01 else "= same")
         if delta > 0.01:    improved += 1
         elif delta < -0.01: degraded += 1
         else:               same += 1
 
-        print(f"Turn {i:>2} ({speaker}, t{turn})  "
-              f"flagged={n_flagged}/{len(words)}  "
-              f"before={acc_before:.2f}  after={acc_after:.2f}  {status}")
-        print(f"  ref:       {reference}")
-        print(f"  model:     {roman_model}")
-        print(f"  corrected: {corrected}")
+        print(f"Turn {i:>2} ({speaker}, t{turn})  flagged={n_flagged}/{len(words)}  "
+              f"before={acc_before:.2f}  without_guardrail={acc_without:.2f}  "
+              f"with_guardrail={acc_with:.2f}  {status}")
+        print(f"  ref:             {reference}")
+        print(f"  model:           {roman_model}")
+        print(f"  no guardrail:    {out_without}")
+        print(f"  with guardrail:  {out_with}")
         print()
 
     n = i
