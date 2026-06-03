@@ -17,6 +17,7 @@ Usage:
 import argparse
 import json
 import sys
+import time
 from pathlib import Path
 
 import openpyxl
@@ -79,8 +80,10 @@ def load_data(max_rows: int):
     return data, idx
 
 
-def run_model(model_id: str, data, idx, use_guardrail: bool = True):
+def run_model(model_id: str, data, idx, use_guardrail: bool = True,
+              verbose: bool = True):
     """Run corrector for one model across all rows. Returns list of result dicts."""
+    short     = model_id.split("/")[-1]
     corrector = Corrector(backend="qwen", model_path=model_id,
                           use_guardrail=use_guardrail)
     results = []
@@ -97,7 +100,23 @@ def run_model(model_id: str, data, idx, use_guardrail: bool = True):
         words     = parse_words(roman_model, word_scores)
         n_flagged = sum(1 for w in words
                         if w.min_conf < CONF_THR or w.geo_conf < GEO_THR)
+
+        if verbose:
+            print(f"  [{short}] Turn {turn} ({speaker}) — running...", flush=True)
+
+        t0        = time.time()
         corrected = corrector.fix(words) if words else roman_model
+        elapsed   = time.time() - t0
+
+        acc_before = wer_accuracy(roman_model, reference)
+        acc_after  = wer_accuracy(corrected,   reference)
+        delta      = acc_after - acc_before
+        status     = "✓" if acc_after >= 0.99 else ("↑" if delta > 0.01 else ("↓" if delta < -0.01 else "="))
+
+        if verbose:
+            print(f"  [{short}] Turn {turn} done — "
+                  f"before={acc_before:.2f} after={acc_after:.2f} {status} "
+                  f"({elapsed:.1f}s)", flush=True)
 
         results.append({
             "speaker":     speaker,
@@ -107,6 +126,7 @@ def run_model(model_id: str, data, idx, use_guardrail: bool = True):
             "corrected":   corrected,
             "n_flagged":   n_flagged,
             "n_words":     len(words),
+            "elapsed_s":   elapsed,
             "acc_before":  wer_accuracy(roman_model, reference),
             "acc_after":   wer_accuracy(corrected,   reference),
         })
@@ -134,17 +154,20 @@ def print_single_model(model_id: str, results: list):
 
         print(f"Turn {r['turn']:>2} ({r['speaker']})  "
               f"flagged={r['n_flagged']}/{r['n_words']}  "
-              f"before={r['acc_before']:.2f}  after={r['acc_after']:.2f}  {status}")
+              f"before={r['acc_before']:.2f}  after={r['acc_after']:.2f}  "
+              f"{r['elapsed_s']:.1f}s  {status}")
         print(f"  ref:       {r['reference']}")
         print(f"  model:     {r['roman_model']}")
         print(f"  corrected: {r['corrected']}")
         print()
 
     n = len(results)
+    avg_time = sum(r["elapsed_s"] for r in results) / n
     print(f"{'─'*70}")
     print(f"  [{short}]  Rows: {n}  |  "
           f"avg before: {total_before/n:.3f}  after: {total_after/n:.3f}  "
-          f"delta: {total_after/n - total_before/n:+.3f}")
+          f"delta: {total_after/n - total_before/n:+.3f}  "
+          f"avg time: {avg_time:.1f}s/turn")
     print(f"  Improved: {improved}  Same: {same}  Degraded: {degraded}")
 
 
@@ -175,31 +198,30 @@ def print_comparative(model_ids: list, all_results: dict, data, idx):
             if i < len(all_results[mid]):
                 r = all_results[mid][i]
                 marker = "✓" if r["acc_after"] >= 0.99 else ("↑" if r["acc_after"] > acc_before else "↓")
-                print(f"  [{short:<16}] {r['acc_after']:.2f} {marker}  {r['corrected']}")
+                print(f"  [{short:<16}] {r['acc_after']:.2f} {marker}  {r['elapsed_s']:.1f}s  {r['corrected']}")
         print()
 
     # Summary table
-    print(f"{'─'*80}")
+    print(f"{'─'*90}")
     print(f"  {'Model':<22} {'Avg Before':>11} {'Avg After':>10} {'Delta':>7} "
-          f"{'Improved':>9} {'Same':>6} {'Degraded':>9}")
-    print(f"  {'-'*22} {'-'*11} {'-'*10} {'-'*7} {'-'*9} {'-'*6} {'-'*9}")
+          f"{'Avg Time':>9} {'Improved':>9} {'Same':>6} {'Degraded':>9}")
+    print(f"  {'-'*22} {'-'*11} {'-'*10} {'-'*7} {'-'*9} {'-'*9} {'-'*6} {'-'*9}")
 
-    acc_before_ref = None
     for mid in model_ids:
         res = all_results[mid]
         if not res:
             continue
-        n = len(res)
-        avg_before = sum(r["acc_before"] for r in res) / n
-        avg_after  = sum(r["acc_after"]  for r in res) / n
+        n        = len(res)
+        avg_before = sum(r["acc_before"]  for r in res) / n
+        avg_after  = sum(r["acc_after"]   for r in res) / n
+        avg_time   = sum(r["elapsed_s"]   for r in res) / n
         improved   = sum(1 for r in res if r["acc_after"] - r["acc_before"] > 0.01)
         same       = sum(1 for r in res if abs(r["acc_after"] - r["acc_before"]) <= 0.01)
         degraded   = sum(1 for r in res if r["acc_after"] - r["acc_before"] < -0.01)
         short      = mid.split("/")[-1]
-        if acc_before_ref is None:
-            acc_before_ref = avg_before
         print(f"  {short:<22} {avg_before:>11.3f} {avg_after:>10.3f} "
-              f"{avg_after - avg_before:>+7.3f} {improved:>9} {same:>6} {degraded:>9}")
+              f"{avg_after - avg_before:>+7.3f} {avg_time:>8.1f}s "
+              f"{improved:>9} {same:>6} {degraded:>9}")
 
 
 def main():
@@ -246,8 +268,11 @@ def main():
     else:
         all_results = {}
         for mid in model_ids:
-            print(f"\nLoading {mid} ...")
-            all_results[mid] = run_model(mid, data, idx, use_guardrail=guardrail)
+            print(f"\n{'─'*60}")
+            print(f"  Loading {mid} ...", flush=True)
+            print(f"{'─'*60}")
+            all_results[mid] = run_model(mid, data, idx, use_guardrail=guardrail,
+                                         verbose=True)
         print_comparative(model_ids, all_results, data, idx)
 
 
