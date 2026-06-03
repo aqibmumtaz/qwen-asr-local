@@ -33,7 +33,6 @@ ALL_MODELS = [
     "Qwen/Qwen3-0.6B",   # ~1.2GB  — smallest, needs examples for proper nouns
     "Qwen/Qwen3-1.7B",   # ~3.5GB  — good balance of speed and quality
     "Qwen/Qwen3-4B",     # ~8GB    — reliable, handles proper nouns without examples
-    "Qwen/Qwen3-8B",     # ~16GB   — production quality
 ]
 # Note: Qwen3 sizes are 0.6B, 1.7B, 4B, 8B, 14B, 32B — no 2B or 3B exists
 DEFAULT_MODEL = "Qwen/Qwen3-0.6B"
