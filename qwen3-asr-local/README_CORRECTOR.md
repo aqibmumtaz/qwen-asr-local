@@ -25,7 +25,7 @@ python3 test_qwen_corrector.py --rows 1
 # All 183 rows
 python3 test_qwen_corrector.py --rows all
 
-# Compare all model sizes side-by-side (run on GPU system)
+# Compare all 3 models side-by-side: 0.6B / 1.7B / 4B (run on GPU system)
 python3 test_qwen_corrector.py --all-models --rows 5
 
 # Custom model selection
@@ -201,7 +201,7 @@ Corrected:<|im_end|>
 | **0.6B, glossary + examples** | **1.00** | examples disambiguate proper nouns ✓ |
 | 4B, glossary + examples | 1.00 | reliable even without examples |
 
-> Run `--all-models` on a GPU system to get full 183-row comparison across all model sizes.
+> Run `--all-models` on a GPU system to get full 183-row comparison across 0.6B / 1.7B / 4B.
 
 ---
 
