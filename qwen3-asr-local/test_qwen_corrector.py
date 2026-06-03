@@ -2,13 +2,16 @@
 """
 Test Qwen corrector on turnwise_results_eval_full.xlsx.
 
-Reads roman_urdu_model + word_scores, calls Corrector.fix(), compares
-against roman_urdu_reference. All prompt/model/glossary logic lives in corrector.py.
+Default: runs on Qwen3-0.6B only.
+Use --all-models to compare 0.6B / 1.7B / 3B / 4B side-by-side.
+Use --models to specify a custom list.
 
 Usage:
-    python3 test_qwen_corrector.py            # first 5 rows
-    python3 test_qwen_corrector.py --rows 10
-    python3 test_qwen_corrector.py --rows all
+    python3 test_qwen_corrector.py                        # 0.6B, first 5 rows
+    python3 test_qwen_corrector.py --rows 1               # 0.6B, first row only
+    python3 test_qwen_corrector.py --rows all             # 0.6B, all 183 rows
+    python3 test_qwen_corrector.py --all-models --rows 5  # all 4 models, 5 rows
+    python3 test_qwen_corrector.py --models Qwen/Qwen3-1.7B Qwen/Qwen3-4B --rows 3
 """
 
 import argparse
@@ -25,6 +28,15 @@ XLSX     = Path("data/CLL analysis/turnwise_results_eval_full.xlsx")
 CONF_THR = 0.65
 GEO_THR  = 0.90
 
+# Available models in order of size
+ALL_MODELS = [
+    "Qwen/Qwen3-0.6B",
+    "Qwen/Qwen3-1.7B",
+    "Qwen/Qwen3-3B",
+    "Qwen/Qwen3-4B",
+]
+DEFAULT_MODEL = "Qwen/Qwen3-0.6B"
+
 
 def wer_accuracy(hyp: str, ref: str) -> float:
     h, r = hyp.lower().split(), ref.lower().split()
@@ -39,8 +51,7 @@ def wer_accuracy(hyp: str, ref: str) -> float:
     return max(0.0, 1.0 - dp[len(h)] / len(r))
 
 
-def parse_words(roman_urdu: str, word_scores_json: str) -> list[WordEntry]:
-    """Build WordEntry list from roman_urdu_model text + word_scores JSON."""
+def parse_words(roman_urdu: str, word_scores_json: str) -> list:
     try:
         scores = json.loads(word_scores_json)
     except Exception:
@@ -58,29 +69,22 @@ def parse_words(roman_urdu: str, word_scores_json: str) -> list[WordEntry]:
     ]
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--rows", default="5",
-                        help="Number of rows to test (default 5, 'all' for all)")
-    args = parser.parse_args()
-    max_rows = 0 if args.rows == "all" else int(args.rows)
-
-    # Load xlsx
+def load_data(max_rows: int):
     wb   = openpyxl.load_workbook(str(XLSX), data_only=True)
     ws   = wb["asr_results"]
     rows = list(ws.iter_rows(values_only=True))
     hdr  = rows[0]
     idx  = {h: i for i, h in enumerate(hdr)}
     data = rows[1:] if max_rows == 0 else rows[1:max_rows+1]
+    return data, idx
 
-    # Load corrector once — model stays in memory for all turns
-    corrector_with    = Corrector(backend="qwen", use_guardrail=True)
-    corrector_without = corrector_with  # reuse same model, toggle per-call below
 
-    total_before = total_after = 0
-    improved = same = degraded = 0
-
-    for i, row in enumerate(data, 1):
+def run_model(model_id: str, data, idx, use_guardrail: bool = True):
+    """Run corrector for one model across all rows. Returns list of result dicts."""
+    corrector = Corrector(backend="qwen", model_path=model_id,
+                          use_guardrail=use_guardrail)
+    results = []
+    for row in data:
         roman_model = row[idx["roman_urdu_model"]]
         word_scores = row[idx["word_scores"]]
         reference   = row[idx["roman_urdu_reference"]]
@@ -93,40 +97,158 @@ def main():
         words     = parse_words(roman_model, word_scores)
         n_flagged = sum(1 for w in words
                         if w.min_conf < CONF_THR or w.geo_conf < GEO_THR)
+        corrected = corrector.fix(words) if words else roman_model
 
-        # Run with and without guardrail
-        corrector_with._backend.use_guardrail = True
-        out_with    = corrector_with.fix(words) if words else roman_model
-        corrector_with._backend.use_guardrail = False
-        out_without = corrector_with.fix(words) if words else roman_model
-        corrector_with._backend.use_guardrail = True  # restore default
+        results.append({
+            "speaker":     speaker,
+            "turn":        turn,
+            "roman_model": roman_model,
+            "reference":   reference,
+            "corrected":   corrected,
+            "n_flagged":   n_flagged,
+            "n_words":     len(words),
+            "acc_before":  wer_accuracy(roman_model, reference),
+            "acc_after":   wer_accuracy(corrected,   reference),
+        })
+    return results
 
-        acc_before   = wer_accuracy(roman_model, reference)
-        acc_with     = wer_accuracy(out_with,    reference)
-        acc_without  = wer_accuracy(out_without, reference)
-        total_before += acc_before
-        total_after  += acc_with
 
-        delta  = acc_with - acc_before
+def print_single_model(model_id: str, results: list):
+    """Print per-turn detail for a single model."""
+    short = model_id.split("/")[-1]
+    print(f"\n{'═'*70}")
+    print(f"  Model: {model_id}")
+    print(f"{'═'*70}\n")
+
+    improved = same = degraded = 0
+    total_before = total_after = 0
+
+    for r in results:
+        delta  = r["acc_after"] - r["acc_before"]
         status = "↑ improved" if delta > 0.01 else ("↓ degraded" if delta < -0.01 else "= same")
         if delta > 0.01:    improved += 1
         elif delta < -0.01: degraded += 1
         else:               same += 1
+        total_before += r["acc_before"]
+        total_after  += r["acc_after"]
 
-        print(f"Turn {i:>2} ({speaker}, t{turn})  flagged={n_flagged}/{len(words)}  "
-              f"before={acc_before:.2f}  without_guardrail={acc_without:.2f}  "
-              f"with_guardrail={acc_with:.2f}  {status}")
-        print(f"  ref:             {reference}")
-        print(f"  model:           {roman_model}")
-        print(f"  no guardrail:    {out_without}")
-        print(f"  with guardrail:  {out_with}")
+        print(f"Turn {r['turn']:>2} ({r['speaker']})  "
+              f"flagged={r['n_flagged']}/{r['n_words']}  "
+              f"before={r['acc_before']:.2f}  after={r['acc_after']:.2f}  {status}")
+        print(f"  ref:       {r['reference']}")
+        print(f"  model:     {r['roman_model']}")
+        print(f"  corrected: {r['corrected']}")
         print()
 
-    n = i
-    print("─" * 70)
-    print(f"Rows: {n}  |  avg WER before: {total_before/n:.3f}  "
-          f"after: {total_after/n:.3f}  delta: {total_after/n - total_before/n:+.3f}")
-    print(f"Improved: {improved}  Same: {same}  Degraded: {degraded}")
+    n = len(results)
+    print(f"{'─'*70}")
+    print(f"  [{short}]  Rows: {n}  |  "
+          f"avg before: {total_before/n:.3f}  after: {total_after/n:.3f}  "
+          f"delta: {total_after/n - total_before/n:+.3f}")
+    print(f"  Improved: {improved}  Same: {same}  Degraded: {degraded}")
+
+
+def print_comparative(model_ids: list, all_results: dict, data, idx):
+    """Print side-by-side comparison across models."""
+    rows_list = []
+    for row in data:
+        if isinstance(row[idx["roman_urdu_model"]], str):
+            rows_list.append(row)
+
+    print(f"\n{'═'*80}")
+    print("  COMPARATIVE RESULTS")
+    print(f"{'═'*80}\n")
+
+    # Per-turn comparison
+    for i, row in enumerate(rows_list):
+        ref      = row[idx["roman_urdu_reference"]]
+        model_in = row[idx["roman_urdu_model"]]
+        turn     = row[idx["turn"]]
+        speaker  = row[idx["speaker"]]
+
+        acc_before = wer_accuracy(model_in, ref)
+        print(f"Turn {turn} ({speaker})  before={acc_before:.2f}")
+        print(f"  ref:   {ref}")
+        print(f"  input: {model_in}")
+        for mid in model_ids:
+            short = mid.split("/")[-1]
+            if i < len(all_results[mid]):
+                r = all_results[mid][i]
+                marker = "✓" if r["acc_after"] >= 0.99 else ("↑" if r["acc_after"] > acc_before else "↓")
+                print(f"  [{short:<16}] {r['acc_after']:.2f} {marker}  {r['corrected']}")
+        print()
+
+    # Summary table
+    print(f"{'─'*80}")
+    print(f"  {'Model':<22} {'Avg Before':>11} {'Avg After':>10} {'Delta':>7} "
+          f"{'Improved':>9} {'Same':>6} {'Degraded':>9}")
+    print(f"  {'-'*22} {'-'*11} {'-'*10} {'-'*7} {'-'*9} {'-'*6} {'-'*9}")
+
+    acc_before_ref = None
+    for mid in model_ids:
+        res = all_results[mid]
+        if not res:
+            continue
+        n = len(res)
+        avg_before = sum(r["acc_before"] for r in res) / n
+        avg_after  = sum(r["acc_after"]  for r in res) / n
+        improved   = sum(1 for r in res if r["acc_after"] - r["acc_before"] > 0.01)
+        same       = sum(1 for r in res if abs(r["acc_after"] - r["acc_before"]) <= 0.01)
+        degraded   = sum(1 for r in res if r["acc_after"] - r["acc_before"] < -0.01)
+        short      = mid.split("/")[-1]
+        if acc_before_ref is None:
+            acc_before_ref = avg_before
+        print(f"  {short:<22} {avg_before:>11.3f} {avg_after:>10.3f} "
+              f"{avg_after - avg_before:>+7.3f} {improved:>9} {same:>6} {degraded:>9}")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Test Qwen corrector on xlsx eval set"
+    )
+    parser.add_argument(
+        "--rows", default="5",
+        help="Rows to test: number or 'all' (default: 5)"
+    )
+    parser.add_argument(
+        "--all-models", action="store_true",
+        help=f"Test all models: {', '.join(ALL_MODELS)}"
+    )
+    parser.add_argument(
+        "--models", nargs="+", default=None,
+        help="Custom list of HuggingFace model IDs to test"
+    )
+    parser.add_argument(
+        "--no-guardrail", action="store_true",
+        help="Disable the high-conf word reinsertion guardrail"
+    )
+    args = parser.parse_args()
+
+    max_rows   = 0 if args.rows == "all" else int(args.rows)
+    guardrail  = not args.no_guardrail
+
+    # Determine which models to run
+    if args.models:
+        model_ids = args.models
+    elif args.all_models:
+        model_ids = ALL_MODELS
+    else:
+        model_ids = [DEFAULT_MODEL]
+
+    data, idx = load_data(max_rows)
+
+    # Single model — show per-turn detail
+    if len(model_ids) == 1:
+        results = run_model(model_ids[0], data, idx, use_guardrail=guardrail)
+        print_single_model(model_ids[0], results)
+
+    # Multiple models — show comparative table
+    else:
+        all_results = {}
+        for mid in model_ids:
+            print(f"\nLoading {mid} ...")
+            all_results[mid] = run_model(mid, data, idx, use_guardrail=guardrail)
+        print_comparative(model_ids, all_results, data, idx)
 
 
 if __name__ == "__main__":
