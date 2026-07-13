@@ -96,12 +96,10 @@ def build_known_correct(src: dict, gold_vocab: set) -> set:
 
 # ── R2: words that must NEVER be treated as a variant (they are correct as-is)
 # Common Roman-Urdu function words + English words that appear in real speech.
-# NOTE on ek / aik: the source had a CYCLE (aik->ek AND ek->aik). Broken by data:
-#   gold  writes  ek=17  aik=1     <- humans overwhelmingly use "ek"
-#   model emits   ek=19  aik=0     <- the ASR only ever produces "ek"
-# So `ek` is the standard form and IS protected below; `aik` is the rare variant
-# and is deliberately NOT protected, which lets the legitimate `aik -> ek`
-# normalisation survive. (Protecting both wrongly killed that entry.)
+# NOTE on ek / aik: the source had a CYCLE (aik->ek AND ek->aik). Resolved by
+# LANGUAGE, not by frequency: the Hindi ASR emits एक -> `ek`, but Roman URDU
+# spells it ایک -> `aik`. So `aik` is the target form and `ek` is the variant.
+# `ek` is therefore NOT protected (it must be mappable); see FORCE_KEEP.
 #
 # The Urdu pronoun/possessive block matters too: its absence is what let the
 # source's bogus `inki -> ek` through — `inki` ("their") has nothing to do with
@@ -122,7 +120,6 @@ one two three four five six seven eight nine ten zero
 all are for and end is in on at to of a an the or if so no not
 care cure help health change charge data city name note four month
 mobile number report call time date
-ek
 
 inki inka inke inhein inhone inhe
 iska iske iski isko isne
@@ -142,10 +139,16 @@ yahan wahan yahi wahi kahin sabhi sabko sabka
 # "variant is already a correct word" test), so each one can rewrite a word a
 # human annotator actually wrote. State the cost in the comment.
 FORCE_KEEP = {
-    # aik -> ek : `ek` is the standard form (gold 17x vs aik 1x; the ASR emits
-    # ek 19x and aik 0x). Normalises the rare spelling to the dominant one.
-    # COST: the gold contains `aik` once, so this rewrites that 1 word (0.03%).
-    ("aik", "ek"),
+    # ek -> aik  : LANGUAGE NORMALISATION, decided deliberately.
+    # The Hindi ASR emits एक -> transliterates to `ek` (19x). Urdu spells it
+    # ایک = `aik`, so the Roman-URDU output should be `aik`.
+    #
+    # COST, measured: the gold annotators wrote `ek` 17x and `aik` only 1x, so
+    # this rewrites 17 gold words (0.50%). That is a KNOWN, ACCEPTED cost — the
+    # gold is internally inconsistent (turn 2 contains both spellings) and is
+    # expected to be re-annotated to `aik`. Until then WER will under-report by
+    # ~16 words on this eval set.
+    ("ek", "aik"),
 }
 
 
@@ -188,10 +191,8 @@ BANNED_PAIRS = {
     ("sar", "sir"), ("main", "mein"), ("mein", "main"), ("yeh", "yahi"),
     ("ki", "ke"), ("naa", "na"), ("nahin", "nahi"),
     ("acha", "accha"), ("aah", "ah"), ("yaar", "yar"),
-    # The WRONG half of the ek/aik cycle. Gold writes ek 17x vs aik 1x, and the
-    # ASR only ever emits ek — so `ek` is the standard. `ek -> aik` would rewrite
-    # the dominant correct form; `aik -> ek` (the other half) is kept and is right.
-    ("ek", "aik"),
+    # NOTE: ek/aik is NOT banned here. See FORCE_KEEP — `ek -> aik` is a
+    # deliberate language normalisation (Hindi एक -> ek; Urdu ایک -> aik).
 }
 
 # ── R5b: canonicals that are never a valid TARGET, whatever the variant ───────
