@@ -38,7 +38,36 @@ OUT   = SCRIPT_DIR / "data" / "lexicons_clean.json"
 XLSX  = SCRIPT_DIR / "data" / "CLL analysis" / "turnwise_results_eval_full.xlsx"
 
 # ── R1: minimum variant length ───────────────────────────────────────────────
-MIN_LEN = 5   # a variant shorter than this is too collision-prone to be safe
+# A blunt length floor ONLY. It exists to kill 1-2 char variants, which are
+# inherently collision-prone regardless of vocabulary.
+#
+# IMPORTANT — length is NOT the real safety test. The real test is R1b below.
+#   "eria" -> "area"  is 4 chars but is pure ASR garbage  => SAFE to keep
+#   "se"   -> "s"     is 2 chars but "se" is a REAL WORD  => MUST drop
+# Using length as the safety rule threw away thousands of good corrections
+# (eria->area, and ~272 short acronym variants). Fixed by R1b.
+MIN_LEN = 3   # only 1-2 char variants are dropped on length alone
+
+
+def build_known_correct(src: dict, gold_vocab: set) -> set:
+    """
+    R1b — the REAL safety test: a variant must never be a word that is already
+    CORRECT, because mapping it away corrupts good output.
+
+    A word is 'already correct' if it is any of:
+      - a human-verified gold word (annotator wrote it)
+      - a protected common/function word
+      - a CANONICAL in the lexicon itself (a canonical is by definition correct)
+
+    This is what actually caused the 23% corruption: se, ji, aap, main, to, ki,
+    yeh, sar were all real words being mapped away. Every one of them is caught
+    by this test — and unlike the length rule, it KEEPS eria->area.
+    """
+    known = set(PROTECTED) | set(gold_vocab)
+    for d in ("corrections", "proper_nouns"):
+        for canonical in src.get(d, {}).values():
+            known.add(str(canonical).strip().lower())
+    return known
 
 # ── R2: words that must NEVER be treated as a variant (they are correct as-is)
 # Common Roman-Urdu function words + English words that appear in real speech.
@@ -86,6 +115,22 @@ BANNED_CANONICALS = {
     "month",    # mahine -> month    (translation, not correction)
     "ga",       # jayega -> ga       (truncation)
     "mr",       # mister -> mr       (abbreviation)
+    # found after relaxing the length rule (R1 -> R1b): these map one REAL word
+    # onto a DIFFERENT real word — always corruption, never a fix.
+    "walaikum", # wale -> walaikum   ("those who" -> a greeting)
+    "meal",     # mil  -> meal       ("meet" -> "food")
+    "din",      # den  -> din        ("give" -> "day")
+    "maa",      # maan -> maa        ("accept" -> "mother")
+    "scene",    # seen -> scene
+}
+
+# Pairs where BOTH forms are valid spellings of the same word. The lexicon's job
+# is to fix ASR garbage, NOT to enforce an orthographic preference between two
+# legitimate spellings — doing so rewrites correct words and hurts WER.
+SPELLING_PREFERENCE_ONLY = {
+    ("aah", "ah"), ("yaar", "yar"), ("khulti", "kholti"), ("jaise", "jese"),
+    ("poora", "pura"), ("bahut", "bohot"), ("bare", "baare"), ("mauke", "mauqa"),
+    ("rahoon", "rahu"), ("jamshed", "jamsheed"), ("sadhe", "saadhay"),
 }
 
 
@@ -131,6 +176,7 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
     stats = defaultdict(int)
     cleaned = {}
     gold_vocab = gold_vocab or set()
+    known_correct = build_known_correct(src, gold_vocab)
 
     for dict_name in ("corrections", "proper_nouns"):
         flat = src.get(dict_name, {})
@@ -144,26 +190,22 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
             # R3 — self-map. Keep ONLY if it is a genuine case-normaliser.
             if vl == cl:
                 if v != c:                      # e.g. cnic -> CNIC  (useful)
-                    grouped[c].add(v)
+                    grouped[c].add(vl)          # variants stored lowercase
                     stats["kept_case_normaliser"] += 1
                 else:                           # e.g. center -> center (no-op)
                     stats["drop_selfmap_noop"] += 1
                 continue
 
-            # R1 — too short to match safely
+            # R1 — length floor. Only kills 1-2 char variants (inherently unsafe).
             if len(v) < MIN_LEN:
                 stats["drop_too_short"] += 1
                 continue
 
-            # R2 — the variant is itself a correct, common word
-            if vl in PROTECTED:
-                stats["drop_protected_variant"] += 1
-                continue
-
-            # R7 — the variant is a human-verified correct word (appears in gold).
-            # Never "correct" a word an annotator wrote. Kills sadhe->saadhay etc.
-            if vl in gold_vocab:
-                stats["drop_gold_protected"] += 1
+            # R1b — THE REAL SAFETY TEST: the variant is already a correct word.
+            # Mapping it away is what corrupted 23% of gold (se->s, aap->app,
+            # main->mein). Unlike a length rule, this KEEPS eria->area.
+            if vl in known_correct:
+                stats["drop_is_real_word"] += 1
                 continue
 
             # R8 — word -> phrase expansion changes the token count downstream.
@@ -177,7 +219,12 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
                 stats["drop_banned_canonical"] += 1
                 continue
 
-            grouped[c].add(v)
+            # R11 — both forms are valid spellings; don't enforce a preference
+            if (vl, cl) in SPELLING_PREFERENCE_ONLY:
+                stats["drop_spelling_preference"] += 1
+                continue
+
+            grouped[c].add(vl)                  # variants stored lowercase
             stats["kept"] += 1
 
         # R4 — break bidirectional cycles: if A is a canonical AND a variant of B
@@ -234,19 +281,114 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
             k: sorted(v) for k, v in sorted(merged.items(), key=lambda x: x[0].lower()) if v
         }
 
-    return cleaned, dict(stats)
+    # ── R10 — UNIFY the two dicts ────────────────────────────────────────────
+    # `corrections` and `proper_nouns` are both word-level exact-match maps; the
+    # split adds no behaviour but DOES fragment entities across them:
+    #   corrections["chughtai"]  = [4 variants]
+    #   proper_nouns["Chughtai"] = [25 variants]     <- SAME entity, split!
+    # 74 such cross-dict collisions existed. Merge into ONE map, keyed by the
+    # correct canonical (prefer the capitalised form — proper nouns should be
+    # capitalised, and acronyms like CNIC must stay uppercase).
+    # TWO passes. A single pass is buggy: if we switch the winning canonical
+    # mid-way, variants already written under the losing key are stranded there
+    # (that left 'allah' AND 'Allah' both present).
+    #
+    # Pass 1 — decide the winning canonical for each lowercase key.
+    canon_for_lower: dict[str, str] = {}
+    for dict_name in ("proper_nouns", "corrections"):
+        for canon in cleaned[dict_name]:
+            low = canon.lower()
+            cur = canon_for_lower.get(low)
+            if cur is None:
+                canon_for_lower[low] = canon
+            elif canon != low and cur == low:
+                canon_for_lower[low] = canon      # prefer the capitalised form
+
+    # Pass 2 — pour every entity's variants into its winning canonical.
+    unified: dict[str, set] = defaultdict(set)
+    for dict_name in ("proper_nouns", "corrections"):
+        for canon, variants in cleaned[dict_name].items():
+            winner = canon_for_lower[canon.lower()]
+            unified[winner] |= set(variants)
+            if canon != winner:
+                unified[winner].add(canon.lower())   # losing spelling is a variant
+                stats["merged_cross_dict"] += 1
+
+    # a variant must never equal its own canonical unless it capitalises it
+    final: dict[str, list] = {}
+    for canon, variants in unified.items():
+        cl = canon.lower()
+        keep = {v for v in variants if v.lower() != cl or canon != cl}
+        if keep:
+            final[canon] = sorted(keep)
+
+    # split out multi-word PHRASES — they need regex replacement, not word lookup
+    words = {k: v for k, v in final.items() if " " not in k}
+    phrases = {k: v for k, v in final.items() if " " in k}
+
+    out = {
+        "lexicon": dict(sorted(words.items(), key=lambda x: x[0].lower())),
+        "phrases": dict(sorted(phrases.items(), key=lambda x: x[0].lower())),
+    }
+    _assert_invariants(out)
+    return out, dict(stats)
+
+
+def _assert_invariants(out: dict) -> None:
+    """
+    HARD INVARIANTS — the cleaner refuses to emit a file that violates these.
+    Keys carry mixed case by design (CNIC, Chughtai, area), so uniqueness must
+    be enforced CASE-INSENSITIVELY or the same entity ends up split.
+    """
+    all_keys = list(out["lexicon"]) + list(out["phrases"])
+
+    # I1 — no two canonicals may collide case-insensitively (chughtai vs Chughtai)
+    seen: dict[str, str] = {}
+    for k in all_keys:
+        low = k.lower()
+        if low in seen:
+            raise AssertionError(
+                f"DUPLICATE CANONICAL KEY (case-insensitive): "
+                f"{seen[low]!r} and {k!r} are the same entity"
+            )
+        seen[low] = k
+
+    # I2 — a canonical must not also appear as a variant of another canonical
+    variant_owner: dict[str, str] = {}
+    for section in ("lexicon", "phrases"):
+        for canon, variants in out[section].items():
+            for v in variants:
+                vl = v.lower()
+                if vl in variant_owner and variant_owner[vl] != canon:
+                    raise AssertionError(
+                        f"VARIANT {v!r} claimed by two canonicals: "
+                        f"{variant_owner[vl]!r} and {canon!r}"
+                    )
+                variant_owner[vl] = canon
+
+    # I3 — no duplicate variants inside one entry, and none equal to its canonical
+    for section in ("lexicon", "phrases"):
+        for canon, variants in out[section].items():
+            lows = [v.lower() for v in variants]
+            if len(lows) != len(set(lows)):
+                raise AssertionError(f"DUPLICATE VARIANT inside {canon!r}: {variants}")
+            if canon.lower() in lows and canon == canon.lower():
+                raise AssertionError(f"NO-OP variant equals canonical in {canon!r}")
 
 
 def to_lookup(cleaned: dict) -> tuple[dict, dict]:
-    """Invert {canonical: [variants]} -> {variant: canonical} for O(1) runtime lookup."""
-    corr, pn = {}, {}
-    for canon, variants in cleaned["corrections"].items():
+    """
+    Invert {canonical: [variants]} -> {variant: canonical} for O(1) runtime lookup.
+    Returns (word_lookup, phrase_lookup).
+    """
+    words, phrases = {}, {}
+    for canon, variants in cleaned.get("lexicon", {}).items():
         for v in variants:
-            corr[v.lower()] = canon
-    for canon, variants in cleaned["proper_nouns"].items():
+            words[v.lower()] = canon
+    for canon, variants in cleaned.get("phrases", {}).items():
         for v in variants:
-            pn[v.lower()] = canon
-    return corr, pn
+            phrases[v.lower()] = canon
+    return words, phrases
 
 
 def measure_corruption(corr: dict, pn: dict, label: str) -> tuple[int, int]:
@@ -295,15 +437,15 @@ def main():
 
     print("  DROP REASONS")
     labels = {
-        "drop_too_short":          f"R1  variant < {MIN_LEN} chars (collision risk)",
-        "drop_protected_variant":  "R2  variant is a correct common word",
+        "drop_too_short":          f"R1  variant < {MIN_LEN} chars (1-2 char only)",
+        "drop_is_real_word":       "R1b variant is ALREADY A CORRECT WORD  <-- the real test",
         "drop_selfmap_noop":       "R3  self-map no-op (key == value)",
         "drop_cycle":              "R4  bidirectional cycle (A<->B)",
         "drop_banned_canonical":   "R5  canonical is wrong/dangerous",
-        "drop_gold_protected":     "R7  variant is a GOLD word (already correct)",
         "drop_word_to_phrase":     "R8  word -> phrase (breaks token count)",
-        "merged_case_fragment":    "R9  MERGED case-fragment (chughtai + Chughtai)",
-        "kept_case_normaliser":    "R6  KEPT case-normaliser (ali->Ali)",
+        "merged_case_fragment":    "R9  MERGED case-fragment (within a dict)",
+        "merged_cross_dict":       "R10 MERGED cross-dict entity (chughtai + Chughtai)",
+        "kept_case_normaliser":    "R6  KEPT case-normaliser (cnic->CNIC)",
         "kept":                    "    KEPT real variant",
     }
     for k, lbl in labels.items():
@@ -311,13 +453,13 @@ def main():
             print(f"    {lbl:<44} {stats[k]:>6}")
     print()
 
-    n_corr_c = len(cleaned["corrections"])
-    n_pn_c   = len(cleaned["proper_nouns"])
-    v_corr   = sum(len(v) for v in cleaned["corrections"].values())
-    v_pn     = sum(len(v) for v in cleaned["proper_nouns"].values())
-    print("  RESULT — restructured as {canonical: [variants]}")
-    print(f"    corrections  : {n_corr_c:>6} canonicals  ({v_corr} variants)")
-    print(f"    proper_nouns : {n_pn_c:>6} canonicals  ({v_pn} variants)")
+    n_words   = len(cleaned["lexicon"])
+    n_phrases = len(cleaned["phrases"])
+    v_words   = sum(len(v) for v in cleaned["lexicon"].values())
+    v_phrases = sum(len(v) for v in cleaned["phrases"].values())
+    print("  RESULT — ONE unified map: {canonical: [variants]}")
+    print(f"    lexicon (words)  : {n_words:>6} canonicals  ({v_words} variants)")
+    print(f"    phrases          : {n_phrases:>6} canonicals  ({v_phrases} variants)")
     print()
 
     # ---- re-measure corruption on gold ----
@@ -325,17 +467,20 @@ def main():
     base = load(BASE)
     measure_corruption(base["corrections"], base["proper_nouns"], "original lexicons.json")
     measure_corruption(src["corrections"], src["proper_nouns"], "lexicons_updated.json")
-    c, p = to_lookup(cleaned)
-    measure_corruption(c, p, "lexicons_clean.json (NEW)")
+    w, ph = to_lookup(cleaned)
+    measure_corruption(w, {}, "lexicons_clean.json (NEW)")
     print()
 
     if args.write:
         out = {
             "_comment": (
-                "CLEANED lexicon. Structure: {canonical: [variant, ...]}. "
-                "One entry per real word; variants grouped. Invert to variant->canonical "
-                f"at load time for O(1) lookup. Cleaned with min_len={MIN_LEN}, "
-                "protected-word blocklist, banned-canonical list, cycle breaking."
+                "CLEANED lexicon. ONE unified map: {canonical: [variant, ...]}. "
+                "One entry per real word; all variants grouped under it; variants stored "
+                "lowercase (lookup lowercases the input). 'phrases' holds multi-word "
+                "entries which need regex replacement rather than word lookup. "
+                "Invert to variant->canonical at load time for O(1) lookup. "
+                "The old corrections/proper_nouns split was removed — it fragmented "
+                "74 entities across the two dicts (e.g. chughtai + Chughtai)."
             ),
             "lexicons": cleaned,
         }
