@@ -112,6 +112,25 @@ one two three four five six seven eight nine ten zero
 all are for and end is in on at to of a an the or if so no not
 care cure help health change charge data city name note four month
 mobile number report call time date
+ek aik
+"""
+# ── Urdu pronouns / possessives / demonstratives ─────────────────────────────
+# These are real, common words and must never be mapped away. Their absence is
+# what let the source's bogus `inki -> ek` survive: `inki` ("their") has nothing
+# to do with `ek` ("one"), but it was not in any known-correct list so R1b
+# passed it through. This closes that whole class.
+"""
+inki inka inke inhein inhone inhe
+iska iske iski isko isne
+unka unke unki unko unhein unhone unhe
+usne uska uske uski usko
+humne humein hamara hamare hamari hamein
+tumhara tumhein tumhare tumhari
+mujhe mujhko mujhse
+aapko aapka aapke aapki aapse aapne
+kisi kisko kisne kiska kiske kiski
+jinka jinke jinki jiska jiske jiski jise jisko jisne
+yahan wahan yahi wahi kahin sabhi sabko sabka
 """.split())
 
 # ── R5: BANNED PAIRS — a specific (variant -> canonical) map that is wrong ────
@@ -239,6 +258,13 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
             # R1 — length floor. Only kills 1-2 char variants (inherently unsafe).
             if len(v) < MIN_LEN:
                 stats["drop_too_short"] += 1
+                continue
+
+            # R12 — the variant is not Latin script (Nastaliq / Arabic / Devanagari).
+            # The pipeline is Devanagari -> transliterate() -> ROMAN, so the lexicon
+            # only ever sees Latin tokens. Non-Latin variants can never fire.
+            if not re.fullmatch(r"[A-Za-z0-9 .'\-]+", v):
+                stats["drop_non_latin"] += 1
                 continue
 
             # R1b — THE REAL SAFETY TEST: the variant is already a correct word.
@@ -573,6 +599,7 @@ def main():
     labels = {
         "drop_too_short":          f"R1  variant < {MIN_LEN} chars (1-2 char only)",
         "drop_is_real_word":       "R1b variant is ALREADY A CORRECT WORD  <-- the real test",
+        "drop_non_latin":          "R12 variant is not Latin script (Nastaliq)",
         "drop_selfmap_noop":       "R3  self-map no-op (key == value)",
         "drop_cycle":              "R4  bidirectional cycle (A<->B)",
         "drop_banned_pair":        "R5  BANNED PAIR (this specific map is wrong)",
