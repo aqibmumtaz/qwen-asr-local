@@ -17924,11 +17924,58 @@
       ]
     },
     "phrases": {
+      "aa ke": [
+        "aake"
+      ],
+      "aage peechhe": [
+        "aagepeeche"
+      ],
+      "aankh dard": [
+        "aankhadard"
+      ],
+      "aap ke": [
+        "aapke"
+      ],
+      "aap ko": [
+        "aapko"
+      ],
+      "aap ne": [
+        "aapne"
+      ],
+      "aap se": [
+        "aapse"
+      ],
+      "assalam o alaikum": [
+        "assalaamualaikum",
+        "assalamoalaikum",
+        "assalamualaikum",
+        "salaamualaikum",
+        "salaamullaah",
+        "slaam"
+      ],
+      "bataiye ga": [
+        "bataaiega"
+      ],
+      "bed ridden": [
+        "bedarid"
+      ],
+      "beta beti": [
+        "betaabeti"
+      ],
       "beta HCG": [
         "beeta echaseeji"
       ],
+      "bhai behan": [
+        "bhaaeebahan",
+        "bhaaibahan"
+      ],
       "blood culture": [
         "blood kalchar"
+      ],
+      "blood pressure": [
+        "bladapreshar",
+        "bladpreshar",
+        "bladpressure"
       ],
       "blood pressure monitor": [
         "blood pressure monitar"
@@ -17936,8 +17983,32 @@
       "bone density": [
         "bon densiti"
       ],
+      "call back": [
+        "kolabaik"
+      ],
       "cardiac profile": [
         "kaardiyak profile"
+      ],
+      "chughtai lab": [
+        "chakkaaile",
+        "chaupaail",
+        "chikataaeela",
+        "chikataaila",
+        "chikatalaab",
+        "chitaaila",
+        "chokhaail",
+        "chukaai",
+        "chukataaila",
+        "chukataalaab",
+        "chuktaailaab",
+        "chuktaaile",
+        "chuktaalaar",
+        "chuppaai",
+        "chuppaailaak",
+        "chuptaalaab",
+        "chutaailaib",
+        "chutaalaar",
+        "taailaab"
       ],
       "complete blood count": [
         "kampleet blood kaaunt"
@@ -17954,6 +18025,26 @@
       "CT scan": [
         "seetee skain",
         "seeti scan"
+      ],
+      "daant dard": [
+        "daantadard",
+        "daantdard"
+      ],
+      "dijiye ga": [
+        "deejiega"
+      ],
+      "dil ki bimari": [
+        "dilakeebeemari"
+      ],
+      "din bhar": [
+        "dinabhar",
+        "dinbhar"
+      ],
+      "doctor sahab": [
+        "janasaahab"
+      ],
+      "ek dum": [
+        "ekadam"
       ],
       "fertility profile": [
         "phartiliti profile"
@@ -17973,14 +18064,30 @@
       "free T4": [
         "phri t4"
       ],
+      "gale dard": [
+        "galedard"
+      ],
+      "gale kharaash": [
+        "galekharaash"
+      ],
       "game over": [
         "gem oowar"
       ],
       "genetic test": [
         "jenetik test"
       ],
+      "haath paer": [
+        "haathapair",
+        "haathpair"
+      ],
+      "hafte bhar": [
+        "haphtebhar"
+      ],
       "hard copy": [
         "haard copy"
+      ],
+      "hat ke": [
+        "hatke"
       ],
       "health check": [
         "helth check"
@@ -18003,14 +18110,59 @@
       "i think": [
         "aai think"
       ],
+      "idhar udhar": [
+        "idharaudhar"
+      ],
+      "is se": [
+        "isse",
+        "usse"
+      ],
+      "ji ji": [
+        "jeeji"
+      ],
+      "jis main": [
+        "jisamen"
+      ],
+      "kaan dard": [
+        "kaanadard",
+        "kaandard"
+      ],
+      "kamar dard": [
+        "kamaradard",
+        "kamardard"
+      ],
+      "kar ke": [
+        "karke"
+      ],
+      "kar raha hoon": [
+        "karaaoon"
+      ],
+      "karwaiye ga": [
+        "karawaaiega"
+      ],
       "khaali pet": [
         "khali pet"
+      ],
+      "khansi zukam": [
+        "khaansijukam"
       ],
       "khuda hafiz": [
         "khudaa hafiz"
       ],
+      "ki zaroorat": [
+        "kizarat"
+      ],
       "kidney function": [
         "kidni phankshan"
+      ],
+      "kijiye ga": [
+        "keejiega"
+      ],
+      "kinhon ne": [
+        "kinhonne"
+      ],
+      "kisi ne": [
+        "kisine"
       ],
       "lab technician": [
         "lab teknishiyan"
@@ -18018,23 +18170,65 @@
       "lag gaye": [
         "lag gae"
       ],
+      "lahore se": [
+        "laahausim"
+      ],
+      "lijiye ga": [
+        "leejiega"
+      ],
+      "likhwaiye ga": [
+        "likhaaega"
+      ],
       "lipid profile": [
         "lipid prophaail"
       ],
       "liver function": [
         "liver phankshan"
       ],
+      "maa baap": [
+        "maabaap",
+        "maanbaap"
+      ],
+      "mahine bhar": [
+        "mahinebhar"
+      ],
+      "miss ayesha": [
+        "misaaisha",
+        "misaaishe"
+      ],
       "normal delivery": [
         "normal dileewri"
       ],
+      "oopar neeche": [
+        "oopaneeche"
+      ],
       "Pap smear": [
-        "paip smiyar"
+        "paip smiyar",
+        "paipsmiyar"
+      ],
+      "pet dard": [
+        "petadard",
+        "petdard"
       ],
       "pick up": [
-        "pik ap"
+        "pik ap",
+        "pikaap"
+      ],
+      "PIN code": [
+        "piincode"
+      ],
+      "pooch ke": [
+        "poochke"
       ],
       "RA factor": [
         "ra phaiktar"
+      ],
+      "raat bhar": [
+        "raatabhar",
+        "raatbhar"
+      ],
+      "re check": [
+        "reechek"
       ],
       "red cell": [
         "red sale"
@@ -18047,6 +18241,24 @@
       ],
       "routine checkup": [
         "rooteen checkup"
+      ],
+      "saal bhar": [
+        "saalabhar",
+        "saalbhar"
+      ],
+      "se related": [
+        "seleted"
+      ],
+      "seene dard": [
+        "seenedard"
+      ],
+      "sheet bukhaar": [
+        "sheetabukhaar"
+      ],
+      "sir dard": [
+        "saradard",
+        "sardard",
+        "siradard"
       ],
       "SMS mila": [
         "sms mila"
@@ -18078,6 +18290,12 @@
       "thyroid profile": [
         "thyroid prophaail"
       ],
+      "umar bhar": [
+        "umrabhar"
+      ],
+      "un se": [
+        "unse"
+      ],
       "uric acid": [
         "yoorik esid"
       ],
@@ -18086,6 +18304,9 @@
       ],
       "urine routine": [
         "urine rooteen"
+      ],
+      "us main": [
+        "usamen"
       ],
       "vitamin B": [
         "vitamin bi"
@@ -18108,6 +18329,9 @@
       ],
       "white cell": [
         "whaait sale"
+      ],
+      "yahan wahan": [
+        "yahaanwahaan"
       ],
       "yeh faisla": [
         "i fisla"

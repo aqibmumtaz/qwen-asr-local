@@ -128,7 +128,6 @@ usne uska uske uski usko
 humne humein hamara hamare hamari hamein
 tumhara tumhein tumhare tumhari
 mujhe mujhko mujhse
-aapko aapka aapke aapki aapse aapne
 kisi kisko kisne kiska kiske kiski
 jinka jinke jinki jiska jiske jiski jise jisko jisne
 yahan wahan yahi wahi kahin sabhi sabko sabka
@@ -301,11 +300,22 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
                 stats["drop_is_real_word"] += 1
                 continue
 
-            # R8 — word -> phrase expansion changes the token count downstream.
-            # e.g. karenge -> "karein ge",  salam -> "assalam o alaikum"
+            # R8 — word -> phrase expansion. DATA-DRIVEN, not a blanket ban.
+            #
+            # An earlier version dropped ALL of these "because they break token
+            # counts". That was wrong and cost 64 good fixes to block 2 bad ones:
+            #   assalaamualaikum -> "assalam o alaikum"   GOOD: the ASR merges it
+            #   aapka -> "aap ka",  aapko -> "aap ko"     GOOD: gold splits them
+            #   karenge -> "karein ge"                    BAD:  gold keeps it joined
+            #
+            # The GOLD decides. Expanding is only wrong when the annotators write
+            # the word JOINED — then splitting it creates an extra token and a
+            # WER error. If the gold writes it SPLIT, expanding is exactly right.
             if " " not in v and " " in c:
-                stats["drop_word_to_phrase"] += 1
-                continue
+                if vl in gold_vocab:          # gold keeps this word joined
+                    stats["drop_word_to_phrase"] += 1
+                    continue
+                # gold splits it (or never uses it) -> the expansion is correct
 
             # R5 — this SPECIFIC (variant -> canonical) map is wrong.
             # Ban the PAIR, not the canonical: `nephrology` is a fine word, it is
