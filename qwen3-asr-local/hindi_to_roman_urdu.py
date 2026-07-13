@@ -93,16 +93,48 @@ MATRAS = {
 _PUNCT_BOUNDARY = set(' \t\n.,!?;:।॥"\'()[]{}')
 
 
-# ── Lexicons — loaded from data/lexicons.json ────────────────────────────────
-# Plain JSON data file, no Python. Edit directly to add/remove entries.
-# Top-level structure: { "lexicons": { "corrections": {...}, "proper_nouns": {...} } }
+# ── Lexicon ──────────────────────────────────────────────────────────────────
+# Default: data/lexicons_v2.json — {canonical: [variants]}, one entry per real
+# word. Inverted here to a flat {variant: canonical} map, so runtime lookup is
+# O(1) exactly as before.
+#
+# v2 replaces the old lexicons.json + lexicons_updated.json. See clean_lexicon.py.
+# Set  LEXICON=old  to fall back to data/lexicons.json (for A/B comparison).
 import json as _json
+import os as _os
 from pathlib import Path as _Path
 
-_LEXICONS_PATH = _Path(__file__).resolve().parent / 'data' / 'lexicons.json'
-_lex = _json.loads(_LEXICONS_PATH.read_text(encoding='utf-8'))['lexicons']
-CORRECTIONS  = _lex['corrections']
-PROPER_NOUNS = _lex['proper_nouns']
+_DATA = _Path(__file__).resolve().parent / 'data'
+LEXICON_VERSION = _os.getenv('LEXICON', 'v2').lower()
+
+
+def _load_lexicon(version: str = 'v2'):
+    """Returns (word_map, phrase_map) as flat {variant_lower: canonical}."""
+    if version == 'old':
+        raw = _json.loads((_DATA / 'lexicons.json').read_text(encoding='utf-8'))['lexicons']
+        words = {k.lower(): v for k, v in raw['proper_nouns'].items()}
+        # PROPER_NOUNS won on collisions in the old code, so load it first
+        for k, v in raw['corrections'].items():
+            words.setdefault(k.lower(), v)
+        phrases = {k.lower(): v for k, v in raw['corrections'].items() if ' ' in k}
+        return words, phrases
+
+    raw = _json.loads((_DATA / 'lexicons_v2.json').read_text(encoding='utf-8'))['lexicons']
+    words, phrases = {}, {}
+    for canon, variants in raw['lexicon'].items():
+        for v in variants:
+            words[v.lower()] = canon
+    for canon, variants in raw['phrases'].items():
+        for v in variants:
+            phrases[v.lower()] = canon
+    return words, phrases
+
+
+WORD_MAP, PHRASE_MAP = _load_lexicon(LEXICON_VERSION)
+
+# Back-compat aliases — some callers still import these names.
+CORRECTIONS  = WORD_MAP
+PROPER_NOUNS = {}
 
 
 
@@ -290,46 +322,46 @@ def _normalize_endings(text: str) -> str:
     return text
 
 
+# phrase keys, longest first, so "blood culture" beats "blood" if both existed
+_PHRASE_KEYS = sorted(PHRASE_MAP, key=len, reverse=True)
+
+
 def _apply_corrections(text: str) -> str:
     """
-    Layer 3: replace known wrong phonetic words with natural Roman Urdu.
+    Layer 3: map ASR misspellings onto the correct Roman Urdu word.
 
-    Two lookup tables (both held in CORRECTIONS unless capitalisation matters):
-      - PROPER_NOUNS: names / places / acronyms — explicit caps from dict value
-      - CORRECTIONS:  common words AND multi-word phrases
-                      - keys without spaces → word-level lookup
-                      - keys with spaces    → phrase-level regex replacement
-                        (runs after word-level so phrases see corrected words)
+    Both maps are flat {variant_lower: canonical}, inverted from v2's
+    {canonical: [variants]} at import time.
+
+    PHRASE PASS RUNS FIRST. A multi-word garble like "beeta echaseeji" must be
+    matched while it is still intact — if the word pass ran first it could
+    rewrite "beeta" on its own and the phrase would never match.
+
+    A canonical may itself be several words (assalaamualaikum ->
+    "assalam o alaikum"); that is fine, it is a plain string substitution.
     """
-    # Single-word pass first (so multi-word patterns can match the corrected forms)
-    def fix_word(m):
-        w = m.group(0)
-        lower = w.lower()
-        if lower in PROPER_NOUNS:
-            return PROPER_NOUNS[lower]
-        corrected = CORRECTIONS.get(lower)
-        if not corrected or ' ' in lower:  # skip phrase keys
-            return w
-        if w[0].isupper():
-            return corrected[0].upper() + corrected[1:]
-        return corrected
-
-    text = re.sub(r'[A-Za-z0-9]+', fix_word, text)
-
-    # Phrase pass: any CORRECTIONS key containing a space.
-    # Longest keys first so 'hepatitis B' beats 'hepatitis' if both existed.
-    phrase_keys = sorted(
-        (k for k in CORRECTIONS if ' ' in k),
-        key=lambda k: -len(k),
-    )
-    for phrase in phrase_keys:
+    # 1. phrase pass — on the raw text, before any word is touched
+    for phrase in _PHRASE_KEYS:
         text = re.sub(
             rf'\b{re.escape(phrase)}\b',
-            CORRECTIONS[phrase],
+            PHRASE_MAP[phrase],
             text,
             flags=re.IGNORECASE,
         )
-    return text
+
+    # 2. word pass
+    def fix_word(m):
+        w = m.group(0)
+        canon = WORD_MAP.get(w.lower())
+        if not canon:
+            return w
+        # the canonical carries its own correct case (CNIC, Chughtai, area);
+        # only mirror an incoming capital when the canonical is all-lowercase
+        if w[0].isupper() and canon == canon.lower():
+            return canon[0].upper() + canon[1:]
+        return canon
+
+    return re.sub(r"[A-Za-z0-9]+", fix_word, text)
 
 
 def transliterate(text: str) -> str:
@@ -351,8 +383,9 @@ if __name__ == '__main__':
         ("मेरा नाम اکیب ہے۔",            "mera naam اکیب ہے۔"),
         ("आज का मौसम بہت اچھا ہے۔",      "aaj ka mausam بہت اچھا ہے۔"),
         ("बहुत अच्छा है।",                "bahut acha hai."),
+        # gold annotators write "main" for में, not "mein" — the gold is the WER target
         ("यह कोड की ज़बान में आवाज़ की शिनाख़्त का टेस्ट है।",
-                                           "yeh kod ki zaban mein awaz ki shanakht ka test hai."),
+                                           "yeh kod ki zaban main awaz ki shanakht ka test hai."),
         # vowel ending normalisation
         ("नदी",      "nadi"),
         ("ज़िंदगी",  "zindagi"),
@@ -411,7 +444,8 @@ if __name__ == '__main__':
         ("मेरा नाम अकीब है।", "mera naam Aqib hai."),
         # ── Comprehensive corrections (CORRECTIONS dict) ─────────────────
         ("चार",      "char"),
-        ("पाँच",     "panch"),
+        # gold annotators write "paanch", not "panch" — the gold is the WER target
+        ("पाँच",     "paanch"),
         ("कितना",    "kitna"),
         ("कितनी",    "kitni"),
         ("बेटा",     "beta"),

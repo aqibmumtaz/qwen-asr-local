@@ -106,7 +106,7 @@ def build_known_correct(src: dict, gold_vocab: set) -> set:
 # `ek` ("one"), but it was in no known-correct list, so R1b passed it.
 PROTECTED = set("""
 se ji ka ki ke ko na naa hai hain ho hoon hun tha thi the ga gi ge
-main mein mera meri mere hum tum aap ap woh yeh jo is us un in
+main mera meri mere hum tum aap ap woh yeh jo is us un in
 kya kyun kab kahan kaise koi kuch sab har
 to bhi hi ab phir aur ya lekin agar magar
 do de di dia diya le li lo lia liya
@@ -114,7 +114,7 @@ kar kare karo karna kiya raha rahi rahe
 baat naam kaam saal din raat waqt
 bhai behan beta beti maa baap walid
 acha achha theek sahi ghalat
-nahi nahin han haan ji-han
+nahi han haan ji-han
 sar sir sahab saab madam maam
 one two three four five six seven eight nine ten zero
 all are for and end is in on at to of a an the or if so no not
@@ -201,11 +201,23 @@ BANNED_PAIRS = {
     ("jayega", "ga"), ("mister", "mr"), ("hb", "hub"), ("sahab", "shahab"),
     ("shahid", "shahab"), ("okay", "ok"), ("off", "of"), ("end", "and"),
     ("all", "al"), ("are", "area"), ("for", "fo"), ("two", "ii"),
-    ("sar", "sir"), ("main", "mein"), ("mein", "main"), ("yeh", "yahi"),
-    ("ki", "ke"), ("naa", "na"), ("nahin", "nahi"),
+    ("sar", "sir"), ("main", "mein"), ("yeh", "yahi"),
+    ("ki", "ke"), ("naa", "na"),
     ("acha", "accha"), ("aah", "ah"), ("yaar", "yar"),
     # NOTE: ek/aik is NOT banned here. See FORCE_KEEP — `ek -> aik` is a
     # deliberate language normalisation (Hindi एक -> ek; Urdu ایک -> aik).
+    #
+    # Bogus source mappings — an ordinary word mapped onto a PERSON'S NAME or an
+    # unrelated word. Caught by the transliterator's own test suite, which the
+    # 183-turn gold could not catch (these words never occur in it).
+    ("nadi", "nadeem"),     # nadi = river   -> Nadeem is a NAME
+    ("khana", "khan"),      # khana = food   -> Khan is a NAME
+    ("kod", "kot"),         # kod  = code    -> Kot is a place
+    # NOTE: nahin->nahi, mein->main, panch->paanch are NOT banned. The
+    # transliterator natively emits nahin / mein / panch (from नहीं / में / पाँच),
+    # but the gold NEVER uses those forms (nahi=70/nahin=0, main=84/mein=0,
+    # paanch=5/panch=0). These are pure orthographic normalisations we NEED.
+    # Banning them cost 4 turns and ~70 words.
 }
 
 # ── R5b: canonicals that are never a valid TARGET, whatever the variant ───────
@@ -484,16 +496,24 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
     # Title-case canonicals that the gazetteer positively identifies as entities,
     # so output casing is consistent (Afzal, Arif, Sialkot — not afzal, Arif, ...).
     gaz = load_gazetteer()
-    retitled: dict[str, list] = {}
+    retitled: dict[str, set] = defaultdict(set)
     for k, v in words.items():
         proper = gaz.get(k.lower())
         if proper and proper != k:
-            retitled[proper] = sorted(set(v) | set(retitled.get(proper, [])) | {k.lower()})
+            # `ali` -> `Ali`. The LOWERCASE form must stay as a variant, or nothing
+            # maps ali -> Ali and the capitalisation never happens. An earlier pass
+            # stripped it here, which silently broke every gazetteer entity.
+            retitled[proper] |= set(v) | {k.lower()}
             stats["retitled_entity"] += 1
         else:
-            retitled[k] = v
-    words = {k: sorted(set(v) - {k.lower()} if k != k.lower() else set(v))
-             for k, v in retitled.items()}
+            retitled[k] |= set(v)
+
+    # Only a variant equal to an ALL-LOWERCASE canonical is a true no-op.
+    # (ali -> Ali capitalises, so it is useful and must be kept.)
+    words = {
+        k: sorted(v - {k.lower()}) if k == k.lower() else sorted(v)
+        for k, v in retitled.items()
+    }
     words = {k: v for k, v in words.items() if v}
 
     out = {
