@@ -21,7 +21,7 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 ENTITIES = SCRIPT_DIR / "data" / "entities.json"
-CLEAN = SCRIPT_DIR / "data" / "lexicons_clean.json"
+CLEAN = SCRIPT_DIR / "data" / "lexicons_v2.json"
 
 # Terms that must NEVER be capitalised even if a classifier says PERSON/PLACE/ORG.
 # These are ordinary words that happen to look name-like. Capitalising them would

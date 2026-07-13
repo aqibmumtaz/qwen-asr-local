@@ -15,7 +15,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-CLEAN = SCRIPT_DIR / "data" / "lexicons_clean.json"
+CLEAN = SCRIPT_DIR / "data" / "lexicons_v2.json"
 BROKEN = SCRIPT_DIR / "data" / "lexicons_updated.json"
 ORIG = SCRIPT_DIR / "data" / "lexicons.json"
 XLSX = SCRIPT_DIR / "data" / "CLL analysis" / "turnwise_results_eval_full.xlsx"
@@ -64,7 +64,7 @@ def main():
             lookup[v.lower()] = canon
 
     print("=" * 74)
-    print("  VERIFICATION — lexicons_clean.json")
+    print("  VERIFICATION — lexicons_v2.json")
     print("=" * 74)
     for c in CATS:
         print(f"  {c:<13} : {len(lex[c]):>5} canonicals / "
@@ -171,7 +171,7 @@ def main():
         c_c, _, ex = corrupt(lookup)
         print(f"          original lexicons.json : {c_o:>4}/{t}  ({100*c_o/t:.2f}%)")
         print(f"          lexicons_updated.json  : {c_b:>4}/{t}  ({100*c_b/t:.2f}%)  <- broken")
-        print(f"          lexicons_clean.json    : {c_c:>4}/{t}  ({100*c_c/t:.2f}%)  <- NEW")
+        print(f"          lexicons_v2.json    : {c_c:>4}/{t}  ({100*c_c/t:.2f}%)  <- NEW")
         check("corruption <= original baseline", c_c <= c_o,
               f"remaining: {list(ex.items())[:5]}" if ex else "zero corruption")
     except ImportError:

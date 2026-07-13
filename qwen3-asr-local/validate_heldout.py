@@ -89,7 +89,7 @@ def main():
     for name, lu in [
         ("original lexicons.json", base_lu),
         ("lexicons_updated.json", upd_lu),
-        ("lexicons_clean.json", clean_lu),
+        ("lexicons_v2.json", clean_lu),
     ]:
         ch, tot = corrupt_on(held, lu)
         print(f"    {name:<26} {ch:>4} / {tot}  ({100*ch/tot:.2f}%)")

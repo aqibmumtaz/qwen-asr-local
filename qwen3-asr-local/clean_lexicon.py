@@ -1,28 +1,43 @@
 #!/usr/bin/env python3
 """
-STEP 2 — Clean the lexicon and restructure it as {canonical: [variants]}.
+STEP 2 — Build lexicons_v2.json: clean, and restructure as {canonical: [variants]}.
+
+    lexicons_updated.json  (14,845 flat rows, corrupts 23% of gold)
+        |  clean_lexicon.py
+        v
+    lexicons_v2.json       (2,010 canonicals, corrupts 0%)
 
 WHY the new structure:
-    old:  {"chukaai": "chughtai", "chugai": "chughtai", ... }   <- 13,211 flat keys
-    new:  {"chughtai": ["chukaai", "chugai", "chukkai"], ... }  <- 1 entry per real word
+    old:  {"chukaai": "chughtai", "chugai": "chughtai", ... }   <- one row per MISSPELLING
+    new:  {"Chughtai": ["chukaai", "chugai", "chukkai"], ... }  <- one row per REAL WORD
 
-    One entry per real word. Variants grouped and visible. Collisions become obvious.
-    At load time we invert it back to a flat variant->canonical dict for O(1) lookup,
+    Variants grouped under the word they belong to; collisions become obvious.
+    At load time we invert back to a flat variant->canonical dict for O(1) lookup,
     so runtime cost is identical.
 
-CLEANUP RULES (each derived from the audit findings):
-    R1  drop variants <= MIN_LEN chars      -> kills se->s, ji->jee, c->ch  (1,124 keys)
-    R2  never let a PROTECTED word be a variant -> kills aap->app, main->mein, jo->woh
-    R3  drop self-maps (variant == canonical)   -> 281 no-ops
-    R4  break bidirectional cycles (A->B and B->A) -> 15 cycles
-    R5  drop BANNED canonicals (meaning-changing / medically dangerous)
-    R6  keep case-normalisers (ali->Ali, cnic->CNIC) — these are the 75 good ones
+CLEANUP RULES:
+    R1   (none) — NO length rule. It earned nothing and destroyed good short
+                  fixes (lb->lab, eria->area). See the long note at MIN_LEN.
+    R1b  drop a variant that is ALREADY A CORRECT WORD   <- the real safety test
+    R3   drop self-map no-ops (key == value)
+    R4   break bidirectional cycles (A->B and B->A)
+    R5   drop BANNED PAIRS — ban the specific wrong (variant -> canonical) map,
+         NOT the canonical (banning `nephrology` also killed ~20 good fixes)
+    R5b  drop fragment CANONICALS (a single letter is never a valid output)
+    R6   KEEP case-normalisers (cnic->CNIC, ali->Ali)
+    R8   drop word->phrase expansions (they break token counts)
+    R9   merge case-fragments within a dict
+    R10  merge cross-dict entities (chughtai + Chughtai were split)
+    R11  drop pure spelling-preference pairs (both forms valid)
+
+    Names/places/orgs are Title-Cased from the curated data/entities.json.
+    Hard invariants (I1-I4) make the script REFUSE to emit a bad file.
 
 Then re-measures corruption on the 183-turn gold set.
 
 Usage:
     python3 clean_lexicon.py                 # dry-run, report only
-    python3 clean_lexicon.py --write         # write data/lexicons_clean.json
+    python3 clean_lexicon.py --write         # write data/lexicons_v2.json
 """
 
 import argparse
@@ -34,7 +49,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 SRC   = SCRIPT_DIR / "data" / "lexicons_updated.json"
 BASE  = SCRIPT_DIR / "data" / "lexicons.json"
-OUT   = SCRIPT_DIR / "data" / "lexicons_clean.json"
+OUT   = SCRIPT_DIR / "data" / "lexicons_v2.json"
 XLSX  = SCRIPT_DIR / "data" / "CLL analysis" / "turnwise_results_eval_full.xlsx"
 
 # ── R1: NO LENGTH RULE ───────────────────────────────────────────────────────
@@ -538,7 +553,7 @@ def measure_corruption(corr: dict, pn: dict, label: str) -> tuple[int, int]:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--write", action="store_true", help="write data/lexicons_clean.json")
+    ap.add_argument("--write", action="store_true", help="write data/lexicons_v2.json")
     args = ap.parse_args()
 
     src = load(SRC)
@@ -594,7 +609,7 @@ def main():
     measure_corruption(base["corrections"], base["proper_nouns"], "original lexicons.json")
     measure_corruption(src["corrections"], src["proper_nouns"], "lexicons_updated.json")
     w, ph = to_lookup(cleaned)
-    measure_corruption(w, {}, "lexicons_clean.json (NEW)")
+    measure_corruption(w, {}, "lexicons_v2.json (NEW)")
     print()
 
     if args.write:
@@ -617,7 +632,7 @@ def main():
         OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"  ✓ written: {OUT}")
     else:
-        print("  (dry run — pass --write to save data/lexicons_clean.json)")
+        print("  (dry run — pass --write to save data/lexicons_v2.json)")
     print()
 
 
