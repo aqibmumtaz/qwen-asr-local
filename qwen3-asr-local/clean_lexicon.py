@@ -37,16 +37,26 @@ BASE  = SCRIPT_DIR / "data" / "lexicons.json"
 OUT   = SCRIPT_DIR / "data" / "lexicons_clean.json"
 XLSX  = SCRIPT_DIR / "data" / "CLL analysis" / "turnwise_results_eval_full.xlsx"
 
-# ── R1: minimum variant length ───────────────────────────────────────────────
-# A blunt length floor ONLY. It exists to kill 1-2 char variants, which are
-# inherently collision-prone regardless of vocabulary.
+# ── R1: NO LENGTH RULE ───────────────────────────────────────────────────────
 #
-# IMPORTANT — length is NOT the real safety test. The real test is R1b below.
+# There is deliberately no minimum-variant-length rule. It was tried at 5, then
+# 3, and it earns NOTHING: with it off, gold corruption is identical (0.00%),
+# and it destroys legitimate short fixes — lb->lab, dl->dil, nw->new, kt->kot,
+# md->med, sr->sir, tj->taj. At MIN_LEN=5 it also killed eria->area and ~272
+# short acronym variants.
+#
+# Length was never the real safety test:
 #   "eria" -> "area"  is 4 chars but is pure ASR garbage  => SAFE to keep
 #   "se"   -> "s"     is 2 chars but "se" is a REAL WORD  => MUST drop
-# Using length as the safety rule threw away thousands of good corrections
-# (eria->area, and ~272 short acronym variants). Fixed by R1b.
-MIN_LEN = 3   # only 1-2 char variants are dropped on length alone
+# The real test is R1b (is the variant already a correct word?), which catches
+# every dangerous short variant (se, ji, jo, ki, to, do, ek) on its own merits.
+#
+# IMPORTANT: exact-match lookup is safe at ANY length — `lb` can only ever fire
+# on the exact token `lb`. Short strings ARE dangerous for FUZZY matching
+# (edit-distance 2 from a 2-char string matches almost anything), but that is a
+# Step-3 concern and must be solved in the resolver (e.g. scale the distance
+# threshold by length), NOT by mutilating the lexicon here.
+MIN_LEN = 0   # rule disabled — see above
 
 
 def build_known_correct(src: dict, gold_vocab: set) -> set:
@@ -89,40 +99,55 @@ care cure help health change charge data city name note four month
 mobile number report call time date
 """.split())
 
-# ── R5: canonicals that are semantically wrong / dangerous — never map TO these
-BANNED_CANONICALS = {
-    "woh",      # jo -> woh   (relative pronoun -> demonstrative)
-    "humaira",  # mera -> humaira  ("my" -> a person's name)
-    "health",   # help -> health   (clinically dangerous)
-    "cure",     # care -> cure     (clinically dangerous)
-    "charge",   # change -> charge
-    "nephrology",  # neurologist -> nephrology (WRONG specialty — dangerous)
-    "stent",    # stand -> stent
-    "mor",      # four -> mor
-    "ct",       # city -> ct
-    "app",      # aap -> app
-    "naeem",    # name -> naeem
-    "safdar",   # sakte -> safdar
-    "shahab",   # sahab/shahid -> shahab
-    "hub",      # hb -> hub
-    "three",    # teen -> three  (digit/word flip)
-    "not",      # note -> not
-    "blue",     # below -> blue
-    "s", "m", "ii",  # se->s, me->m, to->ii
-    # found by re-measuring after the first cleanup pass:
-    "central",  # centre -> central  (different word)
-    "majeed",   # mazeed -> majeed   ("more" -> a person's name)
-    "month",    # mahine -> month    (translation, not correction)
-    "ga",       # jayega -> ga       (truncation)
-    "mr",       # mister -> mr       (abbreviation)
-    # found after relaxing the length rule (R1 -> R1b): these map one REAL word
-    # onto a DIFFERENT real word — always corruption, never a fix.
-    "walaikum", # wale -> walaikum   ("those who" -> a greeting)
-    "meal",     # mil  -> meal       ("meet" -> "food")
-    "din",      # den  -> din        ("give" -> "day")
-    "maa",      # maan -> maa        ("accept" -> "mother")
-    "scene",    # seen -> scene
+# ── R5: BANNED PAIRS — a specific (variant -> canonical) map that is wrong ────
+#
+# CRITICAL: ban the PAIR, not the canonical.
+#
+# An earlier version banned the CANONICAL, which was a serious bug: banning
+# `nephrology` (because of the bad map neurologist->nephrology) also destroyed
+# every LEGITIMATE nephrology spelling fix — nefrologee, nephrolgy, nephroloji,
+# and ~20 more. Same for cure, blue, charge, health, majeed, central...
+# It threw away ~150 good corrections to block ~25 bad ones.
+#
+# The canonical is almost always a perfectly good word. It is one specific
+# mapping that is wrong, because the VARIANT side is a different real word.
+BANNED_PAIRS = {
+    # relative pronoun -> demonstrative
+    ("jo", "woh"),
+    # "my" -> a person's name
+    ("mera", "humaira"),
+    # clinically dangerous: different meaning
+    ("help", "health"), ("care", "cure"), ("neurologist", "nephrology"),
+    ("stand", "stent"),
+    # one real word -> a different real word
+    ("change", "charge"), ("four", "mor"), ("city", "ct"), ("aap", "app"),
+    ("name", "naeem"), ("sakte", "safdar"), ("teen", "three"), ("note", "not"),
+    ("below", "blue"), ("centre", "central"), ("mahine", "month"),
+    ("wale", "walaikum"), ("mil", "meal"), ("den", "din"), ("maan", "maa"),
+    ("seen", "scene"), ("mazeed", "majeed"), ("delhi", "dil"), ("haan", "khan"),
+    ("janab", "chenab"), ("kitni", "queens"), ("route", "rohi"), ("gel", "jail"),
+    ("national", "international"), ("emergency", "serivce"), ("civil", "civel"),
+    ("face", "phase"), ("chand", "chanda"), ("nagar", "naghar"),
+    ("renal", "renala"), ("silver", "siver"), ("jina", "jinnah"),
+    ("charger", "charges"), ("tek", "take"), ("terah", "tera"), ("thi", "the"),
+    ("use", "us ko"), ("wah", "woh"), ("walid", "waleed"), ("zahid", "zaid"),
+    # truncations / abbreviations, not corrections
+    ("jayega", "ga"), ("mister", "mr"), ("hb", "hub"), ("sahab", "shahab"),
+    ("shahid", "shahab"), ("okay", "ok"), ("off", "of"), ("end", "and"),
+    ("all", "al"), ("are", "area"), ("for", "fo"), ("two", "ii"),
+    ("sar", "sir"), ("main", "mein"), ("mein", "main"), ("yeh", "yahi"),
+    ("ki", "ke"), ("naa", "na"), ("nahin", "nahi"), ("aik", "ek"),
+    ("acha", "accha"), ("aah", "ah"), ("yaar", "yar"),
 }
+
+# ── R5b: canonicals that are never a valid TARGET, whatever the variant ───────
+# A canonical is what we OUTPUT. A single letter or a fragment is never a real
+# word, so it can never be a correct output. This — not variant length — is the
+# right guard: it kills ea->e, ee->e, ca->c, g->gh while leaving lb->lab alone.
+BANNED_CANONICALS = (
+    set("abcdefghijklmnopqrstuvwxyz")          # every single letter
+    | {"ii", "al", "fo", "ga", "mr", "ok", "of", "gh", "aw", "be", "e"}
+)
 
 # Pairs where BOTH forms are valid spellings of the same word. The lexicon's job
 # is to fix ASR garbage, NOT to enforce an orthographic preference between two
@@ -214,7 +239,15 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
                 stats["drop_word_to_phrase"] += 1
                 continue
 
-            # R5 — the canonical is semantically wrong / dangerous
+            # R5 — this SPECIFIC (variant -> canonical) map is wrong.
+            # Ban the PAIR, not the canonical: `nephrology` is a fine word, it is
+            # only `neurologist -> nephrology` that is dangerous. Banning the
+            # canonical would also kill nefrologee/nephrolgy/... (~150 good fixes).
+            if (vl, cl) in BANNED_PAIRS:
+                stats["drop_banned_pair"] += 1
+                continue
+
+            # canonical is a single letter / fragment — never a valid target
             if cl in BANNED_CANONICALS:
                 stats["drop_banned_canonical"] += 1
                 continue
@@ -527,7 +560,8 @@ def main():
         "drop_is_real_word":       "R1b variant is ALREADY A CORRECT WORD  <-- the real test",
         "drop_selfmap_noop":       "R3  self-map no-op (key == value)",
         "drop_cycle":              "R4  bidirectional cycle (A<->B)",
-        "drop_banned_canonical":   "R5  canonical is wrong/dangerous",
+        "drop_banned_pair":        "R5  BANNED PAIR (this specific map is wrong)",
+        "drop_banned_canonical":   "R5b canonical is a fragment (s, m, ii)",
         "drop_word_to_phrase":     "R8  word -> phrase (breaks token count)",
         "merged_case_fragment":    "R9  MERGED case-fragment (within a dict)",
         "merged_cross_dict":       "R10 MERGED cross-dict entity (chughtai + Chughtai)",

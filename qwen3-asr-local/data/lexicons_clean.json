@@ -308,7 +308,8 @@
         "addayala"
       ],
       "add": [
-        "aid"
+        "aid",
+        "ed"
       ],
       "address": [
         "adars",
@@ -612,11 +613,6 @@
       "aksar": [
         "akasar"
       ],
-      "al": [
-        "aal",
-        "ala",
-        "hal"
-      ],
       "alaikum": [
         "lekum"
       ],
@@ -732,7 +728,8 @@
         "aell",
         "ahll",
         "alle",
-        "allh"
+        "allh",
+        "ol"
       ],
       "Allah": [
         "aalla",
@@ -1086,6 +1083,9 @@
       "apni": [
         "apanee",
         "apani"
+      ],
+      "app": [
+        "aip"
       ],
       "Apple": [
         "aiapal"
@@ -1543,17 +1543,6 @@
         "awicennaa",
         "awikenna",
         "awycenna"
-      ],
-      "aw": [
-        "aaew",
-        "aaiw",
-        "aaw",
-        "aew",
-        "ahw",
-        "aiw",
-        "awe",
-        "awh",
-        "aww"
       ],
       "Awaan": [
         "aawaan",
@@ -2283,17 +2272,6 @@
         "bbazar",
         "bzar"
       ],
-      "be": [
-        "baae",
-        "bae",
-        "baee",
-        "bbe",
-        "bea",
-        "bee",
-        "beh",
-        "bie",
-        "bii"
-      ],
       "Beenish": [
         "baneesh",
         "beaenish",
@@ -2542,6 +2520,17 @@
         "blud",
         "bluod",
         "bluud"
+      ],
+      "blue": [
+        "balue",
+        "bblue",
+        "bilo",
+        "biloo",
+        "bilyoo",
+        "ble",
+        "bllue",
+        "bloo",
+        "blooe"
       ],
       "BNP": [
         "beeenpi"
@@ -2803,12 +2792,6 @@
       "by": [
         "baay"
       ],
-      "c": [
-        "cai",
-        "cay",
-        "cee",
-        "cii"
-      ],
       "C-section": [
         "si sekshan"
       ],
@@ -3052,6 +3035,20 @@
         "cnter",
         "kenter"
       ],
+      "central": [
+        "cenatral",
+        "cenntral",
+        "centaral",
+        "centraal",
+        "centrala",
+        "centrall",
+        "centrl",
+        "centrral",
+        "centtral",
+        "cntral",
+        "kentraal",
+        "kentral"
+      ],
       "centre": [
         "antar",
         "cenatre",
@@ -3172,6 +3169,13 @@
       ],
       "char": [
         "chaar"
+      ],
+      "charge": [
+        "chaarge",
+        "chaart",
+        "charage",
+        "charrge",
+        "chrge"
       ],
       "charger": [
         "chaarjar"
@@ -4033,8 +4037,21 @@
       "CRP": [
         "seeaarpi"
       ],
+      "CT": [
+        "seeti",
+        "sionemkri"
+      ],
       "culture": [
         "kalchar"
+      ],
+      "cure": [
+        "coore",
+        "cre",
+        "cuar",
+        "cuer",
+        "curre",
+        "koore",
+        "kure"
       ],
       "current": [
         "karant"
@@ -4297,6 +4314,7 @@
       "dha": [
         "daha",
         "ddha",
+        "dh",
         "dhaa"
       ],
       "dhai": [
@@ -4429,7 +4447,19 @@
         "del",
         "dila",
         "dill",
+        "dl",
         "dyl"
+      ],
+      "din": [
+        "deeen",
+        "deen",
+        "dihn",
+        "diihn",
+        "diin",
+        "diinh",
+        "dinh",
+        "dyn",
+        "dyyn"
       ],
       "directly": [
         "daayarektali"
@@ -4535,13 +4565,6 @@
       "duniya": [
         "duniyaa"
       ],
-      "e": [
-        "eaa",
-        "eai",
-        "eay",
-        "eea",
-        "eeh"
-      ],
       "Easypaisa": [
         "eezeepaisa"
       ],
@@ -4602,7 +4625,8 @@
         "eed"
       ],
       "eight": [
-        "aath"
+        "aath",
+        "et"
       ],
       "Eima": [
         "aima",
@@ -5380,6 +5404,7 @@
       ],
       "fee": [
         "fees",
+        "fi",
         "fis",
         "phee",
         "phees"
@@ -5468,12 +5493,6 @@
       ],
       "FNAC": [
         "ephaenaesi"
-      ],
-      "fo": [
-        "ffo",
-        "foo",
-        "pho",
-        "phoo"
       ],
       "folic": [
         "pholik"
@@ -5728,17 +5747,6 @@
       ],
       "Germany": [
         "jarmani"
-      ],
-      "gh": [
-        "gaah",
-        "gah",
-        "geeh",
-        "geh",
-        "ggh",
-        "ghe",
-        "ghee",
-        "ghh",
-        "gih"
       ],
       "ghalat": [
         "galat"
@@ -6681,6 +6689,16 @@
         "haid",
         "hait"
       ],
+      "health": [
+        "halth",
+        "heaalt",
+        "heaalth",
+        "healath",
+        "heallth",
+        "healt",
+        "healtha",
+        "helth"
+      ],
       "heart": [
         "haart",
         "hart"
@@ -6801,6 +6819,7 @@
       ],
       "hod": [
         "h o d",
+        "hd",
         "hed",
         "hoda",
         "hodd",
@@ -6887,6 +6906,12 @@
       "hua": [
         "huaa"
       ],
+      "hub": [
+        "hab",
+        "hoob",
+        "huba",
+        "hubb"
+      ],
       "hue": [
         "huve"
       ],
@@ -6907,6 +6932,19 @@
         "humaa",
         "humae",
         "humah"
+      ],
+      "Humaira": [
+        "hamera",
+        "homaaira",
+        "homaeera",
+        "homaeira",
+        "homaera",
+        "homahira",
+        "homaira",
+        "homairaa",
+        "homayra",
+        "humaera",
+        "humayra"
       ],
       "Humayun": [
         "homaayun",
@@ -7929,7 +7967,10 @@
         "jaizakaish"
       ],
       "jee": [
-        "zee"
+        "jy",
+        "zee",
+        "zi",
+        "zy"
       ],
       "Jehlum": [
         "jehllum",
@@ -7988,6 +8029,7 @@
         "zhelum"
       ],
       "ji": [
+        "je",
         "jeew"
       ],
       "Jilani": [
@@ -8516,6 +8558,7 @@
         "cda",
         "cdaa",
         "kada",
+        "kd",
         "kdaa",
         "kdda",
         "khada",
@@ -8928,7 +8971,8 @@
       "khi": [
         "kee",
         "khee",
-        "khy"
+        "khy",
+        "ky"
       ],
       "khirki": [
         "khirakee"
@@ -9155,6 +9199,7 @@
         "koot",
         "kota",
         "kott",
+        "kt",
         "qoot",
         "qot"
       ],
@@ -9252,6 +9297,7 @@
         "laba",
         "labb",
         "laib",
+        "lb",
         "leb",
         "lebar",
         "llab",
@@ -9799,6 +9845,31 @@
       "majboot": [
         "majaboot"
       ],
+      "Majeed": [
+        "maajeed",
+        "maajeid",
+        "maajid",
+        "maajied",
+        "maajyd",
+        "maazeed",
+        "maazid",
+        "maazyd",
+        "maejeed",
+        "mahjeed",
+        "mahjeid",
+        "mahjied",
+        "majeeda",
+        "majeedd",
+        "majeet",
+        "majeid",
+        "majied",
+        "majiid",
+        "majyd",
+        "mazid",
+        "mazyd",
+        "mjeed",
+        "mmajeed"
+      ],
       "majid": [
         "maajed",
         "maejid",
@@ -10158,6 +10229,7 @@
       ],
       "med": [
         "mad",
+        "md",
         "meda",
         "medd",
         "met",
@@ -10588,6 +10660,15 @@
       ],
       "monitor": [
         "monitar"
+      ],
+      "month": [
+        "manth"
+      ],
+      "mor": [
+        "mmor",
+        "moor",
+        "mora",
+        "morr"
       ],
       "morning": [
         "mohrning",
@@ -11085,6 +11166,20 @@
         "ndra",
         "nnadra"
       ],
+      "Naeem": [
+        "naaeem",
+        "naaeim",
+        "naaiem",
+        "naaim",
+        "naeaem",
+        "naeeam",
+        "naeehm",
+        "naeeim",
+        "naeim",
+        "naieem",
+        "naiem",
+        "naiim"
+      ],
       "nafrat": [
         "napharat"
       ],
@@ -11539,6 +11634,30 @@
       "nephrologist": [
         "nephrolojist"
       ],
+      "nephrology": [
+        "nefrologee",
+        "nefrologi",
+        "nefrology",
+        "nefroloogy",
+        "nefroology",
+        "nepharology",
+        "nephrlogy",
+        "nephrolgy",
+        "nephrollogy",
+        "nephrologee",
+        "nephrologi",
+        "nephroloji",
+        "nephroloogee",
+        "nephroloogi",
+        "nephroloogy",
+        "nephroologee",
+        "nephroologi",
+        "nephroology",
+        "nephrooloogy",
+        "nephrrology",
+        "nnephrology",
+        "nphrology"
+      ],
       "neurological": [
         "nyoorolojikli"
       ],
@@ -11563,6 +11682,7 @@
         "nev",
         "newa",
         "nnew",
+        "nw",
         "nyoo"
       ],
       "next": [
@@ -11719,6 +11839,17 @@
         "nur",
         "nuur"
       ],
+      "not": [
+        "noht",
+        "nooht",
+        "nooot",
+        "noot",
+        "nooth",
+        "notee",
+        "noth",
+        "nut",
+        "nuut"
+      ],
       "Noushina": [
         "nasheena",
         "nohushina",
@@ -11838,16 +11969,6 @@
         "obstitrecs",
         "obstitrics",
         "obstitrycs"
-      ],
-      "of": [
-        "oaf",
-        "oeef",
-        "oef",
-        "ofe",
-        "ofh",
-        "ohf",
-        "oif",
-        "oof"
       ],
       "off": [
         "oph"
@@ -12138,7 +12259,8 @@
         "pac",
         "paka",
         "pakk",
-        "paq"
+        "paq",
+        "pk"
       ],
       "Pakistan": [
         "paakistaan",
@@ -12883,12 +13005,6 @@
         "quraet",
         "quraht"
       ],
-      "r": [
-        "raa",
-        "rai",
-        "raw",
-        "ray"
-      ],
       "RA": [
         "aarae"
       ],
@@ -13083,6 +13199,7 @@
         "raam",
         "rama",
         "ramm",
+        "rm",
         "rram"
       ],
       "Ramla": [
@@ -13528,6 +13645,7 @@
         "ryzwan"
       ],
       "roa": [
+        "ro",
         "roaa",
         "rooa",
         "rooaa",
@@ -13751,6 +13869,19 @@
         "sayd",
         "seed",
         "ssaeed"
+      ],
+      "Safdar": [
+        "saafdar",
+        "saefdar",
+        "safadar",
+        "safdaar",
+        "safdaer",
+        "safdahr",
+        "safdarh",
+        "safdarr",
+        "safddar",
+        "saffdar",
+        "sahfdar"
       ],
       "Safdarabad": [
         "saafdaarabad",
@@ -14709,6 +14840,15 @@
         "shh",
         "shhah"
       ],
+      "shahab": [
+        "shaahaab",
+        "shaahab",
+        "shahaab",
+        "shahaba",
+        "shahabb",
+        "shahb",
+        "shhab"
+      ],
       "Shahbaz": [
         "sahbaz",
         "shaahbaz",
@@ -15409,6 +15549,7 @@
         "seer",
         "sira",
         "sirr",
+        "sr",
         "ssir",
         "syr"
       ],
@@ -15610,6 +15751,9 @@
       ],
       "STD": [
         "sndi"
+      ],
+      "stent": [
+        "staind"
       ],
       "stethoscope": [
         "stethoskop"
@@ -15971,6 +16115,7 @@
         "taje",
         "tajh",
         "taz",
+        "tj",
         "ttaj"
       ],
       "tak": [
@@ -16189,6 +16334,7 @@
         "teka",
         "tekk",
         "teq",
+        "tk",
         "ttek"
       ],
       "Telegram": [
@@ -16278,6 +16424,10 @@
       ],
       "thousand": [
         "thaaujend"
+      ],
+      "three": [
+        "teri",
+        "thri"
       ],
       "through": [
         "throo"
@@ -16536,6 +16686,7 @@
         "ued",
         "ueta",
         "uett",
+        "ut",
         "yooeeti"
       ],
       "ug": [
@@ -17083,7 +17234,8 @@
         "vaah",
         "vah",
         "waah",
-        "waha"
+        "waha",
+        "wh"
       ],
       "wahab": [
         "waahaab",
@@ -17114,6 +17266,10 @@
         "walaa",
         "walla",
         "wla"
+      ],
+      "walaikum": [
+        "waalko",
+        "walikamuslaam"
       ],
       "Walayat": [
         "waalaiat",
@@ -17394,6 +17550,9 @@
       "without": [
         "widaaut"
       ],
+      "woh": [
+        "wo"
+      ],
       "X-ray": [
         "eks re",
         "eksaray",
@@ -17429,7 +17588,8 @@
         "yaara",
         "yara",
         "yarr",
-        "yer"
+        "yer",
+        "yr"
       ],
       "Yasir": [
         "naasir",
@@ -17457,7 +17617,8 @@
         "yasmiin"
       ],
       "yeh": [
-        "yah"
+        "yah",
+        "ye"
       ],
       "you": [
         "yoo"
