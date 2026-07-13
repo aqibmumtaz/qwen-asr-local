@@ -1,0 +1,61 @@
+{
+  "_comment": [
+    "GAZETTEER — the authoritative entity list. This is the ONE place that decides",
+    "what is a proper noun, because neither the source lexicon's casing nor an",
+    "English dictionary can tell you:",
+    "  - source casing is arbitrary  (source had 'arif' AND 'afzal' both lowercase,",
+    "    yet 'Arif' ended up capitalised and 'afzal' did not)",
+    "  - English dict says 'Delhi', 'Allah', 'Apple' are dictionary words (they are,",
+    "    as proper nouns) while calling Urdu words like 'aasman' non-words",
+    "Everything listed here is categorised as a proper noun and Title-Cased.",
+    "Anything NOT listed falls through to 'words'. Extend this file as new names,",
+    "places, doctors, labs or brands appear in the calls."
+  ],
+
+  "given_names": [
+    "abbad", "abdal", "abdul", "abdullah", "abdurrahman", "abeed", "abeer", "abida",
+    "adil", "adnan", "afaq", "afsheen", "afzal", "ahmad", "ahmed", "ahmer", "ahsan",
+    "aisha", "akbar", "akram", "ali", "amer", "amir", "ammar", "anwar", "aqib",
+    "arif", "arsalan", "asad", "asghar", "asif", "asim", "aslam", "ayesha", "ayub",
+    "azhar", "aziz", "babar", "bashir", "bilal", "danish", "ehtisham", "faheem",
+    "faisal", "faiz", "farah", "farhan", "farooq", "fatima", "fayyaz", "furqan",
+    "ghulam", "habib", "hafiz", "haider", "hamza", "hanif", "haroon", "hasan",
+    "hassan", "humaira", "hussain", "iftikhar", "imran", "iqbal", "irfan", "ishaq",
+    "jamshed", "javed", "junaid", "kamran", "kashif", "khalid", "khawaja", "mahmood",
+    "majeed", "malik", "mansoor", "maryam", "masood", "mazhar", "mehmood", "mehwish",
+    "mubashir", "muhammad", "mujahid", "munir", "murtaza", "musa", "mustafa",
+    "naeem", "nadeem", "nasir", "naseer", "nawaz", "nazir", "nida", "noman",
+    "qasim", "raheem", "rahim", "rashid", "rauf", "rehan", "rizwan", "sadia",
+    "safdar", "saeed", "sajid", "sajjida", "salman", "sana", "saqib", "sara",
+    "sarah", "shabbir", "shafiq", "shahid", "shakeel", "sharif", "shoaib", "sultan",
+    "tahir", "talha", "tanveer", "tariq", "tayyaba", "usama", "usman", "waheed",
+    "wajid", "waqar", "waseem", "yasir", "younas", "yousaf", "zahid", "zainab",
+    "zeeshan", "zia", "zubaida", "zubair"
+  ],
+
+  "places": [
+    "abbottabad", "adayala", "adyala", "attock", "awaisia", "awasia", "bahawalpur",
+    "bhakkar", "chakwal", "chennai", "chiniot", "dijkot", "dubai", "faisalabad",
+    "gujranwala", "gujrat", "hafizabad", "hyderabad", "islamabad", "jhang", "jhelum",
+    "kabirwala", "kamalia", "karachi", "karianwala", "kasur", "khanewal", "kohat",
+    "lahore", "lalamusa", "mardan", "mianwali", "multan", "murree", "muzaffarabad",
+    "muzaffargarh", "nowshera", "okara", "pakpattan", "peshawar", "quetta",
+    "rahimyar", "rawalpindi", "sadiqabad", "sahiwal", "sargodha", "sheikhupura",
+    "sialkot", "sukkar", "swat", "taxila", "vehari", "wazirabad",
+    "pakistan", "india", "delhi", "america", "australia", "canada", "japan", "sydney"
+  ],
+
+  "organisations": [
+    "chughtai", "shaukat", "khanum", "agha", "aga", "excel", "essa", "indus",
+    "jinnah", "mayo", "services", "victoria", "fatimiyah", "faqeerni", "civic",
+    "cavalry", "jazz", "telenor", "ufone", "zong", "easypaisa", "jazzcash",
+    "nayapay", "mobilink", "nadra", "android", "apple", "bing", "outlook",
+    "telegram", "twitter", "yahoo", "google", "whatsapp"
+  ],
+
+  "religious": [
+    "allah", "ameen", "bismillah", "alhamdulillah", "inshallah", "mashallah",
+    "astaghfirullah", "subhanallah", "jazakallah", "masha", "eid", "ramzan",
+    "quran", "hajj", "umrah"
+  ]
+}

@@ -322,41 +322,77 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
         if keep:
             final[canon] = sorted(keep)
 
-    # ── R12 — CATEGORISE by what the canonical's casing tells us ─────────────
-    # The canonical already encodes its own category:
-    #   CNIC / ECG / SGPT   -> ALL CAPS      -> acronym
-    #   Chughtai / Lahore   -> Capitalised   -> proper noun
-    #   area / appointment  -> lowercase     -> common word
-    #   "Chughtai Lab"      -> has a space   -> phrase (needs regex, not word lookup)
+    # ── Split into `lexicon` and `phrases` — by MECHANISM, not semantics ──────
     #
-    # This is not cosmetic: `acronyms` + `proper_nouns` IS the entity list for the
-    # ASR context glossary (Layer 1), so having them separated makes it directly
-    # usable instead of needing a filter every time.
-    def categorise(canon: str) -> str:
-        if " " in canon:
-            return "phrases"
-        if canon.isupper() and len(canon) <= 6:
-            return "acronyms"
-        if canon[:1].isupper():
-            return "proper_nouns"
-        return "words"
+    # WHY NO acronym/proper_noun/word CATEGORIES:
+    #   We tried. It cannot be done reliably, and a confidently-wrong category is
+    #   worse than none. To categorise you must know that `afzal` is a name but
+    #   `aasman` (sky) is a word — and nothing in the data tells you that:
+    #     - the source's own casing is arbitrary (it had BOTH `arif` and `afzal`
+    #       lowercase, yet one ended up capitalised and the other did not)
+    #     - an English dictionary fails in BOTH directions: it calls `Delhi`,
+    #       `Allah` and `Apple` dictionary words, and calls Urdu words like
+    #       `aasman`, `aaiye`, `achanak` non-words (=> "must be a name")
+    #   Any auto-classifier would mislabel hundreds of entries.
+    #
+    #   The categories also bought us nothing: the runtime flattens them into one
+    #   lookup anyway, and the only real consumer — the ASR context glossary —
+    #   must be SMALL and per-call scoped (the scale test showed a 180-term
+    #   glossary performs WORSE than a 3-term one). So the glossary comes from the
+    #   curated data/entities.json gazetteer, not from auto-classification.
+    #
+    # The lexicon/phrases split IS justified: they need different lookup machinery
+    # (exact word match vs. regex phrase replacement).
+    words = {k: v for k, v in final.items() if " " not in k}
+    phrases = {k: v for k, v in final.items() if " " in k}
 
-    out: dict[str, dict] = {
-        "acronyms": {}, "proper_nouns": {}, "words": {}, "phrases": {},
-    }
-    for canon, variants in final.items():
-        out[categorise(canon)][canon] = variants
-        stats[f"cat_{categorise(canon)}"] += 1
+    # Title-case canonicals that the gazetteer positively identifies as entities,
+    # so output casing is consistent (Afzal, Arif, Sialkot — not afzal, Arif, ...).
+    gaz = load_gazetteer()
+    retitled: dict[str, list] = {}
+    for k, v in words.items():
+        proper = gaz.get(k.lower())
+        if proper and proper != k:
+            retitled[proper] = sorted(set(v) | set(retitled.get(proper, [])) | {k.lower()})
+            stats["retitled_entity"] += 1
+        else:
+            retitled[k] = v
+    words = {k: sorted(set(v) - {k.lower()} if k != k.lower() else set(v))
+             for k, v in retitled.items()}
+    words = {k: v for k, v in words.items() if v}
 
     out = {
-        cat: dict(sorted(d.items(), key=lambda x: x[0].lower()))
-        for cat, d in out.items()
+        "lexicon": dict(sorted(words.items(), key=lambda x: x[0].lower())),
+        "phrases": dict(sorted(phrases.items(), key=lambda x: x[0].lower())),
     }
     _assert_invariants(out)
     return out, dict(stats)
 
 
-CATEGORIES = ("acronyms", "proper_nouns", "words", "phrases")
+def load_gazetteer() -> dict:
+    """
+    data/entities.json -> {lowercase: TitleCase}.
+
+    A small, CURATED, hand-maintained entity list. Its ONLY jobs are:
+      1. make output casing consistent for known names/places
+      2. supply the ASR context glossary (Layer 1)
+    It is deliberately NOT used to categorise the whole lexicon — see the long
+    comment in clean(). High precision, does not need to be complete.
+    """
+    path = SCRIPT_DIR / "data" / "entities.json"
+    if not path.exists():
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    out = {}
+    for key, items in raw.items():
+        if key.startswith("_"):
+            continue
+        for e in items:
+            out[e.lower()] = e.title() if not e.isupper() else e
+    return out
+
+
+CATEGORIES = ("lexicon", "phrases")
 
 
 def _assert_invariants(out: dict) -> None:
@@ -422,26 +458,23 @@ def to_lookup(cleaned: dict) -> tuple[dict, dict]:
     Returns (word_lookup, phrase_lookup).
     """
     words, phrases = {}, {}
-    for cat in ("acronyms", "proper_nouns", "words"):
-        for canon, variants in cleaned.get(cat, {}).items():
-            for v in variants:
-                words[v.lower()] = canon
+    for canon, variants in cleaned.get("lexicon", {}).items():
+        for v in variants:
+            words[v.lower()] = canon
     for canon, variants in cleaned.get("phrases", {}).items():
         for v in variants:
             phrases[v.lower()] = canon
     return words, phrases
 
 
-def entity_glossary(cleaned: dict) -> list[str]:
+def entity_glossary(cleaned: dict | None = None) -> list[str]:
     """
-    The ASR context glossary (Layer 1) = acronyms + proper nouns.
-    These are the OOV entities the model cannot know; the common `words` and
-    `phrases` are things it already knows and would only dilute the biasing.
+    The ASR context glossary (Layer 1) comes from the CURATED gazetteer, not from
+    auto-classifying the lexicon. Keep it small — the scale test showed a 180-term
+    glossary performs WORSE than a 3-term one (soft biasing dilutes).
+    In production, scope it per call: base entities + this call's lab/agent/patient.
     """
-    return sorted(
-        list(cleaned.get("acronyms", {})) + list(cleaned.get("proper_nouns", {})),
-        key=str.lower,
-    )
+    return sorted(set(load_gazetteer().values()), key=str.lower)
 
 
 def measure_corruption(corr: dict, pn: dict, label: str) -> tuple[int, int]:
@@ -506,25 +539,19 @@ def main():
             print(f"    {lbl:<44} {stats[k]:>6}")
     print()
 
-    print("  RESULT — categorised {canonical: [variants]}")
+    print("  RESULT — {canonical: [variants]}  (no semantic categories — see clean())")
     tot_c = tot_v = 0
-    desc = {
-        "acronyms":     "ALL CAPS   (CNIC, ECG, SGPT)",
-        "proper_nouns": "Capitalised (Chughtai, Lahore)",
-        "words":        "lowercase  (area, appointment)",
-        "phrases":      "multi-word (Chughtai Lab)",
-    }
+    desc = {"lexicon": "single words  (exact match lookup)",
+            "phrases": "multi-word    (regex replacement)"}
     for cat in CATEGORIES:
-        n = len(cleaned[cat])
-        v = sum(len(x) for x in cleaned[cat].values())
-        tot_c += n
-        tot_v += v
-        print(f"    {cat:<13} {n:>5} canonicals  {v:>6} variants   {desc[cat]}")
-    print(f"    {'TOTAL':<13} {tot_c:>5} canonicals  {tot_v:>6} variants")
+        n = len(cleaned[cat]); v = sum(len(x) for x in cleaned[cat].values())
+        tot_c += n; tot_v += v
+        print(f"    {cat:<9} {n:>5} canonicals  {v:>6} variants   {desc[cat]}")
+    print(f"    {'TOTAL':<9} {tot_c:>5} canonicals  {tot_v:>6} variants")
     print()
-    gl = entity_glossary(cleaned)
-    print(f"  ASR context glossary (acronyms + proper_nouns): {len(gl)} entities")
-    print(f"    e.g. {', '.join(gl[:10])} ...")
+    gl = entity_glossary()
+    print(f"  ASR glossary (from curated data/entities.json): {len(gl)} entities")
+    print(f"    e.g. {', '.join(gl[:8])} ...")
     print()
 
     # ---- re-measure corruption on gold ----
@@ -539,16 +566,17 @@ def main():
     if args.write:
         out = {
             "_comment": (
-                "CLEANED lexicon. Structure: {category: {canonical: [variant, ...]}}. "
-                "4 categories, derived from the canonical's own casing: "
-                "acronyms (ALL CAPS: CNIC, ECG), proper_nouns (Capitalised: Chughtai, "
-                "Lahore), words (lowercase: area, appointment), phrases (multi-word). "
-                "Canonicals keep their correct case; variants are ALWAYS lowercase "
-                "(lookup lowercases the input word). Canonical keys are unique "
-                "case-insensitively ACROSS all categories — enforced, not incidental. "
-                "At load: collapse acronyms+proper_nouns+words into one flat "
-                "variant->canonical map; phrases need regex replacement. "
-                "acronyms + proper_nouns IS the ASR context glossary (Layer 1)."
+                "CLEANED lexicon. Structure: {canonical: [variant, ...]}. "
+                "TWO sections, split by MECHANISM not semantics: `lexicon` (single "
+                "words, exact-match lookup) and `phrases` (multi-word, regex "
+                "replacement). There are deliberately NO acronym/proper_noun/word "
+                "categories: nothing in the data can tell you that `afzal` is a name "
+                "but `aasman` (sky) is a word — source casing is arbitrary and an "
+                "English dictionary fails both ways. A confidently-wrong category is "
+                "worse than none. Canonicals keep their correct case (CNIC, Chughtai); "
+                "variants are ALWAYS lowercase (lookup lowercases its input). Keys are "
+                "unique case-insensitively — enforced by _assert_invariants(). The ASR "
+                "context glossary comes from the curated data/entities.json instead."
             ),
             "lexicons": cleaned,
         }

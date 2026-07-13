@@ -51,11 +51,11 @@ def main():
         sys.exit(f"missing {CLEAN} — run clean_lexicon.py --write first")
 
     lex = json.loads(CLEAN.read_text(encoding="utf-8"))["lexicons"]
-    CATS = ("acronyms", "proper_nouns", "words", "phrases")
+    CATS = ("lexicon", "phrases")
     all_entries = {}
     for c in CATS:
         all_entries.update(lex[c])
-    words = {**lex["acronyms"], **lex["proper_nouns"], **lex["words"]}
+    words = lex["lexicon"]
     phrases = lex["phrases"]
 
     lookup = {}
@@ -73,7 +73,7 @@ def main():
     print()
 
     # ── KEY UNIQUENESS (the invariant you asked for) ─────────────────────────
-    print("  KEY UNIQUENESS — enforced ACROSS all 4 categories")
+    print("  KEY UNIQUENESS — enforced across lexicon + phrases")
     kc = Counter(k.lower() for k in all_entries)
     dup_keys = {k: [x for x in all_entries if x.lower() == k] for k, n in kc.items() if n > 1}
     check("no canonical key duplicated (case-insensitive)", not dup_keys,
@@ -129,6 +129,17 @@ def main():
           f"{nonlower[:5]}" if nonlower else "canonical keeps case, variants lowercase")
     check("key entities present with variants", len(ents) >= 5,
           "  " + ", ".join(f"{k}={v}" for k, v in ents.items()))
+
+    # every gazetteer entity present in the lexicon must be Title-Cased consistently
+    import sys as _s
+    _s.path.insert(0, str(SCRIPT_DIR))
+    from clean_lexicon import load_gazetteer
+    gaz = load_gazetteer()
+    miscased = [k for k in all_entries
+                if k.lower() in gaz and k != gaz[k.lower()]]
+    check("gazetteer entities are consistently cased", not miscased,
+          f"{miscased[:8]}" if miscased else
+          "Afzal / Arif / Ayesha / Sialkot all Title-Cased (was: afzal vs Arif)")
 
     # ── GOLD CORRUPTION ──────────────────────────────────────────────────────
     print("\n  CORRUPTION ON THE 183-TURN GOLD SET")
