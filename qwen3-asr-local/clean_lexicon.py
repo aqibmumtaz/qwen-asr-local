@@ -133,6 +133,20 @@ jinka jinke jinki jiska jiske jiski jise jisko jisne
 yahan wahan yahi wahi kahin sabhi sabko sabka
 """.split())
 
+# ── CANONICAL_FIXES — the SOURCE's canonical is itself wrong ─────────────────
+# Sometimes lexicons_updated.json corrects a misspelling to another misspelling.
+# Here we replace the bad canonical with the right word; the bad one is demoted
+# to a variant, so both it and its old variants now resolve correctly.
+#
+#   source:  "majaboot" -> "majboot"     (majboot is NOT a word)
+#   fixed :  "mazboot"  -> [majboot, majaboot]
+#
+# Mostly Urdu z-sounds (ز / ض) that the Hindi ASR renders as `j`.
+CANONICAL_FIXES = {
+    "majboot": "mazboot",     # مضبوط = strong  (z, not j)
+}
+
+
 # ── FORCE_KEEP — pairs kept even though a safety rule would drop them ─────────
 # Use sparingly. Each entry here is a deliberate override of R1b (the
 # "variant is already a correct word" test), so each one can rewrite a word a
@@ -264,6 +278,16 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
         for variant, canonical in flat.items():
             v = variant.strip()
             c = str(canonical).strip()
+
+            # CANONICAL_FIXES — the source's canonical is itself a misspelling.
+            # Point at the real word, and keep the bad canonical as a variant so
+            # it resolves too (majaboot -> mazboot, AND majboot -> mazboot).
+            if c.lower() in CANONICAL_FIXES:
+                right = CANONICAL_FIXES[c.lower()]
+                grouped[right].add(c.lower())      # demote old canonical to variant
+                c = right
+                stats["canonical_fixed"] += 1
+
             vl, cl = v.lower(), c.lower()
 
             # R3 — self-map. Keep ONLY if it is a genuine case-normaliser.
