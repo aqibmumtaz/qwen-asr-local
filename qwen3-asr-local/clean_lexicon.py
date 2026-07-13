@@ -96,6 +96,16 @@ def build_known_correct(src: dict, gold_vocab: set) -> set:
 
 # ── R2: words that must NEVER be treated as a variant (they are correct as-is)
 # Common Roman-Urdu function words + English words that appear in real speech.
+# NOTE on ek / aik: the source had a CYCLE (aik->ek AND ek->aik). Broken by data:
+#   gold  writes  ek=17  aik=1     <- humans overwhelmingly use "ek"
+#   model emits   ek=19  aik=0     <- the ASR only ever produces "ek"
+# So `ek` is the standard form and IS protected below; `aik` is the rare variant
+# and is deliberately NOT protected, which lets the legitimate `aik -> ek`
+# normalisation survive. (Protecting both wrongly killed that entry.)
+#
+# The Urdu pronoun/possessive block matters too: its absence is what let the
+# source's bogus `inki -> ek` through — `inki` ("their") has nothing to do with
+# `ek` ("one"), but it was in no known-correct list, so R1b passed it.
 PROTECTED = set("""
 se ji ka ki ke ko na naa hai hain ho hoon hun tha thi the ga gi ge
 main mein mera meri mere hum tum aap ap woh yeh jo is us un in
@@ -112,14 +122,8 @@ one two three four five six seven eight nine ten zero
 all are for and end is in on at to of a an the or if so no not
 care cure help health change charge data city name note four month
 mobile number report call time date
-ek aik
-"""
-# ── Urdu pronouns / possessives / demonstratives ─────────────────────────────
-# These are real, common words and must never be mapped away. Their absence is
-# what let the source's bogus `inki -> ek` survive: `inki` ("their") has nothing
-# to do with `ek` ("one"), but it was not in any known-correct list so R1b
-# passed it through. This closes that whole class.
-"""
+ek
+
 inki inka inke inhein inhone inhe
 iska iske iski isko isne
 unka unke unki unko unhein unhone unhe
@@ -132,6 +136,18 @@ kisi kisko kisne kiska kiske kiski
 jinka jinke jinki jiska jiske jiski jise jisko jisne
 yahan wahan yahi wahi kahin sabhi sabko sabka
 """.split())
+
+# ── FORCE_KEEP — pairs kept even though a safety rule would drop them ─────────
+# Use sparingly. Each entry here is a deliberate override of R1b (the
+# "variant is already a correct word" test), so each one can rewrite a word a
+# human annotator actually wrote. State the cost in the comment.
+FORCE_KEEP = {
+    # aik -> ek : `ek` is the standard form (gold 17x vs aik 1x; the ASR emits
+    # ek 19x and aik 0x). Normalises the rare spelling to the dominant one.
+    # COST: the gold contains `aik` once, so this rewrites that 1 word (0.03%).
+    ("aik", "ek"),
+}
+
 
 # ── R5: BANNED PAIRS — a specific (variant -> canonical) map that is wrong ────
 #
@@ -170,8 +186,12 @@ BANNED_PAIRS = {
     ("shahid", "shahab"), ("okay", "ok"), ("off", "of"), ("end", "and"),
     ("all", "al"), ("are", "area"), ("for", "fo"), ("two", "ii"),
     ("sar", "sir"), ("main", "mein"), ("mein", "main"), ("yeh", "yahi"),
-    ("ki", "ke"), ("naa", "na"), ("nahin", "nahi"), ("aik", "ek"),
+    ("ki", "ke"), ("naa", "na"), ("nahin", "nahi"),
     ("acha", "accha"), ("aah", "ah"), ("yaar", "yar"),
+    # The WRONG half of the ek/aik cycle. Gold writes ek 17x vs aik 1x, and the
+    # ASR only ever emits ek — so `ek` is the standard. `ek -> aik` would rewrite
+    # the dominant correct form; `aik -> ek` (the other half) is kept and is right.
+    ("ek", "aik"),
 }
 
 # ── R5b: canonicals that are never a valid TARGET, whatever the variant ───────
@@ -258,6 +278,12 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
             # R1 — length floor. Only kills 1-2 char variants (inherently unsafe).
             if len(v) < MIN_LEN:
                 stats["drop_too_short"] += 1
+                continue
+
+            # FORCE_KEEP — explicit override of the safety rules below.
+            if (vl, cl) in FORCE_KEEP:
+                grouped[c].add(vl)
+                stats["force_kept"] += 1
                 continue
 
             # R12 — the variant is not Latin script (Nastaliq / Arabic / Devanagari).
@@ -600,6 +626,7 @@ def main():
         "drop_too_short":          f"R1  variant < {MIN_LEN} chars (1-2 char only)",
         "drop_is_real_word":       "R1b variant is ALREADY A CORRECT WORD  <-- the real test",
         "drop_non_latin":          "R12 variant is not Latin script (Nastaliq)",
+        "force_kept":              "    FORCE-KEPT (explicit override)",
         "drop_selfmap_noop":       "R3  self-map no-op (key == value)",
         "drop_cycle":              "R4  bidirectional cycle (A<->B)",
         "drop_banned_pair":        "R5  BANNED PAIR (this specific map is wrong)",
