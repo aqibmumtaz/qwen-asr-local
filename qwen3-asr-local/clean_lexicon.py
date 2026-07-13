@@ -322,41 +322,69 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
         if keep:
             final[canon] = sorted(keep)
 
-    # split out multi-word PHRASES — they need regex replacement, not word lookup
-    words = {k: v for k, v in final.items() if " " not in k}
-    phrases = {k: v for k, v in final.items() if " " in k}
+    # ── R12 — CATEGORISE by what the canonical's casing tells us ─────────────
+    # The canonical already encodes its own category:
+    #   CNIC / ECG / SGPT   -> ALL CAPS      -> acronym
+    #   Chughtai / Lahore   -> Capitalised   -> proper noun
+    #   area / appointment  -> lowercase     -> common word
+    #   "Chughtai Lab"      -> has a space   -> phrase (needs regex, not word lookup)
+    #
+    # This is not cosmetic: `acronyms` + `proper_nouns` IS the entity list for the
+    # ASR context glossary (Layer 1), so having them separated makes it directly
+    # usable instead of needing a filter every time.
+    def categorise(canon: str) -> str:
+        if " " in canon:
+            return "phrases"
+        if canon.isupper() and len(canon) <= 6:
+            return "acronyms"
+        if canon[:1].isupper():
+            return "proper_nouns"
+        return "words"
+
+    out: dict[str, dict] = {
+        "acronyms": {}, "proper_nouns": {}, "words": {}, "phrases": {},
+    }
+    for canon, variants in final.items():
+        out[categorise(canon)][canon] = variants
+        stats[f"cat_{categorise(canon)}"] += 1
 
     out = {
-        "lexicon": dict(sorted(words.items(), key=lambda x: x[0].lower())),
-        "phrases": dict(sorted(phrases.items(), key=lambda x: x[0].lower())),
+        cat: dict(sorted(d.items(), key=lambda x: x[0].lower()))
+        for cat, d in out.items()
     }
     _assert_invariants(out)
     return out, dict(stats)
 
 
+CATEGORIES = ("acronyms", "proper_nouns", "words", "phrases")
+
+
 def _assert_invariants(out: dict) -> None:
     """
     HARD INVARIANTS — the cleaner refuses to emit a file that violates these.
-    Keys carry mixed case by design (CNIC, Chughtai, area), so uniqueness must
-    be enforced CASE-INSENSITIVELY or the same entity ends up split.
+
+    Uniqueness is enforced ACROSS ALL CATEGORIES, not per-category. Keys carry
+    mixed case by design (CNIC / Chughtai / area) — so the same entity could
+    otherwise land in two categories and be silently split, which is exactly the
+    chughtai + Chughtai bug that the old corrections/proper_nouns split caused.
     """
-    all_keys = list(out["lexicon"]) + list(out["phrases"])
+    # I1 — no canonical may collide with another, case-insensitively, ANYWHERE
+    seen: dict[str, tuple[str, str]] = {}
+    for cat in CATEGORIES:
+        for k in out[cat]:
+            low = k.lower()
+            if low in seen:
+                pcat, pk = seen[low]
+                raise AssertionError(
+                    f"DUPLICATE CANONICAL KEY (case-insensitive): "
+                    f"{pk!r} in [{pcat}] and {k!r} in [{cat}] are the same entity"
+                )
+            seen[low] = (cat, k)
 
-    # I1 — no two canonicals may collide case-insensitively (chughtai vs Chughtai)
-    seen: dict[str, str] = {}
-    for k in all_keys:
-        low = k.lower()
-        if low in seen:
-            raise AssertionError(
-                f"DUPLICATE CANONICAL KEY (case-insensitive): "
-                f"{seen[low]!r} and {k!r} are the same entity"
-            )
-        seen[low] = k
-
-    # I2 — a canonical must not also appear as a variant of another canonical
+    # I2 — a variant must belong to exactly one canonical, across all categories
     variant_owner: dict[str, str] = {}
-    for section in ("lexicon", "phrases"):
-        for canon, variants in out[section].items():
+    for cat in CATEGORIES:
+        for canon, variants in out[cat].items():
             for v in variants:
                 vl = v.lower()
                 if vl in variant_owner and variant_owner[vl] != canon:
@@ -366,29 +394,54 @@ def _assert_invariants(out: dict) -> None:
                     )
                 variant_owner[vl] = canon
 
-    # I3 — no duplicate variants inside one entry, and none equal to its canonical
-    for section in ("lexicon", "phrases"):
-        for canon, variants in out[section].items():
+    # I3 — no duplicate variants inside an entry; none may be a no-op
+    for cat in CATEGORIES:
+        for canon, variants in out[cat].items():
             lows = [v.lower() for v in variants]
             if len(lows) != len(set(lows)):
                 raise AssertionError(f"DUPLICATE VARIANT inside {canon!r}: {variants}")
             if canon.lower() in lows and canon == canon.lower():
                 raise AssertionError(f"NO-OP variant equals canonical in {canon!r}")
 
+    # I4 — every variant must be stored lowercase (lookup lowercases its input)
+    for cat in CATEGORIES:
+        for canon, variants in out[cat].items():
+            bad = [v for v in variants if v != v.lower()]
+            if bad:
+                raise AssertionError(f"NON-LOWERCASE variant in {canon!r}: {bad}")
+
 
 def to_lookup(cleaned: dict) -> tuple[dict, dict]:
     """
     Invert {canonical: [variants]} -> {variant: canonical} for O(1) runtime lookup.
+
+    The 4 categories are for HUMANS (navigability, and acronyms+proper_nouns is
+    the ASR glossary). At runtime they collapse into one flat word map, plus a
+    phrase map (phrases need regex replacement, not word lookup).
+
     Returns (word_lookup, phrase_lookup).
     """
     words, phrases = {}, {}
-    for canon, variants in cleaned.get("lexicon", {}).items():
-        for v in variants:
-            words[v.lower()] = canon
+    for cat in ("acronyms", "proper_nouns", "words"):
+        for canon, variants in cleaned.get(cat, {}).items():
+            for v in variants:
+                words[v.lower()] = canon
     for canon, variants in cleaned.get("phrases", {}).items():
         for v in variants:
             phrases[v.lower()] = canon
     return words, phrases
+
+
+def entity_glossary(cleaned: dict) -> list[str]:
+    """
+    The ASR context glossary (Layer 1) = acronyms + proper nouns.
+    These are the OOV entities the model cannot know; the common `words` and
+    `phrases` are things it already knows and would only dilute the biasing.
+    """
+    return sorted(
+        list(cleaned.get("acronyms", {})) + list(cleaned.get("proper_nouns", {})),
+        key=str.lower,
+    )
 
 
 def measure_corruption(corr: dict, pn: dict, label: str) -> tuple[int, int]:
@@ -453,13 +506,25 @@ def main():
             print(f"    {lbl:<44} {stats[k]:>6}")
     print()
 
-    n_words   = len(cleaned["lexicon"])
-    n_phrases = len(cleaned["phrases"])
-    v_words   = sum(len(v) for v in cleaned["lexicon"].values())
-    v_phrases = sum(len(v) for v in cleaned["phrases"].values())
-    print("  RESULT — ONE unified map: {canonical: [variants]}")
-    print(f"    lexicon (words)  : {n_words:>6} canonicals  ({v_words} variants)")
-    print(f"    phrases          : {n_phrases:>6} canonicals  ({v_phrases} variants)")
+    print("  RESULT — categorised {canonical: [variants]}")
+    tot_c = tot_v = 0
+    desc = {
+        "acronyms":     "ALL CAPS   (CNIC, ECG, SGPT)",
+        "proper_nouns": "Capitalised (Chughtai, Lahore)",
+        "words":        "lowercase  (area, appointment)",
+        "phrases":      "multi-word (Chughtai Lab)",
+    }
+    for cat in CATEGORIES:
+        n = len(cleaned[cat])
+        v = sum(len(x) for x in cleaned[cat].values())
+        tot_c += n
+        tot_v += v
+        print(f"    {cat:<13} {n:>5} canonicals  {v:>6} variants   {desc[cat]}")
+    print(f"    {'TOTAL':<13} {tot_c:>5} canonicals  {tot_v:>6} variants")
+    print()
+    gl = entity_glossary(cleaned)
+    print(f"  ASR context glossary (acronyms + proper_nouns): {len(gl)} entities")
+    print(f"    e.g. {', '.join(gl[:10])} ...")
     print()
 
     # ---- re-measure corruption on gold ----
@@ -474,13 +539,16 @@ def main():
     if args.write:
         out = {
             "_comment": (
-                "CLEANED lexicon. ONE unified map: {canonical: [variant, ...]}. "
-                "One entry per real word; all variants grouped under it; variants stored "
-                "lowercase (lookup lowercases the input). 'phrases' holds multi-word "
-                "entries which need regex replacement rather than word lookup. "
-                "Invert to variant->canonical at load time for O(1) lookup. "
-                "The old corrections/proper_nouns split was removed — it fragmented "
-                "74 entities across the two dicts (e.g. chughtai + Chughtai)."
+                "CLEANED lexicon. Structure: {category: {canonical: [variant, ...]}}. "
+                "4 categories, derived from the canonical's own casing: "
+                "acronyms (ALL CAPS: CNIC, ECG), proper_nouns (Capitalised: Chughtai, "
+                "Lahore), words (lowercase: area, appointment), phrases (multi-word). "
+                "Canonicals keep their correct case; variants are ALWAYS lowercase "
+                "(lookup lowercases the input word). Canonical keys are unique "
+                "case-insensitively ACROSS all categories — enforced, not incidental. "
+                "At load: collapse acronyms+proper_nouns+words into one flat "
+                "variant->canonical map; phrases need regex replacement. "
+                "acronyms + proper_nouns IS the ASR context glossary (Layer 1)."
             ),
             "lexicons": cleaned,
         }

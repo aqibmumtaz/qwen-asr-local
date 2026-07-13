@@ -51,8 +51,12 @@ def main():
         sys.exit(f"missing {CLEAN} — run clean_lexicon.py --write first")
 
     lex = json.loads(CLEAN.read_text(encoding="utf-8"))["lexicons"]
-    words, phrases = lex["lexicon"], lex["phrases"]
-    all_entries = {**words, **phrases}
+    CATS = ("acronyms", "proper_nouns", "words", "phrases")
+    all_entries = {}
+    for c in CATS:
+        all_entries.update(lex[c])
+    words = {**lex["acronyms"], **lex["proper_nouns"], **lex["words"]}
+    phrases = lex["phrases"]
 
     lookup = {}
     for canon, vs in all_entries.items():
@@ -62,14 +66,14 @@ def main():
     print("=" * 74)
     print("  VERIFICATION — lexicons_clean.json")
     print("=" * 74)
-    print(f"  lexicon (words) : {len(words):>5} canonicals / "
-          f"{sum(len(v) for v in words.values()):>6} variants")
-    print(f"  phrases         : {len(phrases):>5} canonicals / "
-          f"{sum(len(v) for v in phrases.values()):>6} variants")
+    for c in CATS:
+        print(f"  {c:<13} : {len(lex[c]):>5} canonicals / "
+              f"{sum(len(v) for v in lex[c].values()):>6} variants")
+    print(f"  {'TOTAL':<13} : {len(all_entries):>5} canonicals")
     print()
 
     # ── KEY UNIQUENESS (the invariant you asked for) ─────────────────────────
-    print("  KEY UNIQUENESS — keys carry mixed case (CNIC / Chughtai / area)")
+    print("  KEY UNIQUENESS — enforced ACROSS all 4 categories")
     kc = Counter(k.lower() for k in all_entries)
     dup_keys = {k: [x for x in all_entries if x.lower() == k] for k, n in kc.items() if n > 1}
     check("no canonical key duplicated (case-insensitive)", not dup_keys,
@@ -119,6 +123,10 @@ def main():
     ents = {e: len(words[e]) for e in
             ["Chughtai", "Sialkot", "Lahore", "Islamabad", "Faisalabad", "CNIC", "area"]
             if e in words}
+    # variants must all be lowercase
+    nonlower = [(k, v) for k, vs in all_entries.items() for v in vs if v != v.lower()]
+    check("all variants stored lowercase", not nonlower,
+          f"{nonlower[:5]}" if nonlower else "canonical keeps case, variants lowercase")
     check("key entities present with variants", len(ents) >= 5,
           "  " + ", ".join(f"{k}={v}" for k, v in ents.items()))
 

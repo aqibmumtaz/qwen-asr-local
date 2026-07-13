@@ -1,7 +1,1131 @@
 {
-  "_comment": "CLEANED lexicon. ONE unified map: {canonical: [variant, ...]}. One entry per real word; all variants grouped under it; variants stored lowercase (lookup lowercases the input). 'phrases' holds multi-word entries which need regex replacement rather than word lookup. Invert to variant->canonical at load time for O(1) lookup. The old corrections/proper_nouns split was removed — it fragmented 74 entities across the two dicts (e.g. chughtai + Chughtai).",
+  "_comment": "CLEANED lexicon. Structure: {category: {canonical: [variant, ...]}}. 4 categories, derived from the canonical's own casing: acronyms (ALL CAPS: CNIC, ECG), proper_nouns (Capitalised: Chughtai, Lahore), words (lowercase: area, appointment), phrases (multi-word). Canonicals keep their correct case; variants are ALWAYS lowercase (lookup lowercases the input word). Canonical keys are unique case-insensitively ACROSS all categories — enforced, not incidental. At load: collapse acronyms+proper_nouns+words into one flat variant->canonical map; phrases need regex replacement. acronyms + proper_nouns IS the ASR context glossary (Layer 1).",
   "lexicons": {
-    "lexicon": {
+    "acronyms": {
+      "AD": [
+        "eedee"
+      ],
+      "AIDS": [
+        "aaids",
+        "aids"
+      ],
+      "ANA": [
+        "ana",
+        "eenae"
+      ],
+      "APGI": [
+        "eepiji"
+      ],
+      "ATM": [
+        "eteeem"
+      ],
+      "B12": [
+        "b12",
+        "bee12"
+      ],
+      "BNP": [
+        "beeenpi",
+        "bnp"
+      ],
+      "BP": [
+        "beepi"
+      ],
+      "CBC": [
+        "cbc",
+        "ebeesi",
+        "seebeesee",
+        "seebeesi",
+        "sibisee"
+      ],
+      "CK-MB": [
+        "ckmb",
+        "seeke embi"
+      ],
+      "CNIC": [
+        "cnic",
+        "siene"
+      ],
+      "COVID": [
+        "covid",
+        "kovid",
+        "kowid"
+      ],
+      "CRP": [
+        "crp",
+        "seeaarpi"
+      ],
+      "ECG": [
+        "eei",
+        "eeseeji",
+        "eesheejee",
+        "eseeji"
+      ],
+      "EEG": [
+        "eeeejee",
+        "eeeeji",
+        "eeeji"
+      ],
+      "EG": [
+        "eeji"
+      ],
+      "ER": [
+        "er"
+      ],
+      "ESR": [
+        "edisepi",
+        "eeesaaar",
+        "esr"
+      ],
+      "FNAC": [
+        "ephaenaesi",
+        "fnac"
+      ],
+      "GP": [
+        "deeti",
+        "jeepi"
+      ],
+      "GST": [
+        "gst",
+        "jeeesti"
+      ],
+      "HCG": [
+        "echaseeji",
+        "hcg"
+      ],
+      "HDL": [
+        "echadeeel",
+        "edichali",
+        "hdl"
+      ],
+      "HIV": [
+        "echaaaeewi",
+        "hiv",
+        "hivi"
+      ],
+      "HPV": [
+        "hpv"
+      ],
+      "ICU": [
+        "aaisiyoo",
+        "icu"
+      ],
+      "ID": [
+        "aaeedi"
+      ],
+      "IPD": [
+        "ipd"
+      ],
+      "IQ": [
+        "aaiq"
+      ],
+      "IV": [
+        "aaeevi",
+        "aaivee",
+        "aaivi",
+        "aiiv",
+        "iaav",
+        "iav",
+        "ieev",
+        "iev",
+        "ihv",
+        "iiv",
+        "iv",
+        "ive",
+        "ivh",
+        "ivv",
+        "ivy"
+      ],
+      "KFT": [
+        "keephti",
+        "kft"
+      ],
+      "LDL": [
+        "eladeeel",
+        "ldl"
+      ],
+      "LFT": [
+        "elaephti",
+        "elaphti",
+        "lft"
+      ],
+      "LTP": [
+        "eelteepi"
+      ],
+      "MC": [
+        "emsi"
+      ],
+      "MRI": [
+        "eemaaraaee",
+        "emaaaraaai",
+        "mri"
+      ],
+      "NC": [
+        "ensi"
+      ],
+      "OPD": [
+        "opd"
+      ],
+      "OT": [
+        "oti"
+      ],
+      "PCP": [
+        "paiseepeesee"
+      ],
+      "PCR": [
+        "peeseeaar",
+        "pisiar",
+        "pisior"
+      ],
+      "PDF": [
+        "peedeeeph",
+        "pidiephi"
+      ],
+      "PIN": [
+        "pen",
+        "pin"
+      ],
+      "PP": [
+        "peepi",
+        "pp"
+      ],
+      "PSA": [
+        "peeesae",
+        "psa"
+      ],
+      "RA": [
+        "aarae"
+      ],
+      "RFT": [
+        "aaraephti",
+        "aaraphti",
+        "rft"
+      ],
+      "SGOT": [
+        "esajeeoti",
+        "esjeeoti",
+        "sgot"
+      ],
+      "SGPT": [
+        "esajeepeeti",
+        "esjeepeeti",
+        "sgpt"
+      ],
+      "SMS": [
+        "esaemaes"
+      ],
+      "SSO": [
+        "esso"
+      ],
+      "STD": [
+        "sndi",
+        "std"
+      ],
+      "STI": [
+        "sti"
+      ],
+      "T3": [
+        "tee3"
+      ],
+      "T4": [
+        "tee4"
+      ],
+      "TB": [
+        "teebi",
+        "tibi"
+      ],
+      "TG": [
+        "tg"
+      ],
+      "TMT": [
+        "teeemti",
+        "tmt"
+      ],
+      "TSH": [
+        "teeesaech",
+        "tsh"
+      ],
+      "VLDL": [
+        "vldl",
+        "weeeladeeel"
+      ]
+    },
+    "proper_nouns": {
+      "Abdullah": [
+        "aabdollah",
+        "aabdoollah",
+        "aabdullaah",
+        "aabdullah",
+        "abadullah",
+        "abbdullah",
+        "abddullah",
+        "abdllah",
+        "abdollaah",
+        "abdollaeh",
+        "abdollah",
+        "abdollahh",
+        "abdoollaah",
+        "abdoollah",
+        "abdoullah",
+        "abdulah",
+        "abdulalah",
+        "abdulla",
+        "abdullaah",
+        "abdullah",
+        "abdullaha",
+        "abdullh"
+      ],
+      "Ahmad": [
+        "aahhmad",
+        "aahmaad",
+        "aahmad",
+        "aehmad",
+        "ahamad",
+        "ahamed",
+        "ahhmad",
+        "ahmaad",
+        "ahmad",
+        "ahmada",
+        "ahmadd",
+        "ahmadh",
+        "ahmaed",
+        "ahmahd",
+        "ahmat",
+        "ahmd",
+        "ahmmad"
+      ],
+      "Alhamdulillah": [
+        "alamdala",
+        "alhamdulillaah",
+        "alhamdulillah",
+        "alhamdullah"
+      ],
+      "Allah": [
+        "aalla",
+        "aallah",
+        "aellah",
+        "ahllah",
+        "alla",
+        "allaa",
+        "allaah",
+        "allaeh",
+        "allah",
+        "allahh",
+        "alllah"
+      ],
+      "Ameen": [
+        "aameen",
+        "aamein",
+        "aamien",
+        "aemeen",
+        "ahmeen",
+        "ahmein",
+        "ahmien",
+        "ameen",
+        "amein",
+        "amien",
+        "amiin"
+      ],
+      "America": [
+        "amerika"
+      ],
+      "Android": [
+        "endroid"
+      ],
+      "Apple": [
+        "aiapal"
+      ],
+      "Aqib": [
+        "aakib",
+        "aaqib",
+        "akeeb",
+        "akib",
+        "aqeeb",
+        "aqib"
+      ],
+      "Arif": [
+        "aaref",
+        "aarif",
+        "aaryf",
+        "aerif",
+        "ahref",
+        "ahrif",
+        "ahryf",
+        "areef",
+        "aref",
+        "arif",
+        "aryf"
+      ],
+      "Asif": [
+        "aasef",
+        "aasif",
+        "aasyf",
+        "aesif",
+        "ahsef",
+        "ahsif",
+        "ahsyf",
+        "aseef",
+        "asef",
+        "asif",
+        "asyf"
+      ],
+      "Astaghfirullah": [
+        "astaghfirullaah"
+      ],
+      "Australia": [
+        "ostreliya"
+      ],
+      "Ayesha": [
+        "aaiesha",
+        "aaisha",
+        "aayesha",
+        "aayisha",
+        "aaysha",
+        "aeeisha",
+        "aeesha",
+        "aeyesha",
+        "ahiesha",
+        "aiesha",
+        "aieshaa",
+        "aiisha",
+        "aisha",
+        "ayesh",
+        "ayesha",
+        "ayeshaa",
+        "ayisha",
+        "aysha",
+        "saaeesha"
+      ],
+      "Bangalore": [
+        "bangalor"
+      ],
+      "Barak": [
+        "baarak"
+      ],
+      "Bing": [
+        "binga"
+      ],
+      "Bismillah": [
+        "bismillaah"
+      ],
+      "C-section": [
+        "si sekshan"
+      ],
+      "Canada": [
+        "kanada"
+      ],
+      "Chennai": [
+        "chennai"
+      ],
+      "Christmas": [
+        "krisamas"
+      ],
+      "Chughtai": [
+        "chaktaai",
+        "chghtai",
+        "chhughtai",
+        "chitaai",
+        "choghtaai",
+        "choghtae",
+        "choghtaee",
+        "choghtaei",
+        "choghtahi",
+        "choghtai",
+        "choghtay",
+        "chooghtae",
+        "chooghtai",
+        "chooghtay",
+        "choogtae",
+        "choogtai",
+        "choogtay",
+        "chughatai",
+        "chughtaaee",
+        "chughtae",
+        "chughtai",
+        "chughtay",
+        "chughttai",
+        "chugtae",
+        "chugtai",
+        "chugtay",
+        "chukataai",
+        "chuktaai",
+        "chutaai"
+      ],
+      "Delhi": [
+        "dillee",
+        "dilli"
+      ],
+      "Diwali": [
+        "diwali"
+      ],
+      "Dubai": [
+        "dubai"
+      ],
+      "EasyPaisa": [
+        "easypaisa",
+        "eezeepaisa"
+      ],
+      "Eid": [
+        "eed"
+      ],
+      "England": [
+        "engaland"
+      ],
+      "Facebook": [
+        "phesabuk"
+      ],
+      "Faisal": [
+        "faisal",
+        "phaisal"
+      ],
+      "Faisalabad": [
+        "faesaalabad",
+        "faesalaabad",
+        "faesalabaad",
+        "faesalabad",
+        "faisaalaabad",
+        "faisaalabaad",
+        "faisaalabad",
+        "faisalaabaad",
+        "faisalaabad",
+        "faisalabaad",
+        "faisalabad",
+        "faisalabada",
+        "faisalabadd",
+        "faisalabat",
+        "faisalabbad",
+        "faisalabd",
+        "faisalbad",
+        "faisallabad",
+        "faissalabad",
+        "faysaalabad",
+        "faysalaabad",
+        "faysalabaad",
+        "faysalabad",
+        "ffaisalabad",
+        "phaesalabad",
+        "phaisaalabad",
+        "phaisalaabaad",
+        "phaisalaabad",
+        "phaisalabaad",
+        "phaisalabad",
+        "phaysalabad",
+        "فیصلabad"
+      ],
+      "France": [
+        "phraans"
+      ],
+      "Germany": [
+        "jarmani"
+      ],
+      "Gmail": [
+        "gmaail"
+      ],
+      "Google": [
+        "googal"
+      ],
+      "Hb": [
+        "echbi"
+      ],
+      "HbA1c": [
+        "echabeee1si",
+        "echbi a one si",
+        "hba1",
+        "hba1c"
+      ],
+      "Hindustan": [
+        "hindustaan"
+      ],
+      "Holter": [
+        "holtar"
+      ],
+      "Hussain": [
+        "hoossaen",
+        "hoossain",
+        "hoossayn",
+        "hossaain",
+        "hossaeen",
+        "hossaen",
+        "hossain",
+        "hossayn",
+        "hssain",
+        "husain",
+        "husasain",
+        "husein",
+        "hussaen",
+        "hussain",
+        "hussaina",
+        "hussainn",
+        "hussayn"
+      ],
+      "Hyderabad": [
+        "haidaraabaad",
+        "heederaabad",
+        "heederabaad",
+        "heederabad",
+        "hideraabad",
+        "hiderabaad",
+        "hiderabad",
+        "hydderabad",
+        "hyderaabaad",
+        "hyderaabad",
+        "hyderabaad",
+        "hyderabad",
+        "hyderabada",
+        "hyderabadd",
+        "hyderabat",
+        "hyderabbad",
+        "hyderabd",
+        "hyderbad",
+        "hyderrabad",
+        "hydrabad"
+      ],
+      "Ibrahim": [
+        "ibraheem",
+        "ibrahim"
+      ],
+      "Imran": [
+        "ihmran",
+        "iimraan",
+        "iimran",
+        "imaraan",
+        "immran",
+        "imraan",
+        "imraen",
+        "imrahn",
+        "imran",
+        "imranh",
+        "imrann",
+        "imrran"
+      ],
+      "India": [
+        "indiya"
+      ],
+      "Insha": [
+        "insha"
+      ],
+      "Instagram": [
+        "instaagraam"
+      ],
+      "Islamabad": [
+        "eeslaamabad",
+        "eeslamaabad",
+        "eeslamabaad",
+        "eeslamabad",
+        "isalamabad",
+        "islaamaabaad",
+        "islaamaabad",
+        "islaamabaad",
+        "islaamabad",
+        "islamaabaad",
+        "islamaabad",
+        "islamabaad",
+        "islamabad",
+        "islamabada",
+        "islamabadd",
+        "islamabat",
+        "islamabbad",
+        "islamabd",
+        "islambad",
+        "islammabad",
+        "isllamabad",
+        "islmabad",
+        "isslamabad",
+        "yslaamabad",
+        "yslamaabad",
+        "yslamabaad",
+        "yslamabad"
+      ],
+      "Ismail": [
+        "ihsmail",
+        "iismail",
+        "ismaael",
+        "ismaail",
+        "ismaayl",
+        "ismaeel",
+        "ismaeil",
+        "ismael",
+        "ismahel",
+        "ismail",
+        "ismayl"
+      ],
+      "Japan": [
+        "jaapaan"
+      ],
+      "Jazak": [
+        "jazaak"
+      ],
+      "Jazz": [
+        "jazz",
+        "jez"
+      ],
+      "JazzCash": [
+        "jaizakaish",
+        "jazzcash"
+      ],
+      "Kamran": [
+        "kaamaraan",
+        "kaamran",
+        "kaemran",
+        "kahmran",
+        "kammran",
+        "kamraan",
+        "kamraen",
+        "kamrahn",
+        "kamran",
+        "kamranh",
+        "kamrann",
+        "kamrran"
+      ],
+      "Karachi": [
+        "caaraachi",
+        "caarachee",
+        "caarachi",
+        "caarachy",
+        "caraachee",
+        "caraachi",
+        "caraachy",
+        "carachee",
+        "carachi",
+        "carachy",
+        "kaaraachee",
+        "kaaraachi",
+        "kaaraachy",
+        "kaarachee",
+        "kaarachi",
+        "kaarachy",
+        "karaachee",
+        "karaachi",
+        "karaachy",
+        "karaanchi",
+        "karachee",
+        "karachi",
+        "karachy",
+        "karchi",
+        "karrachi",
+        "kkarachi",
+        "krachi",
+        "qaaraachi",
+        "qaarachee",
+        "qaarachi",
+        "qaarachy",
+        "qaraachee",
+        "qaraachi",
+        "qaraachy",
+        "qarachee",
+        "qarachi",
+        "qarachy"
+      ],
+      "Khadija": [
+        "kadija",
+        "khaadeja",
+        "khaadija",
+        "khaadyja",
+        "khaddija",
+        "khadeeja",
+        "khadeja",
+        "khadejaa",
+        "khadejae",
+        "khadija",
+        "khadijah",
+        "khadyja",
+        "khateeja",
+        "khatija"
+      ],
+      "Kolkata": [
+        "kalakatta",
+        "kolkata"
+      ],
+      "Lahore": [
+        "laahaur",
+        "laahaus",
+        "laahoore",
+        "laahore",
+        "lahaur",
+        "lahoar",
+        "lahoer",
+        "lahoore",
+        "lahor",
+        "lahore",
+        "lahorre",
+        "lahre",
+        "lhore",
+        "lhoro",
+        "llahore",
+        "lor",
+        "lore"
+      ],
+      "LinkedIn": [
+        "linkdin"
+      ],
+      "London": [
+        "landan"
+      ],
+      "Maryam": [
+        "maeryam",
+        "mareeam",
+        "mariaam",
+        "mariaem",
+        "mariahm",
+        "mariyam",
+        "maryam"
+      ],
+      "Masha": [
+        "maasha"
+      ],
+      "Microsoft": [
+        "maaikrosoft"
+      ],
+      "Milad": [
+        "meelaad"
+      ],
+      "Mobilink": [
+        "mobilink"
+      ],
+      "Muhammad": [
+        "mohaammad",
+        "mohaemmad",
+        "mohahmmad",
+        "mohammaad",
+        "mohammad",
+        "mohammaed",
+        "mohammahd",
+        "mohammed",
+        "moohammad",
+        "mouhammad",
+        "muhaammad",
+        "muhammad",
+        "muhammed"
+      ],
+      "Mumbai": [
+        "mumbaee",
+        "mumbai",
+        "munbai"
+      ],
+      "Navratri": [
+        "navratri"
+      ],
+      "NayaPay": [
+        "nayapay"
+      ],
+      "Olu": [
+        "aaolu",
+        "oochalu",
+        "oolu"
+      ],
+      "Outlook": [
+        "aautlook"
+      ],
+      "Pakistan": [
+        "paakistaan",
+        "paakstaan"
+      ],
+      "Paktel": [
+        "paktel"
+      ],
+      "Pap": [
+        "paip"
+      ],
+      "Pinterest": [
+        "pintarest"
+      ],
+      "Quetta": [
+        "kooetta",
+        "kooettaa",
+        "koyta",
+        "kuetta",
+        "kuettaa",
+        "kweta",
+        "qetta",
+        "qooetta",
+        "qooettaa",
+        "queta",
+        "quetata",
+        "quett",
+        "quetta",
+        "quettaa",
+        "qutta"
+      ],
+      "Quran": [
+        "quraan"
+      ],
+      "Rabia": [
+        "raabea",
+        "raabia",
+        "raabiya",
+        "raabya",
+        "rabbia",
+        "rabea",
+        "rabeaa",
+        "rabeae",
+        "rabeah",
+        "rabeea",
+        "rabia",
+        "rabya"
+      ],
+      "Rakhi": [
+        "rakhi"
+      ],
+      "Ramzan": [
+        "ramazaan"
+      ],
+      "Rawalpindi": [
+        "raavalpindi",
+        "raawaalpindi",
+        "raawalapindi",
+        "raawalpeendi",
+        "raawalpindee",
+        "raawalpindi",
+        "raawalpindy",
+        "raawalpyndi",
+        "ravaalpindi",
+        "ravalpeendi",
+        "ravalpindee",
+        "ravalpindi",
+        "ravalpindy",
+        "ravalpyndi",
+        "rawaalpeendi",
+        "rawaalpindee",
+        "rawaalpindi",
+        "rawaalpindy",
+        "rawaalpyndi",
+        "rawalapindi",
+        "rawallpindi",
+        "rawalpeendee",
+        "rawalpeendi",
+        "rawalpeendy",
+        "rawalpinadi",
+        "rawalpinddi",
+        "rawalpindee",
+        "rawalpindi",
+        "rawalpindy",
+        "rawalpinndi",
+        "rawalpndi",
+        "rawalpyndee",
+        "rawalpyndi",
+        "rawalpyndy",
+        "rawlpindi",
+        "rrawalpindi",
+        "rwalpindi"
+      ],
+      "SadaPay": [
+        "sadapay"
+      ],
+      "Sadia": [
+        "saadea",
+        "saadia",
+        "saadiya",
+        "saadya",
+        "saddia",
+        "sadea",
+        "sadeaa",
+        "sadeae",
+        "sadeah",
+        "sadeea",
+        "sadia",
+        "sadiya",
+        "sadya"
+      ],
+      "Safia": [
+        "safia",
+        "safiya"
+      ],
+      "Salman": [
+        "saalman",
+        "saelman",
+        "sahlman",
+        "salamaan",
+        "sallman",
+        "salmaan",
+        "salmaen",
+        "salmahn",
+        "salman",
+        "salmanh",
+        "salmann",
+        "salmman"
+      ],
+      "Samsung": [
+        "samsang"
+      ],
+      "Saudi": [
+        "saoodi"
+      ],
+      "Sialkot": [
+        "salkot",
+        "seeaalcot",
+        "seeaalkoot",
+        "seeaalkot",
+        "seeaalqot",
+        "seealcoot",
+        "seealcot",
+        "seealkoot",
+        "seealkot",
+        "seealqoot",
+        "seealqot",
+        "sehalakot",
+        "siaalcoot",
+        "siaalcot",
+        "siaalkoot",
+        "siaalkot",
+        "siaalqoot",
+        "siaalqot",
+        "sialakot",
+        "sialcoot",
+        "sialcot",
+        "sialkkot",
+        "sialkod",
+        "sialkoot",
+        "sialkot",
+        "sialkota",
+        "sialkott",
+        "sialkt",
+        "siallkot",
+        "sialqoot",
+        "sialqot",
+        "silkot",
+        "siyaalakot",
+        "siyaalkot",
+        "ssialkot",
+        "syaalcot",
+        "syaalkoot",
+        "syaalkot",
+        "syaalqot",
+        "syalcoot",
+        "syalcot",
+        "syalkoot",
+        "syalkot",
+        "syalqoot",
+        "syalqot"
+      ],
+      "Snapchat": [
+        "snaepchat"
+      ],
+      "SubhanAllah": [
+        "subhaanallaah"
+      ],
+      "Tariq": [
+        "taareq",
+        "taarik",
+        "taariq",
+        "taaryq",
+        "taeriq",
+        "tahreq",
+        "tahriq",
+        "tahryq",
+        "tareq",
+        "tarik",
+        "tariq",
+        "taryq"
+      ],
+      "Telegram": [
+        "teleegraam"
+      ],
+      "Telenor": [
+        "telenor"
+      ],
+      "Twitter": [
+        "twitar"
+      ],
+      "Ufone": [
+        "ufone"
+      ],
+      "Umar": [
+        "omar",
+        "uhmaar",
+        "uhmar",
+        "umaahr",
+        "umaar",
+        "umaer",
+        "umahr",
+        "umar",
+        "umarh",
+        "umarr",
+        "ummar",
+        "umr",
+        "umra",
+        "uumar"
+      ],
+      "Usman": [
+        "asaan",
+        "oosmaan",
+        "oosman",
+        "uhsmaan",
+        "uhsman",
+        "usaman",
+        "usmaan",
+        "usmaen",
+        "usmahn",
+        "usman",
+        "usmana",
+        "usmanh",
+        "usmann",
+        "usmman",
+        "usmn",
+        "ussman",
+        "uthman",
+        "uusman"
+      ],
+      "WhatsApp": [
+        "wats ap",
+        "whaatsaep",
+        "whatsaap"
+      ],
+      "Widal": [
+        "widaal"
+      ],
+      "X-ray": [
+        "eks re",
+        "eksaray",
+        "eksare",
+        "eksre",
+        "ksray",
+        "x-ray"
+      ],
+      "Yahoo": [
+        "yaahoo"
+      ],
+      "Yousaf": [
+        "yohusaf",
+        "yoosaaf",
+        "yoosaef",
+        "yoosaf",
+        "yoosahf",
+        "yoosaph",
+        "yoousaf",
+        "youhsaf",
+        "yousaaf",
+        "yousaf",
+        "yuosaf",
+        "yuusaf"
+      ],
+      "YouTube": [
+        "yootyoob"
+      ],
+      "Yusuf": [
+        "yusuf"
+      ],
+      "Zainab": [
+        "jaina",
+        "zaaenab",
+        "zaainab",
+        "zaaynab",
+        "zaeenab",
+        "zaeinab",
+        "zaenaab",
+        "zaenab",
+        "zaenaeb",
+        "zaenahb",
+        "zainab",
+        "zaynab",
+        "zenab"
+      ],
+      "Zong": [
+        "zong"
+      ],
+      "Zoom": [
+        "zoom"
+      ]
+    },
+    "words": {
       "aaeen": [
         "aaeeen"
       ],
@@ -157,30 +1281,6 @@
         "abdulh",
         "abdull"
       ],
-      "Abdullah": [
-        "aabdollah",
-        "aabdoollah",
-        "aabdullaah",
-        "aabdullah",
-        "abadullah",
-        "abbdullah",
-        "abddullah",
-        "abdllah",
-        "abdollaah",
-        "abdollaeh",
-        "abdollah",
-        "abdollahh",
-        "abdoollaah",
-        "abdoollah",
-        "abdoullah",
-        "abdulah",
-        "abdulalah",
-        "abdulla",
-        "abdullaah",
-        "abdullah",
-        "abdullaha",
-        "abdullh"
-      ],
       "abdurrahman": [
         "abdurremaan"
       ],
@@ -281,9 +1381,6 @@
       ],
       "actual": [
         "ekchual"
-      ],
-      "AD": [
-        "eedee"
       ],
       "adaab": [
         "aadaab"
@@ -459,25 +1556,6 @@
       "agent": [
         "eajent"
       ],
-      "Ahmad": [
-        "aahhmad",
-        "aahmaad",
-        "aahmad",
-        "aehmad",
-        "ahamad",
-        "ahamed",
-        "ahhmad",
-        "ahmaad",
-        "ahmad",
-        "ahmada",
-        "ahmadd",
-        "ahmadh",
-        "ahmaed",
-        "ahmahd",
-        "ahmat",
-        "ahmd",
-        "ahmmad"
-      ],
       "ahmed": [
         "aahmed",
         "aahmid",
@@ -514,10 +1592,6 @@
         "aisaan",
         "aisan",
         "aiseen"
-      ],
-      "AIDS": [
-        "aaids",
-        "aids"
       ],
       "ain": [
         "aain",
@@ -677,12 +1751,6 @@
         "alphataah",
         "alphatah"
       ],
-      "Alhamdulillah": [
-        "alamdala",
-        "alhamdulillaah",
-        "alhamdulillah",
-        "alhamdullah"
-      ],
       "ali": [
         "aale",
         "aalee",
@@ -737,19 +1805,6 @@
         "ahll",
         "alle",
         "allh"
-      ],
-      "Allah": [
-        "aalla",
-        "aallah",
-        "aellah",
-        "ahllah",
-        "alla",
-        "allaa",
-        "allaah",
-        "allaeh",
-        "allah",
-        "allahh",
-        "alllah"
       ],
       "allama": [
         "aallaama",
@@ -836,22 +1891,6 @@
         "amiem",
         "amiim"
       ],
-      "Ameen": [
-        "aameen",
-        "aamein",
-        "aamien",
-        "aemeen",
-        "ahmeen",
-        "ahmein",
-        "ahmien",
-        "ameen",
-        "amein",
-        "amien",
-        "amiin"
-      ],
-      "America": [
-        "amerika"
-      ],
       "amin": [
         "aamen",
         "aamin",
@@ -931,10 +1970,6 @@
         "aamaunt",
         "amaaunt"
       ],
-      "ANA": [
-        "ana",
-        "eenae"
-      ],
       "anam": [
         "aanaam",
         "aanam",
@@ -967,9 +2002,6 @@
         "andaaza",
         "andaja",
         "indaja"
-      ],
-      "Android": [
-        "endroid"
       ],
       "aneel": [
         "aaneel",
@@ -1083,9 +2115,6 @@
       "apartment": [
         "eparteement"
       ],
-      "APGI": [
-        "eepiji"
-      ],
       "apna": [
         "apana",
         "apanaa"
@@ -1093,9 +2122,6 @@
       "apni": [
         "apanee",
         "apani"
-      ],
-      "Apple": [
-        "aiapal"
       ],
       "application": [
         "epleekeshan"
@@ -1115,14 +2141,6 @@
       ],
       "approve": [
         "aproow"
-      ],
-      "Aqib": [
-        "aakib",
-        "aaqib",
-        "akeeb",
-        "akib",
-        "aqeeb",
-        "aqib"
       ],
       "aqsa": [
         "aaqqsa",
@@ -1144,19 +2162,6 @@
         "areaa",
         "arrea",
         "eria"
-      ],
-      "Arif": [
-        "aaref",
-        "aarif",
-        "aaryf",
-        "aerif",
-        "ahref",
-        "ahrif",
-        "ahryf",
-        "areef",
-        "aref",
-        "arif",
-        "aryf"
       ],
       "arifwala": [
         "aareefwala",
@@ -1370,19 +2375,6 @@
         "aseaa",
         "asya"
       ],
-      "Asif": [
-        "aasef",
-        "aasif",
-        "aasyf",
-        "aesif",
-        "ahsef",
-        "ahsif",
-        "ahsyf",
-        "aseef",
-        "asef",
-        "asif",
-        "asyf"
-      ],
       "asim": [
         "aasam"
       ],
@@ -1419,9 +2411,6 @@
       ],
       "assign": [
         "asaain"
-      ],
-      "Astaghfirullah": [
-        "astaghfirullaah"
       ],
       "asthma": [
         "asthama"
@@ -1472,9 +2461,6 @@
         "atik",
         "atyq"
       ],
-      "ATM": [
-        "eteeem"
-      ],
       "attka": [
         "aattka",
         "aattkaa",
@@ -1491,9 +2477,6 @@
       ],
       "aur": [
         "aor"
-      ],
-      "Australia": [
-        "ostreliya"
       ],
       "auto": [
         "oto"
@@ -1721,27 +2704,6 @@
         "aiaz",
         "ayaaj"
       ],
-      "Ayesha": [
-        "aaiesha",
-        "aaisha",
-        "aayesha",
-        "aayisha",
-        "aaysha",
-        "aeeisha",
-        "aeesha",
-        "aeyesha",
-        "ahiesha",
-        "aiesha",
-        "aieshaa",
-        "aiisha",
-        "aisha",
-        "ayesh",
-        "ayesha",
-        "ayeshaa",
-        "ayisha",
-        "aysha",
-        "saaeesha"
-      ],
       "ayub": [
         "aaiub",
         "aayob",
@@ -1855,10 +2817,6 @@
         "azraa",
         "azrra",
         "azzra"
-      ],
-      "B12": [
-        "b12",
-        "bee12"
       ],
       "baaqi": [
         "baki"
@@ -2079,9 +3037,6 @@
         "bbaldia",
         "bldia"
       ],
-      "Bangalore": [
-        "bangalor"
-      ],
       "bank": [
         "baink"
       ],
@@ -2108,9 +3063,6 @@
       ],
       "barah": [
         "baarah"
-      ],
-      "Barak": [
-        "baarak"
       ],
       "barakahu": [
         "baaraakahu",
@@ -2500,9 +3452,6 @@
         "byn",
         "byyn"
       ],
-      "Bing": [
-        "binga"
-      ],
       "biopsy": [
         "baayopsi",
         "baiopasi"
@@ -2510,9 +3459,6 @@
       "biryani": [
         "birayani",
         "biryaani"
-      ],
-      "Bismillah": [
-        "bismillaah"
       ],
       "biwi": [
         "beevi",
@@ -2554,10 +3500,6 @@
         "blud",
         "bluod",
         "bluud"
-      ],
-      "BNP": [
-        "beeenpi",
-        "bnp"
       ],
       "bodevolution": [
         "bbodevolution",
@@ -2627,9 +3569,6 @@
       ],
       "box": [
         "boks"
-      ],
-      "BP": [
-        "beepi"
       ],
       "brady": [
         "bredi"
@@ -2822,9 +3761,6 @@
         "cee",
         "cii"
       ],
-      "C-section": [
-        "si sekshan"
-      ],
       "calcium": [
         "kailshiyam"
       ],
@@ -2843,9 +3779,6 @@
         "cmp",
         "kaamp",
         "kamp"
-      ],
-      "Canada": [
-        "kanada"
       ],
       "canal": [
         "caanaal",
@@ -3047,13 +3980,6 @@
         "kawalree",
         "kawalri",
         "kawalry"
-      ],
-      "CBC": [
-        "cbc",
-        "ebeesi",
-        "seebeesee",
-        "seebeesi",
-        "sibisee"
       ],
       "center": [
         "cenater",
@@ -3302,9 +4228,6 @@
         "chinab",
         "chnab"
       ],
-      "Chennai": [
-        "chennai"
-      ],
       "chhe": [
         "chhah"
       ],
@@ -3469,9 +4392,6 @@
         "chowqy",
         "chwki"
       ],
-      "Christmas": [
-        "krisamas"
-      ],
       "chuburji": [
         "chaboorji",
         "chaburji",
@@ -3502,37 +4422,6 @@
         "chuburzi",
         "chuburzy",
         "chupurji"
-      ],
-      "Chughtai": [
-        "chaktaai",
-        "chghtai",
-        "chhughtai",
-        "chitaai",
-        "choghtaai",
-        "choghtae",
-        "choghtaee",
-        "choghtaei",
-        "choghtahi",
-        "choghtai",
-        "choghtay",
-        "chooghtae",
-        "chooghtai",
-        "chooghtay",
-        "choogtae",
-        "choogtai",
-        "choogtay",
-        "chughatai",
-        "chughtaaee",
-        "chughtae",
-        "chughtai",
-        "chughtay",
-        "chughttai",
-        "chugtae",
-        "chugtai",
-        "chugtay",
-        "chukataai",
-        "chuktaai",
-        "chutaai"
       ],
       "church": [
         "charch"
@@ -3709,10 +4598,6 @@
         "kyvyl",
         "kywil"
       ],
-      "CK-MB": [
-        "ckmb",
-        "seeke embi"
-      ],
       "class": [
         "klaas"
       ],
@@ -3837,10 +4722,6 @@
         "klynics",
         "klyniks",
         "klynycs"
-      ],
-      "CNIC": [
-        "cnic",
-        "siene"
       ],
       "coffee": [
         "kophi"
@@ -4027,11 +4908,6 @@
       "cover": [
         "kawar"
       ],
-      "COVID": [
-        "covid",
-        "kovid",
-        "kowid"
-      ],
       "cream": [
         "kreem"
       ],
@@ -4049,10 +4925,6 @@
       ],
       "crore": [
         "karor"
-      ],
-      "CRP": [
-        "crp",
-        "seeaarpi"
       ],
       "culture": [
         "kalchar"
@@ -4220,10 +5092,6 @@
       ],
       "delete": [
         "dileet"
-      ],
-      "Delhi": [
-        "dillee",
-        "dilli"
       ],
       "delivery": [
         "deliwari",
@@ -4493,9 +5361,6 @@
       "distance": [
         "distens"
       ],
-      "Diwali": [
-        "diwali"
-      ],
       "dobara": [
         "dubara"
       ],
@@ -4556,9 +5421,6 @@
       "dua": [
         "duaa"
       ],
-      "Dubai": [
-        "dubai"
-      ],
       "duniya": [
         "duniyaa"
       ],
@@ -4568,16 +5430,6 @@
         "eay",
         "eea",
         "eeh"
-      ],
-      "EasyPaisa": [
-        "easypaisa",
-        "eezeepaisa"
-      ],
-      "ECG": [
-        "eei",
-        "eeseeji",
-        "eesheejee",
-        "eseeji"
       ],
       "echo": [
         "eeko",
@@ -4610,14 +5462,6 @@
         "edwart",
         "edwrd"
       ],
-      "EEG": [
-        "eeeejee",
-        "eeeeji",
-        "eeeji"
-      ],
-      "EG": [
-        "eeji"
-      ],
       "ehsan": [
         "ehsaan",
         "ehsana",
@@ -4625,9 +5469,6 @@
         "ehsn",
         "ehssan",
         "mishan"
-      ],
-      "Eid": [
-        "eed"
       ],
       "eight": [
         "aath"
@@ -4717,22 +5558,11 @@
       "engineer": [
         "injeeniyar"
       ],
-      "England": [
-        "engaland"
-      ],
       "ensure": [
         "inshor"
       ],
-      "ER": [
-        "er"
-      ],
       "erp": [
         "eeaarapeeaar"
-      ],
-      "ESR": [
-        "edisepi",
-        "eeesaaar",
-        "esr"
       ],
       "essing": [
         "eassing",
@@ -4820,9 +5650,6 @@
       "face": [
         "phes"
       ],
-      "Facebook": [
-        "phesabuk"
-      ],
       "facilitate": [
         "phaisilitet",
         "phaisiliti",
@@ -4856,44 +5683,6 @@
         "fahhim",
         "fahhym",
         "fahym"
-      ],
-      "Faisal": [
-        "faisal",
-        "phaisal"
-      ],
-      "Faisalabad": [
-        "faesaalabad",
-        "faesalaabad",
-        "faesalabaad",
-        "faesalabad",
-        "faisaalaabad",
-        "faisaalabaad",
-        "faisaalabad",
-        "faisalaabaad",
-        "faisalaabad",
-        "faisalabaad",
-        "faisalabad",
-        "faisalabada",
-        "faisalabadd",
-        "faisalabat",
-        "faisalabbad",
-        "faisalabd",
-        "faisalbad",
-        "faisallabad",
-        "faissalabad",
-        "faysaalabad",
-        "faysalaabad",
-        "faysalabaad",
-        "faysalabad",
-        "ffaisalabad",
-        "phaesalabad",
-        "phaisaalabad",
-        "phaisalaabaad",
-        "phaisalaabad",
-        "phaisalabaad",
-        "phaisalabad",
-        "phaysalabad",
-        "فیصلabad"
       ],
       "faisla": [
         "fisla",
@@ -5500,10 +6289,6 @@
         "flued",
         "fluyd"
       ],
-      "FNAC": [
-        "ephaenaesi",
-        "fnac"
-      ],
       "fo": [
         "ffo",
         "foo",
@@ -5564,9 +6349,6 @@
         "fuzea",
         "fuzia",
         "fuzya"
-      ],
-      "France": [
-        "phraans"
       ],
       "free": [
         "faree",
@@ -5761,9 +6543,6 @@
       "genetic": [
         "jenetik"
       ],
-      "Germany": [
-        "jarmani"
-      ],
       "gh": [
         "gaah",
         "gah",
@@ -5896,9 +6675,6 @@
       "glucose": [
         "glookoz"
       ],
-      "Gmail": [
-        "gmaail"
-      ],
       "gojra": [
         "gjra",
         "gojara",
@@ -5927,9 +6703,6 @@
       "good": [
         "gud"
       ],
-      "Google": [
-        "googal"
-      ],
       "govt": [
         "goovt",
         "goowt",
@@ -5939,10 +6712,6 @@
         "govtt",
         "gowt",
         "gvt"
-      ],
-      "GP": [
-        "deeti",
-        "jeepi"
       ],
       "graduation": [
         "gradeshan"
@@ -5973,10 +6742,6 @@
       ],
       "group": [
         "grup"
-      ],
-      "GST": [
-        "gst",
-        "jeeesti"
       ],
       "guide": [
         "gaaid"
@@ -6698,24 +7463,6 @@
         "hazzro",
         "hzro"
       ],
-      "Hb": [
-        "echbi"
-      ],
-      "HbA1c": [
-        "echabeee1si",
-        "echbi a one si",
-        "hba1",
-        "hba1c"
-      ],
-      "HCG": [
-        "echaseeji",
-        "hcg"
-      ],
-      "HDL": [
-        "echadeeel",
-        "edichali",
-        "hdl"
-      ],
       "head": [
         "haid",
         "hait"
@@ -6806,9 +7553,6 @@
         "hinae",
         "hyna"
       ],
-      "Hindustan": [
-        "hindustaan"
-      ],
       "hira": [
         "heera",
         "heeraa",
@@ -6824,11 +7568,6 @@
       ],
       "history": [
         "histri"
-      ],
-      "HIV": [
-        "echaaaeewi",
-        "hiv",
-        "hivi"
       ],
       "hmm": [
         "hamm"
@@ -6849,9 +7588,6 @@
       ],
       "hold": [
         "hol"
-      ],
-      "Holter": [
-        "holtar"
       ],
       "holy": [
         "hly",
@@ -6924,9 +7660,6 @@
         "houssing",
         "housyng"
       ],
-      "HPV": [
-        "hpv"
-      ],
       "hua": [
         "huaa"
       ],
@@ -6995,63 +7728,11 @@
         "husnaen",
         "husnayn"
       ],
-      "Hussain": [
-        "hoossaen",
-        "hoossain",
-        "hoossayn",
-        "hossaain",
-        "hossaeen",
-        "hossaen",
-        "hossain",
-        "hossayn",
-        "hssain",
-        "husain",
-        "husasain",
-        "husein",
-        "hussaen",
-        "hussain",
-        "hussaina",
-        "hussainn",
-        "hussayn"
-      ],
-      "Hyderabad": [
-        "haidaraabaad",
-        "heederaabad",
-        "heederabaad",
-        "heederabad",
-        "hideraabad",
-        "hiderabaad",
-        "hiderabad",
-        "hydderabad",
-        "hyderaabaad",
-        "hyderaabad",
-        "hyderabaad",
-        "hyderabad",
-        "hyderabada",
-        "hyderabadd",
-        "hyderabat",
-        "hyderabbad",
-        "hyderabd",
-        "hyderbad",
-        "hyderrabad",
-        "hydrabad"
-      ],
       "hypertension": [
         "haaiparatenshan"
       ],
-      "Ibrahim": [
-        "ibraheem",
-        "ibrahim"
-      ],
       "ibuprofen": [
         "ibuprophen"
-      ],
-      "ICU": [
-        "aaisiyoo",
-        "icu"
-      ],
-      "ID": [
-        "aaeedi"
       ],
       "idea": [
         "aaidiya"
@@ -7177,20 +7858,6 @@
       "immune": [
         "eemyoon"
       ],
-      "Imran": [
-        "ihmran",
-        "iimraan",
-        "iimran",
-        "imaraan",
-        "immran",
-        "imraan",
-        "imraen",
-        "imrahn",
-        "imran",
-        "imranh",
-        "imrann",
-        "imrran"
-      ],
       "imtiaz": [
         "ihmtiaz",
         "iimtiaz",
@@ -7242,9 +7909,6 @@
         "inndex",
         "yndex"
       ],
-      "India": [
-        "indiya"
-      ],
       "infection": [
         "inphekshan"
       ],
@@ -7278,14 +7942,8 @@
       "insaan": [
         "insaaaan"
       ],
-      "Insha": [
-        "insha"
-      ],
       "inshaAllah": [
         "inshaalla"
-      ],
-      "Instagram": [
-        "instaagraam"
       ],
       "installment": [
         "instolament"
@@ -7380,15 +8038,9 @@
         "iph",
         "ipp"
       ],
-      "IPD": [
-        "ipd"
-      ],
       "iPhone": [
         "aaeephon",
         "aiphon"
-      ],
-      "IQ": [
-        "aaiq"
       ],
       "iqbal": [
         "eekbaal",
@@ -7519,35 +8171,6 @@
         "isllam",
         "isslam"
       ],
-      "Islamabad": [
-        "eeslaamabad",
-        "eeslamaabad",
-        "eeslamabaad",
-        "eeslamabad",
-        "isalamabad",
-        "islaamaabaad",
-        "islaamaabad",
-        "islaamabaad",
-        "islaamabad",
-        "islamaabaad",
-        "islamaabad",
-        "islamabaad",
-        "islamabad",
-        "islamabada",
-        "islamabadd",
-        "islamabat",
-        "islamabbad",
-        "islamabd",
-        "islambad",
-        "islammabad",
-        "isllamabad",
-        "islmabad",
-        "isslamabad",
-        "yslaamabad",
-        "yslamaabad",
-        "yslamabaad",
-        "yslamabad"
-      ],
       "islampura": [
         "eeslaampura",
         "eeslampoora",
@@ -7576,19 +8199,6 @@
       ],
       "isliye": [
         "isalie"
-      ],
-      "Ismail": [
-        "ihsmail",
-        "iismail",
-        "ismaael",
-        "ismaail",
-        "ismaayl",
-        "ismaeel",
-        "ismaeil",
-        "ismael",
-        "ismahel",
-        "ismail",
-        "ismayl"
       ],
       "israr": [
         "ihsraar",
@@ -7649,23 +8259,6 @@
         "yttephaaq",
         "yttephak",
         "yttephaq"
-      ],
-      "IV": [
-        "aaeevi",
-        "aaivee",
-        "aaivi",
-        "aiiv",
-        "iaav",
-        "iav",
-        "ieev",
-        "iev",
-        "ihv",
-        "iiv",
-        "iv",
-        "ive",
-        "ivh",
-        "ivv",
-        "ivy"
       ],
       "iver": [
         "ihver",
@@ -7878,9 +8471,6 @@
       "jaongi": [
         "jaaoongi"
       ],
-      "Japan": [
-        "jaapaan"
-      ],
       "jaranwala": [
         "charaawala",
         "jaaraanwala",
@@ -7975,17 +8565,6 @@
       ],
       "jayenge": [
         "jaaenge"
-      ],
-      "Jazak": [
-        "jazaak"
-      ],
-      "Jazz": [
-        "jazz",
-        "jez"
-      ],
-      "JazzCash": [
-        "jaizakaish",
-        "jazzcash"
       ],
       "jee": [
         "zee"
@@ -8274,20 +8853,6 @@
       "kamra": [
         "kamaraa"
       ],
-      "Kamran": [
-        "kaamaraan",
-        "kaamran",
-        "kaemran",
-        "kahmran",
-        "kammran",
-        "kamraan",
-        "kamraen",
-        "kamrahn",
-        "kamran",
-        "kamranh",
-        "kamrann",
-        "kamrran"
-      ],
       "kamzor": [
         "kamazor"
       ],
@@ -8345,45 +8910,6 @@
       ],
       "kaoge": [
         "kaaoge"
-      ],
-      "Karachi": [
-        "caaraachi",
-        "caarachee",
-        "caarachi",
-        "caarachy",
-        "caraachee",
-        "caraachi",
-        "caraachy",
-        "carachee",
-        "carachi",
-        "carachy",
-        "kaaraachee",
-        "kaaraachi",
-        "kaaraachy",
-        "kaarachee",
-        "kaarachi",
-        "kaarachy",
-        "karaachee",
-        "karaachi",
-        "karaachy",
-        "karaanchi",
-        "karachee",
-        "karachi",
-        "karachy",
-        "karchi",
-        "karrachi",
-        "kkarachi",
-        "krachi",
-        "qaaraachi",
-        "qaarachee",
-        "qaarachi",
-        "qaarachy",
-        "qaraachee",
-        "qaraachi",
-        "qaraachy",
-        "qarachee",
-        "qarachi",
-        "qarachy"
       ],
       "karein": [
         "karen"
@@ -8614,10 +9140,6 @@
         "keebord",
         "kibord"
       ],
-      "KFT": [
-        "keephti",
-        "kft"
-      ],
       "khaali": [
         "khali"
       ],
@@ -8635,22 +9157,6 @@
         "khadd",
         "khaddaa",
         "khdda"
-      ],
-      "Khadija": [
-        "kadija",
-        "khaadeja",
-        "khaadija",
-        "khaadyja",
-        "khaddija",
-        "khadeeja",
-        "khadeja",
-        "khadejaa",
-        "khadejae",
-        "khadija",
-        "khadijah",
-        "khadyja",
-        "khateeja",
-        "khatija"
       ],
       "khadim": [
         "kaadeem",
@@ -9199,10 +9705,6 @@
         "qoohaat",
         "qoohat"
       ],
-      "Kolkata": [
-        "kalakatta",
-        "kolkata"
-      ],
       "konsa": [
         "kaun sa",
         "kaunsa",
@@ -9333,25 +9835,6 @@
         "ladi",
         "ldy",
         "llady"
-      ],
-      "Lahore": [
-        "laahaur",
-        "laahaus",
-        "laahoore",
-        "laahore",
-        "lahaur",
-        "lahoar",
-        "lahoer",
-        "lahoore",
-        "lahor",
-        "lahore",
-        "lahorre",
-        "lahre",
-        "lhore",
-        "lhoro",
-        "llahore",
-        "lor",
-        "lore"
       ],
       "lake": [
         "laace",
@@ -9530,10 +10013,6 @@
         "ltif",
         "teeph"
       ],
-      "LDL": [
-        "eladeeel",
-        "ldl"
-      ],
       "leave": [
         "leaave",
         "leaavi",
@@ -9582,11 +10061,6 @@
         "livels",
         "livils"
       ],
-      "LFT": [
-        "elaephti",
-        "elaphti",
-        "lft"
-      ],
       "liaquat": [
         "leaaquat",
         "leaequat",
@@ -9622,9 +10096,6 @@
       ],
       "line": [
         "laain"
-      ],
-      "LinkedIn": [
-        "linkdin"
       ],
       "liver": [
         "leewar",
@@ -9705,9 +10176,6 @@
         "loohana",
         "luhana"
       ],
-      "London": [
-        "landan"
-      ],
       "lord": [
         "llord",
         "loord",
@@ -9732,9 +10200,6 @@
         "ltee",
         "lth",
         "ltt"
-      ],
-      "LTP": [
-        "eelteepi"
       ],
       "maaf": [
         "maaph"
@@ -10129,18 +10594,6 @@
       "marriage": [
         "mairej"
       ],
-      "Maryam": [
-        "maeryam",
-        "mareeam",
-        "mariaam",
-        "mariaem",
-        "mariahm",
-        "mariyam",
-        "maryam"
-      ],
-      "Masha": [
-        "maasha"
-      ],
       "mashaAllah": [
         "maashalla"
       ],
@@ -10217,9 +10670,6 @@
       "mazeed": [
         "maje",
         "majeeb"
-      ],
-      "MC": [
-        "emsi"
       ],
       "measles": [
         "meezals"
@@ -10491,12 +10941,6 @@
         "myanwali",
         "myanwaly"
       ],
-      "Microsoft": [
-        "maaikrosoft"
-      ],
-      "Milad": [
-        "meelaad"
-      ],
       "milna": [
         "milnaa"
       ],
@@ -10623,9 +11067,6 @@
         "mobaaeel",
         "mobaail"
       ],
-      "Mobilink": [
-        "mobilink"
-      ],
       "mohallah": [
         "mhallah",
         "mmohallah",
@@ -10680,11 +11121,6 @@
       ],
       "mou": [
         "moyoo"
-      ],
-      "MRI": [
-        "eemaaraaee",
-        "emaaaraaai",
-        "mri"
       ],
       "mrs": [
         "mises"
@@ -10779,21 +11215,6 @@
         "muhallaa",
         "muhlla"
       ],
-      "Muhammad": [
-        "mohaammad",
-        "mohaemmad",
-        "mohahmmad",
-        "mohammaad",
-        "mohammad",
-        "mohammaed",
-        "mohammahd",
-        "mohammed",
-        "moohammad",
-        "mouhammad",
-        "muhaammad",
-        "muhammad",
-        "muhammed"
-      ],
       "mujtaba": [
         "mojtaaba",
         "mojtaba",
@@ -10830,11 +11251,6 @@
       ],
       "multivitamin": [
         "malteewitaamin"
-      ],
-      "Mumbai": [
-        "mumbaee",
-        "mumbai",
-        "munbai"
       ],
       "mumkin": [
         "mamkan"
@@ -11461,9 +11877,6 @@
         "naviid",
         "naweed"
       ],
-      "Navratri": [
-        "navratri"
-      ],
       "nawabshah": [
         "naavabshah",
         "naawaabshah",
@@ -11516,9 +11929,6 @@
       ],
       "naya": [
         "nayaa"
-      ],
-      "NayaPay": [
-        "nayapay"
       ],
       "naz": [
         "naaez",
@@ -11574,9 +11984,6 @@
         "nijaamaabaad",
         "nnazimabad",
         "nzimabad"
-      ],
-      "NC": [
-        "ensi"
       ],
       "near": [
         "nar",
@@ -11986,11 +12393,6 @@
         "olt",
         "oold"
       ],
-      "Olu": [
-        "aaolu",
-        "oochalu",
-        "oolu"
-      ],
       "omair": [
         "ohmair",
         "omaaer",
@@ -12067,9 +12469,6 @@
       ],
       "ooncha": [
         "oonchaa"
-      ],
-      "OPD": [
-        "opd"
       ],
       "opp": [
         "oopp",
@@ -12151,17 +12550,11 @@
         "ortopedik",
         "ortopedyc"
       ],
-      "OT": [
-        "oti"
-      ],
       "out": [
         "oot",
         "oud",
         "outa",
         "outt"
-      ],
-      "Outlook": [
-        "aautlook"
       ],
       "paaonga": [
         "paaoonga"
@@ -12222,10 +12615,6 @@
         "paka",
         "pakk",
         "paq"
-      ],
-      "Pakistan": [
-        "paakistaan",
-        "paakstaan"
       ],
       "pakka": [
         "paacca",
@@ -12289,9 +12678,6 @@
         "pkpattan",
         "پاکپتن"
       ],
-      "Paktel": [
-        "paktel"
-      ],
       "palpitation": [
         "pelpiteshan"
       ],
@@ -12301,9 +12687,6 @@
       "pancreas": [
         "penakriyaas",
         "penkriya"
-      ],
-      "Pap": [
-        "paip"
       ],
       "paper": [
         "pepar"
@@ -12444,18 +12827,6 @@
       "payment": [
         "pemement",
         "pement"
-      ],
-      "PCP": [
-        "paiseepeesee"
-      ],
-      "PCR": [
-        "peeseeaar",
-        "pisiar",
-        "pisior"
-      ],
-      "PDF": [
-        "peedeeeph",
-        "pidiephi"
       ],
       "pe": [
         "pae"
@@ -12605,15 +12976,8 @@
       "pijiye": [
         "pijie"
       ],
-      "PIN": [
-        "pen",
-        "pin"
-      ],
       "pina": [
         "peena"
-      ],
-      "Pinterest": [
-        "pintarest"
       ],
       "pkli": [
         "p k l",
@@ -12678,10 +13042,6 @@
       ],
       "potassium": [
         "potaishiyam"
-      ],
-      "PP": [
-        "peepi",
-        "pp"
       ],
       "pre": [
         "pri"
@@ -12773,10 +13133,6 @@
       ],
       "provide": [
         "prowaaid"
-      ],
-      "PSA": [
-        "peeesae",
-        "psa"
       ],
       "psychiatrist": [
         "saaikiyaatrist"
@@ -12941,26 +13297,6 @@
         "quins",
         "quyns"
       ],
-      "Quetta": [
-        "kooetta",
-        "kooettaa",
-        "koyta",
-        "kuetta",
-        "kuettaa",
-        "kweta",
-        "qetta",
-        "qooetta",
-        "qooettaa",
-        "queta",
-        "quetata",
-        "quett",
-        "quetta",
-        "quettaa",
-        "qutta"
-      ],
-      "Quran": [
-        "quraan"
-      ],
       "qurat": [
         "qoorat",
         "qoraat",
@@ -12979,9 +13315,6 @@
         "raw",
         "ray"
       ],
-      "RA": [
-        "aarae"
-      ],
       "raana": [
         "raan",
         "raanaa",
@@ -12989,20 +13322,6 @@
         "rana",
         "ranaa",
         "rraana"
-      ],
-      "Rabia": [
-        "raabea",
-        "raabia",
-        "raabiya",
-        "raabya",
-        "rabbia",
-        "rabea",
-        "rabeaa",
-        "rabeae",
-        "rabeah",
-        "rabeea",
-        "rabia",
-        "rabya"
       ],
       "rabieh": [
         "raabeeh",
@@ -13170,9 +13489,6 @@
         "rakhha",
         "raqha"
       ],
-      "Rakhi": [
-        "rakhi"
-      ],
       "ram": [
         "raam",
         "rama",
@@ -13223,9 +13539,6 @@
         "rmtalai",
         "roomtali",
         "rramtalai"
-      ],
-      "Ramzan": [
-        "ramazaan"
       ],
       "random": [
         "raindam",
@@ -13337,45 +13650,6 @@
         "ravee",
         "ravy",
         "rawi"
-      ],
-      "Rawalpindi": [
-        "raavalpindi",
-        "raawaalpindi",
-        "raawalapindi",
-        "raawalpeendi",
-        "raawalpindee",
-        "raawalpindi",
-        "raawalpindy",
-        "raawalpyndi",
-        "ravaalpindi",
-        "ravalpeendi",
-        "ravalpindee",
-        "ravalpindi",
-        "ravalpindy",
-        "ravalpyndi",
-        "rawaalpeendi",
-        "rawaalpindee",
-        "rawaalpindi",
-        "rawaalpindy",
-        "rawaalpyndi",
-        "rawalapindi",
-        "rawallpindi",
-        "rawalpeendee",
-        "rawalpeendi",
-        "rawalpeendy",
-        "rawalpinadi",
-        "rawalpinddi",
-        "rawalpindee",
-        "rawalpindi",
-        "rawalpindy",
-        "rawalpinndi",
-        "rawalpndi",
-        "rawalpyndee",
-        "rawalpyndi",
-        "rawalpyndy",
-        "rawlpindi",
-        "rrawalpindi",
-        "rwalpindi"
       ],
       "razzaq": [
         "raazzaq",
@@ -13565,11 +13839,6 @@
       "results": [
         "rijalt"
       ],
-      "RFT": [
-        "aaraephti",
-        "aaraphti",
-        "rft"
-      ],
       "riaz": [
         "rayaaj",
         "reaaz",
@@ -13754,26 +14023,8 @@
         "saedaf",
         "sahdaf"
       ],
-      "SadaPay": [
-        "sadapay"
-      ],
       "sadhe": [
         "saarhe"
-      ],
-      "Sadia": [
-        "saadea",
-        "saadia",
-        "saadiya",
-        "saadya",
-        "saddia",
-        "sadea",
-        "sadeaa",
-        "sadeae",
-        "sadeah",
-        "sadeea",
-        "sadia",
-        "sadiya",
-        "sadya"
       ],
       "sadiq": [
         "saadeek",
@@ -13889,10 +14140,6 @@
       ],
       "safed": [
         "saphed"
-      ],
-      "Safia": [
-        "safia",
-        "safiya"
       ],
       "safoora": [
         "saafoora",
@@ -14215,20 +14462,6 @@
         "salmah",
         "salmma"
       ],
-      "Salman": [
-        "saalman",
-        "saelman",
-        "sahlman",
-        "salamaan",
-        "sallman",
-        "salmaan",
-        "salmaen",
-        "salmahn",
-        "salman",
-        "salmanh",
-        "salmann",
-        "salmman"
-      ],
       "sambrial": [
         "saambreeal",
         "saambriaal",
@@ -14314,9 +14547,6 @@
         "samrae",
         "samrah",
         "samrra"
-      ],
-      "Samsung": [
-        "samsang"
       ],
       "sana": [
         "saana",
@@ -14486,9 +14716,6 @@
       ],
       "saturday": [
         "saitarde"
-      ],
-      "Saudi": [
-        "saoodi"
       ],
       "saylani": [
         "sailaanee",
@@ -14714,16 +14941,6 @@
       "seven": [
         "seman",
         "sewan"
-      ],
-      "SGOT": [
-        "esajeeoti",
-        "esjeeoti",
-        "sgot"
-      ],
-      "SGPT": [
-        "esajeepeeti",
-        "esjeepeeti",
-        "sgpt"
       ],
       "shabbir": [
         "sabbir",
@@ -15340,53 +15557,6 @@
       "shuru": [
         "shuroo"
       ],
-      "Sialkot": [
-        "salkot",
-        "seeaalcot",
-        "seeaalkoot",
-        "seeaalkot",
-        "seeaalqot",
-        "seealcoot",
-        "seealcot",
-        "seealkoot",
-        "seealkot",
-        "seealqoot",
-        "seealqot",
-        "sehalakot",
-        "siaalcoot",
-        "siaalcot",
-        "siaalkoot",
-        "siaalkot",
-        "siaalqoot",
-        "siaalqot",
-        "sialakot",
-        "sialcoot",
-        "sialcot",
-        "sialkkot",
-        "sialkod",
-        "sialkoot",
-        "sialkot",
-        "sialkota",
-        "sialkott",
-        "sialkt",
-        "siallkot",
-        "sialqoot",
-        "sialqot",
-        "silkot",
-        "siyaalakot",
-        "siyaalkot",
-        "ssialkot",
-        "syaalcot",
-        "syaalkoot",
-        "syaalkot",
-        "syaalqot",
-        "syalcoot",
-        "syalcot",
-        "syalkoot",
-        "syalkot",
-        "syalqoot",
-        "syalqot"
-      ],
       "siddique": [
         "sddique",
         "seeddeeque",
@@ -15554,12 +15724,6 @@
         "smiar",
         "smiyar"
       ],
-      "SMS": [
-        "esaemaes"
-      ],
-      "Snapchat": [
-        "snaepchat"
-      ],
       "society": [
         "sciety",
         "socety",
@@ -15661,9 +15825,6 @@
       "sputum": [
         "sputam"
       ],
-      "SSO": [
-        "esso"
-      ],
       "staff": [
         "sataff",
         "sstaff",
@@ -15713,15 +15874,8 @@
       "station": [
         "steshan"
       ],
-      "STD": [
-        "sndi",
-        "std"
-      ],
       "stethoscope": [
         "stethoskop"
-      ],
-      "STI": [
-        "sti"
       ],
       "street": [
         "satriit",
@@ -15753,9 +15907,6 @@
         "subhana",
         "subhann",
         "subhn"
-      ],
-      "SubhanAllah": [
-        "subhaanallaah"
       ],
       "subhani": [
         "sobhaani",
@@ -16051,12 +16202,6 @@
       "system": [
         "sistam"
       ],
-      "T3": [
-        "tee3"
-      ],
-      "T4": [
-        "tee4"
-      ],
       "ta": [
         "taa"
       ],
@@ -16119,20 +16264,6 @@
       ],
       "taraf": [
         "tarph"
-      ],
-      "Tariq": [
-        "taareq",
-        "taarik",
-        "taariq",
-        "taaryq",
-        "taeriq",
-        "tahreq",
-        "tahriq",
-        "tahryq",
-        "tareq",
-        "tarik",
-        "tariq",
-        "taryq"
       ],
       "tashbeeb": [
         "taashbeeb",
@@ -16224,10 +16355,6 @@
       "tazeem": [
         "taajeen"
       ],
-      "TB": [
-        "teebi",
-        "tibi"
-      ],
       "teacher": [
         "teechar"
       ],
@@ -16301,12 +16428,6 @@
         "teq",
         "ttek"
       ],
-      "Telegram": [
-        "teleegraam"
-      ],
-      "Telenor": [
-        "telenor"
-      ],
       "tennis": [
         "tenis"
       ],
@@ -16342,9 +16463,6 @@
         "testts",
         "tiists",
         "tists"
-      ],
-      "TG": [
-        "tg"
       ],
       "thanda": [
         "thandaa"
@@ -16500,10 +16618,6 @@
         "typ",
         "tyyp"
       ],
-      "TMT": [
-        "teeemti",
-        "tmt"
-      ],
       "toba": [
         "tba",
         "tob",
@@ -16599,10 +16713,6 @@
       "triple": [
         "tepal"
       ],
-      "TSH": [
-        "teeesaech",
-        "tsh"
-      ],
       "tulsi": [
         "tolse",
         "tolsee",
@@ -16624,9 +16734,6 @@
       ],
       "tumor": [
         "tyoomar"
-      ],
-      "Twitter": [
-        "twitar"
       ],
       "two": [
         "too"
@@ -16655,9 +16762,6 @@
         "ueta",
         "uett",
         "yooeeti"
-      ],
-      "Ufone": [
-        "ufone"
       ],
       "ug": [
         "uaag",
@@ -16725,22 +16829,6 @@
         "ultrasoond",
         "ultrasuond",
         "ultrasuund"
-      ],
-      "Umar": [
-        "omar",
-        "uhmaar",
-        "uhmar",
-        "umaahr",
-        "umaar",
-        "umaer",
-        "umahr",
-        "umar",
-        "umarh",
-        "umarr",
-        "ummar",
-        "umr",
-        "umra",
-        "uumar"
       ],
       "umer": [
         "uhmeer",
@@ -16935,26 +17023,6 @@
       ],
       "uska": [
         "usakaa"
-      ],
-      "Usman": [
-        "asaan",
-        "oosmaan",
-        "oosman",
-        "uhsmaan",
-        "uhsman",
-        "usaman",
-        "usmaan",
-        "usmaen",
-        "usmahn",
-        "usman",
-        "usmana",
-        "usmanh",
-        "usmann",
-        "usmman",
-        "usmn",
-        "ussman",
-        "uthman",
-        "uusman"
       ],
       "uthai": [
         "uthaai"
@@ -17193,10 +17261,6 @@
       "vitamins": [
         "witaamins"
       ],
-      "VLDL": [
-        "vldl",
-        "weeeladeeel"
-      ],
       "voice": [
         "wois"
       ],
@@ -17434,11 +17498,6 @@
         "westt",
         "wst"
       ],
-      "WhatsApp": [
-        "wats ap",
-        "whaatsaep",
-        "whatsaap"
-      ],
       "where": [
         "wer",
         "weyar"
@@ -17448,9 +17507,6 @@
       ],
       "wicket": [
         "wiket"
-      ],
-      "Widal": [
-        "widaal"
       ],
       "wifi": [
         "waaeephaai"
@@ -17518,19 +17574,8 @@
       "without": [
         "widaaut"
       ],
-      "X-ray": [
-        "eks re",
-        "eksaray",
-        "eksare",
-        "eksre",
-        "ksray",
-        "x-ray"
-      ],
       "yahan": [
         "yahaan"
-      ],
-      "Yahoo": [
-        "yaahoo"
       ],
       "yaqoob": [
         "yaakoob",
@@ -17598,26 +17643,6 @@
         "younaas",
         "yuonas",
         "yuunas"
-      ],
-      "Yousaf": [
-        "yohusaf",
-        "yoosaaf",
-        "yoosaef",
-        "yoosaf",
-        "yoosahf",
-        "yoosaph",
-        "yoousaf",
-        "youhsaf",
-        "yousaaf",
-        "yousaf",
-        "yuosaf",
-        "yuusaf"
-      ],
-      "YouTube": [
-        "yootyoob"
-      ],
-      "Yusuf": [
-        "yusuf"
       ],
       "zaban": [
         "zaabaan",
@@ -17710,21 +17735,6 @@
         "zaeigham",
         "zaygham",
         "zekaam"
-      ],
-      "Zainab": [
-        "jaina",
-        "zaaenab",
-        "zaainab",
-        "zaaynab",
-        "zaeenab",
-        "zaeinab",
-        "zaenaab",
-        "zaenab",
-        "zaenaeb",
-        "zaenahb",
-        "zainab",
-        "zaynab",
-        "zenab"
       ],
       "zaka": [
         "zaaka",
@@ -17888,12 +17898,6 @@
         "zubea",
         "zubia",
         "zubya"
-      ],
-      "Zong": [
-        "zong"
-      ],
-      "Zoom": [
-        "zoom"
       ],
       "zukam": [
         "zukaam"
