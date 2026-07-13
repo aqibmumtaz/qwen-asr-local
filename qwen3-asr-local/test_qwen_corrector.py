@@ -190,15 +190,24 @@ def print_comparative(model_ids: list, all_results: dict, data, idx):
         speaker  = row[idx["speaker"]]
 
         acc_before = wer_accuracy(model_in, ref)
-        print(f"Turn {turn} ({speaker})  before={acc_before:.2f}")
-        print(f"  ref:   {ref}")
-        print(f"  input: {model_in}")
+        w = 90
+        print(f"{'─'*w}")
+        print(f"  Turn {turn} ({speaker})  "
+              f"flagged={all_results[model_ids[0]][i]['n_flagged']}/{all_results[model_ids[0]][i]['n_words']}  "
+              f"WER before={acc_before:.2f}")
+        print(f"{'─'*w}")
+        label_w = 18
+        print(f"  {'INPUT':<{label_w}} {model_in}")
+        print(f"  {'REFERENCE':<{label_w}} {ref}")
+        print()
         for mid in model_ids:
             short = mid.split("/")[-1]
             if i < len(all_results[mid]):
-                r = all_results[mid][i]
-                marker = "✓" if r["acc_after"] >= 0.99 else ("↑" if r["acc_after"] > acc_before else "↓")
-                print(f"  [{short:<16}] {r['acc_after']:.2f} {marker}  {r['elapsed_s']:.1f}s  {r['corrected']}")
+                r      = all_results[mid][i]
+                delta  = r["acc_after"] - acc_before
+                marker = "✓" if r["acc_after"] >= 0.99 else ("↑" if delta > 0.01 else ("↓" if delta < -0.01 else "="))
+                label  = f"{short} ({r['acc_after']:.2f}{marker} {r['elapsed_s']:.1f}s)"
+                print(f"  {label:<{label_w}} {r['corrected']}")
         print()
 
     # Summary table
