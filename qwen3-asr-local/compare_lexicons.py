@@ -31,9 +31,10 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 XLSX = SCRIPT_DIR / "data" / "CLL analysis" / "turnwise_results_eval_full.xlsx"
 
 
-def load_transliterate(version: str):
-    """Re-import hindi_to_roman_urdu with LEXICON=<version>."""
-    os.environ["LEXICON"] = version
+def load_transliterate(cfg: str):
+    """cfg: 'old' | 'v2' | 'v2+resolver'"""
+    os.environ["LEXICON"]  = "old" if cfg == "old" else "v2"
+    os.environ["RESOLVER"] = "1" if cfg.endswith("resolver") else "0"
     sys.path.insert(0, str(SCRIPT_DIR))
     import hindi_to_roman_urdu as H
     importlib.reload(H)
@@ -83,7 +84,7 @@ def main():
     print()
 
     results = {}
-    for ver in ("old", "v2"):
+    for ver in ("old", "v2", "v2+resolver"):
         tr, nw, npz = load_transliterate(ver)
         accs, ex_hit, ex_tot, outs = [], 0, 0, []
         for turn, spk, hindi, ref in turns:
@@ -104,20 +105,23 @@ def main():
         }
         print(f"  [{ver:<3}] lexicon entries: {nw:>6} words + {npz:>3} phrases")
 
-    o, v = results["old"], results["v2"]
+    o, v, rz = results["old"], results["v2"], results["v2+resolver"]
     print()
     print("=" * 78)
     print("  RESULTS")
     print("=" * 78)
     print()
-    print(f"  {'metric':<26} {'OLD':>12} {'v2':>12} {'delta':>12}")
-    print(f"  {'-'*26} {'-'*12} {'-'*12} {'-'*12}")
-    print(f"  {'WER accuracy (mean)':<26} {o['acc']*100:>11.2f}% {v['acc']*100:>11.2f}% "
-          f"{(v['acc']-o['acc'])*100:>+11.2f}%")
-    print(f"  {'gold words reproduced':<26} {o['exact']*100:>11.2f}% {v['exact']*100:>11.2f}% "
-          f"{(v['exact']-o['exact'])*100:>+11.2f}%")
-    print(f"  {'  (count)':<26} {o['ex_hit']:>12} {v['ex_hit']:>12} "
-          f"{v['ex_hit']-o['ex_hit']:>+12}")
+    print(f"  {'metric':<24} {'OLD':>10} {'v2':>10} {'v2+RESOLVER':>13}  {'v2 vs old':>10}")
+    print(f"  {'-'*24} {'-'*10} {'-'*10} {'-'*13}  {'-'*10}")
+    print(f"  {'WER accuracy (mean)':<24} {o['acc']*100:>9.2f}% {v['acc']*100:>9.2f}% "
+          f"{rz['acc']*100:>12.2f}%  {(v['acc']-o['acc'])*100:>+9.2f}%")
+    print(f"  {'gold words reproduced':<24} {o['exact']*100:>9.2f}% {v['exact']*100:>9.2f}% "
+          f"{rz['exact']*100:>12.2f}%  {(v['exact']-o['exact'])*100:>+9.2f}%")
+    print(f"  {'  (count)':<24} {o['ex_hit']:>10} {v['ex_hit']:>10} {rz['ex_hit']:>13}  "
+          f"{v['ex_hit']-o['ex_hit']:>+10}")
+    print()
+    print(f"  resolver vs v2:  WER {(rz['acc']-v['acc'])*100:+.2f} pts   "
+          f"words {rz['ex_hit']-v['ex_hit']:+d}")
 
     better = sum(1 for a, b in zip(o["accs"], v["accs"]) if b > a + 1e-9)
     worse = sum(1 for a, b in zip(o["accs"], v["accs"]) if b < a - 1e-9)

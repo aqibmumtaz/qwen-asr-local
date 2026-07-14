@@ -136,6 +136,20 @@ WORD_MAP, PHRASE_MAP = _load_lexicon(LEXICON_VERSION)
 CORRECTIONS  = WORD_MAP
 PROPER_NOUNS = {}
 
+# ── Optional Layer 4: the RESOLVER (see resolver.py) ─────────────────────────
+# The exact lexicon can only fix spellings someone already listed. The resolver
+# COMPUTES a match for spellings never seen before — measured to recover 44% of
+# held-out variants that exact lookup cannot touch at all.
+# Enable with  RESOLVER=1.
+_RESOLVER = None
+if _os.getenv('RESOLVER', '').lower() in ('1', 'true', 'yes', 'on'):
+    try:
+        from resolver import Resolver as _R
+        _RESOLVER = _R()
+    except Exception as _e:          # never break the pipeline over an optional layer
+        import sys as _sys
+        print(f"[warn] resolver unavailable: {_e}", file=_sys.stderr)
+
 
 
 # ── Core algorithm ────────────────────────────────────────────────────────────
@@ -354,6 +368,10 @@ def _apply_corrections(text: str) -> str:
         w = m.group(0)
         canon = WORD_MAP.get(w.lower())
         if not canon:
+            # 3. resolver (optional) — only for words the exact lexicon MISSED.
+            #    It never overrides an exact hit; see the guards in resolver.py.
+            if _RESOLVER is not None:
+                return _RESOLVER.resolve_word(w)
             return w
         # the canonical carries its own correct case (CNIC, Chughtai, area);
         # only mirror an incoming capital when the canonical is all-lowercase
