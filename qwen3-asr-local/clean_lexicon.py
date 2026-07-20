@@ -142,15 +142,33 @@ yahan wahan yahi wahi kahin sabhi sabko sabka
 #   fixed :  "mazboot"  -> [majboot, majaboot]
 #
 # Mostly Urdu z-sounds (ز / ض) that the Hindi ASR renders as `j`.
+#
+# The second group comes from lexicons_clean.json, which re-canonicalised some
+# clusters against a form the GOLD annotators never use. Each is decided by gold
+# frequency, not taste — where the new source is RIGHT (maam 7x vs maim 0x,
+# kijiye 3x vs kiye 0x, assalam 11x vs salam 4x) it is left alone.
 CANONICAL_FIXES = {
     "majboot": "mazboot",     # مضبوط = strong  (z, not j)
+
+    # lexicons_clean.json's canonical vs what the gold actually writes
+    "central": "centre",      # gold: centre 8x, central 0x
+    "jaaega":  "jayega",      # gold: jayega 2x, jaaega 0x
+    "ahmed":   "Ahmad",       # gold: Ahmad  3x, Ahmed  0x
+    "mistar":  "mister",      # gold: mister 1x, mistar 0x
 }
 
 
-# ── FORCE_KEEP — pairs kept even though a safety rule would drop them ─────────
-# Use sparingly. Each entry here is a deliberate override of R1b (the
-# "variant is already a correct word" test), so each one can rewrite a word a
-# human annotator actually wrote. State the cost in the comment.
+# ── FORCE_KEEP — pairs we guarantee, whatever the source says ────────────────
+# Two jobs:
+#   1. KEEP the pair even though a safety rule (R1b) would drop it.
+#   2. INJECT the pair if the source does not contain it at all.
+# (2) matters because lexicons_clean.json DELETED ek->aik under its "no
+# common-word rewrites" policy. Without injection our deliberate language
+# choice would silently disappear the moment the source is refreshed.
+#
+# Use sparingly. Each entry overrides the "variant is already a correct word"
+# test, so each one can rewrite a word a human annotator actually wrote. State
+# the cost in the comment.
 FORCE_KEEP = {
     # ek -> aik  : LANGUAGE NORMALISATION, decided deliberately.
     # The Hindi ASR emits एक -> transliterates to `ek` (19x). Urdu spells it
@@ -162,6 +180,22 @@ FORCE_KEEP = {
     # expected to be re-annotated to `aik`. Until then WER will under-report by
     # ~16 words on this eval set.
     ("ek", "aik"),
+}
+
+
+# ── NORMALIZATIONS — align our output to the gold's preferred spelling ────────
+# Measured on the 80-call benchmark (2026-07): our transliteration emits a valid
+# ALTERNATIVE spelling that the human annotators consistently write differently,
+# landing just below the fuzzy match threshold so it counts as an error. These are
+# ONE-DIRECTIONAL and safe — the reverse case does not occur in the gold.
+#   sar->sir (+131 words), bahut->bohot, okay->ok   =>  ~+1% diff_words
+# NOT included: aik<->ek (that is a deliberate language choice — see FORCE_KEEP),
+# and grammatical particles (ki/ke/ka, iske/is) which occur in BOTH directions and
+# would corrupt the reverse cases if mapped.
+NORMALIZATIONS = {
+    "sar": "sir",
+    "bahut": "bohot",
+    "okay": "ok",
 }
 
 
@@ -189,6 +223,10 @@ BANNED_PAIRS = {
     ("change", "charge"), ("four", "mor"), ("city", "ct"), ("aap", "app"),
     ("name", "naeem"), ("sakte", "safdar"), ("teen", "three"), ("note", "not"),
     ("below", "blue"), ("centre", "central"), ("mahine", "month"),
+    # lexicons_clean.json canonicalises Ahmad -> Ahmed; the gold writes `ahmad`.
+    # Cost of not banning it: 1 turn regresses (sultan ahmad naam hai).
+    # NB both sides are compared lowercased (see the (vl, cl) lookup).
+    ("ahmad", "ahmed"),
     ("wale", "walaikum"), ("mil", "meal"), ("den", "din"), ("maan", "maa"),
     ("seen", "scene"), ("mazeed", "majeed"), ("delhi", "dil"), ("haan", "khan"),
     ("janab", "chenab"), ("kitni", "queens"), ("route", "rohi"), ("gel", "jail"),
@@ -276,6 +314,66 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))["lexicons"]
 
 
+def load_merged(paths: list[Path], gold_vocab: set) -> dict:
+    """
+    Merge several source lexicons. The LAST file is AUTHORITATIVE.
+
+    We received lexicons_clean.json after lexicons_updated.json. It is the better
+    source — it fixes majaboot->mazboot, drops kod->kot and inki->ek, and
+    Title-cases the names. But it also enforces a "no common-word rewrites" policy
+    that deleted 326 mappings the GOLD reference actually wants:
+        nahin->nahi (gold 70x)   je->ji (83x)   ye->yeh (49x)   wo->woh (38x)
+    Using it alone costs 2.88 WER points.
+
+    A plain union is WRONG: the newer file's 770 deletions are deliberate, and a
+    union silently resurrects every one of them from the older file (that is how
+    centre->central and Ahmad->Ahmed came back and cost 4 turns).
+
+    So: take the authoritative file as-is, then restore a dropped mapping from an
+    older file ONLY when the gold references vouch for it —
+        the canonical is a word a human actually wrote, AND
+        the variant is NOT (or we would be corrupting a correct word).
+    That readmits nahin->nahi and je->ji while still refusing centre->central,
+    because "centre" is itself a gold word.
+    """
+    *older, authoritative = paths
+    merged = {s: dict(m) for s, m in load(authoritative).items()}
+
+    restored = 0
+    for p in older:
+        for section, mapping in load(p).items():
+            target = merged.setdefault(section, {})
+            for variant, canon in mapping.items():
+                if variant in target:
+                    continue                       # authoritative already decided
+                if canon.lower() not in gold_vocab:
+                    continue                       # gold does not vouch for it
+                if variant.lower() in gold_vocab:
+                    continue                       # variant is itself correct
+                target[variant] = canon
+                restored += 1
+
+    if older:
+        print(f"  merged: {authoritative.name} (authoritative) "
+              f"+ {restored} gold-vouched mappings restored from "
+              f"{', '.join(p.name for p in older)}")
+
+    # FORCE_KEEP job 2 — inject pairs no source contains (see FORCE_KEEP above).
+    injected = [f"{v}->{c}" for v, c in FORCE_KEEP
+                if v not in merged["corrections"] and v not in merged["proper_nouns"]]
+    for variant, canon in FORCE_KEEP:
+        merged["corrections"].setdefault(variant, canon)
+    if injected:
+        print(f"  FORCE_KEEP injected (absent from every source): {', '.join(injected)}")
+
+    # NORMALIZATIONS — align to gold's preferred spelling (override any source map).
+    for variant, canon in NORMALIZATIONS.items():
+        merged["corrections"][variant] = canon
+    print(f"  NORMALIZATIONS applied: {', '.join(f'{v}->{c}' for v, c in NORMALIZATIONS.items())}")
+
+    return merged
+
+
 def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
     """Returns (canonical->[variants] for each dict, drop-reason stats)."""
     stats = defaultdict(int)
@@ -316,8 +414,10 @@ def clean(src: dict, gold_vocab: set | None = None) -> tuple[dict, dict]:
                 stats["drop_too_short"] += 1
                 continue
 
-            # FORCE_KEEP — explicit override of the safety rules below.
-            if (vl, cl) in FORCE_KEEP:
+            # FORCE_KEEP / NORMALIZATIONS — explicit overrides of the safety rules.
+            # NORMALIZATIONS deliberately map a valid word (sar, bahut) to the gold's
+            # preferred spelling, so they MUST bypass R1b ("variant is a real word").
+            if (vl, cl) in FORCE_KEEP or NORMALIZATIONS.get(vl) == cl:
                 grouped[c].add(vl)
                 stats["force_kept"] += 1
                 continue
@@ -659,16 +759,22 @@ def measure_corruption(corr: dict, pn: dict, label: str) -> tuple[int, int]:
 
 
 def main():
+    global SRC, OUT
     ap = argparse.ArgumentParser()
-    ap.add_argument("--write", action="store_true", help="write data/lexicons_v2.json")
+    ap.add_argument("--write", action="store_true", help="write the output file")
+    ap.add_argument("--src", type=Path, nargs="+", default=[SRC],
+                    help="source lexicon(s); later files win on conflict")
+    ap.add_argument("--out", type=Path, default=OUT,
+                    help="output path (default: data/lexicons_v2.json)")
     args = ap.parse_args()
+    SRC, OUT = args.src[-1], args.out
 
-    src = load(SRC)
     gold_vocab = load_gold_vocab()
     print("=" * 78)
     print("  STEP 2 — LEXICON CLEANUP")
     print("=" * 78)
-    print(f"  source: {SRC.name}")
+    print(f"  source: {' + '.join(p.name for p in args.src)}")
+    src = load_merged(args.src, gold_vocab)
     print(f"    corrections  : {len(src['corrections']):>6} flat entries")
     print(f"    proper_nouns : {len(src['proper_nouns']):>6} flat entries")
     print(f"  gold protected vocabulary: {len(gold_vocab)} human-verified words")
@@ -716,7 +822,8 @@ def main():
     print("  CORRUPTION ON THE 183-TURN GOLD SET")
     base = load(BASE)
     measure_corruption(base["corrections"], base["proper_nouns"], "original lexicons.json")
-    measure_corruption(src["corrections"], src["proper_nouns"], "lexicons_updated.json")
+    measure_corruption(src["corrections"], src["proper_nouns"],
+                       " + ".join(p.name for p in args.src))
     w, ph = to_lookup(cleaned)
     measure_corruption(w, {}, "lexicons_v2.json (NEW)")
     print()

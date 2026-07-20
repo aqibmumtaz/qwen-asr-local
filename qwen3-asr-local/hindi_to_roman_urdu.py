@@ -119,7 +119,10 @@ def _load_lexicon(version: str = 'v2'):
         phrases = {k.lower(): v for k, v in raw['corrections'].items() if ' ' in k}
         return words, phrases
 
-    raw = _json.loads((_DATA / 'lexicons_v2.json').read_text(encoding='utf-8'))['lexicons']
+    # any other version loads data/lexicons_<version>.json in the v2 layout
+    raw = _json.loads(
+        (_DATA / f'lexicons_{version}.json').read_text(encoding='utf-8')
+    )['lexicons']
     words, phrases = {}, {}
     for canon, variants in raw['lexicon'].items():
         for v in variants:
@@ -136,11 +139,10 @@ WORD_MAP, PHRASE_MAP = _load_lexicon(LEXICON_VERSION)
 CORRECTIONS  = WORD_MAP
 PROPER_NOUNS = {}
 
-# ── Optional Layer 4: the RESOLVER (see resolver.py) ─────────────────────────
-# The exact lexicon can only fix spellings someone already listed. The resolver
-# COMPUTES a match for spellings never seen before — measured to recover 44% of
-# held-out variants that exact lookup cannot touch at all.
-# Enable with  RESOLVER=1.
+# ── Optional Layer 4a: the RESOLVER (see resolver.py) — DEPRECATED ────────────
+# Rule-based edit-distance fallback. Superseded by the phonetic model (below):
+# on the 80-call set the resolver nets ~0 (helped 5 / hurt 4) because it corrupts
+# real words (taareekh->Tariq). Kept only for A/B. Enable with RESOLVER=1.
 _RESOLVER = None
 if _os.getenv('RESOLVER', '').lower() in ('1', 'true', 'yes', 'on'):
     try:
@@ -149,6 +151,23 @@ if _os.getenv('RESOLVER', '').lower() in ('1', 'true', 'yes', 'on'):
     except Exception as _e:          # never break the pipeline over an optional layer
         import sys as _sys
         print(f"[warn] resolver unavailable: {_e}", file=_sys.stderr)
+
+# ── Optional Layer 4b: the PHONETIC CONTRASTIVE MODEL (learned generalizer) ───
+# The exact lexicon only fixes spellings someone listed. The phonetic model
+# COMPUTES the canonical for unseen spellings — 97% held-out recall vs the
+# resolver's 30%. It is the maintainable replacement for enumerating variants.
+# Runs only on words the exact lexicon MISSED, with a 0.90 abstain threshold so
+# it never corrupts real words. Enable with  PHONETIC=1.
+# NOTE: on this eval it is accuracy-neutral (the fuzzy metric already forgives the
+# spelling drift it fixes); its value is maintainability, not a score gain.
+_PHONETIC = None
+if _os.getenv('PHONETIC', '').lower() in ('1', 'true', 'yes', 'on'):
+    try:
+        from phonetic_contrastive_model.corrector import PhoneticContrastiveCorrector as _P
+        _PHONETIC = _P.load(threshold=float(_os.getenv('PHONETIC_THRESHOLD', '0.90')))
+    except Exception as _e:          # never break the pipeline over an optional layer
+        import sys as _sys
+        print(f"[warn] phonetic model unavailable: {_e}", file=_sys.stderr)
 
 
 
@@ -340,6 +359,46 @@ def _normalize_endings(text: str) -> str:
 _PHRASE_KEYS = sorted(PHRASE_MAP, key=len, reverse=True)
 
 
+_TOKEN = re.compile(r'[A-Za-z0-9]+')
+
+
+def _expand(canon: str, following: str) -> str:
+    """
+    Expand a variant to its canonical WITHOUT duplicating words the ASR already
+    transcribed.
+
+    A single-word variant may expand to several words:
+        "chughtai lab": ["chukaai", "chuppaai", ...]
+    Most of those garble only the NAME. When the ASR did hear "lab" as its own
+    token, a blind expansion emits it twice:
+        chukaai laib se  ->  chughtai lab | lab se       <- "lab" duplicated
+
+    So: if the tail of the expansion is immediately repeated in the text that
+    FOLLOWS the match, emit only the head and let the text's own copy stand.
+        chukaai laib se  ->  chughtai | lab se           <- correct
+
+    The following tokens are compared through WORD_MAP, because the phrase pass
+    runs FIRST — at this point the text still reads "laib", and it only becomes
+    "lab" in the word pass below. Comparing the raw token would miss the clash.
+
+    Only an UNBROKEN run of words is considered (nothing but whitespace between
+    the match and the repeat), so genuine reduplication across a clause boundary
+    is never collapsed. At least one word is always emitted.
+    """
+    words = canon.split()
+    if len(words) < 2:
+        return canon
+    if following[:1] and not following[:1].isspace():
+        return canon                     # glued to punctuation — not a word repeat
+
+    nxt = [(WORD_MAP.get(t.lower()) or t).lower()
+           for t in _TOKEN.findall(following)[: len(words) - 1]]
+    for k in range(len(words) - 1, 0, -1):          # longest tail first
+        if nxt[:k] == [w.lower() for w in words[-k:]]:
+            return ' '.join(words[:-k])
+    return canon
+
+
 def _apply_corrections(text: str) -> str:
     """
     Layer 3: map ASR misspellings onto the correct Roman Urdu word.
@@ -352,13 +411,15 @@ def _apply_corrections(text: str) -> str:
     rewrite "beeta" on its own and the phrase would never match.
 
     A canonical may itself be several words (assalaamualaikum ->
-    "assalam o alaikum"); that is fine, it is a plain string substitution.
+    "assalam o alaikum"); _expand() keeps that from duplicating a word the ASR
+    already emitted.
     """
     # 1. phrase pass — on the raw text, before any word is touched
     for phrase in _PHRASE_KEYS:
+        canon = PHRASE_MAP[phrase]
         text = re.sub(
             rf'\b{re.escape(phrase)}\b',
-            PHRASE_MAP[phrase],
+            lambda m, c=canon: _expand(c, m.string[m.end():]),
             text,
             flags=re.IGNORECASE,
         )
@@ -368,11 +429,16 @@ def _apply_corrections(text: str) -> str:
         w = m.group(0)
         canon = WORD_MAP.get(w.lower())
         if not canon:
-            # 3. resolver (optional) — only for words the exact lexicon MISSED.
-            #    It never overrides an exact hit; see the guards in resolver.py.
+            # 3. learned fallback — ONLY for words the exact lexicon MISSED.
+            #    Prefer the phonetic model (generalizes, abstains safely); the
+            #    resolver is the deprecated rule-based alternative. Neither can
+            #    override an exact lexicon hit.
+            if _PHONETIC is not None:
+                return _PHONETIC.resolve_word(w)
             if _RESOLVER is not None:
                 return _RESOLVER.resolve_word(w)
             return w
+        canon = _expand(canon, m.string[m.end():])
         # the canonical carries its own correct case (CNIC, Chughtai, area);
         # only mirror an incoming capital when the canonical is all-lowercase
         if w[0].isupper() and canon == canon.lower():
@@ -400,7 +466,7 @@ if __name__ == '__main__':
         # (input, expected)
         ("मेरा नाम اکیب ہے۔",            "mera naam اکیب ہے۔"),
         ("आज का मौसम بہت اچھا ہے۔",      "aaj ka mausam بہت اچھا ہے۔"),
-        ("बहुत अच्छा है।",                "bahut acha hai."),
+        ("बहुत अच्छा है।",                "bohot acha hai."),   # NORMALIZATIONS: bahut->bohot (gold spelling)
         # gold annotators write "main" for में, not "mein" — the gold is the WER target
         ("यह कोड की ज़बान में आवाज़ की शिनाख़्त का टेस्ट है।",
                                            "yeh kod ki zaban main awaz ki shanakht ka test hai."),

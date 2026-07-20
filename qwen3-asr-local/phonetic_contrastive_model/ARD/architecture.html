@@ -1,0 +1,275 @@
+<title>Phonetic Contrastive Model — Architecture</title>
+<style>
+  :root{
+    --paper:#f5f7f9; --surface:#ffffff; --surface-2:#eef2f5;
+    --ink:#131820; --muted:#5c6675; --line:#dbe1e8;
+    --accent:#0e7c86; --accent-ink:#0a5c64; --accent-soft:#d6ebed;
+    --warm:#b45309; --warm-soft:#f6e6d2;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#0c1016; --surface:#141b24; --surface-2:#1b2531;
+      --ink:#e7edf4; --muted:#93a1b2; --line:#26313d;
+      --accent:#2dd4bf; --accent-ink:#7fe9db; --accent-soft:#10312f;
+      --warm:#e9a35e; --warm-soft:#2c2213;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f5f7f9; --surface:#ffffff; --surface-2:#eef2f5;
+    --ink:#131820; --muted:#5c6675; --line:#dbe1e8;
+    --accent:#0e7c86; --accent-ink:#0a5c64; --accent-soft:#d6ebed;
+    --warm:#b45309; --warm-soft:#f6e6d2;
+  }
+  :root[data-theme="dark"]{
+    --paper:#0c1016; --surface:#141b24; --surface-2:#1b2531;
+    --ink:#e7edf4; --muted:#93a1b2; --line:#26313d;
+    --accent:#2dd4bf; --accent-ink:#7fe9db; --accent-soft:#10312f;
+    --warm:#e9a35e; --warm-soft:#2c2213;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:48px 24px 72px}
+
+  header{margin-bottom:36px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent-ink);margin:0 0 10px}
+  h1{font-size:clamp(26px,4vw,38px);line-height:1.1;margin:0 0 10px;
+    letter-spacing:-.02em;text-wrap:balance;font-weight:680}
+  .lede{color:var(--muted);max-width:60ch;margin:0}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{font-family:var(--mono);font-size:12px;padding:5px 10px;border-radius:999px;
+    background:var(--surface-2);border:1px solid var(--line);color:var(--ink)}
+  .chip b{color:var(--accent-ink);font-weight:600}
+
+  .stage-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);margin:32px 0 12px}
+
+  /* inputs */
+  .inputs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .io{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;text-align:center}
+  .io .role{font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted)}
+  .io .tok{font-family:var(--mono);font-size:19px;margin-top:4px;color:var(--ink)}
+  .io.anchor{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent-soft)}
+  .io.pos{border-color:var(--warm);box-shadow:inset 0 0 0 1px var(--warm-soft)}
+
+  .shared{display:flex;align-items:center;gap:10px;justify-content:center;
+    margin:14px 0 6px;color:var(--muted);font-size:13px}
+  .shared .brace{flex:1;height:1px;background:
+    linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+  .shared em{font-style:normal;font-family:var(--mono);font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);white-space:nowrap}
+
+  /* encoder stack */
+  .stack{display:flex;flex-direction:column;gap:0}
+  .layer{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:14px;
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px}
+  .num{font-family:var(--mono);font-size:13px;color:var(--accent-ink);
+    background:var(--accent-soft);border-radius:8px;height:34px;display:grid;
+    place-items:center;font-weight:600}
+  .lname{font-weight:620;font-size:15px;letter-spacing:-.01em}
+  .lop{font-family:var(--mono);font-size:12.5px;color:var(--accent-ink);margin-top:2px}
+  .lwhy{font-size:13px;color:var(--muted);margin-top:6px;max-width:52ch}
+  .lwhy code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+    border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
+  .lwhy b{color:var(--ink);font-weight:600}
+  .layer{align-items:start}
+  .layer .num,.layer .shape{margin-top:1px}
+  .shape{font-family:var(--mono);font-size:13px;white-space:nowrap;
+    background:var(--surface-2);border:1px solid var(--line);border-radius:8px;
+    padding:6px 10px;color:var(--ink)}
+  .shape b{color:var(--accent-ink);font-weight:600}
+  .flow{height:16px;display:flex;justify-content:center;align-items:center}
+  .flow::before{content:"";width:2px;height:100%;
+    background:linear-gradient(var(--accent),var(--accent));opacity:.5}
+  .flow.warm::before{background:var(--warm);opacity:.55}
+
+  /* contrastive space */
+  .space-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+  @media(max-width:680px){.space-grid{grid-template-columns:1fr}
+    .inputs{grid-template-columns:1fr}}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .panel h3{margin:0 0 4px;font-size:14px;letter-spacing:-.01em}
+  .panel p{margin:0;color:var(--muted);font-size:13px}
+  .panel .mono{font-family:var(--mono);font-size:12.5px;color:var(--ink)}
+  .space-vis{position:relative;height:186px;margin-top:12px;border-radius:10px;
+    background:radial-gradient(120% 120% at 50% 45%,var(--surface-2),var(--surface));
+    border:1px solid var(--line);overflow:hidden}
+  .dot{position:absolute;border-radius:50%;transform:translate(-50%,-50%)}
+  .canon{width:16px;height:16px;background:var(--warm);
+    box-shadow:0 0 0 5px var(--warm-soft)}
+  .var{width:9px;height:9px;background:var(--accent)}
+  .far{width:9px;height:9px;background:var(--muted);opacity:.55}
+  .lbl{position:absolute;font-family:var(--mono);font-size:10.5px;color:var(--muted);
+    transform:translate(-50%,-50%)}
+  .pull{position:absolute;height:1px;background:var(--accent);opacity:.4;
+    transform-origin:left center}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;
+    font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .sw{width:10px;height:10px;border-radius:50%}
+
+  .foot{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:12.5px;font-family:var(--mono)}
+  .foot b{color:var(--ink);font-weight:600}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Phonetic Contrastive Model · v1</p>
+    <h1>A character-level Siamese encoder for Roman-Urdu normalisation</h1>
+    <p class="lede">One shared encoder maps both a garbled variant and its canonical into
+      the same 128-dimensional space; training pulls each variant next to its canonical, so
+      the model learns the phonetic transformation (z↔j, aa↔a, ee↔i) instead of memorising
+      spellings.</p>
+    <div class="chips">
+      <span class="chip">char-level · <b>vocab 33</b></span>
+      <span class="chip"><b>128</b>-d embedding</span>
+      <span class="chip">BiGRU · <b>2 layers</b></span>
+      <span class="chip">≈ <b>0.5M</b> params</span>
+      <span class="chip">loss · <b>InfoNCE</b></span>
+    </div>
+  </header>
+
+  <p class="stage-label">Input · same encoder used twice</p>
+  <div class="inputs">
+    <div class="io anchor">
+      <div class="role">variant · anchor</div>
+      <div class="tok">chugataai</div>
+    </div>
+    <div class="io pos">
+      <div class="role">canonical · positive</div>
+      <div class="tok">Chughtai</div>
+    </div>
+  </div>
+  <div class="shared">
+    <span class="brace"></span><em>shared weights → Siamese</em><span class="brace"></span>
+  </div>
+
+  <div class="stack">
+    <div class="layer">
+      <div class="num">1</div>
+      <div><div class="lname">Tokenise</div>
+        <div class="lop">chars → ids · pad = 0 · unseen → &lt;unk&gt;</div>
+        <div class="lwhy">Each character becomes a number. Short words are padded to equal
+          length; any character never seen in training maps to &lt;unk&gt;, so the model
+          never breaks on new input at runtime.</div></div>
+      <div class="shape">(<b>B</b>, T)</div>
+    </div>
+    <div class="flow"></div>
+    <div class="layer">
+      <div class="num">2</div>
+      <div><div class="lname">Embedding</div>
+        <div class="lop">nn.Embedding(33 → 96), padding_idx = 0</div>
+        <div class="lwhy">Every character id turns into a trainable 96-dim vector — the
+          network's private alphabet, which it shapes during training so phonetically related
+          letters sit near each other. Padding stays fixed at zero.</div></div>
+      <div class="shape">(B, T, <b>96</b>)</div>
+    </div>
+    <div class="flow"></div>
+    <div class="layer">
+      <div class="num">3</div>
+      <div><div class="lname">BiGRU encoder</div>
+        <div class="lop">GRU(96 → 128) × 2, bidirectional</div>
+        <div class="lwhy">Reads the word forwards and backwards, in two stacked layers. Each
+          character now carries the context of the whole word — that's how <code>aa</code> vs
+          <code>a</code> and <code>gh</code> vs <code>g</code> become distinguishable.</div></div>
+      <div class="shape">(B, T, <b>256</b>)</div>
+    </div>
+    <div class="flow"></div>
+    <div class="layer">
+      <div class="num">4</div>
+      <div><div class="lname">Masked pool</div>
+        <div class="lop">mean ⊕ max over real chars</div>
+        <div class="lwhy">Collapses the variable-length sequence into one fixed vector:
+          <b>mean</b> captures overall shape, <b>max</b> the strongest features. Padding is
+          masked out, so a 3-letter and a 12-letter word are pooled fairly.</div></div>
+      <div class="shape">(B, <b>512</b>)</div>
+    </div>
+    <div class="flow"></div>
+    <div class="layer">
+      <div class="num">5</div>
+      <div><div class="lname">Project + LayerNorm</div>
+        <div class="lop">Linear(512 → 128) + LayerNorm</div>
+        <div class="lwhy">Compresses to the final 128-dim embedding and normalises its
+          distribution — so the same word always lands in the same place, which keeps inference
+          stable across any input.</div></div>
+      <div class="shape">(B, <b>128</b>)</div>
+    </div>
+    <div class="flow"></div>
+    <div class="layer">
+      <div class="num">6</div>
+      <div><div class="lname">L2 normalise</div>
+        <div class="lop">scale to unit length</div>
+        <div class="lwhy">Scales the vector to length 1 so it sits on the unit sphere. Now
+          similarity is a clean <b>cosine = dot product</b> — two words are close by direction
+          alone, independent of magnitude.</div></div>
+      <div class="shape">(B, 128) · <b>‖z‖=1</b></div>
+    </div>
+  </div>
+
+  <p class="stage-label">Objective &amp; runtime</p>
+  <div class="space-grid">
+    <div class="panel">
+      <h3>Contrastive space — InfoNCE</h3>
+      <p>Variants of a word cluster around their canonical; other canonicals are pushed away.
+        In-batch negatives are taken over <span class="mono">unique</span> canonicals, so two
+        variants sharing a canonical are never treated as negatives.</p>
+      <div class="space-vis" id="vis" aria-label="embedding space: variants clustered near their canonical, other words far"></div>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--warm)"></i>canonical</span>
+        <span><i class="sw" style="background:var(--accent)"></i>its variants (pull in)</span>
+        <span><i class="sw" style="background:var(--muted)"></i>other canonicals (push out)</span>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Inference</h3>
+      <p class="mono" style="margin-bottom:10px">resolve_word(w):</p>
+      <p>encode <b class="mono">w</b> → cosine vs the cached
+        <span class="mono">(1922, 128)</span> canonical index → arg-max.</p>
+      <p style="margin-top:10px">If best similarity &lt; <span class="mono">0.60</span> →
+        <b style="color:var(--warm)">abstain</b> (leave the word unchanged). This threshold is
+        the safety guard that stops real words being corrupted.</p>
+      <p style="margin-top:10px">A <b>new canonical</b> is added by encoding it once and
+        appending to the index — <b>no retraining</b>.</p>
+    </div>
+  </div>
+
+  <p class="foot">char-level, not semantic — the signal is phonetic spelling, so a word/sentence
+    embedder would be the wrong axis. &nbsp;·&nbsp; <b>Handles</b> common-word drift &amp; new
+    canonicals. &nbsp;<b>Defers</b> acoustically-confusable names (Siddique / Siddiqui) to audio.</p>
+</div>
+
+<script>
+  // scatter: one canonical, its variants pulled in, other canonicals pushed out
+  (function(){
+    var vis=document.getElementById('vis');
+    if(!vis) return;
+    var W=vis.clientWidth||520, H=186, cx=W*0.40, cy=H*0.5;
+    function place(cls,x,y,txt){
+      var d=document.createElement('div'); d.className='dot '+cls;
+      d.style.left=x+'px'; d.style.top=y+'px'; vis.appendChild(d);
+      if(txt){var l=document.createElement('div');l.className='lbl';
+        l.style.left=x+'px';l.style.top=(y-13)+'px';l.textContent=txt;vis.appendChild(l);}
+    }
+    // pull lines from variants to canonical
+    var vpts=[[-46,-30],[-58,8],[-30,34],[26,-40],[40,26],[14,44],[-14,-46]];
+    vpts.forEach(function(p){
+      var x=cx+p[0], y=cy+p[1];
+      var dx=cx-x, dy=cy-y, len=Math.sqrt(dx*dx+dy*dy), ang=Math.atan2(dy,dx)*180/Math.PI;
+      var ln=document.createElement('div'); ln.className='pull';
+      ln.style.left=x+'px'; ln.style.top=y+'px'; ln.style.width=len+'px';
+      ln.style.transform='rotate('+ang+'deg)'; vis.appendChild(ln);
+    });
+    vpts.forEach(function(p){place('var',cx+p[0],cy+p[1]);});
+    place('canon',cx,cy,'Chughtai');
+    // far-away other canonicals
+    [[W*0.86,H*0.24,'Sialkot'],[W*0.9,H*0.72,'nephrology'],[W*0.72,H*0.9,'report']]
+      .forEach(function(p){place('far',p[0],p[1],p[2]);});
+  })();
+</script>

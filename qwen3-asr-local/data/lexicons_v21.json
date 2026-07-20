@@ -1,0 +1,7731 @@
+{
+  "_comment": "v2 minus variants the phonetic model recovers >= 0.9. Deploy with PHONETIC=1 so the model refills the dropped variants. Regenerate via phonetic_contrastive_model.prune_lexicon when v2 changes.",
+  "lexicons": {
+    "lexicon": {
+      "aaeen": [
+        "aaeeen"
+      ],
+      "aagaz": [],
+      "aaghaaz": [
+        "aagaaj"
+      ],
+      "aaiye": [],
+      "aakhirkar": [],
+      "aana": [],
+      "aaongi": [],
+      "aapka": [
+        "aapakaa"
+      ],
+      "aapki": [
+        "aapaki"
+      ],
+      "aasan": [
+        "aasaaan"
+      ],
+      "aasman": [
+        "aasamaan"
+      ],
+      "aata": [
+        "ata"
+      ],
+      "aaye": [
+        "aae"
+      ],
+      "aayega": [
+        "aaega"
+      ],
+      "aayegi": [
+        "aaegi"
+      ],
+      "aayen": [
+        "aaen"
+      ],
+      "aayenge": [
+        "aaenge",
+        "aaengey"
+      ],
+      "aayi": [
+        "aai"
+      ],
+      "aazma": [
+        "aajma"
+      ],
+      "Abbad": [
+        "abbada",
+        "abbadd",
+        "abbat",
+        "abbd"
+      ],
+      "abbasi": [
+        "aabbaasee",
+        "abbsi"
+      ],
+      "Abbottabad": [
+        "ahebataabaad",
+        "ebtaabaad"
+      ],
+      "abbu": [],
+      "Abdal": [
+        "abdala",
+        "abdl"
+      ],
+      "abdomen": [
+        "doman",
+        "domin",
+        "dominoj"
+      ],
+      "Abdul": [
+        "abdulh"
+      ],
+      "Abdullah": [
+        "abdllah",
+        "abdullh"
+      ],
+      "Abdurrahman": [
+        "abdurremaan"
+      ],
+      "Abeed": [
+        "abbeed",
+        "abeaed",
+        "abeead"
+      ],
+      "Abeer": [
+        "abbeer",
+        "abeaer",
+        "abeehr"
+      ],
+      "abhi": [
+        "abhee"
+      ],
+      "Abida": [
+        "aabeda",
+        "aabita",
+        "abbida",
+        "abedae",
+        "abedah",
+        "abeeda"
+      ],
+      "abortion": [
+        "eborshan"
+      ],
+      "above": [],
+      "abuse": [
+        "aabose",
+        "aabusi",
+        "abbuse",
+        "aboosi",
+        "abosea",
+        "abosi",
+        "abusi"
+      ],
+      "according": [
+        "akordingali"
+      ],
+      "account": [
+        "akaaunt"
+      ],
+      "ach": [
+        "achch"
+      ],
+      "acha": [
+        "achcha",
+        "achchhaa"
+      ],
+      "achanak": [],
+      "achar": [],
+      "acid": [
+        "esid"
+      ],
+      "acidity": [
+        "esiditi"
+      ],
+      "actual": [
+        "ekchual"
+      ],
+      "AD": [
+        "eedee"
+      ],
+      "adaab": [],
+      "Adayala": [
+        "adayal",
+        "adayla"
+      ],
+      "add": [
+        "aid"
+      ],
+      "address": [
+        "adars",
+        "aidres",
+        "edres"
+      ],
+      "adhami": [
+        "aadhame",
+        "adami",
+        "adhaame"
+      ],
+      "Adil": [
+        "adeelo",
+        "adila"
+      ],
+      "advance": [
+        "edawaans"
+      ],
+      "Adyala": [
+        "adyal",
+        "adyla"
+      ],
+      "afb": [
+        "aaefb",
+        "aafbh",
+        "aahfb",
+        "aaphb",
+        "aeefb"
+      ],
+      "affect": [
+        "iphekt"
+      ],
+      "afgan": [],
+      "Afsheen": [
+        "affsheen",
+        "afseen",
+        "afshaeen",
+        "afshi"
+      ],
+      "Afzal": [],
+      "again": [
+        "agen"
+      ],
+      "age": [
+        "aayej",
+        "aij"
+      ],
+      "agent": [
+        "eajent"
+      ],
+      "Ahmad": [
+        "aahhmad",
+        "aahmed",
+        "aahmid",
+        "aehmed",
+        "ahamed",
+        "ahhmed",
+        "ahhmid",
+        "ahmada",
+        "ahmat",
+        "ahmead",
+        "ahmed",
+        "ahmedd",
+        "ahmedh",
+        "ahmeed",
+        "ahmid"
+      ],
+      "Ahsan": [
+        "aahsaan",
+        "ahsaen",
+        "ahsahn",
+        "ahsanh",
+        "ahssan",
+        "aisaan",
+        "aiseen"
+      ],
+      "AIDS": [
+        "aaids"
+      ],
+      "aik": [
+        "ek"
+      ],
+      "ain": [
+        "aayn",
+        "aeen",
+        "aein",
+        "ahen",
+        "ahin",
+        "ahyn"
+      ],
+      "airport": [
+        "eyaraport"
+      ],
+      "Ajeet": [
+        "aajeit",
+        "aajiet",
+        "aejeet",
+        "ahjeet",
+        "ahjeit",
+        "ahjiet",
+        "ajiit",
+        "hajeet"
+      ],
+      "ajk": [
+        "aajq",
+        "aazc",
+        "aazq",
+        "ajak",
+        "ajka",
+        "ejeeke",
+        "ejeke"
+      ],
+      "Akbar": [
+        "aacbaar",
+        "aaqbaar",
+        "akbara",
+        "akber"
+      ],
+      "akchah": [
+        "aekchah",
+        "akshah"
+      ],
+      "akhir": [],
+      "Akhtar": [
+        "aekhtar",
+        "akhtaer",
+        "akhtahr",
+        "akhtarh"
+      ],
+      "aksar": [],
+      "alaikum": [
+        "lekum"
+      ],
+      "alam": [
+        "aalaam",
+        "aelam",
+        "ahlam",
+        "alaem",
+        "alahm",
+        "alamh",
+        "alamm"
+      ],
+      "albumin": [
+        "elbimen",
+        "elbiyam",
+        "elbyoomin"
+      ],
+      "alcohol": [
+        "alsohol"
+      ],
+      "Alfatah": [
+        "al phateh"
+      ],
+      "Alhamdulillah": [
+        "alamdala"
+      ],
+      "Ali": [
+        "aale",
+        "aalee",
+        "aeli",
+        "ahle",
+        "ahli",
+        "ahly",
+        "ale",
+        "alli"
+      ],
+      "Alkhidmat": [
+        "al khidmat",
+        "khidmat"
+      ],
+      "all": [
+        "aaall",
+        "aaell",
+        "aahll",
+        "aallh",
+        "aeell",
+        "ahll",
+        "alle",
+        "allh"
+      ],
+      "Allah": [
+        "aalla",
+        "ahllah"
+      ],
+      "allama": [
+        "ahamar",
+        "allam"
+      ],
+      "allergy": [
+        "elarji"
+      ],
+      "allied": [
+        "alliet"
+      ],
+      "Alnawaz": [
+        "al nawaaz",
+        "aalnavaj",
+        "al-namaz",
+        "alnawaza"
+      ],
+      "already": [
+        "olredi",
+        "oredi"
+      ],
+      "alvida": [],
+      "Ameem": [
+        "aameim",
+        "aamiem",
+        "ahmeem",
+        "ahmeim",
+        "ahmiem",
+        "amiim"
+      ],
+      "Ameen": [],
+      "America": [],
+      "amin": [
+        "aamein",
+        "aamien",
+        "aemeen",
+        "ahmeen",
+        "ahmein",
+        "ahmen",
+        "ahmien",
+        "ahmin",
+        "ahmyn",
+        "amein",
+        "amien"
+      ],
+      "Amir": [
+        "aaemer",
+        "aahmer",
+        "aahmir",
+        "aamear",
+        "aameer",
+        "aamehr",
+        "aamerh",
+        "aamerr",
+        "ahmar",
+        "ahmera",
+        "ahmerr",
+        "ahmmer",
+        "ahmr",
+        "ahmre",
+        "ameer"
+      ],
+      "Amjad": [
+        "ahmjad",
+        "amjadd",
+        "amjaed",
+        "amjahd",
+        "amjjad"
+      ],
+      "Ammar": [
+        "aahmmar",
+        "ahmmar",
+        "amaar",
+        "ammaer",
+        "ammahr",
+        "ammarr"
+      ],
+      "Ammara": [
+        "aamra",
+        "aemmara",
+        "ahmmara",
+        "ammaara",
+        "ammaera",
+        "ammahra",
+        "ammarae",
+        "ammarra"
+      ],
+      "ammi": [],
+      "Amna": [
+        "aammna",
+        "ahmna",
+        "amnae",
+        "amnah"
+      ],
+      "amount": [],
+      "ANA": [
+        "eenae"
+      ],
+      "anam": [
+        "aanaam",
+        "ahnam",
+        "anaem",
+        "anahm",
+        "anamh"
+      ],
+      "Anand": [
+        "ahnand",
+        "anandd",
+        "anandh"
+      ],
+      "anda": [],
+      "andaza": [
+        "indaja"
+      ],
+      "Android": [],
+      "Aneel": [
+        "ahneel",
+        "ahneil",
+        "ahniel"
+      ],
+      "angio": [
+        "enjiyo"
+      ],
+      "angiography": [],
+      "angry": [
+        "aagri"
+      ],
+      "Aniqa": [
+        "aaneqa",
+        "ahneqa",
+        "aneeka",
+        "anika"
+      ],
+      "Anjum": [
+        "ahnjom",
+        "anchum"
+      ],
+      "annual": [
+        "enual"
+      ],
+      "Ansari": [
+        "ahnsare"
+      ],
+      "antacid": [
+        "entaasid"
+      ],
+      "antibiotic": [
+        "enteebaayotik"
+      ],
+      "antibody": [
+        "enteebodi"
+      ],
+      "antigen": [
+        "enteejan"
+      ],
+      "Anwar": [
+        "ahnwar",
+        "annwar",
+        "anwaer",
+        "anwahr",
+        "anwarh",
+        "anwwar"
+      ],
+      "Anwer": [
+        "aanwir",
+        "ahnwir",
+        "anweer",
+        "anwehr"
+      ],
+      "anxiety": [
+        "enjaaiti"
+      ],
+      "aoge": [],
+      "aonga": [],
+      "apartment": [
+        "eparteement"
+      ],
+      "APGI": [
+        "eepiji"
+      ],
+      "apna": [
+        "apanaa"
+      ],
+      "apni": [
+        "apanee"
+      ],
+      "app": [
+        "aip"
+      ],
+      "Apple": [
+        "aiapal"
+      ],
+      "application": [
+        "epleekeshan"
+      ],
+      "apply": [
+        "aplaai"
+      ],
+      "appointment": [
+        "apaartament",
+        "aplaaiment",
+        "apoyentament"
+      ],
+      "approve": [
+        "aproow"
+      ],
+      "Aqib": [
+        "aakib",
+        "akeeb",
+        "aqeeb"
+      ],
+      "Aqsa": [
+        "aaqqsa",
+        "aeqsa",
+        "ahqsa",
+        "aksa",
+        "aksha",
+        "aqqsa",
+        "aqsae",
+        "aqsah",
+        "aqssa"
+      ],
+      "area": [
+        "eria"
+      ],
+      "Arif": [
+        "ahref",
+        "ahrif",
+        "ahryf"
+      ],
+      "Arifwala": [],
+      "Arishma": [
+        "ahreshma"
+      ],
+      "arit": [
+        "ahret",
+        "ahrit",
+        "ahryt"
+      ],
+      "arman": [
+        "aramaan"
+      ],
+      "Arooba": [
+        "arupa"
+      ],
+      "Aroosa": [
+        "roobsa"
+      ],
+      "arrange": [
+        "arenj"
+      ],
+      "Arsalan": [
+        "arashalaan",
+        "arasulaan",
+        "arsaelan",
+        "arsahlan"
+      ],
+      "Arshad": [
+        "arishad",
+        "arsad"
+      ],
+      "Arslan": [
+        "arasalaan",
+        "harsalaan"
+      ],
+      "arz": [
+        "arj"
+      ],
+      "Asad": [
+        "aasaad",
+        "aesad",
+        "ahsad",
+        "asadd",
+        "asadh",
+        "asaed",
+        "asahd",
+        "assad"
+      ],
+      "Asghar": [
+        "asagar",
+        "asgghar",
+        "askar"
+      ],
+      "Ashfaq": [
+        "aashphaaq",
+        "aashphak",
+        "ashfaqa",
+        "ashphaak",
+        "ishfaak"
+      ],
+      "ashraf": [
+        "aeshraf",
+        "sharaf"
+      ],
+      "asia": [
+        "aasiya",
+        "aesia",
+        "ahsea",
+        "ahsia",
+        "ahsya",
+        "aseaa"
+      ],
+      "Asif": [
+        "aasef",
+        "aasyf",
+        "aesif",
+        "ahsef",
+        "ahsif",
+        "ahsyf",
+        "aseef",
+        "asef"
+      ],
+      "Asim": [
+        "aasam"
+      ],
+      "Aslam": [
+        "aeslam",
+        "ahslam",
+        "asalam",
+        "aslaem",
+        "aslahm",
+        "aslamh",
+        "aslamm",
+        "asllam",
+        "asslam"
+      ],
+      "Asma": [
+        "aasmaa",
+        "aasmae",
+        "aesma",
+        "ahsma",
+        "asmae",
+        "asmah",
+        "asmma",
+        "assma"
+      ],
+      "aspirin": [
+        "espirin"
+      ],
+      "assalam": [
+        "shaallam"
+      ],
+      "assign": [
+        "asaain"
+      ],
+      "Astaghfirullah": [],
+      "asthma": [],
+      "athar": [
+        "aatthar",
+        "adhar"
+      ],
+      "atharah": [],
+      "athletes": [
+        "ethaleets"
+      ],
+      "Atif": [
+        "ahtef"
+      ],
+      "Atiq": [
+        "aatikur",
+        "ahteq",
+        "ateekul"
+      ],
+      "ATM": [
+        "eteeem"
+      ],
+      "attka": [
+        "atika"
+      ],
+      "aur": [
+        "aor"
+      ],
+      "Australia": [
+        "ostreliya"
+      ],
+      "auto": [
+        "oto"
+      ],
+      "automatically": [
+        "otomaitikli"
+      ],
+      "avail": [
+        "awel"
+      ],
+      "availability": [],
+      "available": [
+        "avelebal",
+        "avelebil",
+        "awelebil",
+        "awelibal",
+        "ewelebal"
+      ],
+      "Avicenna": [
+        "avcenna",
+        "avicenn"
+      ],
+      "awaaz": [
+        "waas"
+      ],
+      "Awais": [
+        "aawaes",
+        "aewais",
+        "ahwaes",
+        "ahwais",
+        "ahways",
+        "auais",
+        "awesh",
+        "aweyas",
+        "awwaas",
+        "hawes",
+        "wais"
+      ],
+      "Awaisia": [
+        "aavaiseea",
+        "aawaeseea",
+        "avaeseea",
+        "awaeseea",
+        "awaisa",
+        "awaisi"
+      ],
+      "awan": [
+        "aewaan",
+        "ahwaan",
+        "ahwan",
+        "auaan",
+        "auan",
+        "awaaen",
+        "awaahn",
+        "awaanh",
+        "awaann",
+        "awaean",
+        "awaen",
+        "awanh",
+        "ewaan"
+      ],
+      "Awasia": [
+        "aavaseea",
+        "aawaaseea",
+        "aawaseeaa",
+        "avaaseea",
+        "avaseea",
+        "avaseeaa",
+        "awaaseeaa",
+        "awasa",
+        "awasi"
+      ],
+      "awaz": [
+        "aawaaj",
+        "aawaaz"
+      ],
+      "Ayaz": [
+        "aaiaz",
+        "aeaz",
+        "aeeaz",
+        "aeyaz",
+        "ahiaz",
+        "ahyaz",
+        "aiaez",
+        "ayaaj"
+      ],
+      "Ayesha": [
+        "ahiesha",
+        "ayesh",
+        "saaeesha"
+      ],
+      "Ayub": [
+        "aayob",
+        "aeeob",
+        "aeeub",
+        "aeub",
+        "aeyub",
+        "aiob",
+        "ayoob"
+      ],
+      "azaad": [],
+      "azad": [
+        "aajaad",
+        "aajad",
+        "ajaad",
+        "ajad",
+        "azada",
+        "azadd",
+        "azat",
+        "azzad"
+      ],
+      "azam": [
+        "azaem",
+        "azamh",
+        "azamm"
+      ],
+      "Azeem": [
+        "aajeem",
+        "aajim",
+        "aajym",
+        "aaziem",
+        "aezeem",
+        "ahzeem",
+        "ahzeim",
+        "ahziem",
+        "ajeem",
+        "ajim",
+        "ajym",
+        "azeema",
+        "azeemm",
+        "azzeem",
+        "zeem"
+      ],
+      "Aziz": [
+        "aajeej",
+        "aajeez",
+        "aajij",
+        "aazeej",
+        "aazez",
+        "aazij",
+        "aazyj",
+        "ahzez",
+        "ajeej",
+        "ajeez",
+        "ajij",
+        "ajyj",
+        "azeej",
+        "aziza"
+      ],
+      "Azra": [
+        "aajraa",
+        "azara",
+        "azrra",
+        "azzra"
+      ],
+      "B12": [
+        "bee12"
+      ],
+      "baaqi": [
+        "baki"
+      ],
+      "baasi": [
+        "basi"
+      ],
+      "baat": [
+        "baaten"
+      ],
+      "baayen": [
+        "baaen"
+      ],
+      "baazu": [],
+      "baba": [],
+      "bacha": [],
+      "bachay": [
+        "bachche"
+      ],
+      "bachi": [
+        "bachchi"
+      ],
+      "bacterial": [
+        "baikteeriyal",
+        "basterial"
+      ],
+      "badminton": [
+        "baidamintan"
+      ],
+      "baees": [
+        "baaees"
+      ],
+      "bahar": [],
+      "Bahawalnagar": [
+        "bahaawal nagar"
+      ],
+      "Bahawalpur": [],
+      "Bahria": [
+        "bahra",
+        "bahri",
+        "bairiya",
+        "bhria"
+      ],
+      "bai": [
+        "baei",
+        "bahe",
+        "bahi",
+        "bahy"
+      ],
+      "Baig": [
+        "baheg",
+        "bahig",
+        "bahyg",
+        "bheg"
+      ],
+      "baithiye": [],
+      "Baiza": [
+        "baaeeja",
+        "baezae",
+        "baezah",
+        "bhaaeeza",
+        "bheza"
+      ],
+      "bakht": [
+        "baaqht",
+        "baaxt",
+        "bakat",
+        "bakhth"
+      ],
+      "balance": [
+        "bailens"
+      ],
+      "Baldia": [
+        "balda",
+        "baldi"
+      ],
+      "Bangalore": [],
+      "bank": [
+        "baink"
+      ],
+      "bansari": [],
+      "banwane": [],
+      "baqaya": [],
+      "bara": [],
+      "barah": [],
+      "Barak": [],
+      "barakahu": [
+        "bara kahu"
+      ],
+      "barf": [
+        "barph"
+      ],
+      "bari": [],
+      "Barki": [
+        "baarcee",
+        "baarqee",
+        "barqee",
+        "bbarki",
+        "brki"
+      ],
+      "base": [
+        "bes"
+      ],
+      "baseline": [],
+      "Bashir": [
+        "bashair",
+        "basheed",
+        "bashira",
+        "bashr",
+        "bshir"
+      ],
+      "basic": [
+        "besik"
+      ],
+      "basically": [
+        "besikli"
+      ],
+      "Basit": [
+        "baaset",
+        "baasid",
+        "bahset",
+        "baseet",
+        "baset"
+      ],
+      "bataenge": [],
+      "bataiye": [],
+      "bataun": [],
+      "bataye": [
+        "bataaen"
+      ],
+      "Batkhela": [
+        "btkhela"
+      ],
+      "Batool": [
+        "btool"
+      ],
+      "battery": [
+        "baitri"
+      ],
+      "bazaar": [],
+      "bazar": [
+        "baajaar",
+        "bajaar",
+        "bazara",
+        "bazarr",
+        "bazer"
+      ],
+      "Beenish": [
+        "baneesh"
+      ],
+      "begum": [
+        "begam",
+        "begm",
+        "beguma"
+      ],
+      "behan": [
+        "bahan"
+      ],
+      "behtar": [],
+      "Benazir": [
+        "benaajeer",
+        "benazr"
+      ],
+      "beta": [],
+      "bhagwan": [],
+      "bhai": [
+        "bhaaee"
+      ],
+      "Bhakkar": [
+        "bahakkar",
+        "bakkhar"
+      ],
+      "bharein": [
+        "bharen"
+      ],
+      "Bhattian": [],
+      "Bhimber": [
+        "bahimber",
+        "beembar",
+        "bhimaber",
+        "bhimbera",
+        "bimbar",
+        "binbar"
+      ],
+      "bhura": [],
+      "Bhutto": [
+        "bahutto"
+      ],
+      "bike": [
+        "baaik"
+      ],
+      "Bilal": [
+        "belahl",
+        "bihlal"
+      ],
+      "bilirubin": [
+        "bileeroobin"
+      ],
+      "bill": [
+        "bil"
+      ],
+      "bimar": [
+        "beemaar"
+      ],
+      "bin": [
+        "beeen",
+        "bihn",
+        "biihn",
+        "biinh",
+        "binh"
+      ],
+      "Bing": [
+        "binga"
+      ],
+      "biopsy": [
+        "baayopsi",
+        "baiopasi"
+      ],
+      "biryani": [],
+      "Bismillah": [],
+      "biwi": [
+        "beevi"
+      ],
+      "biyasi": [
+        "bayasi"
+      ],
+      "block": [
+        "balock",
+        "bblock",
+        "blck",
+        "blocak",
+        "blocka"
+      ],
+      "blood": [
+        "blad",
+        "bllood"
+      ],
+      "blue": [
+        "balue",
+        "bilo",
+        "biloo",
+        "bilyoo",
+        "bllue"
+      ],
+      "BNP": [
+        "beeenpi"
+      ],
+      "bodevolution": [
+        "board evolution"
+      ],
+      "bohot": [
+        "bahut"
+      ],
+      "bomb": [
+        "bamb",
+        "bomab",
+        "bomba"
+      ],
+      "bone": [
+        "bon"
+      ],
+      "bonus": [
+        "bonas"
+      ],
+      "book": [
+        "buk"
+      ],
+      "booking": [
+        "bookking",
+        "bukking"
+      ],
+      "box": [
+        "boks"
+      ],
+      "BP": [
+        "beepi"
+      ],
+      "brady": [
+        "bredi"
+      ],
+      "brain": [
+        "bren"
+      ],
+      "brains": [
+        "brens"
+      ],
+      "branch": [],
+      "break": [
+        "brek"
+      ],
+      "breast": [
+        "breasd"
+      ],
+      "brewary": [
+        "barewary"
+      ],
+      "brief": [
+        "breeph"
+      ],
+      "brother": [
+        "bradar"
+      ],
+      "budget": [
+        "bajat"
+      ],
+      "building": [],
+      "Bukhari": [
+        "bkhari"
+      ],
+      "Buner": [
+        "bbuner",
+        "bner",
+        "booner",
+        "bunar",
+        "bunera",
+        "bunre"
+      ],
+      "bura": [],
+      "Burewala": [
+        "burwala"
+      ],
+      "Burney": [
+        "barni",
+        "borneay"
+      ],
+      "Bushra": [
+        "boshrae",
+        "boshrah",
+        "boushra",
+        "bushara"
+      ],
+      "business": [
+        "bizanes"
+      ],
+      "butt": [
+        "booutt",
+        "bouutt",
+        "buhtt",
+        "butth",
+        "buuhtt"
+      ],
+      "by": [
+        "baay"
+      ],
+      "C-section": [
+        "si sekshan"
+      ],
+      "calcium": [
+        "kailshiyam"
+      ],
+      "call": [
+        "kaal",
+        "kol"
+      ],
+      "calling": [
+        "koling"
+      ],
+      "camp": [
+        "camap",
+        "cammp",
+        "campa",
+        "kaamp"
+      ],
+      "Canada": [],
+      "canal": [
+        "canala",
+        "kaanaal"
+      ],
+      "cancel": [
+        "kainsal",
+        "kainsel",
+        "kainsil"
+      ],
+      "cancellation": [
+        "kainsaleshan"
+      ],
+      "cancer": [
+        "canacer",
+        "cancar",
+        "cancre",
+        "kaanker",
+        "kainsar"
+      ],
+      "cantonment": [
+        "cantonmend",
+        "containment",
+        "kantroment"
+      ],
+      "cantt": [
+        "canatt",
+        "canntt",
+        "cantat",
+        "cantd",
+        "cantta",
+        "kaantt",
+        "kent"
+      ],
+      "capsule": [
+        "kaipsool"
+      ],
+      "card": [],
+      "cardiac": [
+        "kaardiyak"
+      ],
+      "cardiography": [],
+      "cardiologist": [
+        "kaindarolaz"
+      ],
+      "cardiology": [
+        "cardology"
+      ],
+      "care": [
+        "caar",
+        "caer",
+        "carre",
+        "kaare",
+        "keyar"
+      ],
+      "case": [
+        "kes"
+      ],
+      "cases": [
+        "keses"
+      ],
+      "cash": [
+        "kaesh",
+        "kaiash",
+        "kaish"
+      ],
+      "Cavalry": [
+        "kaibalri"
+      ],
+      "CBC": [
+        "ebeesi",
+        "seebeesee",
+        "seebeesi",
+        "sibisee"
+      ],
+      "center": [
+        "cenater"
+      ],
+      "centre": [
+        "antar",
+        "cenatral",
+        "cenntral",
+        "centaral",
+        "centrala",
+        "centrall",
+        "centrl",
+        "centrral",
+        "centtral",
+        "cntral",
+        "kentraal",
+        "kentral",
+        "saintar",
+        "sentar",
+        "senter",
+        "sentral"
+      ],
+      "chacha": [],
+      "chachi": [],
+      "chahiye": [],
+      "chai": [
+        "chaae"
+      ],
+      "Chakwal": [
+        "chakwala"
+      ],
+      "chalees": [],
+      "chand": [],
+      "chanda": [
+        "chandda"
+      ],
+      "Chandra": [
+        "candra",
+        "chanddra"
+      ],
+      "change": [
+        "chenj",
+        "chenjet"
+      ],
+      "changed": [
+        "canged"
+      ],
+      "changing": [
+        "chenjes"
+      ],
+      "chaprasi": [],
+      "char": [],
+      "charge": [
+        "chaart",
+        "charrge"
+      ],
+      "charger": [
+        "chaarjar"
+      ],
+      "charges": [
+        "chaarj",
+        "chaarjej",
+        "chaarjes",
+        "chaarjis",
+        "chargesa",
+        "charj",
+        "charjej",
+        "charrges"
+      ],
+      "Charsadda": [
+        "char sada",
+        "charsadd"
+      ],
+      "chaudah": [
+        "chaudaa"
+      ],
+      "Chaudhri": [
+        "caudhri",
+        "chawdhri"
+      ],
+      "chawal": [],
+      "Chawinda": [
+        "chawind",
+        "chawnda"
+      ],
+      "check": [
+        "chek"
+      ],
+      "checkup": [
+        "cheekap",
+        "chekaap"
+      ],
+      "cheena": [
+        "cheen"
+      ],
+      "cheez": [
+        "cheej"
+      ],
+      "cheezein": [
+        "cheejon"
+      ],
+      "Chenab": [
+        "chenaba",
+        "chenabb",
+        "chenb",
+        "chennab",
+        "chinaab",
+        "chnab"
+      ],
+      "Chennai": [],
+      "chhe": [
+        "chhah"
+      ],
+      "chhor": [
+        "chor"
+      ],
+      "Chichawatni": [
+        "chchawatni",
+        "chichaawatri"
+      ],
+      "child": [
+        "chilad",
+        "chilld",
+        "chilt",
+        "chld"
+      ],
+      "children": [
+        "chldren"
+      ],
+      "Chiniot": [
+        "chiniod",
+        "chinit",
+        "chiniyaanoot",
+        "chinnaut",
+        "chinot"
+      ],
+      "chobis": [
+        "chaubees"
+      ],
+      "cholesterol": [
+        "koleestrol",
+        "kolestrol"
+      ],
+      "chota": [
+        "chhotaa"
+      ],
+      "choti": [
+        "chhotee"
+      ],
+      "chowk": [
+        "chauk",
+        "chog",
+        "chong",
+        "choovc",
+        "choovq",
+        "choowq",
+        "chovq",
+        "chow",
+        "chowak",
+        "chowka",
+        "chowkk",
+        "chwk"
+      ],
+      "chowki": [
+        "chauki",
+        "choowcee",
+        "choowqee",
+        "chovcee",
+        "chovqee",
+        "chwki"
+      ],
+      "Christmas": [
+        "krisamas"
+      ],
+      "Chuburji": [
+        "chaboorji",
+        "chupurji"
+      ],
+      "Chughtai": [
+        "chaktaai",
+        "chghtai",
+        "chitaai",
+        "choogtae",
+        "chugtae",
+        "chukataai",
+        "chuktaai",
+        "chutaai"
+      ],
+      "church": [
+        "charch"
+      ],
+      "chutney": [
+        "chatni"
+      ],
+      "chutta": [
+        "chatta",
+        "chtta",
+        "chuta",
+        "chutt"
+      ],
+      "circular": [],
+      "city": [
+        "ceetee",
+        "keetee",
+        "keeti",
+        "keety",
+        "siti"
+      ],
+      "civel": [
+        "ceevel",
+        "ceewel",
+        "civela",
+        "civell",
+        "cvel",
+        "cywel",
+        "keevel",
+        "keewel",
+        "kiwel",
+        "kywel",
+        "siwil"
+      ],
+      "civic": [
+        "ceevik",
+        "ceevyc",
+        "ceevyk",
+        "ceewik",
+        "ceewyc",
+        "civc",
+        "civica",
+        "cvic",
+        "cyweec",
+        "keevic",
+        "keevik",
+        "keevyc",
+        "keewic",
+        "kiveec",
+        "kiveek",
+        "kiweec",
+        "kyveec"
+      ],
+      "civil": [
+        "ceeveel",
+        "ceeweel",
+        "civila",
+        "cvil",
+        "keeveel",
+        "keevyl"
+      ],
+      "CK-MB": [
+        "seeke embi"
+      ],
+      "class": [
+        "klaas"
+      ],
+      "classmate": [
+        "klaasameet"
+      ],
+      "clear": [
+        "kliyar"
+      ],
+      "client": [
+        "klaaint"
+      ],
+      "Clifton": [
+        "clfton",
+        "cliftn",
+        "kliphatan"
+      ],
+      "clinic": [
+        "calinic",
+        "cleeneec",
+        "cleeneek",
+        "clinc",
+        "clinica",
+        "cllinic",
+        "kleeneec",
+        "kleenyc",
+        "klineek"
+      ],
+      "clinics": [
+        "calinics",
+        "cleeneecs",
+        "cleeneeks",
+        "clincs",
+        "clinicas",
+        "clinicsa",
+        "kleeneecs",
+        "kleeniks",
+        "kleenycs",
+        "klineeks"
+      ],
+      "CNIC": [
+        "siene"
+      ],
+      "coffee": [
+        "kophi"
+      ],
+      "col": [
+        "cohl",
+        "colh",
+        "coohl",
+        "coolh",
+        "coool",
+        "cuul"
+      ],
+      "collect": [
+        "kalekt"
+      ],
+      "collection": [
+        "kalekshan"
+      ],
+      "college": [
+        "kolej"
+      ],
+      "colonoscopy": [],
+      "colony": [
+        "kaloni"
+      ],
+      "color": [
+        "kalar"
+      ],
+      "company": [
+        "kanpani"
+      ],
+      "complain": [
+        "kamplen"
+      ],
+      "complete": [
+        "kanpaleet",
+        "kanpleet"
+      ],
+      "computer": [
+        "kanpyootar"
+      ],
+      "conducted": [
+        "kandakted"
+      ],
+      "confidential": [
+        "kanphidenshal"
+      ],
+      "confirm": [
+        "kainpharm",
+        "kanfaail",
+        "kanfarm",
+        "kanfram",
+        "kanpharm",
+        "konphram"
+      ],
+      "confirmation": [
+        "kanpharmeshan"
+      ],
+      "connect": [
+        "kanekt"
+      ],
+      "connected": [],
+      "connection": [
+        "kaneksh",
+        "kanekshan"
+      ],
+      "consultation": [
+        "kansaleshan",
+        "kansalteshan",
+        "konsalteshan"
+      ],
+      "consumer": [
+        "kanjyoomar"
+      ],
+      "contact": [
+        "contacd",
+        "contacta",
+        "kaantekt"
+      ],
+      "contraception": [
+        "kontraasepshan"
+      ],
+      "contrast": [
+        "kantraas"
+      ],
+      "cook": [
+        "kuk"
+      ],
+      "copy": [],
+      "coronary": [],
+      "corporate": [
+        "korporet"
+      ],
+      "cost": [
+        "kaast",
+        "kos"
+      ],
+      "count": [
+        "kaaunt"
+      ],
+      "cover": [
+        "kawar"
+      ],
+      "COVID": [
+        "kowid"
+      ],
+      "cream": [
+        "kreem"
+      ],
+      "creatinine": [
+        "kreetanaain",
+        "krietinin",
+        "kritina",
+        "kritinen"
+      ],
+      "credit": [],
+      "cricket": [],
+      "crore": [
+        "karor"
+      ],
+      "CRP": [
+        "seeaarpi"
+      ],
+      "CT": [
+        "seeti",
+        "sionemkri"
+      ],
+      "culture": [
+        "kalchar"
+      ],
+      "cure": [
+        "coore",
+        "cuar",
+        "cuer",
+        "curre",
+        "koore"
+      ],
+      "current": [
+        "karant"
+      ],
+      "customer": [
+        "kastamar"
+      ],
+      "cycle": [
+        "saaikil"
+      ],
+      "cytology": [
+        "saaitoloji"
+      ],
+      "daayen": [
+        "daaen"
+      ],
+      "Dabgari": [
+        "dabakri",
+        "dubgadi"
+      ],
+      "dada": [
+        "daadaa"
+      ],
+      "dadi": [],
+      "daina": [
+        "aaina",
+        "daenae",
+        "diyana"
+      ],
+      "damad": [],
+      "dance": [
+        "daans"
+      ],
+      "darkar": [
+        "dar kaar"
+      ],
+      "darmiyan": [
+        "dauraan"
+      ],
+      "darwaza": [],
+      "darzi": [],
+      "Daska": [
+        "dask",
+        "daskar"
+      ],
+      "date": [
+        "deet",
+        "det"
+      ],
+      "daudna": [
+        "daurna"
+      ],
+      "dawai": [],
+      "days": [
+        "daais",
+        "daays",
+        "daees",
+        "daeys",
+        "dahis",
+        "dahys",
+        "daiis",
+        "daysh",
+        "dez"
+      ],
+      "Deepak": [
+        "deaepak",
+        "deehpak",
+        "teepak"
+      ],
+      "deewar": [],
+      "defence": [
+        "defenace",
+        "deffence",
+        "dephenke"
+      ],
+      "defense": [
+        "diphens"
+      ],
+      "define": [
+        "identiphaai"
+      ],
+      "degree": [],
+      "dekhiye": [
+        "dekhijie"
+      ],
+      "delete": [],
+      "Delhi": [
+        "dillee",
+        "dilli"
+      ],
+      "delivery": [],
+      "dena": [],
+      "dengue": [],
+      "deni": [],
+      "density": [],
+      "Depalpur": [],
+      "departmental": [],
+      "deposit": [
+        "dipozit"
+      ],
+      "dera": [
+        "ddera",
+        "derra"
+      ],
+      "dermatologist": [],
+      "detail": [
+        "ditel"
+      ],
+      "details": [],
+      "devi": [
+        "ddevi",
+        "deavi",
+        "deeve",
+        "dehvi",
+        "dive"
+      ],
+      "dha": [
+        "daha",
+        "ddha"
+      ],
+      "dhai": [],
+      "dhanyawad": [],
+      "dharkan": [
+        "jatagan"
+      ],
+      "dharti": [
+        "dharatee"
+      ],
+      "dhora": [
+        "dahora",
+        "dhor"
+      ],
+      "diabetes": [
+        "daayabiteez"
+      ],
+      "diagnosis": [
+        "daaignosis",
+        "daayagnosis"
+      ],
+      "diagnostic": [
+        "diagnosatic"
+      ],
+      "dial": [
+        "daayal"
+      ],
+      "different": [
+        "dipharent"
+      ],
+      "dijiye": [
+        "deejie"
+      ],
+      "Dijkot": [
+        "deejqoot",
+        "deezqot",
+        "dijkod",
+        "ditch"
+      ],
+      "dikhaaonga": [],
+      "dil": [
+        "ddil",
+        "dila",
+        "dill",
+        "dl"
+      ],
+      "din": [
+        "deeen",
+        "dihn",
+        "diihn",
+        "diinh"
+      ],
+      "directly": [
+        "daayarektali"
+      ],
+      "disconnect": [
+        "diskret"
+      ],
+      "discount": [
+        "diskaaunt"
+      ],
+      "discuss": [
+        "diskas"
+      ],
+      "dispensary": [],
+      "distance": [
+        "distens"
+      ],
+      "Diwali": [],
+      "dobara": [],
+      "doctor": [
+        "daakatar",
+        "daaktar",
+        "daatachaib",
+        "doctr",
+        "doktar",
+        "loktar"
+      ],
+      "doctors": [
+        "doktars"
+      ],
+      "doge": [
+        "deeoge"
+      ],
+      "doing": [],
+      "dose": [
+        "doz"
+      ],
+      "double": [
+        "dabal"
+      ],
+      "download": [
+        "daaunalod"
+      ],
+      "driver": [
+        "draaiwar"
+      ],
+      "drop": [
+        "drap"
+      ],
+      "dua": [],
+      "Dubai": [],
+      "duniya": [],
+      "Easypaisa": [
+        "eezeepaisa"
+      ],
+      "ECG": [
+        "eei",
+        "eeseeji",
+        "eesheejee",
+        "eseeji"
+      ],
+      "echo": [
+        "eeko",
+        "eko",
+        "iko"
+      ],
+      "echocardiography": [
+        "echo cardiography",
+        "iko kaardiyograaphi"
+      ],
+      "edi": [
+        "eri"
+      ],
+      "education": [
+        "edukeshan",
+        "edyukeshan",
+        "ejukeshan"
+      ],
+      "edward": [
+        "edawart",
+        "edwart"
+      ],
+      "EEG": [
+        "eeeejee",
+        "eeeeji",
+        "eeeji"
+      ],
+      "EG": [
+        "eeji"
+      ],
+      "ehsan": [
+        "ehsana",
+        "ehsn",
+        "ehssan",
+        "mishan"
+      ],
+      "Eid": [],
+      "eight": [
+        "aath",
+        "et"
+      ],
+      "Eima": [
+        "aima",
+        "eaima",
+        "ehima",
+        "eihma"
+      ],
+      "Ejaz": [
+        "ejazh",
+        "mijaaj"
+      ],
+      "electroencephalography": [],
+      "electrolyte": [
+        "ilektrolaait"
+      ],
+      "electrolytes": [
+        "ilektrolaaits"
+      ],
+      "eleven": [
+        "ilewan"
+      ],
+      "email": [
+        "eemel",
+        "iemel",
+        "imaaeel"
+      ],
+      "eme": [
+        "emme"
+      ],
+      "emergency": [
+        "eemarjency",
+        "emergenacy",
+        "imarajensi",
+        "imarjensi",
+        "imrejensi"
+      ],
+      "employment": [],
+      "encephalography": [
+        "enasephalograaphi"
+      ],
+      "endocrinologist": [
+        "endokraainolojist"
+      ],
+      "endoscopy": [],
+      "engineer": [
+        "injeeniyar"
+      ],
+      "England": [],
+      "ensure": [
+        "inshor"
+      ],
+      "erp": [
+        "eeaarapeeaar"
+      ],
+      "ESR": [
+        "edisepi",
+        "eeesaaar"
+      ],
+      "essing": [
+        "eassing",
+        "eesseng",
+        "essihng"
+      ],
+      "everything": [],
+      "exact": [
+        "ekjaikt",
+        "ekjekt"
+      ],
+      "exam": [
+        "egzaam"
+      ],
+      "examination": [
+        "eksaamineshan"
+      ],
+      "examine": [
+        "eksaamin"
+      ],
+      "experience": [
+        "eksapeeriyans"
+      ],
+      "exposure": [],
+      "face": [
+        "phes"
+      ],
+      "Facebook": [
+        "phesabuk"
+      ],
+      "facilitate": [
+        "phaisilitet",
+        "phaisiliti"
+      ],
+      "facility": [
+        "phesiliti"
+      ],
+      "factor": [
+        "phaiktar"
+      ],
+      "Fahim": [
+        "faahiem",
+        "faeheem",
+        "faheaem",
+        "faheeam",
+        "faheehm"
+      ],
+      "Faisal": [],
+      "Faisalabad": [
+        "faisalabat",
+        "faislabat"
+      ],
+      "faisla": [
+        "phaisalaa"
+      ],
+      "Faiyaz": [
+        "faeeiaz",
+        "faiyaaj",
+        "fayaaj",
+        "fiaz",
+        "fiyaaj"
+      ],
+      "Faiza": [
+        "faezae",
+        "faezah",
+        "phaaizar"
+      ],
+      "fakhr": [],
+      "falah": [
+        "falh",
+        "fallah",
+        "flah"
+      ],
+      "falak": [
+        "faelak",
+        "fahlak",
+        "falakh",
+        "falakk",
+        "fallak"
+      ],
+      "faltu": [
+        "phaaltoo"
+      ],
+      "family": [
+        "faameelee",
+        "fameelee",
+        "famly",
+        "phaimili",
+        "phameelee"
+      ],
+      "Faqeerni": [],
+      "Farah": [
+        "faaraeh",
+        "faerah",
+        "fahrah",
+        "fara",
+        "faraeh",
+        "farha"
+      ],
+      "Fareeda": [
+        "phaarida"
+      ],
+      "Fareeha": [
+        "fariya"
+      ],
+      "Farhana": [
+        "farhanae"
+      ],
+      "farmaiye": [
+        "pharamaaiega"
+      ],
+      "farmaiyega": [
+        "pharamaaiga"
+      ],
+      "Farooq": [
+        "faarok",
+        "faarook",
+        "faaruk",
+        "farahuk",
+        "farooqa",
+        "faroz",
+        "faruk",
+        "ffarooq",
+        "frooq",
+        "phaarook",
+        "phaarooq",
+        "phaaruq",
+        "pharok",
+        "pharook",
+        "pharuk"
+      ],
+      "Farooqi": [],
+      "farq": [
+        "pharaq"
+      ],
+      "Farrukh": [
+        "fahrrokh",
+        "furakaan"
+      ],
+      "farz": [
+        "pharaz",
+        "pharz"
+      ],
+      "fasting": [],
+      "Fatehpur": [],
+      "Fatima": [
+        "faatma",
+        "fatim"
+      ],
+      "Fatimiyah": [
+        "phaatamiya"
+      ],
+      "Faud": [
+        "faeud",
+        "fahod",
+        "faudd",
+        "fawd"
+      ],
+      "fauj": [],
+      "fauji": [],
+      "faur": [
+        "phaur"
+      ],
+      "Fawad": [
+        "fauad",
+        "fawaed"
+      ],
+      "fax": [
+        "phaiks"
+      ],
+      "Fayaz": [
+        "faeeaz",
+        "fahiaz",
+        "fahyaz",
+        "faiz",
+        "fihaaz"
+      ],
+      "fazal": [
+        "fazael",
+        "fazala",
+        "fazil",
+        "fazl"
+      ],
+      "fee": [
+        "fees",
+        "fis",
+        "phee",
+        "phees"
+      ],
+      "feedback": [
+        "pheedabaik"
+      ],
+      "feel": [
+        "pheel"
+      ],
+      "Fehmeda": [
+        "feahmeda",
+        "fumida"
+      ],
+      "female": [
+        "feemel",
+        "pheemel"
+      ],
+      "fertility": [],
+      "fetal": [],
+      "fifty": [],
+      "file": [
+        "phaail"
+      ],
+      "film": [
+        "philam"
+      ],
+      "first": [
+        "phaast",
+        "pharst"
+      ],
+      "five": [
+        "phaaiw"
+      ],
+      "fix": [
+        "phiks"
+      ],
+      "flat": [
+        "flait",
+        "phlait"
+      ],
+      "floor": [
+        "faloor",
+        "ffloor",
+        "floora",
+        "floors",
+        "phloor",
+        "phlor",
+        "phlur"
+      ],
+      "flp": [
+        "ephaelpi",
+        "fnp"
+      ],
+      "fluid": [
+        "flluid",
+        "floeed"
+      ],
+      "FNAC": [
+        "ephaenaesi"
+      ],
+      "folic": [],
+      "follow": [
+        "pholo"
+      ],
+      "football": [
+        "phutabol"
+      ],
+      "for": [
+        "fohr",
+        "foohr",
+        "fooor",
+        "foor",
+        "foorh",
+        "fuur",
+        "phoor"
+      ],
+      "form": [
+        "phaarm"
+      ],
+      "forty": [
+        "phorth"
+      ],
+      "four": [
+        "phor"
+      ],
+      "Fouzia": [
+        "faouzia"
+      ],
+      "Fozia": [
+        "faauzi",
+        "faujiya"
+      ],
+      "France": [
+        "phraans"
+      ],
+      "free": [
+        "faree",
+        "ffree",
+        "frree",
+        "phree",
+        "phri",
+        "phry"
+      ],
+      "friday": [
+        "phraaide"
+      ],
+      "from": [
+        "froohm",
+        "froomh",
+        "froomm",
+        "fruum"
+      ],
+      "front": [
+        "phrant"
+      ],
+      "full": [
+        "phul"
+      ],
+      "function": [
+        "phankshan"
+      ],
+      "fungus": [
+        "fongoos",
+        "fongos",
+        "fonguus",
+        "foongos",
+        "foongus",
+        "foungus",
+        "funggus"
+      ],
+      "gaadi": [
+        "gari"
+      ],
+      "Gajjumata": [],
+      "ganga": [],
+      "Gangaram": [
+        "gangarama"
+      ],
+      "gaon": [
+        "gaanw"
+      ],
+      "garam": [
+        "garm"
+      ],
+      "garbhwati": [],
+      "garden": [
+        "gaaroadan",
+        "grden"
+      ],
+      "garh": [
+        "garah",
+        "garha",
+        "garrh"
+      ],
+      "garmi": [],
+      "gas": [
+        "gais"
+      ],
+      "gastro": [
+        "gaistro"
+      ],
+      "gastroenterologist": [],
+      "gate": [],
+      "gaye": [
+        "gaae",
+        "gae"
+      ],
+      "gayi": [
+        "gai"
+      ],
+      "gehra": [
+        "gahra"
+      ],
+      "gehri": [
+        "gahri"
+      ],
+      "gel": [
+        "jel"
+      ],
+      "general": [
+        "genehral"
+      ],
+      "genetic": [
+        "jenetik"
+      ],
+      "Germany": [
+        "jarmani"
+      ],
+      "ghalat": [
+        "galat"
+      ],
+      "Ghazala": [
+        "gajaalla",
+        "ghazaela"
+      ],
+      "ghazi": [
+        "gaajee",
+        "gaazee",
+        "gajee",
+        "gazee",
+        "ghaajee",
+        "ghajee"
+      ],
+      "Ghulam": [
+        "gholaem",
+        "gulaam"
+      ],
+      "Ghurki": [
+        "ghoorcee",
+        "ghoorqee",
+        "ghrki",
+        "gurdki",
+        "urki"
+      ],
+      "gill": [
+        "gilla"
+      ],
+      "Gillani": [
+        "galani",
+        "geellane",
+        "gelane",
+        "gellane"
+      ],
+      "girls": [
+        "garls",
+        "girlls",
+        "girlsa",
+        "grls"
+      ],
+      "glucometer": [],
+      "glucose": [
+        "glookoz"
+      ],
+      "Gmail": [],
+      "Gojra": [
+        "gjra",
+        "gojara",
+        "gojr",
+        "goozraa"
+      ],
+      "Gondal": [
+        "gondael"
+      ],
+      "good": [
+        "gud"
+      ],
+      "Google": [
+        "googal"
+      ],
+      "govt": [
+        "govat",
+        "govd",
+        "govta"
+      ],
+      "GP": [
+        "deeti",
+        "jeepi"
+      ],
+      "graduation": [
+        "gradeshan"
+      ],
+      "gram": [
+        "graaem",
+        "graahm",
+        "graamh",
+        "graamm",
+        "graem",
+        "grahm",
+        "gramh",
+        "gramm"
+      ],
+      "ground": [
+        "graaund",
+        "grount"
+      ],
+      "group": [
+        "grup"
+      ],
+      "GST": [
+        "jeeesti"
+      ],
+      "guide": [
+        "gaaid"
+      ],
+      "gujar": [
+        "gjar",
+        "goojaar",
+        "goojar",
+        "goozaar",
+        "goozar",
+        "gujara",
+        "gujjar",
+        "gujr"
+      ],
+      "Gujjrat": [
+        "gjjrat",
+        "gujjrad"
+      ],
+      "Gujranwala": [
+        "gjranwala",
+        "gujaraamawala",
+        "gujaraawala",
+        "gujaraawla"
+      ],
+      "Gujrat": [
+        "gjrat",
+        "goojraat",
+        "goozraat",
+        "gujrad",
+        "gujrata",
+        "kucharaat"
+      ],
+      "gul": [
+        "gouul",
+        "guhl",
+        "gulh",
+        "guuhl",
+        "guulh"
+      ],
+      "gulab": [
+        "glab",
+        "gulaba"
+      ],
+      "Gulberg": [
+        "glberg",
+        "gulabarak"
+      ],
+      "Gulistan": [
+        "glistan",
+        "gulstan"
+      ],
+      "Guliyana": [
+        "guliani"
+      ],
+      "Gulshan": [
+        "golshane",
+        "gulshana"
+      ],
+      "gulzar": [
+        "glzar",
+        "golzahr",
+        "gooljaar",
+        "gulzara"
+      ],
+      "Gurki": [
+        "goorcee",
+        "goorqee",
+        "grki",
+        "gurkki"
+      ],
+      "guru": [
+        "gooroo"
+      ],
+      "guzashta": [
+        "gazshata"
+      ],
+      "gyan": [
+        "jnaan"
+      ],
+      "gyani": [],
+      "gyarah": [],
+      "gynaecologist": [
+        "gaayna kolejist",
+        "gaayanaakaalojist",
+        "gynaecologisd"
+      ],
+      "gyne": [
+        "gaayni"
+      ],
+      "gynecologist": [
+        "gaainekolajist",
+        "gaainokolojist",
+        "gaayanaakolajist"
+      ],
+      "Habib": [],
+      "hadded": [
+        "haadeed",
+        "haddet"
+      ],
+      "Hafiz": [
+        "haafas",
+        "haafeiz",
+        "haafiez",
+        "haefeez",
+        "hafeaez",
+        "hafeeaz",
+        "hafeehz",
+        "hafiiz"
+      ],
+      "hafiza": [
+        "aafiza",
+        "haafij"
+      ],
+      "Hafizabad": [
+        "haafazaabaad",
+        "hafizabat",
+        "hafzabad"
+      ],
+      "Hafsa": [
+        "hafa"
+      ],
+      "hafte": [
+        "haphte"
+      ],
+      "Haider": [
+        "haidar"
+      ],
+      "hairan": [],
+      "haji": [],
+      "hajjam": [],
+      "Hajra": [
+        "haajrae",
+        "hajjra",
+        "hajrae"
+      ],
+      "halal": [
+        "halala"
+      ],
+      "halar": [
+        "alaar",
+        "halara",
+        "haler"
+      ],
+      "hallmark": [],
+      "halwa": [],
+      "halwai": [],
+      "hamara": [],
+      "hameed": [
+        "hameedal",
+        "hameet"
+      ],
+      "hamein": [
+        "hamen"
+      ],
+      "hamesha": [],
+      "Hamza": [
+        "hamz"
+      ],
+      "Hanif": [],
+      "hara": [],
+      "hard": [],
+      "Haripur": [
+        "haripr",
+        "harpur"
+      ],
+      "haris": [
+        "haeris",
+        "hahres",
+        "hahrys"
+      ],
+      "harna": [],
+      "Hasanabdal": [],
+      "Hasilpur": [],
+      "Hassan": [
+        "aihasan",
+        "hahsan",
+        "hasaen",
+        "hassaen",
+        "hassana",
+        "hssan"
+      ],
+      "hawa": [],
+      "hawai": [],
+      "hayat": [
+        "hahiat"
+      ],
+      "hazar": [],
+      "Hazro": [
+        "haajroo",
+        "hazzro"
+      ],
+      "Hb": [
+        "echbi"
+      ],
+      "HbA1c": [
+        "echbi a one si",
+        "echabeee1si",
+        "hba1"
+      ],
+      "HCG": [
+        "echaseeji"
+      ],
+      "HDL": [
+        "echadeeel",
+        "edichali"
+      ],
+      "head": [
+        "haid",
+        "hait"
+      ],
+      "health": [
+        "heaalt",
+        "healtha"
+      ],
+      "heart": [
+        "haart",
+        "hart"
+      ],
+      "heavy": [
+        "haiwi"
+      ],
+      "hello": [
+        "haelo"
+      ],
+      "hemoglobin": [],
+      "hepatitis": [],
+      "hi": [
+        "haay"
+      ],
+      "high": [
+        "haai"
+      ],
+      "highway": [
+        "heegvay"
+      ],
+      "hijab": [
+        "haazra",
+        "heejab",
+        "hejaab",
+        "hejab",
+        "hejaeb",
+        "hejahb",
+        "hihjab",
+        "hiijab",
+        "hijabb"
+      ],
+      "hilal": [
+        "hlal"
+      ],
+      "hina": [
+        "henae"
+      ],
+      "Hindustan": [],
+      "hira": [],
+      "histopathology": [],
+      "history": [],
+      "HIV": [
+        "echaaaeewi"
+      ],
+      "hmm": [
+        "hamm"
+      ],
+      "hmmm": [
+        "amm"
+      ],
+      "hockey": [],
+      "hod": [
+        "h o d",
+        "hoda",
+        "hodd"
+      ],
+      "hold": [
+        "hol"
+      ],
+      "Holter": [],
+      "holy": [
+        "holly",
+        "hoolee"
+      ],
+      "home": [
+        "haam",
+        "hme",
+        "hom",
+        "homme"
+      ],
+      "homework": [
+        "homawark"
+      ],
+      "homocysteine": [
+        "homosisteen"
+      ],
+      "hope": [],
+      "hormone": [
+        "hormon"
+      ],
+      "hospital": [
+        "hosptal",
+        "hspital"
+      ],
+      "hotel": [],
+      "house": [
+        "haaus"
+      ],
+      "housing": [
+        "haausing",
+        "hoseeng",
+        "housinag",
+        "housng"
+      ],
+      "hua": [],
+      "hub": [
+        "hoob",
+        "huba",
+        "hubb"
+      ],
+      "hue": [
+        "huve"
+      ],
+      "hui": [],
+      "hum": [
+        "ham"
+      ],
+      "huma": [
+        "homae",
+        "homah",
+        "humae"
+      ],
+      "Humaira": [
+        "hamera",
+        "homaeera",
+        "homaeira",
+        "homahira"
+      ],
+      "Humayun": [
+        "homaeyun",
+        "homayon",
+        "humyan"
+      ],
+      "humne": [
+        "hamne"
+      ],
+      "hurriat": [],
+      "Husnain": [
+        "hasanen",
+        "husanaan"
+      ],
+      "Hussain": [
+        "hssain",
+        "husein",
+        "hussaina"
+      ],
+      "Hyderabad": [
+        "haidaraabaad",
+        "hyderabat"
+      ],
+      "hypertension": [
+        "haaiparatenshan"
+      ],
+      "Ibrahim": [],
+      "ibuprofen": [],
+      "ICU": [
+        "aaisiyoo"
+      ],
+      "ID": [
+        "aaeedi"
+      ],
+      "idea": [
+        "aaidiya"
+      ],
+      "identify": [
+        "aaeedentiphaai",
+        "aaidentiphaai"
+      ],
+      "iftar": [],
+      "Iftikhar": [
+        "iftaqaar"
+      ],
+      "igm": [
+        "aaeejeeem"
+      ],
+      "ignore": [],
+      "ihsan": [
+        "ahasaan",
+        "ihasaan",
+        "ihsaaen",
+        "ihsaanh",
+        "ihsanh",
+        "ihssan"
+      ],
+      "ijaz": [
+        "aizaj",
+        "iijaez",
+        "ijazh",
+        "ijjaz"
+      ],
+      "ikkis": [
+        "ikkees"
+      ],
+      "ilaqa": [],
+      "Illahbad": [
+        "ilaahaabaad",
+        "illahbat"
+      ],
+      "illaj": [
+        "eellaaj",
+        "eellaaz",
+        "eellaj",
+        "eellaz",
+        "illaja"
+      ],
+      "imam": [
+        "eemaam",
+        "eemam",
+        "ihmaam",
+        "ihmam",
+        "iihmam",
+        "imahm",
+        "imama"
+      ],
+      "immune": [
+        "eemyoon"
+      ],
+      "Imran": [],
+      "imtiaz": [
+        "imatiyaaj"
+      ],
+      "in": [
+        "iaan",
+        "ian",
+        "ihn",
+        "iian",
+        "iien",
+        "ine",
+        "inh"
+      ],
+      "inam": [
+        "ihnaam",
+        "ihnam",
+        "iihnam"
+      ],
+      "inclusive": [],
+      "index": [
+        "eendex",
+        "inadex",
+        "indeks",
+        "indexa"
+      ],
+      "India": [],
+      "infection": [
+        "inphekshan"
+      ],
+      "influence": [
+        "influense"
+      ],
+      "information": [
+        "inaphorameshan"
+      ],
+      "inhaler": [],
+      "inhein": [],
+      "inhone": [],
+      "injection": [
+        "injekshan"
+      ],
+      "insaan": [],
+      "Insha": [],
+      "inshaAllah": [],
+      "Instagram": [],
+      "installment": [],
+      "insurance": [
+        "inshyorens"
+      ],
+      "integrated": [],
+      "international": [
+        "intaraneshanal"
+      ],
+      "internet": [],
+      "interview": [
+        "intarawyoo"
+      ],
+      "intezar": [
+        "intazaar"
+      ],
+      "ip": [
+        "ieep",
+        "iiep",
+        "iihp"
+      ],
+      "iPhone": [
+        "aaeephon",
+        "aiphon"
+      ],
+      "IQ": [
+        "aaiq"
+      ],
+      "Iqbal": [
+        "eekbaal",
+        "eekbal",
+        "eeqbaal",
+        "eeqbal",
+        "ihqbal",
+        "iikbal",
+        "ikabaal",
+        "iqbala",
+        "ykbaal"
+      ],
+      "iqra": [
+        "ekra"
+      ],
+      "Irfan": [
+        "ihrfan",
+        "irafaan"
+      ],
+      "iron": [
+        "aayaran"
+      ],
+      "irum": [
+        "eram",
+        "ihraam",
+        "ihram",
+        "ihrum",
+        "iihram",
+        "iraem",
+        "irahm",
+        "iramh",
+        "iramm"
+      ],
+      "is": [
+        "iaas",
+        "ias",
+        "ies",
+        "ihs",
+        "iias",
+        "iies",
+        "iis",
+        "ise",
+        "ish",
+        "iss"
+      ],
+      "isb": [
+        "eesb",
+        "isab",
+        "isba",
+        "isbb",
+        "issb"
+      ],
+      "Ishaq": [
+        "isahaak",
+        "isaq",
+        "ishak",
+        "ishaqh"
+      ],
+      "Ishfaq": [
+        "ihshfaq",
+        "iishfaq",
+        "isfaq",
+        "ishafaq",
+        "ishfaeq",
+        "ishfak",
+        "ishfaqh",
+        "ishfaqq",
+        "ishwaak"
+      ],
+      "iska": [
+        "isakaa"
+      ],
+      "islam": [
+        "ihslam",
+        "isllam",
+        "isslam"
+      ],
+      "Islamabad": [],
+      "Islampura": [
+        "eeslaampura",
+        "eeslampoora",
+        "eeslampuraa"
+      ],
+      "isliye": [
+        "isalie"
+      ],
+      "ismail": [
+        "ihsmail",
+        "ismahel"
+      ],
+      "israr": [
+        "isaraar",
+        "issrar"
+      ],
+      "issue": [
+        "ishoo",
+        "ishyoo"
+      ],
+      "its": [
+        "ihts",
+        "iihts",
+        "iiits",
+        "iitsh",
+        "itse",
+        "itsee",
+        "itsh",
+        "itsi",
+        "itsy"
+      ],
+      "Ittefaq": [
+        "eettefak",
+        "eettephaaq",
+        "eettephak",
+        "eettephaq",
+        "etofa"
+      ],
+      "IV": [
+        "aaeevi",
+        "aaivee",
+        "aaivi",
+        "aiiv",
+        "iaav"
+      ],
+      "iver": [
+        "ihver",
+        "iivir",
+        "ivehr",
+        "iverh",
+        "iviir"
+      ],
+      "iving": [],
+      "izhar": [
+        "azar",
+        "ihzhaar",
+        "ijahaar",
+        "izzhar"
+      ],
+      "jaan": [
+        "jaanna",
+        "janna"
+      ],
+      "jaaye": [
+        "jaae"
+      ],
+      "Jahanian": [
+        "jahaanan",
+        "jahaaniya",
+        "jahanan",
+        "jahaniana",
+        "jahanin"
+      ],
+      "jail": [
+        "jaila",
+        "zael"
+      ],
+      "jaiye": [
+        "jaaie",
+        "jaaijie"
+      ],
+      "Jalalpur": [
+        "jilaalapur"
+      ],
+      "jaldi": [],
+      "jami": [
+        "jammi",
+        "zaamee",
+        "zaami",
+        "zaamy",
+        "zamee"
+      ],
+      "Jamrud": [
+        "jamarud",
+        "jammu",
+        "jamrd",
+        "zaamrood"
+      ],
+      "Jamshaid": [
+        "jaemshaid",
+        "jahmshaed",
+        "jahmshayd",
+        "taajamashed"
+      ],
+      "Jamsheed": [
+        "jaamshid",
+        "jamashed",
+        "jamsheet",
+        "jmsheed",
+        "zaamshid",
+        "zaamshyd",
+        "zamshid"
+      ],
+      "jamuni": [],
+      "janab": [],
+      "Janjua": [],
+      "jao": [],
+      "jaoge": [],
+      "jaonga": [],
+      "jaongi": [],
+      "Japan": [],
+      "Jaranwala": [
+        "charaawala",
+        "jaraawala"
+      ],
+      "jata": [],
+      "Javaid": [
+        "jaawed",
+        "jahvaed"
+      ],
+      "Javed": [
+        "jaavied",
+        "jabed",
+        "javead",
+        "javiid"
+      ],
+      "Jawad": [
+        "jaewad",
+        "jahwad",
+        "jauad",
+        "jawadd",
+        "jawadh",
+        "jawaed",
+        "jawwad"
+      ],
+      "jayegi": [
+        "jaaegi"
+      ],
+      "jayen": [],
+      "jayenge": [
+        "jaaenge"
+      ],
+      "Jazak": [],
+      "Jazz": [
+        "jez"
+      ],
+      "Jazzcash": [
+        "jaizakaish"
+      ],
+      "Jehlum": [
+        "jehlm",
+        "jehluma",
+        "zehloom"
+      ],
+      "jeoge": [],
+      "Jhang": [
+        "jahang",
+        "jang",
+        "jhanga",
+        "jung"
+      ],
+      "jhangi": [
+        "jangi",
+        "zhaangee",
+        "zhangee"
+      ],
+      "Jhelum": [
+        "jahalam",
+        "jahelum",
+        "jehalam",
+        "jelam",
+        "jhellum",
+        "jheluma",
+        "zheloom"
+      ],
+      "ji": [
+        "je",
+        "jeew"
+      ],
+      "Jilani": [
+        "jeelaanee",
+        "jlani",
+        "zeelanee"
+      ],
+      "jina": [],
+      "Jinnah": [
+        "jinaaw",
+        "jinnh",
+        "jnnah",
+        "zeennaah"
+      ],
+      "Johar": [
+        "jhar",
+        "johara",
+        "johor",
+        "zoohaar"
+      ],
+      "joint": [
+        "johint",
+        "juent"
+      ],
+      "jugular": [
+        "jagular"
+      ],
+      "juice": [
+        "joos"
+      ],
+      "jumma": [],
+      "kabab": [],
+      "kabhar": [],
+      "kabhi": [],
+      "Kabirwala": [
+        "kbirwala"
+      ],
+      "kacha": [
+        "kachcha"
+      ],
+      "kahan": [],
+      "kahiye": [
+        "kahijie"
+      ],
+      "kainat": [],
+      "kala": [
+        "kaalaa"
+      ],
+      "Kamalia": [
+        "kamaaliya",
+        "kamala",
+        "kamali"
+      ],
+      "Kamonki": [
+        "kaamoki"
+      ],
+      "kamra": [
+        "kamaraa"
+      ],
+      "Kamran": [
+        "kaamaraan",
+        "kahmran",
+        "kamranh"
+      ],
+      "kamzor": [],
+      "kamzori": [],
+      "Kandiwal": [
+        "kandwal"
+      ],
+      "kanta": [
+        "kaantae",
+        "kaenta",
+        "kahnta",
+        "kantae",
+        "kantah"
+      ],
+      "kaoge": [],
+      "Karachi": [
+        "caarachee",
+        "caraachee",
+        "karaanchi"
+      ],
+      "karein": [],
+      "Karianwala": [
+        "karanwala"
+      ],
+      "karshma": [
+        "krishma"
+      ],
+      "karun": [],
+      "karunga": [],
+      "karungi": [],
+      "karwa": [
+        "kadawaa"
+      ],
+      "karwaaonga": [],
+      "karwaaongi": [],
+      "karwaen": [
+        "karawaae"
+      ],
+      "karwaenge": [],
+      "karwai": [],
+      "karwain": [
+        "karawaaen"
+      ],
+      "karwana": [],
+      "karwat": [
+        "karawaten"
+      ],
+      "karwaun": [
+        "karawate"
+      ],
+      "karwaya": [],
+      "Kashif": [
+        "kaeshif",
+        "kahshef",
+        "kahshif",
+        "kahshyf",
+        "kashaif"
+      ],
+      "Kashmir": [],
+      "Kasur": [
+        "caasoor",
+        "kasr",
+        "qaasoor"
+      ],
+      "katna": [],
+      "kausar": [
+        "kaeusar",
+        "kahosar",
+        "kahusar",
+        "kaoosar",
+        "kaosaer",
+        "kawsar",
+        "khusar",
+        "kosar"
+      ],
+      "kayenge": [
+        "kaaenge"
+      ],
+      "kda": [
+        "cdaa",
+        "kada",
+        "kdda",
+        "khada",
+        "kkda",
+        "qdaa"
+      ],
+      "keh": [
+        "kah"
+      ],
+      "kehna": [
+        "kahna"
+      ],
+      "Kehror": [
+        "cehroor",
+        "kehrora",
+        "kehrr",
+        "khror",
+        "kkehror",
+        "qehroor"
+      ],
+      "kehte": [
+        "kahte"
+      ],
+      "keliye": [
+        "kelie"
+      ],
+      "keyboard": [],
+      "KFT": [
+        "keephti"
+      ],
+      "khaali": [],
+      "khaata": [],
+      "khadda": [
+        "kaadda",
+        "kaaddaa",
+        "khadd"
+      ],
+      "khadija": [
+        "khateeja",
+        "khatija"
+      ],
+      "khadim": [
+        "kadeem",
+        "khaadeemli",
+        "khadima",
+        "khadm"
+      ],
+      "khadimat": [
+        "khadimad",
+        "khadmat",
+        "khidamat",
+        "khitamat",
+        "kidamat"
+      ],
+      "khalal": [],
+      "Khalid": [
+        "khahled"
+      ],
+      "khalil": [
+        "kaaleel",
+        "kaleel",
+        "khadi",
+        "khalila",
+        "khall"
+      ],
+      "khaliq": [
+        "khaaleq",
+        "khaalik",
+        "khaeliq",
+        "khahleq",
+        "khahliq"
+      ],
+      "khan": [
+        "khaaen",
+        "khaanh",
+        "khaen",
+        "khahn",
+        "khanh"
+      ],
+      "Khanpur": [],
+      "khansi": [],
+      "Khanum": [
+        "khanm",
+        "khanuma"
+      ],
+      "kharab": [],
+      "Kharian": [
+        "kariya",
+        "khaariya",
+        "kharan",
+        "khariana",
+        "kharin"
+      ],
+      "Khattak": [
+        "kattaac",
+        "kattac",
+        "khaattaac",
+        "khattaka"
+      ],
+      "khauf": [
+        "khof"
+      ],
+      "Khawaja": [
+        "kawazaa",
+        "khauaja",
+        "khawaacha",
+        "khawaeja",
+        "khawaj",
+        "khuaaja"
+      ],
+      "khawar": [
+        "khaewar",
+        "khahwar",
+        "khauar",
+        "khawaer",
+        "khawahr",
+        "khawarh",
+        "khawarr"
+      ],
+      "khayaban": [
+        "kayban",
+        "khayabana",
+        "khaybana",
+        "khaybn",
+        "khyaabane"
+      ],
+      "Khayyam": [
+        "kayyam",
+        "khaeeiam",
+        "khaeeyam"
+      ],
+      "kher": [
+        "khar",
+        "khera",
+        "kherr",
+        "khre"
+      ],
+      "khi": [
+        "khee"
+      ],
+      "khirki": [
+        "khirakee"
+      ],
+      "khuda": [
+        "khhuda",
+        "khodaa",
+        "khodae",
+        "khodah",
+        "khooda",
+        "khouda",
+        "khudaa",
+        "khudae",
+        "khudah"
+      ],
+      "khurak": [],
+      "khurd": [
+        "khrd",
+        "khurad",
+        "khurda",
+        "khurrd",
+        "khurt",
+        "koord",
+        "kord",
+        "kurd"
+      ],
+      "Khurram": [
+        "khoram",
+        "khorraem",
+        "khorrahm",
+        "khurraem"
+      ],
+      "Khurshid": [
+        "khoorshied",
+        "kursheed"
+      ],
+      "Khushab": [
+        "khshab"
+      ],
+      "khushi": [
+        "khushii"
+      ],
+      "Khuwaja": [
+        "khowaeja"
+      ],
+      "kidney": [
+        "ceednai",
+        "ceednay",
+        "cidnai",
+        "cidnay",
+        "cydnai",
+        "cydnay",
+        "kdney",
+        "keednai",
+        "keednay",
+        "kidanee",
+        "kidaney",
+        "kydnai",
+        "kydnay",
+        "qeednai",
+        "qeednay",
+        "qydnai",
+        "qydnay"
+      ],
+      "kijiye": [
+        "keejie",
+        "kie",
+        "kiye"
+      ],
+      "kilometre": [
+        "kilomeetar"
+      ],
+      "kindly": [
+        "kaaindali",
+        "kaandali"
+      ],
+      "king": [
+        "ceeng",
+        "kinag",
+        "kinga",
+        "kking",
+        "qeeng"
+      ],
+      "kiran": [
+        "keraen",
+        "kerahn",
+        "kihran"
+      ],
+      "kisan": [],
+      "kitab": [],
+      "kitna": [],
+      "kitni": [
+        "kitanee"
+      ],
+      "Kohat": [
+        "coohaat",
+        "khat",
+        "kohad",
+        "kohata",
+        "koht",
+        "qoohaat"
+      ],
+      "Kolkata": [
+        "kalakatta"
+      ],
+      "konsa": [
+        "kaun sa",
+        "kaunsa"
+      ],
+      "koonayn": [
+        "kunaan"
+      ],
+      "kot": [
+        "coot",
+        "kkot",
+        "kota",
+        "kott",
+        "qoot"
+      ],
+      "Kotla": [
+        "kotl",
+        "ktla"
+      ],
+      "kuch": [
+        "kuchhh"
+      ],
+      "Kumar": [
+        "komaar",
+        "komaer",
+        "komahr",
+        "koomar",
+        "koumar",
+        "kuhmar",
+        "kumaer",
+        "kumahr"
+      ],
+      "Kumari": [
+        "komaeri",
+        "komahri",
+        "koomare"
+      ],
+      "Kunjah": [
+        "knjah"
+      ],
+      "kursi": [
+        "kursee"
+      ],
+      "kya": [],
+      "kyun": [
+        "kyon"
+      ],
+      "laali": [
+        "lali"
+      ],
+      "lab": [
+        "laba",
+        "lb",
+        "leb",
+        "lebar",
+        "llab"
+      ],
+      "laboratory": [
+        "laiboretri"
+      ],
+      "lady": [
+        "llady"
+      ],
+      "Lahore": [
+        "laahaur",
+        "laahaus",
+        "lahaur",
+        "lhoro",
+        "lor",
+        "lore"
+      ],
+      "lake": [
+        "laace",
+        "laaqe",
+        "lace",
+        "lakke",
+        "llake"
+      ],
+      "lakh": [],
+      "lal": [
+        "laael",
+        "laahl",
+        "laalh",
+        "laeel",
+        "lale"
+      ],
+      "Lalamusa": [
+        "lalamsa"
+      ],
+      "Lalik": [
+        "laalaac",
+        "laalaak",
+        "laalaaq",
+        "laalac",
+        "laalak",
+        "laalaq",
+        "laaleec",
+        "laaleeq",
+        "lalaac",
+        "lalaak",
+        "lalaaq",
+        "lalac",
+        "lalak",
+        "lalaka",
+        "lalakk",
+        "lalaq",
+        "lalika",
+        "lalk",
+        "lallak",
+        "llak",
+        "llalak"
+      ],
+      "Lallian": [],
+      "lamba": [
+        "lanba"
+      ],
+      "lambi": [],
+      "Langrial": [
+        "janaral",
+        "langral"
+      ],
+      "laptop": [
+        "laipatop"
+      ],
+      "larka": [],
+      "larki": [],
+      "late": [
+        "let"
+      ],
+      "Latif": [
+        "latf",
+        "latifa",
+        "teeph"
+      ],
+      "LDL": [
+        "eladeeel"
+      ],
+      "leave": [
+        "leev",
+        "liv"
+      ],
+      "left": [],
+      "lena": [],
+      "leni": [
+        "lenee"
+      ],
+      "level": [
+        "leavel",
+        "leevil",
+        "leveal",
+        "levehl",
+        "livil"
+      ],
+      "levels": [
+        "leevils",
+        "levehls",
+        "lewals",
+        "livils"
+      ],
+      "LFT": [
+        "elaephti",
+        "elaphti"
+      ],
+      "Liaquat": [
+        "leaqooat",
+        "leaquaat"
+      ],
+      "library": [
+        "laaibreri"
+      ],
+      "life": [],
+      "lijiye": [
+        "leejie"
+      ],
+      "like": [
+        "laaik"
+      ],
+      "line": [
+        "laain"
+      ],
+      "LinkedIn": [],
+      "liver": [
+        "leewar",
+        "lewal"
+      ],
+      "liye": [
+        "lie"
+      ],
+      "located": [
+        "lcated"
+      ],
+      "location": [
+        "loakeshan",
+        "lokeshan"
+      ],
+      "locations": [
+        "lokeshans",
+        "lukeshans"
+      ],
+      "loge": [
+        "leeoge"
+      ],
+      "logical": [
+        "rolojikal"
+      ],
+      "lohana": [
+        "lohanae",
+        "lohanah"
+      ],
+      "London": [
+        "landan"
+      ],
+      "lord": [
+        "lorda",
+        "lort"
+      ],
+      "loyalty": [
+        "lawyalti"
+      ],
+      "lt": [
+        "elte",
+        "leet",
+        "ltee"
+      ],
+      "LTP": [
+        "eelteepi"
+      ],
+      "maaf": [],
+      "maam": [
+        "maim",
+        "mem"
+      ],
+      "machhli": [
+        "machhalee"
+      ],
+      "machine": [
+        "machne",
+        "masheen",
+        "mchine"
+      ],
+      "madam": [
+        "maaeem"
+      ],
+      "Madeeha": [
+        "madeehaar"
+      ],
+      "magnesium": [
+        "maigneeshiyam"
+      ],
+      "Maham": [
+        "maahaem",
+        "maeham",
+        "mahamh",
+        "mahamm"
+      ],
+      "mahesh": [
+        "maheash",
+        "mahesha"
+      ],
+      "mahina": [],
+      "mahine": [],
+      "mahl": [
+        "maaehl",
+        "maahhl",
+        "maahlh",
+        "maahll",
+        "maeehl",
+        "mahlh",
+        "mahll"
+      ],
+      "mahma": [
+        "maaehma",
+        "maahmae",
+        "maehma",
+        "mahmae",
+        "mahmma"
+      ],
+      "Mahmood": [
+        "maehmood",
+        "maimood",
+        "mehmod"
+      ],
+      "main": [
+        "mae",
+        "mein",
+        "men"
+      ],
+      "maine": [
+        "mainne"
+      ],
+      "Majeed": [
+        "maazeed",
+        "maazid",
+        "maazyd",
+        "majeet",
+        "mazid",
+        "mazyd"
+      ],
+      "maksad": [],
+      "malaria": [
+        "maleriya"
+      ],
+      "male": [
+        "mel"
+      ],
+      "malik": [
+        "maalek",
+        "maelik",
+        "mahlek",
+        "mahlik",
+        "mahlyk"
+      ],
+      "Malkwal": [],
+      "mall": [
+        "malal",
+        "malla",
+        "mmall"
+      ],
+      "mama": [
+        "maamaa"
+      ],
+      "mami": [],
+      "mamle": [],
+      "mammogram": [
+        "maimograam"
+      ],
+      "manager": [
+        "maenejar"
+      ],
+      "Manawala": [],
+      "Manawan": [
+        "manawana"
+      ],
+      "mangwaaonga": [],
+      "manna": [],
+      "Mansoor": [],
+      "manzoor": [
+        "manzoora"
+      ],
+      "Maqsood": [],
+      "Mardan": [
+        "mardana",
+        "martan",
+        "mrdan"
+      ],
+      "maria": [
+        "maariya",
+        "mahrea",
+        "mahrya"
+      ],
+      "Marium": [
+        "maaream",
+        "maariam",
+        "maaryam",
+        "maeriam",
+        "maeryam",
+        "mahream",
+        "mahreum",
+        "mahriam",
+        "mahryam",
+        "mareaam",
+        "maream",
+        "mareeam",
+        "mareem",
+        "mariaam",
+        "mariaem",
+        "mariahm",
+        "mariam"
+      ],
+      "market": [
+        "marked",
+        "marketa"
+      ],
+      "marketing": [],
+      "marna": [],
+      "marod": [
+        "maror"
+      ],
+      "marriage": [
+        "mairej"
+      ],
+      "Maryam": [],
+      "Masha": [],
+      "mashaAllah": [
+        "maashalla"
+      ],
+      "masla": [
+        "masala"
+      ],
+      "Masood": [
+        "maesood",
+        "mahsood",
+        "mahsuod"
+      ],
+      "match": [
+        "maich"
+      ],
+      "matlab": [],
+      "matter": [
+        "betar"
+      ],
+      "maujood": [
+        "majud",
+        "maujooda"
+      ],
+      "maulana": [],
+      "maulvi": [],
+      "mausam": [],
+      "Mavra": [
+        "maavrae",
+        "maevra",
+        "mahvra",
+        "mavrae",
+        "mavrah",
+        "mavvra"
+      ],
+      "Mawra": [
+        "maewra",
+        "mahwra",
+        "maura",
+        "mawrae",
+        "mawrah",
+        "mawrra",
+        "mawwra"
+      ],
+      "Mayo": [
+        "maioo",
+        "mmayo"
+      ],
+      "mazboot": [],
+      "mazdoor": [],
+      "mazeed": [
+        "maje",
+        "majeeb"
+      ],
+      "MC": [
+        "emsi"
+      ],
+      "measles": [
+        "meezals"
+      ],
+      "med": [
+        "meda",
+        "medd",
+        "mmed"
+      ],
+      "medical": [],
+      "medicare": [
+        "medeekeyar",
+        "mediketar"
+      ],
+      "meharbani": [
+        "mehrabaanee"
+      ],
+      "mehfooz": [
+        "mahafooj",
+        "meahfooz"
+      ],
+      "Mehmood": [
+        "mahamood",
+        "meahmood",
+        "meehmoud",
+        "meehmuod"
+      ],
+      "Mehmoodabad": [
+        "mahmoodabad"
+      ],
+      "mehnga": [
+        "mahanga"
+      ],
+      "mehnge": [
+        "mahange"
+      ],
+      "mehr": [
+        "meaahr",
+        "meeahr",
+        "meehhr",
+        "miihr"
+      ],
+      "Mehrin": [
+        "mahareen"
+      ],
+      "mehsoos": [
+        "mahasoos"
+      ],
+      "Memoona": [
+        "maimona",
+        "momina",
+        "mona"
+      ],
+      "memorial": [
+        "memooreeal",
+        "memoral",
+        "memoril",
+        "memrial"
+      ],
+      "mention": [
+        "menshan"
+      ],
+      "menu": [
+        "menyoo"
+      ],
+      "mera": [],
+      "message": [
+        "maisej",
+        "masej",
+        "mesaej"
+      ],
+      "Metrovil": [
+        "metro oval",
+        "metrovl"
+      ],
+      "mian": [
+        "meaen",
+        "meahn",
+        "meeaan",
+        "miahn",
+        "miana",
+        "mianh",
+        "miya",
+        "mmian"
+      ],
+      "Mianwali": [
+        "manwali",
+        "meeanwalee",
+        "miyaamli",
+        "miyaanwali"
+      ],
+      "Microsoft": [
+        "maaikrosoft"
+      ],
+      "Milad": [],
+      "milna": [],
+      "Mingora": [
+        "mngora"
+      ],
+      "minor": [
+        "meenur",
+        "menohr",
+        "menoor",
+        "mihnor"
+      ],
+      "Mirpur": [
+        "meerapur",
+        "meerpoor",
+        "meerpur",
+        "mirpr",
+        "mirpura",
+        "mrpur"
+      ],
+      "Mirrat": [
+        "mihrrat"
+      ],
+      "miscarriage": [
+        "misakairej"
+      ],
+      "miss": [
+        "misin"
+      ],
+      "mission": [
+        "meesseeon",
+        "meesseeoon",
+        "missin",
+        "missiona",
+        "misson"
+      ],
+      "mitha": [
+        "meetha",
+        "meethaa"
+      ],
+      "mithai": [
+        "meethaai"
+      ],
+      "Moazzam": [
+        "mauzam"
+      ],
+      "mobile": [
+        "mobaaeel",
+        "mobaail"
+      ],
+      "Mobilink": [],
+      "mohallah": [
+        "mhallah",
+        "mohalla"
+      ],
+      "momin": [
+        "momiin",
+        "mominh",
+        "mumen"
+      ],
+      "monday": [
+        "mande"
+      ],
+      "monitor": [
+        "monitar"
+      ],
+      "month": [
+        "manth"
+      ],
+      "mor": [
+        "mmor",
+        "moor",
+        "mora",
+        "morr"
+      ],
+      "morning": [],
+      "mota": [],
+      "motorcycle": [
+        "motarasaaikil"
+      ],
+      "mou": [
+        "moyoo"
+      ],
+      "MRI": [
+        "eemaaraaee",
+        "emaaaraaai"
+      ],
+      "mrs": [
+        "mises"
+      ],
+      "Muaaz": [
+        "moaaez",
+        "moaahz",
+        "moaeaz",
+        "moahaz",
+        "muaas"
+      ],
+      "mubarik": [
+        "mobaerik",
+        "mobahrik"
+      ],
+      "Mubashir": [
+        "mubashashar"
+      ],
+      "Mueen": [
+        "moeaen",
+        "moeean",
+        "mooein"
+      ],
+      "mufti": [
+        "moofte"
+      ],
+      "Mughal": [
+        "moghael"
+      ],
+      "muhalla": [
+        "mhalla",
+        "moohaallaa",
+        "moohallaa",
+        "muhall"
+      ],
+      "Muhammad": [
+        "mohaemmad",
+        "mohammaed",
+        "mohammahd",
+        "mohammed"
+      ],
+      "Mujtaba": [
+        "mushtaba"
+      ],
+      "mukhatib": [
+        "muqatib"
+      ],
+      "Multan": [
+        "mltan"
+      ],
+      "multiple": [
+        "malteepal"
+      ],
+      "multivitamin": [
+        "malteewitaamin"
+      ],
+      "Mumbai": [
+        "munbai"
+      ],
+      "mumkin": [
+        "mamkan"
+      ],
+      "Mumtaz": [
+        "mumataaj"
+      ],
+      "Muneeb": [
+        "moneaeb",
+        "moneeab",
+        "mooneeb",
+        "mooneib"
+      ],
+      "Munir": [
+        "maneer",
+        "mnir",
+        "mooneer",
+        "mooner",
+        "munira",
+        "munr"
+      ],
+      "Muqeet": [
+        "mukeed",
+        "mukeehit"
+      ],
+      "Muridke": [
+        "mureed ke",
+        "mooreedce",
+        "mridke",
+        "murdke"
+      ],
+      "musalsal": [
+        "masalasal"
+      ],
+      "Mushtaq": [],
+      "music": [
+        "myoozik"
+      ],
+      "Mustafa": [
+        "mstafa",
+        "mustafasu"
+      ],
+      "Mutahir": [
+        "mootaaheer",
+        "mtahir",
+        "mutahr"
+      ],
+      "Muzaffar": [
+        "muzaffargarh",
+        "mzaffar"
+      ],
+      "Muzaffarabad": [
+        "muzaffarabat",
+        "mzaffarabad"
+      ],
+      "Nabila": [
+        "nabbeela",
+        "nabeaela",
+        "nabeeala",
+        "nabeehla"
+      ],
+      "Nadeem": [
+        "madeen"
+      ],
+      "nadir": [
+        "naatir",
+        "nadihr"
+      ],
+      "Nadra": [
+        "nadr",
+        "ndra"
+      ],
+      "Naeem": [
+        "naaeim",
+        "naaiem",
+        "naeaem",
+        "naeeam",
+        "naeehm",
+        "naeeim",
+        "naieem",
+        "naiim"
+      ],
+      "nafrat": [],
+      "naghar": [
+        "nagara",
+        "nager",
+        "nagr",
+        "ngar",
+        "pnagar"
+      ],
+      "nahi": [
+        "naheen",
+        "nahiin",
+        "nahin"
+      ],
+      "Naila": [
+        "naelae",
+        "naelah"
+      ],
+      "nala": [
+        "nalla"
+      ],
+      "namaz": [],
+      "name": [
+        "nem"
+      ],
+      "names": [
+        "naames",
+        "namesa",
+        "namess",
+        "nammes",
+        "nams",
+        "nmes",
+        "nnames"
+      ],
+      "nana": [
+        "naanaa"
+      ],
+      "nani": [],
+      "Nankana": [],
+      "Naqvi": [],
+      "narangi": [],
+      "Narangmandi": [
+        "naarang mandi",
+        "narang mandi"
+      ],
+      "Narowal": [],
+      "naseem": [
+        "naaseim",
+        "naasiem",
+        "naeseem",
+        "nahseem",
+        "nahseim",
+        "nahsiem",
+        "nasiim"
+      ],
+      "Naseer": [
+        "naaseir",
+        "naasier",
+        "naasyr",
+        "naeseer",
+        "naesir",
+        "nahseer",
+        "nahseir",
+        "nahser",
+        "nahsier",
+        "nahsir",
+        "nahsyr",
+        "nasiir"
+      ],
+      "nasim": [
+        "naasym",
+        "naesim",
+        "nahsem",
+        "nahsim",
+        "nahsym"
+      ],
+      "Nasrullah": [],
+      "national": [
+        "natonal"
+      ],
+      "Naureen": [
+        "nawreen",
+        "noorin",
+        "noreen"
+      ],
+      "Nausheen": [
+        "asheen",
+        "nasheen",
+        "nawsheen"
+      ],
+      "Naveed": [],
+      "Navratri": [],
+      "Nawabshah": [
+        "nawaapsha"
+      ],
+      "Nawaz": [
+        "naavaj",
+        "naawaaj",
+        "nauaz",
+        "navaaj",
+        "navaj",
+        "nawaza",
+        "nawazh"
+      ],
+      "naya": [],
+      "Nayapay": [],
+      "naz": [
+        "naaez",
+        "naahz",
+        "naaj",
+        "naazh",
+        "naazz",
+        "naeez",
+        "nazh",
+        "nazz"
+      ],
+      "nazar": [],
+      "nazdeek": [],
+      "Nazimabad": [
+        "naajamaabaad",
+        "naajamaabaas",
+        "nazimabat",
+        "nazmabad",
+        "nijaamaabaad"
+      ],
+      "NC": [
+        "ensi"
+      ],
+      "near": [
+        "neara",
+        "niyar",
+        "nnear"
+      ],
+      "neck": [
+        "nek"
+      ],
+      "neecha": [],
+      "neela": [],
+      "Neelofar": [
+        "neaelofar"
+      ],
+      "neend": [],
+      "negative": [],
+      "nephrologist": [],
+      "nephrology": [],
+      "neurological": [
+        "nyoorolojikli"
+      ],
+      "neurologist": [
+        "narwonjeew",
+        "nirwaachit",
+        "nirwaalaajis",
+        "nyoorolojis"
+      ],
+      "neurology": [
+        "nyooroloji",
+        "rologeej"
+      ],
+      "neurons": [
+        "nyoorons"
+      ],
+      "neurosis": [
+        "nyoorosis"
+      ],
+      "new": [
+        "newa",
+        "nnew",
+        "nyoo"
+      ],
+      "next": [
+        "nekst"
+      ],
+      "niamat": [
+        "neamaet",
+        "nehamat"
+      ],
+      "Niazi": [
+        "naajiya",
+        "neaze",
+        "nehaji",
+        "neyaji"
+      ],
+      "night": [
+        "naait"
+      ],
+      "Nimrah": [],
+      "nine": [
+        "naain"
+      ],
+      "nipa": [
+        "neepaa"
+      ],
+      "Nippa": [
+        "neepa",
+        "nepa",
+        "nipaas",
+        "nipp"
+      ],
+      "nisa": [
+        "neesa",
+        "nesaa",
+        "nesae",
+        "nesah",
+        "nihsa",
+        "niisa",
+        "nisha"
+      ],
+      "Nisar": [
+        "neesar",
+        "nesaar",
+        "nesaer",
+        "nesahr",
+        "nihsar",
+        "niisar",
+        "nisaer"
+      ],
+      "Nishtabad": [
+        "nshtabad"
+      ],
+      "Nishtar": [
+        "nshtar"
+      ],
+      "noor": [
+        "noohr",
+        "noora",
+        "nuohr"
+      ],
+      "not": [
+        "nooht",
+        "nooth",
+        "notee",
+        "nuut"
+      ],
+      "Noushina": [
+        "nasheena",
+        "noshiya"
+      ],
+      "Nowshera": [
+        "naau shera",
+        "nashehra",
+        "nashera",
+        "nowsher",
+        "nowshra"
+      ],
+      "numainda": [
+        "nawaayda",
+        "nawamaanda",
+        "nawamaayanda"
+      ],
+      "numb": [
+        "numab",
+        "numba"
+      ],
+      "number": [
+        "nambar",
+        "nambr",
+        "nanbar",
+        "numaber",
+        "numbera",
+        "numberr",
+        "numbre"
+      ],
+      "nurse": [
+        "naras"
+      ],
+      "nursing": [
+        "nursng",
+        "nurssing"
+      ],
+      "Nuzhat": [
+        "nozhaet",
+        "nujaahat",
+        "nusahat"
+      ],
+      "Obaid": [
+        "obaida",
+        "obait",
+        "obbaid"
+      ],
+      "obstetrics": [],
+      "off": [
+        "oph"
+      ],
+      "offer": [
+        "ophar"
+      ],
+      "office": [
+        "aafis",
+        "ophis"
+      ],
+      "offline": [
+        "aaphalaaeen"
+      ],
+      "ointment": [],
+      "ok": [
+        "okay"
+      ],
+      "Okara": [
+        "okar",
+        "okkara",
+        "oocaara",
+        "oocaraa",
+        "ookaaraa",
+        "ooqaraa",
+        "ukada"
+      ],
+      "okay": [
+        "okae",
+        "oke"
+      ],
+      "old": [
+        "olad",
+        "olda",
+        "olld"
+      ],
+      "Olu": [
+        "aaolu",
+        "oochalu"
+      ],
+      "Omair": [
+        "ohmair",
+        "omaeer",
+        "omaeir",
+        "omaher",
+        "omahir"
+      ],
+      "omer": [
+        "ohmer",
+        "omear",
+        "omeer",
+        "omehr",
+        "omerh",
+        "omerr",
+        "omir",
+        "ommer",
+        "oomer",
+        "oomir"
+      ],
+      "Omerson": [
+        "omarasan",
+        "umarasan"
+      ],
+      "on": [
+        "oaan",
+        "oiin",
+        "oin",
+        "onh"
+      ],
+      "oncologist": [],
+      "one": [
+        "muneer",
+        "wan"
+      ],
+      "online": [
+        "aanlaaeen",
+        "aanlaain",
+        "onalaain",
+        "onlaain"
+      ],
+      "only": [
+        "onaly",
+        "onlly",
+        "oonlee"
+      ],
+      "ooncha": [],
+      "opp": [
+        "opap",
+        "oppa"
+      ],
+      "Oppo": [],
+      "opposite": [
+        "kopozit",
+        "opposte"
+      ],
+      "option": [
+        "kopten",
+        "opshan"
+      ],
+      "Orangi": [
+        "aurangi",
+        "oranngi"
+      ],
+      "orthopedic": [],
+      "out": [
+        "outa",
+        "outt"
+      ],
+      "Outlook": [
+        "aautlook"
+      ],
+      "paanch": [],
+      "pacchees": [],
+      "pacha": [
+        "pachchha"
+      ],
+      "pachas": [],
+      "pack": [
+        "paik"
+      ],
+      "package": [
+        "paikej"
+      ],
+      "padhai": [
+        "padaai",
+        "parhai"
+      ],
+      "paer": [],
+      "pahar": [],
+      "painkiller": [
+        "penakilar"
+      ],
+      "paintalees": [],
+      "paintees": [
+        "paitees"
+      ],
+      "paisa": [
+        "paisey",
+        "pesa"
+      ],
+      "paise": [
+        "paese"
+      ],
+      "pait": [
+        "pet"
+      ],
+      "pak": [
+        "paac",
+        "paak",
+        "paaq",
+        "paka",
+        "pakk"
+      ],
+      "Pakistan": [
+        "paakstaan"
+      ],
+      "pakka": [
+        "paacca",
+        "pacca",
+        "paccaa",
+        "pkka"
+      ],
+      "Pakpattan": [
+        "paapatan"
+      ],
+      "Paktel": [],
+      "palpitation": [
+        "pelpiteshan"
+      ],
+      "panchwan": [],
+      "pancreas": [
+        "penakriyaas",
+        "penkriya"
+      ],
+      "paonga": [],
+      "Pap": [
+        "paip"
+      ],
+      "paper": [
+        "pepar"
+      ],
+      "paracetamol": [
+        "pairaasitaamol"
+      ],
+      "paragon": [
+        "paragona",
+        "peraagon"
+      ],
+      "pareshan": [
+        "paresh",
+        "pareshaanon"
+      ],
+      "park": [
+        "paarc",
+        "paark",
+        "paarq",
+        "parak",
+        "parc",
+        "parka",
+        "parkk",
+        "parrk"
+      ],
+      "Parkash": [
+        "parkasha"
+      ],
+      "parso": [],
+      "parson": [],
+      "party": [],
+      "Pasrur": [
+        "basaroor",
+        "basoor",
+        "pashuroor",
+        "pasrr"
+      ],
+      "password": [
+        "paasaward",
+        "pasawarda"
+      ],
+      "pathologist": [
+        "pathalojist"
+      ],
+      "patient": [
+        "benchent",
+        "penchent",
+        "peshan",
+        "peshans",
+        "peshant",
+        "peshent",
+        "peshents"
+      ],
+      "patla": [],
+      "pattern": [
+        "paitarn"
+      ],
+      "Pattoki": [
+        "pato",
+        "pattki"
+      ],
+      "payment": [
+        "pemement"
+      ],
+      "PCP": [
+        "paiseepeesee"
+      ],
+      "PCR": [
+        "peeseeaar",
+        "pisiar",
+        "pisior"
+      ],
+      "PDF": [
+        "peedeeeph",
+        "pidiephi"
+      ],
+      "pe": [
+        "pae"
+      ],
+      "pediatrician": [
+        "peediyaatrishiyan"
+      ],
+      "peechhe": [],
+      "peela": [],
+      "pehla": [
+        "pahla"
+      ],
+      "pehle": [
+        "pahle"
+      ],
+      "pehn": [
+        "pahan"
+      ],
+      "pencil": [
+        "pensil"
+      ],
+      "peo": [
+        "peeo"
+      ],
+      "peoge": [],
+      "perfect": [
+        "parasent"
+      ],
+      "perform": [
+        "paraphorm"
+      ],
+      "period": [
+        "peeriyad"
+      ],
+      "person": [
+        "parsan"
+      ],
+      "personal": [],
+      "Pervaiz": [
+        "pehrvaiz"
+      ],
+      "peshab": [],
+      "Peshawar": [],
+      "peshkash": [],
+      "Phalia": [
+        "faaleea",
+        "faleeaa",
+        "phaaliya",
+        "phala",
+        "phali"
+      ],
+      "phase": [
+        "phaase",
+        "phasse",
+        "phse"
+      ],
+      "phir": [
+        "phar"
+      ],
+      "phlebotomist": [],
+      "phone": [
+        "fon",
+        "foon",
+        "phon"
+      ],
+      "phool": [
+        "phoola"
+      ],
+      "physician": [
+        "phizeeshiyan"
+      ],
+      "pick": [
+        "pik"
+      ],
+      "picnic": [
+        "pikanik"
+      ],
+      "picture": [
+        "pikchar"
+      ],
+      "pijiye": [],
+      "PIN": [
+        "pen"
+      ],
+      "pina": [],
+      "Pinterest": [],
+      "Pkli": [
+        "p k l",
+        "pakli",
+        "pclee",
+        "pkali",
+        "pkkli",
+        "pklli",
+        "pqlee"
+      ],
+      "plain": [],
+      "platelets": [],
+      "plaza": [
+        "plaz"
+      ],
+      "please": [
+        "pleej",
+        "pleez",
+        "plij"
+      ],
+      "police": [
+        "pulis"
+      ],
+      "poly": [
+        "polly"
+      ],
+      "positive": [
+        "pojitiw"
+      ],
+      "possible": [
+        "posibal"
+      ],
+      "postnatal": [
+        "post netal"
+      ],
+      "potassium": [
+        "potaishiyam"
+      ],
+      "PP": [
+        "peepi"
+      ],
+      "pre": [
+        "pri"
+      ],
+      "pre-employment": [
+        "pre employment",
+        "pri employament"
+      ],
+      "pre-marriage": [
+        "pre marriage",
+        "pri mairej"
+      ],
+      "pregnancy": [
+        "preganensi"
+      ],
+      "prenatal": [
+        "pre netal"
+      ],
+      "prescription": [
+        "fiskripshan",
+        "phorskripshan",
+        "presipshan"
+      ],
+      "presentation": [
+        "prezenteshan"
+      ],
+      "pressure": [
+        "preshar"
+      ],
+      "previous": [
+        "preewiyas"
+      ],
+      "price": [
+        "praais",
+        "praaiz",
+        "prais"
+      ],
+      "principal": [],
+      "professor": [
+        "prophesar"
+      ],
+      "profile": [
+        "prophaail",
+        "prophail"
+      ],
+      "profit": [],
+      "project": [],
+      "prolactin": [
+        "prolaiktin"
+      ],
+      "proper": [
+        "propar"
+      ],
+      "properly": [],
+      "protein": [],
+      "provide": [
+        "prowaaid"
+      ],
+      "PSA": [
+        "peeesae"
+      ],
+      "psychiatrist": [
+        "saaikiyaatrist"
+      ],
+      "pulao": [
+        "pulaaw"
+      ],
+      "pura": [
+        "pooraa"
+      ],
+      "purana": [],
+      "pyar": [],
+      "pyara": [],
+      "Qadir": [
+        "kaadir",
+        "qadihr",
+        "qadirh"
+      ],
+      "qahwa": [],
+      "qamar": [
+        "kaamaar",
+        "kaamar",
+        "kamaar",
+        "qamara",
+        "qamarr",
+        "qamer",
+        "qammar",
+        "qmar"
+      ],
+      "Qayum": [
+        "qaeyum"
+      ],
+      "Qayyum": [],
+      "qazi": [
+        "kaaji",
+        "kaazee",
+        "kajee",
+        "kaji",
+        "kajy",
+        "kazee",
+        "phaji",
+        "qaajee",
+        "qajee"
+      ],
+      "qila": [
+        "keela",
+        "keelaa",
+        "kilaa",
+        "killa",
+        "kylaa"
+      ],
+      "quaid": [
+        "kaayad",
+        "kaid",
+        "kooaed",
+        "kooaid",
+        "kooayd",
+        "kuaed",
+        "qaid",
+        "qooaed",
+        "quaida",
+        "quait"
+      ],
+      "qualification": [
+        "kvaaliphikeshan",
+        "kwaaliphikeshan"
+      ],
+      "queens": [
+        "kooeens",
+        "kooins",
+        "kooyns",
+        "kuins",
+        "kuyns",
+        "kwaains",
+        "qeens",
+        "qooins",
+        "qooyns",
+        "queenas",
+        "queensa"
+      ],
+      "Quetta": [
+        "kooetta",
+        "kooettaa",
+        "koyta",
+        "kweta",
+        "qetta",
+        "quett",
+        "qutta"
+      ],
+      "Quran": [],
+      "Qurat": [
+        "qoraht",
+        "quhrat"
+      ],
+      "RA": [
+        "aarae"
+      ],
+      "Raana": [
+        "raan",
+        "rraana"
+      ],
+      "rabia": [
+        "raabiya",
+        "rabbia",
+        "rabeah"
+      ],
+      "Rabieh": [
+        "raabeesh",
+        "rabbieh",
+        "rabi"
+      ],
+      "rabta": [
+        "laapta"
+      ],
+      "rabtay": [
+        "raapte"
+      ],
+      "radiologist": [
+        "ediyolajist"
+      ],
+      "radiology": [
+        "radology"
+      ],
+      "radius": [
+        "rediyas"
+      ],
+      "Rafique": [],
+      "Rahila": [
+        "rahelae",
+        "rahelah"
+      ],
+      "Rahim": [
+        "raahiem",
+        "raheaem",
+        "raheeam",
+        "raheehm",
+        "rahima",
+        "rahimm",
+        "rahm",
+        "rhim"
+      ],
+      "Rahman": [],
+      "rahul": [
+        "raehul",
+        "rahulh"
+      ],
+      "raja": [
+        "raajae",
+        "raajah",
+        "raazaa",
+        "raeja",
+        "rajae",
+        "rajah",
+        "rajja",
+        "razaa"
+      ],
+      "rakha": [
+        "raekha",
+        "rakhae"
+      ],
+      "Rakhi": [],
+      "ram": [
+        "raam",
+        "rama",
+        "ramm",
+        "rram"
+      ],
+      "Ramla": [
+        "raaemlah",
+        "raemlah",
+        "rahmla",
+        "rahmlah",
+        "ramlahh",
+        "ramllah",
+        "rammlah"
+      ],
+      "Ramtalai": [
+        "roomtali"
+      ],
+      "Ramzan": [],
+      "random": [
+        "raindam",
+        "rendam"
+      ],
+      "randomly": [
+        "rendamli"
+      ],
+      "range": [
+        "ranage",
+        "rannge",
+        "rrange"
+      ],
+      "rani": [
+        "raane",
+        "raeni",
+        "rahne",
+        "rahni",
+        "rahny",
+        "rane",
+        "ranee"
+      ],
+      "Rashid": [
+        "miyarshid",
+        "rashaid",
+        "rashida",
+        "rashit"
+      ],
+      "Rasool": [
+        "sool"
+      ],
+      "rasta": [
+        "rasataa"
+      ],
+      "rate": [
+        "ret"
+      ],
+      "Rathore": [
+        "raatoore",
+        "raatore",
+        "rathoar",
+        "rathre"
+      ],
+      "ratio": [
+        "resho"
+      ],
+      "Rauf": [
+        "raeuf",
+        "rahof",
+        "rahuf",
+        "rauff",
+        "rawf"
+      ],
+      "ravi": [
+        "rahve"
+      ],
+      "Rawalpindi": [],
+      "Razzaq": [
+        "raezzaq",
+        "rajaak",
+        "razaak",
+        "razzaqh"
+      ],
+      "reading": [],
+      "ready": [],
+      "reasons": [
+        "reejan"
+      ],
+      "receive": [
+        "riseew"
+      ],
+      "recharge": [
+        "richaarj"
+      ],
+      "Reena": [
+        "leena",
+        "reehna"
+      ],
+      "refer": [
+        "rephar"
+      ],
+      "referral": [
+        "repharal"
+      ],
+      "refund": [
+        "riphand"
+      ],
+      "register": [
+        "rajistar",
+        "rajistard"
+      ],
+      "registration": [
+        "rajistreshan"
+      ],
+      "Rehman": [
+        "rahamaan",
+        "rehmana",
+        "rehmn"
+      ],
+      "rehta": [],
+      "relate": [
+        "rilet"
+      ],
+      "related": [
+        "leted"
+      ],
+      "release": [
+        "rileez"
+      ],
+      "reminder": [
+        "rimaaindar"
+      ],
+      "renal": [],
+      "Renala": [],
+      "repeat": [],
+      "reply": [
+        "riplaai"
+      ],
+      "report": [
+        "reepart"
+      ],
+      "reports": [],
+      "require": [
+        "rikwaayar"
+      ],
+      "required": [
+        "rikwaayard"
+      ],
+      "requirement": [
+        "rikwaayarament"
+      ],
+      "reschedule": [
+        "reshedyool",
+        "rishedyul"
+      ],
+      "resolve": [
+        "risolw"
+      ],
+      "restaurant": [
+        "restaraan"
+      ],
+      "result": [
+        "reesalt",
+        "rizalt"
+      ],
+      "results": [
+        "rijalt"
+      ],
+      "RFT": [
+        "aaraephti",
+        "aaraphti"
+      ],
+      "Riaz": [
+        "rayaaj",
+        "reahz",
+        "reyaaj",
+        "riazh",
+        "riyaaj"
+      ],
+      "rickshaw": [
+        "riksha"
+      ],
+      "rider": [
+        "raaidar",
+        "raaitar"
+      ],
+      "Riffat": [
+        "rafat"
+      ],
+      "right": [
+        "raait"
+      ],
+      "Rizwan": [
+        "rezwaen",
+        "rezwahn",
+        "rijawaan"
+      ],
+      "roa": [
+        "rooaa"
+      ],
+      "road": [
+        "lod",
+        "roada",
+        "roat",
+        "rooaad"
+      ],
+      "rohi": [
+        "roohee"
+      ],
+      "route": [
+        "rod"
+      ],
+      "routine": [
+        "rooteen"
+      ],
+      "royal": [
+        "royala",
+        "royl",
+        "ryal"
+      ],
+      "rozana": [],
+      "Rubina": [
+        "dobeena"
+      ],
+      "rupay": [
+        "roopae"
+      ],
+      "rupaya": [],
+      "rupaye": [
+        "rupye"
+      ],
+      "rural": [
+        "rral",
+        "rurala",
+        "rurl"
+      ],
+      "sabar": [
+        "sabra"
+      ],
+      "sabzi": [],
+      "sacha": [
+        "sachcha"
+      ],
+      "Sachal": [
+        "sachala"
+      ],
+      "sadaf": [
+        "saddaf",
+        "saedaf",
+        "sahdaf"
+      ],
+      "SadaPay": [],
+      "sadhe": [
+        "saarhe"
+      ],
+      "Sadia": [
+        "saadiya",
+        "sadeah",
+        "sadiya"
+      ],
+      "Sadiq": [
+        "saadeek",
+        "saadeeq",
+        "saadik",
+        "saadyk",
+        "sadeek",
+        "sadiqa",
+        "sadq",
+        "sadyk",
+        "sdiq"
+      ],
+      "Sadiqabad": [
+        "sadika baat",
+        "saadakaabaad",
+        "saatheekaabaad",
+        "sadiqabat",
+        "sadqabad"
+      ],
+      "Saeed": [
+        "saaied",
+        "saayd",
+        "saeead",
+        "saeeda",
+        "saeedh",
+        "saeet",
+        "said",
+        "saiid",
+        "sayd",
+        "seed"
+      ],
+      "Safdar": [
+        "safdaer",
+        "safddar"
+      ],
+      "Safdarabad": [
+        "safataraabaad",
+        "safatrabad",
+        "safdarabat"
+      ],
+      "safe": [
+        "seph"
+      ],
+      "safed": [
+        "saphed"
+      ],
+      "Safia": [
+        "safiya"
+      ],
+      "Safoora": [
+        "sfoora"
+      ],
+      "sahab": [],
+      "sahar": [
+        "saahaar",
+        "saahaer",
+        "saehar",
+        "sahaer",
+        "saharh",
+        "saharr"
+      ],
+      "sahib": [
+        "saaheb"
+      ],
+      "Sahiwal": [
+        "sahiwala",
+        "sahiwl",
+        "sahwal",
+        "shiwal"
+      ],
+      "saif": [
+        "saaef",
+        "saaif",
+        "saayf",
+        "saeef",
+        "saeif",
+        "sahef",
+        "sahif",
+        "sahyf"
+      ],
+      "saify": [
+        "saaefy",
+        "shafi"
+      ],
+      "Saigol": [
+        "saigal",
+        "sigol"
+      ],
+      "Saira": [
+        "saaera",
+        "saaira",
+        "saayra",
+        "saeera",
+        "saeira",
+        "saeraa",
+        "saerae",
+        "sayra"
+      ],
+      "Sajid": [
+        "saajed",
+        "saajyd",
+        "saejid",
+        "sahjed",
+        "sahjyd",
+        "sajeed"
+      ],
+      "Sajida": [
+        "saajda",
+        "saajeda",
+        "saejida",
+        "sahjeda",
+        "sahjyda"
+      ],
+      "Sajjad": [],
+      "Sajjida": [
+        "saazzida",
+        "sajjda",
+        "sajjid",
+        "sazzeeda",
+        "sazzyda"
+      ],
+      "sakha": [
+        "saekha",
+        "saka",
+        "sakhae",
+        "sakhah",
+        "sakkha",
+        "shaka"
+      ],
+      "sakhi": [
+        "saakee",
+        "saakhee",
+        "saaki",
+        "saaky",
+        "sakee",
+        "saki",
+        "saky",
+        "skhi",
+        "ssakhi",
+        "state"
+      ],
+      "sakta": [],
+      "salary": [
+        "sailri"
+      ],
+      "sale": [
+        "sel"
+      ],
+      "Saleemi": [
+        "saaleem",
+        "saaleim",
+        "saaliem",
+        "saalymy",
+        "saeleem",
+        "sahleem",
+        "sahleim",
+        "sahliem",
+        "saleem",
+        "saleim",
+        "salem",
+        "saliim",
+        "salim",
+        "sleemi",
+        "sliim"
+      ],
+      "sales": [
+        "sels"
+      ],
+      "salik": [
+        "saalek",
+        "saelik",
+        "sahlek",
+        "sahlik",
+        "sahlyk",
+        "saleek"
+      ],
+      "salma": [
+        "saalmae",
+        "saelma",
+        "sahlma",
+        "sallma"
+      ],
+      "Salman": [
+        "saelman"
+      ],
+      "Sambrial": [
+        "sambarial",
+        "sambral",
+        "sambril",
+        "samdial",
+        "samreyaal"
+      ],
+      "same": [
+        "sem"
+      ],
+      "Samia": [
+        "saamea",
+        "saamiya",
+        "saemia",
+        "sahmea"
+      ],
+      "Samina": [
+        "saamena",
+        "sahmena"
+      ],
+      "samjhe": [
+        "samajhne"
+      ],
+      "sample": [
+        "sahmpli",
+        "sainpal",
+        "sampal",
+        "samplea"
+      ],
+      "sampling": [
+        "saimpaling",
+        "sainpaling"
+      ],
+      "samra": [
+        "saaemra",
+        "saemra",
+        "sahmra",
+        "sammra",
+        "samrae",
+        "samrra"
+      ],
+      "Samsung": [
+        "samsang"
+      ],
+      "sana": [
+        "saanae",
+        "saanah",
+        "saena",
+        "sahna",
+        "sanae",
+        "sanah"
+      ],
+      "sanda": [
+        "saanta",
+        "sada",
+        "sanada",
+        "sand",
+        "snda"
+      ],
+      "Saqib": [
+        "saakib",
+        "saaqeb",
+        "saaqyb",
+        "sahqeb",
+        "sahqib",
+        "sahqyb",
+        "sakib",
+        "saqeb"
+      ],
+      "Saqlain": [
+        "sakalain",
+        "sakalan",
+        "saklehan"
+      ],
+      "Sara": [
+        "saaraa"
+      ],
+      "Sarah": [
+        "saaerah",
+        "saara",
+        "saarae",
+        "saera",
+        "saerah",
+        "sahra",
+        "sahrah",
+        "saraa",
+        "sarae",
+        "saraeh",
+        "sarra"
+      ],
+      "sardi": [],
+      "Sarfaraz": [
+        "selpharaaz"
+      ],
+      "Sarfraz": [
+        "sarafaraaj",
+        "sarfrazh"
+      ],
+      "Sargodha": [
+        "sarakota",
+        "sirgoda"
+      ],
+      "Sarwar": [
+        "saerwar",
+        "sahrwar",
+        "sarrwar",
+        "sarwaer",
+        "sarwahr",
+        "sarwarh"
+      ],
+      "satellite": [
+        "satellte"
+      ],
+      "satian": [
+        "saateeaan",
+        "saateean",
+        "satan",
+        "satiana",
+        "satin",
+        "stian"
+      ],
+      "satrah": [],
+      "saturday": [
+        "saitarde"
+      ],
+      "Saudi": [],
+      "Saylani": [
+        "sariani",
+        "selani",
+        "siliyani"
+      ],
+      "scan": [
+        "skain"
+      ],
+      "scenario": [
+        "saineriyo"
+      ],
+      "schedule": [
+        "shedyool",
+        "shedyul",
+        "shedyuul",
+        "skejyool"
+      ],
+      "scheme": [
+        "sacheme",
+        "schemme",
+        "schme",
+        "sscheme"
+      ],
+      "school": [
+        "skool"
+      ],
+      "score": [
+        "skor"
+      ],
+      "screen": [
+        "screean",
+        "screehn",
+        "ssreen"
+      ],
+      "screening": [],
+      "seat": [
+        "seet"
+      ],
+      "second": [
+        "sekand"
+      ],
+      "seekhna": [
+        "siikhana"
+      ],
+      "segment": [
+        "segament",
+        "segmenat",
+        "segmend",
+        "segmennt",
+        "segmenta"
+      ],
+      "sehar": [
+        "seehar",
+        "sehaer",
+        "seharh",
+        "seharr",
+        "sihaar"
+      ],
+      "sehat": [
+        "sehad",
+        "sehata",
+        "seht",
+        "shat",
+        "siwal"
+      ],
+      "Sehrish": [
+        "saharish",
+        "seehresh",
+        "sihresh"
+      ],
+      "select": [],
+      "send": [
+        "saind"
+      ],
+      "serivce": [
+        "serivace",
+        "serrivce",
+        "servce",
+        "sserivce"
+      ],
+      "serivces": [
+        "sereevces",
+        "sereevkes",
+        "sereewces",
+        "serivaces",
+        "serivcesa",
+        "seriwkes",
+        "serrivces",
+        "servces",
+        "sserivces"
+      ],
+      "serum": [
+        "seeram",
+        "sharam",
+        "siram"
+      ],
+      "service": [
+        "sarwis"
+      ],
+      "services": [
+        "seravices",
+        "serrvices",
+        "serveekes",
+        "servicesa",
+        "serweeces",
+        "sservices"
+      ],
+      "seven": [
+        "seman",
+        "sewan"
+      ],
+      "SGOT": [
+        "esajeeoti",
+        "esjeeoti"
+      ],
+      "SGPT": [
+        "esajeepeeti",
+        "esjeepeeti"
+      ],
+      "Shabir": [
+        "saaber",
+        "saber",
+        "sabihr",
+        "sabirh",
+        "shaabber",
+        "shabbeer",
+        "shabbihr",
+        "shabbiir"
+      ],
+      "Shabnum": [
+        "shabanam",
+        "shabnam",
+        "shabnm",
+        "shabnuma"
+      ],
+      "Shaffique": [
+        "shafeek"
+      ],
+      "Shafiq": [
+        "safiq",
+        "shaafeq",
+        "shaefiq",
+        "shafeeq",
+        "shafeq",
+        "shaffiq",
+        "shafik"
+      ],
+      "Shafqat": [
+        "safqat",
+        "shafakat",
+        "shaffqat",
+        "shafqaet"
+      ],
+      "shah": [
+        "saah",
+        "shaa",
+        "shaaeh",
+        "shaha"
+      ],
+      "shahab": [
+        "sahid",
+        "shaahed",
+        "shaehid",
+        "shahaba",
+        "shahabb",
+        "shahed",
+        "shahhed",
+        "shahhid"
+      ],
+      "shahar": [
+        "shehr"
+      ],
+      "Shahbaz": [
+        "sahbaz",
+        "shahbaez",
+        "shahbazz",
+        "shahbbaz"
+      ],
+      "Shahdra": [
+        "shaahadra",
+        "shahddra",
+        "shahdr"
+      ],
+      "shaheed": [
+        "shaahid",
+        "shaheeda",
+        "shaheedon",
+        "shaheet",
+        "shheed"
+      ],
+      "shaheen": [
+        "saheen",
+        "shaheean"
+      ],
+      "Shaheenabad": [
+        "shahinaab"
+      ],
+      "Shaherzad": [
+        "saherzad"
+      ],
+      "Shahzad": [
+        "sahzad",
+        "shahzaed",
+        "shahzzad"
+      ],
+      "Shaima": [
+        "saaema",
+        "saeema",
+        "saeima",
+        "saema",
+        "saemae",
+        "saemah",
+        "saeyma",
+        "saimae",
+        "sameeya",
+        "samiya",
+        "shaemae",
+        "shameema"
+      ],
+      "Shaiqa": [
+        "saiqa",
+        "shaaika",
+        "shaeqaa",
+        "shaika"
+      ],
+      "Shakargarh": [
+        "shakaragadh"
+      ],
+      "Shalimar": [
+        "shaaleemaar",
+        "shalmar"
+      ],
+      "shalwar": [],
+      "shanakht": [
+        "shinaakhat",
+        "shinaakht"
+      ],
+      "Shaneela": [
+        "saneela"
+      ],
+      "share": [
+        "sheyar"
+      ],
+      "Sharif": [
+        "nawaashareeph",
+        "shaaryph",
+        "sharf",
+        "sharifa",
+        "shrif"
+      ],
+      "Shazia": [
+        "sazia",
+        "shaajiya",
+        "shaehzia",
+        "shahhzea",
+        "shahhzia",
+        "shahhzya"
+      ],
+      "Sheeza": [
+        "seeza",
+        "shaeeza",
+        "sheehza",
+        "sheeyza",
+        "shiiza"
+      ],
+      "Shehbaz": [
+        "sehbaz",
+        "shaehbaz",
+        "shehabaaj"
+      ],
+      "Shehla": [
+        "sehla",
+        "shaehla",
+        "shahla",
+        "shehlla"
+      ],
+      "Shehzad": [
+        "sehzad",
+        "shaehzad",
+        "shahajaad",
+        "sheehzad"
+      ],
+      "sheikh": [
+        "seikh",
+        "shaek",
+        "shaekh",
+        "shaik",
+        "shaikha",
+        "shayk",
+        "sheikha",
+        "shekh"
+      ],
+      "Sheikhupura": [
+        "shaikupura",
+        "shaykupura"
+      ],
+      "sher": [
+        "shaer",
+        "shear",
+        "sheer",
+        "sherh",
+        "sherr",
+        "shher",
+        "shir"
+      ],
+      "Sheraz": [
+        "seraz",
+        "shaeraz",
+        "shaharaaj",
+        "shehraz",
+        "sherazh"
+      ],
+      "Shifa": [
+        "sheepha",
+        "sheephaa",
+        "shfa",
+        "shif"
+      ],
+      "shift": [
+        "shipht"
+      ],
+      "shifts": [
+        "siphte"
+      ],
+      "shikayat": [],
+      "ship": [
+        "sheep",
+        "shipa"
+      ],
+      "Shirazi": [
+        "shairazi",
+        "sheeraze"
+      ],
+      "shirt": [
+        "shart"
+      ],
+      "shop": [
+        "shap",
+        "shopa"
+      ],
+      "shopping": [],
+      "Shoukat": [
+        "shaoukat",
+        "shaukat",
+        "shoukad"
+      ],
+      "Shua": [
+        "shaua",
+        "shoaa",
+        "shoae",
+        "shoah",
+        "shuaah",
+        "suha"
+      ],
+      "Shuja": [
+        "shauja",
+        "shojae",
+        "shojah",
+        "suja"
+      ],
+      "Shujaabad": [
+        "shjaabad",
+        "shujaabat"
+      ],
+      "shukriya": [
+        "phikreeya"
+      ],
+      "shuru": [],
+      "Sialkot": [
+        "salkot",
+        "sehalakot"
+      ],
+      "Siddique": [
+        "sddique",
+        "seeddeeque",
+        "seeddikue",
+        "seeddiqooe",
+        "seeddique",
+        "seeddyque",
+        "siddiqe",
+        "siddque"
+      ],
+      "Siddiqui": [
+        "sadeeki",
+        "seddequi",
+        "seddiqoi",
+        "seddique",
+        "siddeeki",
+        "siddeque"
+      ],
+      "side": [
+        "saaid",
+        "saait"
+      ],
+      "Sidra": [
+        "sdra",
+        "seedra",
+        "seedraa",
+        "sidara",
+        "siddra",
+        "sidr"
+      ],
+      "sign": [
+        "saain"
+      ],
+      "silver": [
+        "seelver",
+        "seelwer",
+        "silvera",
+        "silvre",
+        "silwar",
+        "slver"
+      ],
+      "Silvercenter": [],
+      "simple": [
+        "sinpal"
+      ],
+      "simply": [
+        "sinpali"
+      ],
+      "singh": [
+        "seeng",
+        "sinagh",
+        "singha",
+        "sngh",
+        "ssingh",
+        "syng"
+      ],
+      "sir": [
+        "sar",
+        "seer",
+        "sira",
+        "sirr",
+        "ssir"
+      ],
+      "sirf": [
+        "sirph"
+      ],
+      "sitara": [],
+      "siver": [
+        "seever",
+        "shower",
+        "sivera",
+        "sivre",
+        "ssiver",
+        "sver"
+      ],
+      "six": [
+        "siks"
+      ],
+      "smear": [
+        "smeaer",
+        "smeahr",
+        "smearh",
+        "smearr",
+        "smehar",
+        "smiaer",
+        "smiyar"
+      ],
+      "SMS": [
+        "esaemaes"
+      ],
+      "Snapchat": [],
+      "society": [
+        "sciety",
+        "socety"
+      ],
+      "sodium": [
+        "sodiyam"
+      ],
+      "sofia": [
+        "sofea",
+        "sofeae",
+        "sofeah",
+        "sofeea",
+        "soffia",
+        "sofiya"
+      ],
+      "soft": [
+        "sopht"
+      ],
+      "Sohail": [
+        "sahel",
+        "shail",
+        "sohaila",
+        "suhel"
+      ],
+      "solah": [
+        "sala"
+      ],
+      "sorry": [
+        "sory"
+      ],
+      "specialist": [
+        "speshalist"
+      ],
+      "specialty": [
+        "speshaliti",
+        "speshalti"
+      ],
+      "specific": [
+        "specefec",
+        "specifis",
+        "spesific"
+      ],
+      "spray": [
+        "spre"
+      ],
+      "sputum": [],
+      "SSO": [
+        "esso"
+      ],
+      "staff": [
+        "staaphph",
+        "stafa"
+      ],
+      "stain": [
+        "stahen",
+        "stahin",
+        "stahyn"
+      ],
+      "start": [],
+      "startup": [
+        "staartaap"
+      ],
+      "stat": [
+        "satat",
+        "sstat",
+        "stad",
+        "stata"
+      ],
+      "station": [
+        "steshan"
+      ],
+      "STD": [
+        "sndi"
+      ],
+      "stent": [
+        "staind"
+      ],
+      "stethoscope": [],
+      "street": [
+        "satriit"
+      ],
+      "stress": [
+        "stres"
+      ],
+      "stroke": [
+        "strok"
+      ],
+      "student": [],
+      "studies": [
+        "stadeej"
+      ],
+      "subah": [],
+      "subhan": [
+        "sbhan",
+        "subhana"
+      ],
+      "Subhanallah": [],
+      "Subhani": [],
+      "submit": [
+        "sabamit"
+      ],
+      "subsidy": [],
+      "sufi": [
+        "sofe",
+        "sofee",
+        "soofe",
+        "soofy",
+        "soufi"
+      ],
+      "sugar": [
+        "shugar"
+      ],
+      "Sukkar": [
+        "sakkar",
+        "skkar"
+      ],
+      "Sukkur": [
+        "skkur",
+        "soockoor",
+        "sookkoor",
+        "sookqoor",
+        "sooqkoor",
+        "sukkura"
+      ],
+      "Sulehri": [
+        "soleahri",
+        "sulihre"
+      ],
+      "Sulehria": [
+        "sulahariya",
+        "sulehariya"
+      ],
+      "sultan": [
+        "suhltan"
+      ],
+      "Sumaira": [
+        "mahra",
+        "somaeera",
+        "somaeira",
+        "somaera",
+        "somahira",
+        "sumera"
+      ],
+      "sunday": [
+        "sande"
+      ],
+      "sunehra": [
+        "sunahra"
+      ],
+      "suniye": [
+        "sunijie"
+      ],
+      "sunny": [
+        "sani"
+      ],
+      "supplement": [
+        "sapleement"
+      ],
+      "surgeon": [
+        "sarjan"
+      ],
+      "surgery": [
+        "sorgeary"
+      ],
+      "surgical": [],
+      "Surjeet": [
+        "sarajeet",
+        "sorjeaet"
+      ],
+      "suvidha": [],
+      "Swabi": [
+        "swbi"
+      ],
+      "Swat": [
+        "sawat",
+        "swad",
+        "swata"
+      ],
+      "Sydney": [],
+      "syed": [
+        "seeid",
+        "siead",
+        "siid",
+        "ssyed",
+        "syead",
+        "syeda",
+        "syedd",
+        "syedh",
+        "syet"
+      ],
+      "syrup": [
+        "sirap"
+      ],
+      "system": [
+        "sistam"
+      ],
+      "T3": [
+        "tee3"
+      ],
+      "T4": [
+        "tee4"
+      ],
+      "ta": [],
+      "tabiyat": [],
+      "tablet": [
+        "taibalet"
+      ],
+      "taj": [
+        "taaej",
+        "taahj",
+        "taajh",
+        "taaz",
+        "taeej",
+        "taja",
+        "taje",
+        "tajh",
+        "ttaj"
+      ],
+      "tak": [
+        "daam"
+      ],
+      "takleef": [],
+      "Talha": [
+        "taalhae"
+      ],
+      "Tanveer": [
+        "tanaweer"
+      ],
+      "taqreeban": [
+        "takareer"
+      ],
+      "taraf": [
+        "tarph"
+      ],
+      "Tariq": [
+        "taarik",
+        "taeriq",
+        "tahreq",
+        "tahriq",
+        "tahryq",
+        "tarik"
+      ],
+      "tashbeeb": [
+        "tashabeeb"
+      ],
+      "Tauseef": [
+        "tawseef"
+      ],
+      "tax": [
+        "taiks"
+      ],
+      "taxi": [
+        "taiksi"
+      ],
+      "Taxila": [
+        "taiksala",
+        "taxil",
+        "taxla"
+      ],
+      "Tayyab": [
+        "taaiyab",
+        "taayiab",
+        "taeeiab",
+        "taeeyab",
+        "taeyyab"
+      ],
+      "Tayyaba": [
+        "tabhi",
+        "teiba"
+      ],
+      "tayyar": [
+        "taiyaar"
+      ],
+      "tayyari": [],
+      "taza": [],
+      "Tazeem": [
+        "taajeen"
+      ],
+      "TB": [
+        "teebi",
+        "tibi"
+      ],
+      "teacher": [
+        "teechar"
+      ],
+      "teaching": [
+        "teachng"
+      ],
+      "technician": [
+        "technishiyan"
+      ],
+      "technology": [
+        "teknoloji"
+      ],
+      "Tehmina": [
+        "tahameena"
+      ],
+      "Tehreem": [
+        "tahadeem",
+        "tahareen"
+      ],
+      "Tehseen": [
+        "tahaseen",
+        "teahseen"
+      ],
+      "tek": [
+        "taik",
+        "teka",
+        "tekk",
+        "ttek"
+      ],
+      "Telegram": [],
+      "Telenor": [],
+      "tennis": [],
+      "tension": [
+        "tenshan"
+      ],
+      "tera": [
+        "tairah"
+      ],
+      "test": [
+        "teaast",
+        "testh",
+        "tiist"
+      ],
+      "tests": [
+        "teaasts",
+        "testsh",
+        "tiists"
+      ],
+      "thanda": [],
+      "thank": [
+        "thaink"
+      ],
+      "the": [
+        "thea",
+        "theaa",
+        "theea",
+        "theee",
+        "theeh",
+        "theh",
+        "thii"
+      ],
+      "theek": [
+        "teek",
+        "thiik"
+      ],
+      "thermometer": [
+        "tharmaameetar"
+      ],
+      "these": [
+        "thease",
+        "theese",
+        "theesi",
+        "thehse",
+        "thesea",
+        "thesee",
+        "theseh",
+        "thisi"
+      ],
+      "thirty": [
+        "tharti"
+      ],
+      "thora": [],
+      "thori": [],
+      "thousand": [
+        "thaaujend"
+      ],
+      "three": [
+        "teri"
+      ],
+      "through": [
+        "throo"
+      ],
+      "thyroid": [
+        "taaraait",
+        "thaayaroyadik"
+      ],
+      "ticket": [
+        "tikat"
+      ],
+      "tie": [
+        "taai"
+      ],
+      "tikha": [],
+      "time": [
+        "taaem",
+        "taaim",
+        "taim",
+        "taym",
+        "teemi",
+        "temea",
+        "temee",
+        "tihme"
+      ],
+      "Timergara": [],
+      "timing": [
+        "taaiming",
+        "teemeeng",
+        "timinga"
+      ],
+      "timings": [
+        "taaimings",
+        "timingsa"
+      ],
+      "tip": [
+        "teeep",
+        "tiihp",
+        "tiiph",
+        "tiph"
+      ],
+      "TMT": [
+        "teeemti"
+      ],
+      "toba": [],
+      "today": [
+        "todahi"
+      ],
+      "toofan": [],
+      "Toor": [
+        "tohor",
+        "toohr",
+        "toorh",
+        "toorr",
+        "toour",
+        "tuohr",
+        "tuur"
+      ],
+      "total": [
+        "ttal"
+      ],
+      "town": [
+        "taaun",
+        "towna"
+      ],
+      "trade": [],
+      "train": [
+        "tren"
+      ],
+      "transfer": [
+        "traansaphar"
+      ],
+      "trauma": [
+        "trawmaa",
+        "troumaa"
+      ],
+      "trigger": [
+        "trigar"
+      ],
+      "triglycerides": [
+        "traaiglisaraaids"
+      ],
+      "triple": [
+        "tepal"
+      ],
+      "TSH": [
+        "teeesaech"
+      ],
+      "tulsi": [
+        "tolse",
+        "tolsee",
+        "toolse",
+        "toolsi",
+        "toulsi"
+      ],
+      "tumhara": [],
+      "tumhein": [
+        "tumhen"
+      ],
+      "tumor": [
+        "tyoomar"
+      ],
+      "Twitter": [],
+      "two": [
+        "too"
+      ],
+      "typhoid": [
+        "taaiphaaid",
+        "tayphaaid"
+      ],
+      "ud": [
+        "uaad",
+        "udee"
+      ],
+      "udhar": [
+        "adar"
+      ],
+      "uet": [
+        "ooet",
+        "ueta",
+        "yooeeti"
+      ],
+      "Ufone": [],
+      "ug": [
+        "uaag",
+        "ueeg"
+      ],
+      "ugs": [
+        "ugsee",
+        "ugsh",
+        "ugsi",
+        "ugsy",
+        "uhgs",
+        "uugsh",
+        "uuhgs",
+        "uuugs"
+      ],
+      "ul": [
+        "ueel",
+        "uiil"
+      ],
+      "ullah": [],
+      "ulti": [
+        "ulati"
+      ],
+      "ultrasound": [
+        "aalterasaaund",
+        "alterasaund",
+        "altraasaaund",
+        "saaund"
+      ],
+      "Umar": [
+        "omar",
+        "umr",
+        "umra"
+      ],
+      "umer": [
+        "uhmaar",
+        "uhmar",
+        "uhmeer",
+        "umaahr",
+        "umaar",
+        "umaer",
+        "umahr",
+        "umarh",
+        "umarr",
+        "umeer",
+        "umehr",
+        "umerh",
+        "umerr",
+        "ummar",
+        "ummer",
+        "uumar",
+        "uumer"
+      ],
+      "un": [
+        "uiin",
+        "une",
+        "unee",
+        "unh"
+      ],
+      "under": [
+        "undehr",
+        "undiir"
+      ],
+      "ungli": [
+        "ungalee",
+        "ungali"
+      ],
+      "unhein": [
+        "unhen"
+      ],
+      "unhone": [],
+      "university": [
+        "yooniwarsiti"
+      ],
+      "unka": [
+        "unakaa"
+      ],
+      "unki": [
+        "unaki"
+      ],
+      "Unsa": [
+        "ansa",
+        "uhnsaa",
+        "unsaae"
+      ],
+      "upar": [
+        "oopar"
+      ],
+      "update": [
+        "apadet"
+      ],
+      "upload": [
+        "apalod"
+      ],
+      "upto": [
+        "upptoo",
+        "uptooh"
+      ],
+      "ur": [
+        "uaar",
+        "ueer"
+      ],
+      "urea": [
+        "ureha",
+        "uriae",
+        "uriah",
+        "yooriya"
+      ],
+      "uric": [
+        "yoorik"
+      ],
+      "urine": [
+        "uhrine",
+        "urenea",
+        "urihne",
+        "yoorin"
+      ],
+      "urologist": [
+        "yoorolojist"
+      ],
+      "Usama": [
+        "uhsama",
+        "usaema",
+        "usamma"
+      ],
+      "use": [
+        "yooj",
+        "yooz"
+      ],
+      "uska": [
+        "usakaa"
+      ],
+      "Usman": [
+        "asaan",
+        "oosmaan",
+        "oosman",
+        "uhsmaan",
+        "usaman",
+        "usmana",
+        "usmanh",
+        "usmn",
+        "ussman",
+        "uthman"
+      ],
+      "uthai": [],
+      "uthta": [
+        "tootta"
+      ],
+      "uz": [
+        "uaaz",
+        "ueez"
+      ],
+      "Uzair": [
+        "uhzair",
+        "uuzair"
+      ],
+      "Uzma": [
+        "usmaah",
+        "uuzmae",
+        "uuzmah"
+      ],
+      "vaccination": [
+        "vaccinatin",
+        "waikseeneshan"
+      ],
+      "vaccine": [],
+      "Vehari": [],
+      "verify": [
+        "wereephaai"
+      ],
+      "Victoria": [
+        "vctoria",
+        "victora",
+        "victria"
+      ],
+      "vid": [
+        "wid"
+      ],
+      "video": [
+        "weediyo"
+      ],
+      "vidya": [],
+      "vidyalay": [],
+      "vigyan": [],
+      "village": [
+        "wilej"
+      ],
+      "viral": [
+        "waayaral"
+      ],
+      "visa": [
+        "weeza"
+      ],
+      "visit": [
+        "wijit",
+        "wizat",
+        "wizit"
+      ],
+      "vitamin": [],
+      "vitamins": [],
+      "VLDL": [
+        "weeeladeeel"
+      ],
+      "voice": [
+        "wois"
+      ],
+      "waghaira": [
+        "wagairah"
+      ],
+      "wah": [
+        "waha"
+      ],
+      "wahab": [
+        "waahabb"
+      ],
+      "wahan": [],
+      "wait": [
+        "wet"
+      ],
+      "wala": [
+        "wal",
+        "walla",
+        "wla"
+      ],
+      "walaikum": [
+        "waalko",
+        "walikamuslaam"
+      ],
+      "Walayat": [],
+      "Waleed": [
+        "vaalid",
+        "vaalyd",
+        "valid",
+        "valyd",
+        "waalyd",
+        "waleet",
+        "walyd"
+      ],
+      "walid": [],
+      "Walton": [
+        "waltn"
+      ],
+      "Waqar": [
+        "waeqar",
+        "wahqar",
+        "waqaer",
+        "waqahr",
+        "waqarh",
+        "waqarr",
+        "waqqar"
+      ],
+      "Waqas": [
+        "vakas",
+        "waeqas",
+        "wahqas",
+        "wakaas",
+        "waqaes",
+        "waqahs",
+        "waqash",
+        "waqass",
+        "waqqas"
+      ],
+      "waqt": [],
+      "Warburton": [],
+      "Waseem": [
+        "waeseem",
+        "wahseem",
+        "wahseim",
+        "wahsiem"
+      ],
+      "washroom": [],
+      "Wasim": [
+        "waesim",
+        "wahsem",
+        "wahsim",
+        "wahsym"
+      ],
+      "Wazirabad": [
+        "wazirabat"
+      ],
+      "welcome": [
+        "wailkam",
+        "welakam"
+      ],
+      "wellness": [
+        "wellnesas",
+        "wellnessa"
+      ],
+      "west": [
+        "wesat",
+        "wesd",
+        "westa"
+      ],
+      "Whatsapp": [
+        "wats ap"
+      ],
+      "where": [
+        "wer",
+        "weyar"
+      ],
+      "white": [
+        "whaait"
+      ],
+      "wicket": [],
+      "Widal": [],
+      "wifi": [
+        "waaeephaai"
+      ],
+      "will": [
+        "wiihll"
+      ],
+      "Willingdon": [
+        "bilingatan"
+      ],
+      "with": [
+        "weeth",
+        "weth",
+        "wihth",
+        "wiit",
+        "witth",
+        "wyyth"
+      ],
+      "withdraw": [
+        "withadro"
+      ],
+      "without": [
+        "widaaut"
+      ],
+      "woh": [
+        "wo"
+      ],
+      "X-ray": [
+        "eks re",
+        "eksaray",
+        "eksare",
+        "eksre",
+        "ksray"
+      ],
+      "yahan": [],
+      "Yahoo": [],
+      "Yaqoob": [],
+      "yar": [
+        "eeaar",
+        "eear",
+        "iyaar",
+        "yaara",
+        "yara"
+      ],
+      "Yasir": [
+        "naasir",
+        "yaesir"
+      ],
+      "Yasmeen": [
+        "yahsmeen",
+        "yahsmein",
+        "yahsmien"
+      ],
+      "yeh": [
+        "yah",
+        "ye"
+      ],
+      "you": [],
+      "Younas": [
+        "yoonaes",
+        "yoonahs"
+      ],
+      "Yousaf": [],
+      "YouTube": [
+        "yootyoob"
+      ],
+      "Yusuf": [],
+      "zaban": [],
+      "Zafar": [
+        "zaaffar",
+        "zaeffar",
+        "zaffaar",
+        "zaffaer",
+        "zaffahr",
+        "zaffarh",
+        "zaffarr",
+        "zafphar",
+        "zahffar",
+        "zaphfar"
+      ],
+      "Zaheer": [
+        "zaheehr"
+      ],
+      "zahra": [
+        "jara",
+        "zaaehra",
+        "zara",
+        "zzahra"
+      ],
+      "Zaid": [
+        "jaahid",
+        "jahid",
+        "zaahed",
+        "zaahid",
+        "zaahyd",
+        "zaehid",
+        "zaheed",
+        "zahhed",
+        "zahhid",
+        "zahhyd"
+      ],
+      "Zaigham": [
+        "zekaam"
+      ],
+      "Zainab": [
+        "jaina",
+        "zaenaab",
+        "zaenaeb",
+        "zaenahb",
+        "zenab"
+      ],
+      "Zaka": [
+        "zaeka",
+        "zahka",
+        "zakae",
+        "zakah",
+        "zakka"
+      ],
+      "Zakria": [
+        "jakariya",
+        "jikriya"
+      ],
+      "zaman": [
+        "zaeman",
+        "zahman",
+        "zamaen",
+        "zamahn",
+        "zamanh",
+        "zamman",
+        "zzaman"
+      ],
+      "Zameer": [
+        "jameed",
+        "zahmeir",
+        "zahmier"
+      ],
+      "Zarghoon": [
+        "jargun",
+        "zarghoona"
+      ],
+      "zaroorat": [],
+      "Zayed": [
+        "jaied",
+        "jayed",
+        "zayd",
+        "zayeda",
+        "zayet",
+        "zzayed"
+      ],
+      "zero": [
+        "jeero"
+      ],
+      "zerva": [
+        "jirwa",
+        "zarwa",
+        "zehrva",
+        "zervae",
+        "zervva"
+      ],
+      "Zeshan": [
+        "zeeishan",
+        "zeesan",
+        "zeeshaen",
+        "ziishan"
+      ],
+      "Zia": [
+        "zeae",
+        "zeah",
+        "zeea",
+        "ziha"
+      ],
+      "zindagi": [],
+      "Zobia": [
+        "jobiya",
+        "zobbia",
+        "zobeah"
+      ],
+      "Zong": [],
+      "Zoom": [],
+      "zukam": [],
+      "Zunaira": [
+        "junera",
+        "zonahira"
+      ],
+      "zyada": []
+    },
+    "phrases": {
+      "aa ke": [
+        "aake"
+      ],
+      "aage peechhe": [
+        "aagepeeche"
+      ],
+      "aankh dard": [
+        "aankhadard"
+      ],
+      "aap ke": [
+        "aapke"
+      ],
+      "aap ko": [
+        "aapko"
+      ],
+      "aap ne": [
+        "aapne"
+      ],
+      "aap se": [
+        "aapse"
+      ],
+      "assalam o alaikum": [
+        "assalaamualaikum",
+        "assalamoalaikum",
+        "assalamualaikum",
+        "salaam",
+        "salaamualaikum",
+        "salaamullaah",
+        "slaam"
+      ],
+      "bataiye ga": [
+        "bataaiega"
+      ],
+      "bed ridden": [
+        "bedarid"
+      ],
+      "beta beti": [
+        "betaabeti"
+      ],
+      "beta HCG": [
+        "beeta echaseeji"
+      ],
+      "bhai behan": [
+        "bhaaeebahan",
+        "bhaaibahan"
+      ],
+      "blood culture": [
+        "blood kalchar"
+      ],
+      "blood pressure": [
+        "bladapreshar",
+        "bladpreshar",
+        "bladpressure"
+      ],
+      "blood pressure monitor": [
+        "blood pressure monitar"
+      ],
+      "bone density": [
+        "bon densiti"
+      ],
+      "call back": [
+        "kolabaik"
+      ],
+      "cardiac profile": [
+        "kaardiyak profile"
+      ],
+      "chughtai lab": [
+        "chakkaaile",
+        "chaupaail",
+        "chikataaeela",
+        "chikataaila",
+        "chikatalaab",
+        "chitaaila",
+        "chokhaail",
+        "chukaai",
+        "chukataaila",
+        "chukataalaab",
+        "chuktaailaab",
+        "chuktaaile",
+        "chuktaalaar",
+        "chuppaai",
+        "chuppaailaak",
+        "chuptaalaab",
+        "chutaailaib",
+        "chutaalaar",
+        "taailaab"
+      ],
+      "complete blood count": [
+        "kampleet blood kaaunt"
+      ],
+      "COVID PCR": [
+        "kowid peeseeaar"
+      ],
+      "COVID test": [
+        "kowid test"
+      ],
+      "credit card": [
+        "kraidit kaard"
+      ],
+      "CT scan": [
+        "seetee skain",
+        "seeti scan"
+      ],
+      "daant dard": [
+        "daantadard",
+        "daantdard"
+      ],
+      "dijiye ga": [
+        "deejiega"
+      ],
+      "dil ki bimari": [
+        "dilakeebeemari"
+      ],
+      "din bhar": [
+        "dinabhar",
+        "dinbhar"
+      ],
+      "doctor sahab": [
+        "janasaahab"
+      ],
+      "ek dum": [
+        "ekadam"
+      ],
+      "fertility profile": [
+        "phartiliti profile"
+      ],
+      "folic acid": [
+        "pholik acid"
+      ],
+      "follow up": [
+        "pholo up"
+      ],
+      "form bharein": [
+        "phorm bharen"
+      ],
+      "free T3": [
+        "phri t3"
+      ],
+      "free T4": [
+        "phri t4"
+      ],
+      "gale dard": [
+        "galedard"
+      ],
+      "gale kharaash": [
+        "galekharaash"
+      ],
+      "game over": [
+        "gem oowar"
+      ],
+      "genetic test": [
+        "jenetik test"
+      ],
+      "haath paer": [
+        "haathapair",
+        "haathpair"
+      ],
+      "hafte bhar": [
+        "haphtebhar"
+      ],
+      "hard copy": [
+        "haard copy"
+      ],
+      "hat ke": [
+        "hatke"
+      ],
+      "health check": [
+        "helth check"
+      ],
+      "hepatitis A": [
+        "hepatitis e"
+      ],
+      "hepatitis B": [
+        "hepatitis bi"
+      ],
+      "hepatitis C": [
+        "hepatitis si"
+      ],
+      "home service": [
+        "home sarwis"
+      ],
+      "hormone profile": [
+        "hormon profile"
+      ],
+      "i think": [
+        "aai think"
+      ],
+      "idhar udhar": [
+        "idharaudhar"
+      ],
+      "is se": [
+        "isse",
+        "usse"
+      ],
+      "ji ji": [
+        "jeeji"
+      ],
+      "jis main": [
+        "jisamen"
+      ],
+      "kaan dard": [
+        "kaanadard",
+        "kaandard"
+      ],
+      "kamar dard": [
+        "kamaradard",
+        "kamardard"
+      ],
+      "kar ke": [
+        "karke"
+      ],
+      "kar raha hoon": [
+        "karaaoon"
+      ],
+      "karwaiye ga": [
+        "karawaaiega"
+      ],
+      "khaali pet": [
+        "khali pet"
+      ],
+      "khansi zukam": [
+        "khaansijukam"
+      ],
+      "khuda hafiz": [
+        "khudaa hafiz"
+      ],
+      "ki zaroorat": [
+        "kizarat"
+      ],
+      "kidney function": [
+        "kidni phankshan"
+      ],
+      "kijiye ga": [
+        "keejiega"
+      ],
+      "kinhon ne": [
+        "kinhonne"
+      ],
+      "kisi ne": [
+        "kisine"
+      ],
+      "lab technician": [
+        "lab teknishiyan"
+      ],
+      "lag gaye": [
+        "lag gae"
+      ],
+      "lahore se": [
+        "laahausim"
+      ],
+      "lijiye ga": [
+        "leejiega"
+      ],
+      "likhwaiye ga": [
+        "likhaaega"
+      ],
+      "lipid profile": [
+        "lipid prophaail"
+      ],
+      "liver function": [
+        "liver phankshan"
+      ],
+      "maa baap": [
+        "maabaap",
+        "maanbaap"
+      ],
+      "mahine bhar": [
+        "mahinebhar"
+      ],
+      "miss ayesha": [
+        "misaaisha",
+        "misaaishe"
+      ],
+      "normal delivery": [
+        "normal dileewri"
+      ],
+      "oopar neeche": [
+        "oopaneeche"
+      ],
+      "Pap smear": [
+        "paip smiyar",
+        "paipsmiyar"
+      ],
+      "pet dard": [
+        "petadard",
+        "petdard"
+      ],
+      "pick up": [
+        "pik ap",
+        "pikaap"
+      ],
+      "PIN code": [
+        "piincode"
+      ],
+      "pooch ke": [
+        "poochke"
+      ],
+      "RA factor": [
+        "ra phaiktar"
+      ],
+      "raat bhar": [
+        "raatabhar",
+        "raatbhar"
+      ],
+      "re check": [
+        "reechek"
+      ],
+      "red cell": [
+        "red sale"
+      ],
+      "renal function": [
+        "reenal phankshan"
+      ],
+      "report download karein": [
+        "report download karen"
+      ],
+      "routine checkup": [
+        "rooteen checkup"
+      ],
+      "saal bhar": [
+        "saalabhar",
+        "saalbhar"
+      ],
+      "se related": [
+        "seleted"
+      ],
+      "seene dard": [
+        "seenedard"
+      ],
+      "sheet bukhaar": [
+        "sheetabukhaar"
+      ],
+      "sir dard": [
+        "saradard",
+        "sardard",
+        "siradard"
+      ],
+      "SMS mila": [
+        "sms mila"
+      ],
+      "soft copy": [
+        "sopht copy"
+      ],
+      "stool culture": [
+        "stool kalchar"
+      ],
+      "stress test": [
+        "stres test"
+      ],
+      "sugar monitor": [
+        "sugar monitar"
+      ],
+      "T3 free": [
+        "t3 phri"
+      ],
+      "T4 free": [
+        "t4 phri"
+      ],
+      "tax inclusive": [
+        "taiks inkloosiw"
+      ],
+      "thank you": [
+        "thaink yoo"
+      ],
+      "thyroid profile": [
+        "thyroid prophaail"
+      ],
+      "umar bhar": [
+        "umrabhar"
+      ],
+      "un se": [
+        "unse"
+      ],
+      "uric acid": [
+        "yoorik esid"
+      ],
+      "urine culture": [
+        "urine kalchar"
+      ],
+      "urine routine": [
+        "urine rooteen"
+      ],
+      "us main": [
+        "usamen"
+      ],
+      "vitamin B": [
+        "vitamin bi"
+      ],
+      "vitamin C": [
+        "vitamin si"
+      ],
+      "vitamin D": [
+        "vitamin di"
+      ],
+      "vitamin D3": [
+        "vitamin dee3"
+      ],
+      "vitamin E": [
+        "vitamin e",
+        "vitamin i"
+      ],
+      "WhatsApp par": [
+        "whaatsaep par"
+      ],
+      "white cell": [
+        "whaait sale"
+      ],
+      "yahan wahan": [
+        "yahaanwahaan"
+      ],
+      "yeh faisla": [
+        "i fisla"
+      ]
+    }
+  }
+}

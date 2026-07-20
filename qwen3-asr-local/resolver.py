@@ -36,6 +36,7 @@ Usage:
 """
 
 import json
+import math
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -44,6 +45,25 @@ from typing import Optional
 SCRIPT_DIR = Path(__file__).resolve().parent
 V2 = SCRIPT_DIR / "data" / "lexicons_v2.json"
 XLSX = SCRIPT_DIR / "data" / "CLL analysis" / "turnwise_results_eval_full.xlsx"
+
+# ── Cross-word collision protection ──────────────────────────────────────────
+# Words that normalise to the same key as an unrelated word. Adding them to the
+# known-correct set (G2) prevents the fuzzy matcher from ever touching them.
+#   naila / neela  ->  both normalise to "nela"  (name vs "blue")
+#   faur  / for    ->  both normalise to "for"   ("immediately" vs English "for")
+#   aaye  / eye    ->  both normalise to "e"
+#   aayen / ain    ->  both normalise to "en"
+#   daina / dena   ->  both normalise to "dena"  (same meaning, different spelling)
+#   chai  / chhe   ->  both normalise to "ce"    ("tea" vs "six")
+#   omair / omer   ->  both normalise to "omer"  (different names)
+CROSS_WORD_PROTECTED = {
+    "naila", "neela",
+    "faur", "for",
+    "aaye", "eye",
+    "aayen", "ain",
+    "chai", "chhe",
+    "omair", "omer",
+}
 
 # ── G3: minimum length to attempt a fuzzy match ──────────────────────────────
 # This is the length guard we deliberately DEFERRED from the lexicon cleanup:
@@ -61,8 +81,19 @@ XLSX = SCRIPT_DIR / "data" / "CLL analysis" / "turnwise_results_eval_full.xlsx"
 MIN_FUZZY_LEN = 8
 
 # ── G4: distance budget by word length ───────────────────────────────────────
-# A longer word can absorb more noise before the match becomes a coin-flip.
-def max_distance(n: int) -> int:
+# Uses a proportional threshold (floor) instead of hard-coded tiers.
+# floor() is stricter on short words, preventing false positives.
+#
+# At threshold 0.25:
+#     len  8 → budget 2       len 12 → budget 3
+#     len  9 → budget 2       len 13 → budget 3
+#     len 10 → budget 2       len 14 → budget 3
+#     len 11 → budget 2       len 16 → budget 4
+EDIT_DISTANCE_THRESHOLD = 0.20
+
+
+def _max_distance_fixed(n: int) -> int:
+    """Original hard-coded tier-based distance budget (kept for reference)."""
     if n < MIN_FUZZY_LEN:
         return 0
     if n <= 7:
@@ -70,6 +101,15 @@ def max_distance(n: int) -> int:
     if n <= 11:
         return 2
     return 3
+
+
+def max_distance(token_len: int, candidate_len: int) -> int:
+    """
+    Proportional edit-distance budget based on the longer of the two words.
+    Uses floor (not round) to be stricter on short words and avoid false positives.
+    Note: G3 already ensures the raw word is >= MIN_FUZZY_LEN before this is called.
+    """
+    return math.floor(max(token_len, candidate_len) * EDIT_DISTANCE_THRESHOLD)
 
 
 # ── normalisation — collapse phonetic noise, but KEEP the vowel skeleton ─────
@@ -88,10 +128,13 @@ _SUBS = [
     (r"ph", "f"),            # phes  / fes
     (r"kh|q", "k"),          # khan  / qan
     (r"gh", "g"),            # chughtai / chugtai
-    (r"sh", "s"),            # sh / s
+    # (r"sh", "s"),            # DISABLED: sh (ش) and s (س) are distinct Urdu
+    #                           # letters; collides sabir↔Shabbir, chai↔chhe
     (r"ch", "c"),
-    (r"th|dh", "t"),
-    (r"[zj]", "j"),          # Hindi j <-> Urdu z
+    # (r"th|dh", "t"),         # DISABLED: th/dh/t are distinct sounds in Urdu;
+    #                           # collides tek↔theek, dha↔ta, dhai↔the
+    # (r"[zj]", "j"),          # DISABLED: z and j are distinct phonemes in Urdu,
+    #                           # collapsing them causes false matches
     (r"w", "v"),
     (r"ee|ie|y", "i"),       # vowel LENGTH is noise: nadee / nadi
     (r"oo|ou", "u"),
@@ -155,6 +198,7 @@ class Resolver:
         # G2: words that are already correct and must never be touched
         self.known_correct = {c.lower() for c in self.canonicals}
         self.known_correct |= {c.lower() for c in raw["phrases"]}
+        self.known_correct |= CROSS_WORD_PROTECTED
         if gold_vocab:
             self.known_correct |= gold_vocab
 
@@ -204,20 +248,21 @@ class Resolver:
             return word
 
         # bounded edit-distance search over similar-length skeletons
-        cap = max_distance(len(lw))
+        cap = max_distance(len(nk), len(nk))  # initial cap based on token itself
         if cap == 0:
             return word
         best, best_d, runner_up = None, cap + 1, cap + 1
         for L in range(len(nk) - cap, len(nk) + cap + 1):
             for cnk, canon in self.by_len.get(L, ()):
-                d = _edit(nk, cnk, cap)
+                pair_cap = max_distance(len(nk), len(cnk))
+                d = _edit(nk, cnk, pair_cap)
                 if d < best_d:
                     best, runner_up, best_d = canon, best_d, d
                 elif d < runner_up:
                     runner_up = d
 
         # G4 — require a clear, unambiguous winner
-        if best is None or best_d > cap:
+        if best is None or best_d > max_distance(len(nk), len(normalise(best))):
             self.stats["no_match"] += 1
             return word
         if runner_up == best_d:
