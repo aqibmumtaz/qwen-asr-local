@@ -35,7 +35,7 @@ sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "benchmark"))
 import openpyxl
 from test_accuracy import diff_words
 
-from .asr import BiasedASR
+from .asr import make_asr
 from .retriever import NameRetriever
 
 XLSX = ROOT / "benchmark" / "lab_test_80_calls_urdu_roman_urdu.xlsx"
@@ -65,7 +65,7 @@ def main():
     ap.add_argument("--limit-chunks", type=int, default=0)
     ap.add_argument("--k", type=int, default=15, help="retrieved names to bias with")
     ap.add_argument("--no-oracle", action="store_true")
-    ap.add_argument("--device", default="cpu", choices=["cpu", "mps", "cuda"])
+    ap.add_argument("--backend", default="remote", choices=["remote", "local"])
     ap.add_argument("--language", default="Hindi")
     args = ap.parse_args()
 
@@ -88,8 +88,8 @@ def main():
     picked = picked[: args.calls]
     print(f"selected {len(picked)} name-heavy calls\n", flush=True)
 
-    asr = BiasedASR(device=args.device)
-    retr = NameRetriever(device=args.device)
+    asr = make_asr(backend=args.backend)
+    retr = NameRetriever()
 
     agg = {c: [0, 0] for c in ("A", "B", "C")}          # matched, total
     name_hit = {c: [0, 0] for c in ("A", "B", "C")}     # names found, names total

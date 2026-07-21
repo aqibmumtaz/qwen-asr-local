@@ -18,15 +18,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .asr import BiasedASR
+from .asr import make_asr
 from .retriever import NameRetriever
 
 
 class TwoPass:
-    def __init__(self, asr: BiasedASR | None = None,
-                 retriever: NameRetriever | None = None,
-                 k: int = 15, language: str = "Hindi"):
-        self.asr = asr or BiasedASR()
+    def __init__(self, asr=None, retriever: NameRetriever | None = None,
+                 backend: str = "remote", k: int = 15, language: str = "Hindi"):
+        self.asr = asr or make_asr(backend=backend)     # remote GPU by default
         self.retriever = retriever or NameRetriever()
         self.k = k
         self.language = language
