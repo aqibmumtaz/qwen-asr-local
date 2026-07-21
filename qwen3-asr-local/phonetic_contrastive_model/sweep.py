@@ -27,14 +27,14 @@ import torch
 import torch.nn.functional as F
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "testing"))
+sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "benchmark"))
 
 import openpyxl  # noqa: E402
 from phonetic_contrastive_model.corrector import PhoneticContrastiveCorrector  # noqa: E402
 from phonetic_contrastive_model.data import make_splits  # noqa: E402
 from test_accuracy import diff_words  # noqa: E402
 
-XLSX = ROOT / "testing" / "lab_test_80_calls_urdu_roman_urdu.xlsx"
+XLSX = ROOT / "benchmark" / "lab_test_80_calls_urdu_roman_urdu.xlsx"
 TOKEN = re.compile(r"[A-Za-z]+")
 THRESHOLDS = [0.50, 0.60, 0.70, 0.80, 0.85, 0.90, 0.93, 0.95, 0.97]
 

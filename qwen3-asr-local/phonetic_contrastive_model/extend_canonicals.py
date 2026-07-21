@@ -27,14 +27,14 @@ from pathlib import Path
 import torch
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "testing"))
+sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "benchmark"))
 
 import openpyxl  # noqa: E402
 from test_accuracy import diff_words, normalize_tokens  # noqa: E402
 from phonetic_contrastive_model.corrector import PhoneticContrastiveCorrector, CKPT  # noqa: E402
 
 DATA = ROOT / "data"
-XLSX = ROOT / "testing" / "lab_test_80_calls_urdu_roman_urdu.xlsx"
+XLSX = ROOT / "benchmark" / "lab_test_80_calls_urdu_roman_urdu.xlsx"
 
 
 def load_calls():
