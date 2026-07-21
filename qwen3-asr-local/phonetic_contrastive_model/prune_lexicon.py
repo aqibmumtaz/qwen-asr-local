@@ -33,21 +33,23 @@ def main():
     lex = raw["lexicons"]["lexicon"]
     phrases = raw["lexicons"]["phrases"]
 
+    # DROP a variant IFF the pipeline's resolve_word() actually recovers it. Using the
+    # exact inference call (not a batched encode) guarantees consistency: every dropped
+    # variant is provably handled by the model at runtime, every kept variant stays in
+    # the exact lexicon. (A batched encode disagrees with single-word inference because
+    # of the GRU padding-masking asymmetry — see PHONETIC_MODEL_PIPELINE.md.)
     kept, dropped, total = {}, 0, 0
     for c, vs in lex.items():
-        single = [v for v in vs if " " not in v]
-        multi = [v for v in vs if " " in v]
-        keep = list(multi)
-        if single:
-            emb = corr._encode(single)
-            sims = emb @ corr.index.t()
-            vals, idxs = sims.max(dim=1)
-            for v, j, s in zip(single, idxs.tolist(), vals.tolist()):
-                total += 1
-                if corr.canonicals[j].lower() == c.lower() and s >= args.threshold:
-                    dropped += 1                      # model recomputes it -> drop
-                else:
-                    keep.append(v)                    # keep (model not confident)
+        keep = []
+        for v in vs:
+            if " " in v:                              # phrases always kept
+                keep.append(v)
+                continue
+            total += 1
+            if corr.resolve_word(v).lower() == c.lower():
+                dropped += 1                          # pipeline recovers it -> drop
+            else:
+                keep.append(v)                        # pipeline can't -> keep in lexicon
         kept[c] = keep
 
     out = {

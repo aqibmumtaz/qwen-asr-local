@@ -160,6 +160,23 @@ the 80-call set. Same metric everywhere — do not change it.
 
 ---
 
+## 7b. KNOWN ISSUE — GRU padding-masking asymmetry (fix on next retrain)
+
+`model.py` uses a **bidirectional GRU** on padded batches. The masked mean/max pool
+excludes pad *positions*, but the **backward GRU reads the padding tokens first**, so real
+positions' backward states are contaminated. Consequence: **batch-encoding (with padding) ≠
+single-word encoding** (measured cosine ~0.98, not 1.0).
+
+- Impact: a batched drop-decision disagreed with single-word `resolve_word`, so an early
+  `prune_lexicon` dropped ~1,100 variants the pipeline can't actually recover.
+- **Current mitigation (in place):** `prune_lexicon` decides with `resolve_word()` (single-word,
+  the exact runtime path). Verified: **0 failures** — every v2 variant resolves under v2.1+model.
+  Deployment path (`resolve_word`) and `eval.py`/`sweep.py` are all single-word, so they are
+  self-consistent; the 97.2% held-out recall is the true deployed number.
+- **Proper fix (do at next retrain):** in `CharEncoder.forward`, use
+  `nn.utils.rnn.pack_padded_sequence` so the GRU never processes padding — then batch==single,
+  and training (batched) matches inference (single). Requires retraining + re-prune + re-extend.
+
 ## 8. Key decisions (don't re-litigate)
 
 - **Char-level, not semantic embedders / fastText** — the signal is phonetic spelling; word
