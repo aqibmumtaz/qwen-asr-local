@@ -76,6 +76,19 @@ class PhoneticContrastiveCorrector:
         self.canonicals.append(canon)
         self._known.add(canon.lower())
 
+    @torch.no_grad()
+    def rebuild_index(self, canonicals: list[str], phrases=()):
+        """Rebuild the whole canonical index from a fresh list — IDEMPOTENT.
+        Encodes uniformly (same batching as train.py's index build) so re-running a
+        generator (prune / extend) is deterministic and internally consistent, regardless
+        of any prior in-place edits to the checkpoint."""
+        self.canonicals = list(canonicals)
+        outs, B = [], 512
+        for i in range(0, len(self.canonicals), B):
+            outs.append(self._encode(self.canonicals[i:i + B]))
+        self.index = F.normalize(torch.cat(outs, dim=0), dim=-1)
+        self._known = {c.lower() for c in self.canonicals} | {str(p).lower() for p in phrases}
+
     # ---- the one method that matters -------------------------------------
     @torch.no_grad()
     def resolve_word(self, word: str) -> str:

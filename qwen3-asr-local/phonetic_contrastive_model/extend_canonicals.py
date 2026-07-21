@@ -76,14 +76,18 @@ def main():
     import hindi_to_roman_urdu as H
     import importlib; importlib.reload(H)
 
+    # v2 is the base. Rebuild the model index from the CLEAN v2 canonicals so this script
+    # is IDEMPOTENT — re-running produces the same v2.2 + same index regardless of any prior
+    # --save-index edits to the checkpoint.
+    v2 = json.loads((DATA / "lexicons_v2.json").read_text(encoding="utf-8"))["lexicons"]
+    base_canon = [c for c in v2["lexicon"] if " " not in c]
+    base_low = {c.lower() for c in base_canon}
     corr = PhoneticContrastiveCorrector.load(threshold=args.threshold)
-    terms = [t.strip() for t in args.terms.read_text(encoding="utf-8").splitlines() if t.strip()]
-    terms = [t for t in terms if t.lower() not in corr._known]     # skip already-known
-    data = load_calls()
+    corr.rebuild_index(base_canon, v2["phrases"])                  # clean v2 base
 
-    def transliterate_all():
-        return {cid: corr.resolve_text(H.transliterate(h)) if corr else H.transliterate(h)
-                for cid, (b, h) in data.items()}
+    terms = [t.strip() for t in args.terms.read_text(encoding="utf-8").splitlines() if t.strip()]
+    terms = [t for t in terms if t.isalpha() and t.lower() not in base_low]   # new, single-word
+    data = load_calls()
 
     def score(outs):
         M = T = 0
@@ -91,11 +95,9 @@ def main():
             d = diff_words(b, outs[cid]); M += d.matched; T += d.total
         return 100 * M / T
 
-    # baseline output = v2 + model on misses.  We emulate "on misses" via the pipeline:
     os.environ["PHONETIC"] = "1"; os.environ["PHONETIC_THRESHOLD"] = str(args.threshold)
     importlib.reload(H)
-    # point the pipeline's corrector at OUR instance so add_canonical is visible
-    H._PHONETIC = corr
+    H._PHONETIC = corr                                            # pipeline uses our clean-base corr
     before = {cid: H.transliterate(h) for cid, (b, h) in data.items()}
     base_acc = score(before)
 
@@ -114,15 +116,14 @@ def main():
                 else:
                     bad.add(y)
 
-    safe = [t for t in terms if t not in bad] if not args.no_validate else terms
+    safe = sorted(t for t in terms if t not in bad) if not args.no_validate else sorted(terms)
 
-    # rebuild corrector index with only the SAFE terms (drop ambiguous)
-    corr2 = PhoneticContrastiveCorrector.load(threshold=args.threshold)
-    for t in safe:
-        corr2.add_canonical(t)
-    H._PHONETIC = corr2
+    # FINAL index = v2 base + safe terms, rebuilt uniformly (idempotent, deterministic).
+    corr.rebuild_index(base_canon + safe, v2["phrases"])
+    H._PHONETIC = corr
     after_safe = {cid: H.transliterate(h) for cid, (b, h) in data.items()}
     safe_acc = score(after_safe)
+    corr2 = corr
 
     print("=" * 68)
     print("  EXTEND CANONICALS — maintainability (add terms, no retraining)")
@@ -136,29 +137,31 @@ def main():
     print(f"  accuracy  base {base_acc:.2f}%  ->  +safe terms {safe_acc:.2f}%  ({safe_acc-base_acc:+.2f})")
     print()
 
-    # write v2.2 lexicon = v2 + safe terms as CANONICALS ONLY (no variants).
-    # Deliberately NOT folding the captured garbles in as exact variants — that would
-    # be re-enumerating (the thing the model exists to avoid) and would overfit this
-    # benchmark. The extended MODEL index recovers the garbles by generalisation.
-    raw = json.loads((DATA / "lexicons_v2.json").read_text(encoding="utf-8"))
-    lex = raw["lexicons"]["lexicon"]
+    # v2.2 = v2.1 (PRUNED, built with THIS extended model) + the safe entity canonicals
+    # (empty variant lists). One compact deployable: pruned variants + all canonicals +
+    # new entity names. Same build_pruned() the standalone prune uses, so v2.2's lexicon
+    # equals the v2.1 file plus exactly the added entities. Garbles are NOT baked in as
+    # variants — the model recovers them by generalisation.
+    from phonetic_contrastive_model.prune_lexicon import build_pruned
+    pruned, dropped, _ = build_pruned(corr2)
     added = 0
     for t in safe:
-        if t not in lex:
-            lex[t] = []                       # canonical only; model generalises variants
+        if t not in pruned:
+            pruned[t] = []
             added += 1
-    raw["_comment"] = ("v2.2 = v2 + entity CANONICALS (no variants) added via "
-                       "extend_canonicals. Deploy with PHONETIC=1: the model recovers "
-                       "their garbled spellings from the extended index, no retraining.")
-    args.out_lexicon.write_text(json.dumps(raw, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"  written: {args.out_lexicon.name}  (+{added} canonicals, no variants)")
+    v2raw = json.loads((DATA / "lexicons_v2.json").read_text(encoding="utf-8"))
+    out = {"_comment": ("v2.2 = v2.1 (pruned) + entity CANONICALS added via extend_canonicals. "
+                        "Deploy with PHONETIC=1: model refills dropped variants + entity garbles."),
+           "lexicons": {"lexicon": pruned, "phrases": v2raw["lexicons"]["phrases"]}}
+    args.out_lexicon.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  written: {args.out_lexicon.name}  (v2.1 pruned base + {added} entity canonicals)")
 
     if args.save_index:
         ck = torch.load(CKPT, map_location="cpu")
         ck["canonicals"] = corr2.canonicals
         ck["canonical_embeddings"] = corr2.index.cpu()
         torch.save(ck, CKPT)
-        print(f"  checkpoint index extended -> {CKPT.name} ({len(corr2.canonicals)} canonicals)")
+        print(f"  checkpoint index -> {CKPT.name} ({len(corr2.canonicals)} canonicals)")
 
 
 if __name__ == "__main__":

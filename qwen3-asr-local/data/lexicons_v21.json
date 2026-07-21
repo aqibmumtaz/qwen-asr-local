@@ -48,9 +48,7 @@
       "aayi": [
         "aai"
       ],
-      "aazma": [
-        "aajma"
-      ],
+      "aazma": [],
       "Abbad": [
         "abbada",
         "abbadd",
@@ -203,7 +201,6 @@
         "afggan"
       ],
       "Afsheen": [
-        "affsheen",
         "afseen",
         "afshaeen",
         "afshi"
@@ -478,7 +475,6 @@
         "aemmara",
         "ahmmara",
         "amara",
-        "ammaara",
         "ammaera",
         "ammahra",
         "ammarae",
@@ -857,8 +853,7 @@
         "avaesya",
         "awaeseea",
         "awaisa",
-        "awaisi",
-        "awaissia"
+        "awaisi"
       ],
       "awan": [
         "aewaan",
@@ -1156,7 +1151,6 @@
         "bataaen"
       ],
       "Batkhela": [
-        "batkelaa",
         "batkhla",
         "btkhela"
       ],
@@ -1203,15 +1197,12 @@
       ],
       "Bhakkar": [
         "bahakkar",
-        "bakkhar",
-        "bhakkara"
+        "bakkhar"
       ],
       "bharein": [
         "bharen"
       ],
-      "Bhattian": [
-        "bhattan"
-      ],
+      "Bhattian": [],
       "Bhimber": [
         "bahimber",
         "beembar",
@@ -1231,9 +1222,7 @@
         "belahl",
         "bihlal"
       ],
-      "bilirubin": [
-        "bileeroobin"
-      ],
+      "bilirubin": [],
       "bill": [
         "bil"
       ],
@@ -1431,8 +1420,7 @@
         "cancr",
         "cancre",
         "kaanker",
-        "kainsar",
-        "kanker"
+        "kainsar"
       ],
       "cantonment": [
         "cantonmend",
@@ -1568,23 +1556,18 @@
         "charj",
         "charjej",
         "charjes",
-        "charrges",
         "chrges"
       ],
       "Charsadda": [
         "char sada",
         "charsadd"
       ],
-      "chaudah": [
-        "chaudaa"
-      ],
+      "chaudah": [],
       "Chaudhri": [
         "caudhri",
-        "chaaodhri",
         "chaaudhre",
         "chaaudhri",
         "chaodhre",
-        "chaodhri",
         "chaodhry",
         "chaudhre",
         "chaudhry",
@@ -1679,7 +1662,6 @@
       "chowki": [
         "chauki",
         "choovci",
-        "choovqi",
         "choowcee",
         "choowcy",
         "choowqee",
@@ -1757,6 +1739,7 @@
         "ceevik",
         "ceevyc",
         "ceevyk",
+        "ceewic",
         "ceewik",
         "ceewyc",
         "civc",
@@ -1861,7 +1844,6 @@
         "clnics",
         "clyneecs",
         "clyneeks",
-        "clynyks",
         "kleeneecs",
         "kleenics",
         "kleeniks",
@@ -1934,7 +1916,6 @@
         "kanfarm",
         "kanfram",
         "kanpharm",
-        "kanphirm",
         "konphram"
       ],
       "confirmation": [
@@ -1960,7 +1941,6 @@
         "cntact",
         "contacd",
         "contacta",
-        "contct",
         "kaantekt"
       ],
       "contraception": [
@@ -2143,8 +2123,7 @@
         "deeve",
         "dehvi",
         "deve",
-        "dive",
-        "divy"
+        "dive"
       ],
       "dha": [
         "daha",
@@ -3124,24 +3103,14 @@
         "aihasan",
         "haasaan",
         "haasan",
-        "haassaan",
-        "haassan",
         "haesan",
         "hahsan",
-        "hahssan",
-        "hasaan",
         "hasaen",
-        "hasahn",
         "hasan",
         "hasanh",
         "hasann",
-        "hasasan",
-        "hassaan",
         "hassaen",
-        "hassahn",
         "hassana",
-        "hassanh",
-        "hassann",
         "hssan"
       ],
       "hawa": [],
@@ -3724,7 +3693,6 @@
         "jamashed",
         "jamsheet",
         "jamshid",
-        "jamshyd",
         "jmsheed",
         "zaamshid",
         "zaamshyd",
@@ -4582,15 +4550,10 @@
         "maaeem"
       ],
       "Madeeha": [
-        "maadeiha",
-        "maadieha",
         "maadiha",
         "maadyha",
-        "maddeeha",
         "maddiha",
         "madeehaar",
-        "madeiha",
-        "madieha",
         "madiiha",
         "madyha"
       ],
@@ -4646,7 +4609,6 @@
       ],
       "Majeed": [
         "maajed",
-        "maajeid",
         "maajid",
         "maajyd",
         "maazeed",
@@ -4654,18 +4616,14 @@
         "maazyd",
         "maejid",
         "mahjed",
-        "mahjeid",
         "mahjid",
         "mahjyd",
         "majed",
         "majeet",
-        "majeid",
         "majid",
-        "majiid",
         "majyd",
         "mazid",
-        "mazyd",
-        "mmajeed"
+        "mazyd"
       ],
       "maksad": [],
       "malaria": [
@@ -5171,7 +5129,6 @@
         "naeeam",
         "naeehm",
         "naeeim",
-        "naeim",
         "naieem",
         "naiem",
         "naiim"
@@ -5380,7 +5337,6 @@
         "neazee",
         "nehaji",
         "neyaji",
-        "niaze",
         "niyaji"
       ],
       "night": [
@@ -6079,7 +6035,6 @@
       ],
       "Raana": [
         "raan",
-        "raanaa",
         "rana",
         "ranaa",
         "rraana"
@@ -6139,21 +6094,17 @@
         "rahulh"
       ],
       "raja": [
-        "raaja",
-        "raajaa",
         "raajae",
         "raajah",
         "raaza",
         "raazaa",
         "raeja",
         "rahja",
-        "rajaa",
         "rajae",
         "rajah",
         "rajja",
         "raza",
-        "razaa",
-        "rraja"
+        "razaa"
       ],
       "rakha": [
         "raaka",
@@ -7011,7 +6962,6 @@
       "Shahdra": [
         "shaadra",
         "shaahadra",
-        "shaahdra",
         "shahdara",
         "shahddra",
         "shahdr",
@@ -7053,8 +7003,6 @@
         "saemae",
         "saemah",
         "saeyma",
-        "sahima",
-        "sahyma",
         "saima",
         "saimaa",
         "saimae",
@@ -7656,7 +7604,6 @@
       ],
       "Tayyaba": [
         "tabhi",
-        "taeyyaba",
         "taiyba",
         "teiba"
       ],
@@ -8305,13 +8252,9 @@
       ],
       "Yasmeen": [
         "yaasmein",
-        "yaasmien",
-        "yaesmeen",
         "yahsmeen",
         "yahsmein",
         "yahsmien",
-        "yasmein",
-        "yasmien",
         "yasmiin"
       ],
       "yeh": [

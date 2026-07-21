@@ -23,34 +23,39 @@ V2 = DATA / "lexicons_v2.json"
 V21 = DATA / "lexicons_v21.json"
 
 
+def build_pruned(corr):
+    """Return (kept:{canonical:[variants]}, dropped_count, total). A variant is DROPPED
+    IFF corr.resolve_word() actually recovers it — the exact runtime path, so every
+    dropped variant is provably handled by the model and every kept one stays in the
+    exact lexicon. (Batched encode disagrees with single-word inference; see
+    PHONETIC_MODEL_PIPELINE.md.) Reused by extend_canonicals so v2.1 and v2.2 share
+    one pruning definition."""
+    lex = json.loads(V2.read_text(encoding="utf-8"))["lexicons"]["lexicon"]
+    kept, dropped, total = {}, 0, 0
+    for c, vs in lex.items():
+        keep = []
+        for v in vs:
+            if " " in v:
+                keep.append(v)
+                continue
+            total += 1
+            if corr.resolve_word(v).lower() == c.lower():
+                dropped += 1
+            else:
+                keep.append(v)
+        kept[c] = keep
+    return kept, dropped, total
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--threshold", type=float, default=0.90)
     args = ap.parse_args()
 
     corr = PhoneticContrastiveCorrector.load(threshold=args.threshold)
+    kept, dropped, total = build_pruned(corr)
     raw = json.loads(V2.read_text(encoding="utf-8"))
-    lex = raw["lexicons"]["lexicon"]
     phrases = raw["lexicons"]["phrases"]
-
-    # DROP a variant IFF the pipeline's resolve_word() actually recovers it. Using the
-    # exact inference call (not a batched encode) guarantees consistency: every dropped
-    # variant is provably handled by the model at runtime, every kept variant stays in
-    # the exact lexicon. (A batched encode disagrees with single-word inference because
-    # of the GRU padding-masking asymmetry — see PHONETIC_MODEL_PIPELINE.md.)
-    kept, dropped, total = {}, 0, 0
-    for c, vs in lex.items():
-        keep = []
-        for v in vs:
-            if " " in v:                              # phrases always kept
-                keep.append(v)
-                continue
-            total += 1
-            if corr.resolve_word(v).lower() == c.lower():
-                dropped += 1                          # pipeline recovers it -> drop
-            else:
-                keep.append(v)                        # pipeline can't -> keep in lexicon
-        kept[c] = keep
 
     out = {
         "_comment": f"v2 minus variants the phonetic model recovers >= {args.threshold}. "
