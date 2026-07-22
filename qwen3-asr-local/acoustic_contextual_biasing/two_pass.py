@@ -25,7 +25,7 @@ from .retriever import NameRetriever
 class TwoPass:
     def __init__(self, asr=None, retriever: NameRetriever | None = None,
                  backend: str = "remote", k: int = 15, language: str = "Hindi"):
-        self.asr = asr or make_asr(backend=backend)     # remote GPU by default
+        self.asr = asr or make_asr(backend=backend, variant="en")
         self.retriever = retriever or NameRetriever()
         self.k = k
         self.language = language

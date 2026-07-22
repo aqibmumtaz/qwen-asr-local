@@ -1,10 +1,10 @@
 """
 Qwen3-ASR wrapper — LOCAL or REMOTE, same interface.
 
-  transcribe(audio, context="", language="Hindi") -> str
+  transcribe(audio, context="", language="Hindi") -> str (Hindi text)
 
 REMOTE (default): the GPU-hosted async server (OpenAI-Realtime protocol over WebSocket).
-  - `/chughtai/v1/realtime` variant is DOMAIN-BIASED for Chughtai Lab and returns Roman Urdu.
+  - `/en/v1/realtime` — returns Hindi with language=Hindi instruction + optional biasing context.
   - Fast (GPU); this is what makes a full 80-call benchmark feasible.
 LOCAL: base Qwen3-ASR via the qwen_asr package (CPU, slow; for offline use).
 
@@ -51,7 +51,7 @@ def _pcm16_24k(path) -> bytes:
 
 # ── remote (WebSocket, OpenAI-Realtime) ──────────────────────────────────────
 class RemoteASR:
-    def __init__(self, variant: str = "chughtai", base: str = REMOTE_BASE,
+    def __init__(self, variant: str = "en", base: str = REMOTE_BASE,
                  first_timeout: float = 40.0, quiet_timeout: float = 6.0,
                  max_wait: float = 120.0, retries: int = 1, verbose: bool = False):
         self.url = f"{base}/{variant}/v1/realtime"
@@ -61,10 +61,10 @@ class RemoteASR:
         self.retries = retries
         self.verbose = verbose
 
-    def transcribe(self, audio, context: str = "", language: str | None = None) -> str:
+    def transcribe(self, audio, context: str = "", language: str | None = "Hindi") -> str:
         for attempt in range(self.retries + 1):
             try:
-                out = asyncio.run(self._run(audio, context))
+                out = asyncio.run(self._run(audio, context, language))
                 if out or attempt == self.retries:
                     return out                    # retry once if empty (transient server queue)
             except Exception as e:
@@ -74,7 +74,7 @@ class RemoteASR:
                     print(f"   retry after {type(e).__name__}", flush=True)
         return ""
 
-    async def _run(self, audio, context: str) -> str:
+    async def _run(self, audio, context: str, language: str | None = "Hindi") -> str:
         import websockets
         pcm = _pcm16_24k(audio)
         segments: list[str] = []
@@ -82,8 +82,13 @@ class RemoteASR:
                                       ping_interval=20) as ws:
             await ws.recv()                                  # session.created
             upd = {"type": "session.update", "session": {"input_audio_format": "pcm16"}}
-            if context:                                      # best-effort per-session biasing
-                upd["session"]["instructions"] = f"Domain terms likely spoken: {context}"
+            instructions_parts = []
+            if language:
+                instructions_parts.append(f"Transcribe in {language} script.")
+            if context:
+                instructions_parts.append(f"Domain terms likely spoken: {context}")
+            if instructions_parts:
+                upd["session"]["instructions"] = " ".join(instructions_parts)
             await ws.send(json.dumps(upd))
             step = 24000 * 2 // 2                             # ~0.5s frames
             for i in range(0, len(pcm), step):
@@ -143,11 +148,14 @@ class LocalASR:
 
 
 def make_asr(backend: str = "remote", **kw):
-    """backend: 'remote' (default, GPU WebSocket) | 'local' (CPU qwen_asr)."""
+    """backend: 'remote' | 'local' | 'gpu-remote'."""
     if backend == "remote":
         return RemoteASR(**kw)
     if backend == "local":
         return LocalASR(**kw)
+    if backend == "gpu-remote":
+        from acoustic_contextual_biasing.gpu_remote_asr import GpuRemoteASR
+        return GpuRemoteASR(**kw)
     raise ValueError(f"unknown backend {backend!r}")
 
 

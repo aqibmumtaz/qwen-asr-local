@@ -39,7 +39,11 @@ def build_pruned(corr):
                 keep.append(v)
                 continue
             total += 1
-            if corr.resolve_word(v).lower() == c.lower():
+            # EXACT match incl. case. Case-insensitive would drop case-only variants
+            # (ali->Ali) that the model returns UNCHANGED (its already-known guard keeps
+            # 'ali'), silently losing capitalisation. Require the model to reproduce the
+            # canonical verbatim, else keep it in the exact lexicon.
+            if corr.resolve_word(v) == c:
                 dropped += 1
             else:
                 keep.append(v)

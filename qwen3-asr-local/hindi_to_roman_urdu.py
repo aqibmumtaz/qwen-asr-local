@@ -105,6 +105,23 @@ import os as _os
 from pathlib import Path as _Path
 
 _DATA = _Path(__file__).resolve().parent / 'data'
+
+
+def _load_dotenv():
+    """Load defaults from .env (LEXICON / PHONETIC / thresholds) WITHOUT overriding a
+    real environment variable — so the env-var mechanism still wins. This is how the
+    production config (v2.2 + phonetic model @0.90) is made the default."""
+    p = _Path(__file__).resolve().parent / '.env'
+    if not p.exists():
+        return
+    for line in p.read_text(encoding='utf-8').splitlines():
+        line = line.strip()
+        if line and not line.startswith('#') and '=' in line:
+            k, v = line.split('=', 1)
+            _os.environ.setdefault(k.strip(), v.strip())
+
+
+_load_dotenv()
 LEXICON_VERSION = _os.getenv('LEXICON', 'v2').lower()
 
 

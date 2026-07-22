@@ -1,20 +1,28 @@
 #!/usr/bin/env python3
 """
-Baseline benchmark on the 80-call lab-test set, CALL-LEVEL.
+Benchmark on the 80-call lab-test set, CALL-LEVEL, on the model_output_hindi column.
 
 Ground truth is per-call (benchmark_roman_urdu, on chunk_index==0). model_output_*
-are per-chunk. So for each call we concatenate the per-chunk column in chunk order,
-produce Roman Urdu, and score against that call's benchmark.
+are per-chunk. So for each call we transliterate each chunk's model_output_hindi,
+join the per-chunk Roman-Urdu in chunk order, and score that against the call's
+benchmark. The per-chunk Roman-Urdu we produce is ALSO written out verbatim, so the
+"model_output" sheet column is exactly the text that was scored.
 
 Metric: the dev's testing/test_accuracy.py :: diff_words   (fuzzy word RECALL, >=0.70)
 Also reported: classic edit-distance WER accuracy (1 - edit/ref_words), same tokeniser.
 
 Configs:
-  C-prev     previous model's own Roman  (model_output_roman_urdu)
-  C0         our transliterate() + v2 exact lexicon, RESOLVER OFF
-  C0+res     our transliterate() + v2 exact lexicon, RESOLVER ON
+  prev     previous model's own Roman  (model_output_roman_urdu, no transliterate)
+  v2       transliterate() + v2 exact lexicon, no phonetic          (text baseline)
+  v22ph    transliterate() + v2.2 lexicon + phonetic model @0.90    (PRODUCTION, .env)
 
-Writes per-call columns into a COPY of the sheet; original is untouched.
+Output workbook (a COPY; the original is untouched):
+  - Sheet1                original sheet, unchanged
+  - model_v22_phonetic    NEW sheet: per-chunk output of the PRODUCTION model
+                          (v2.2 + phonetic) next to model_output_hindi
+  - benchmark_summary     NEW sheet: per-call scores for every config
+
+  python benchmark/benchmark_baseline.py
 """
 import importlib
 import os
@@ -33,6 +41,9 @@ from test_accuracy import diff_words, normalize_tokens
 
 XLSX = HERE / "lab_test_80_calls_urdu_roman_urdu.xlsx"
 OUT = HERE / "lab_test_80_calls_urdu_roman_urdu_benchmarked.xlsx"
+
+# The production config, mirrors .env. Change here if .env changes.
+PROD = {"LEXICON": "v22", "PHONETIC": "1", "PHONETIC_THRESHOLD": "0.9", "RESOLVER": "0"}
 
 
 def wer_acc(benchmark: str, hypothesis: str) -> tuple[int, int]:
@@ -63,17 +74,16 @@ def load_calls():
     return wb, ws, idx, calls, rows
 
 
-def concat(rows, idx, col):
-    return " ".join(
-        str(r[idx[col]]).strip()
-        for r in rows
-        if isinstance(r[idx[col]], str) and r[idx[col]].strip()
-    )
+def set_env(cfg: dict):
+    for k in ("LEXICON", "PHONETIC", "PHONETIC_THRESHOLD", "RESOLVER"):
+        os.environ.pop(k, None)
+    os.environ.update(cfg)
 
 
-def transliterate_for(resolver_on: bool):
-    os.environ["LEXICON"] = "v2"
-    os.environ["RESOLVER"] = "1" if resolver_on else "0"
+def transliterate_for(cfg: dict):
+    """Set env + reload the pipeline so its module globals (lexicon, phonetic model,
+    resolver flag) are rebuilt for THIS config, then return its transliterate()."""
+    set_env(cfg)
     import hindi_to_roman_urdu as H
     importlib.reload(H)
     return H.transliterate
@@ -82,7 +92,42 @@ def transliterate_for(resolver_on: bool):
 def main():
     wb, ws, idx, calls, rows = load_calls()
 
-    # gather bench + concatenated Hindi per call
+    # ONE row-object per data row of Sheet1, in the ORIGINAL row order — so the output
+    # sheet lines up one-to-one with Sheet1 (every model_output_hindi row, benchmarked
+    # or not, gets its corresponding output row).
+    all_chunks = []
+    for r in rows[1:]:
+        h = r[idx["model_output_hindi"]]
+        pv = r[idx["model_output_roman_urdu"]]
+        au = r[idx["actual_urdu_transcript"]]
+        br = r[idx["benchmark_roman_urdu"]]
+        all_chunks.append({
+            "cid": r[idx["call_id"]],
+            "ci": r[idx["chunk_index"]],
+            "audio": r[idx["audio_name"]],
+            "hindi": h.strip() if isinstance(h, str) else "",
+            "prev": pv.strip() if isinstance(pv, str) else "",
+            "actual_urdu": au.strip() if isinstance(au, str) else "",
+            "bench_roman": br.strip() if isinstance(br, str) else "",
+        })
+
+    # Run each transliterate config in its OWN pass. transliterate() reads module
+    # globals at call time and importlib.reload mutates the shared module dict in
+    # place, so compute ALL rows for one config before moving to the next.
+    CONFIGS = [
+        ("v2",    {"LEXICON": "v2",  "PHONETIC": "",  "RESOLVER": "0"}),
+        ("v22ph", PROD),
+    ]
+    for key, cfg in CONFIGS:
+        tr = transliterate_for(cfg)
+        for ch in all_chunks:
+            ch[key] = tr(ch["hindi"]) if ch["hindi"] else ""
+
+    # group by call for scoring; only calls WITH a benchmark are scored.
+    KEYS = ["prev", "v2", "v22ph"]
+    by_call = defaultdict(list)
+    for ch in all_chunks:
+        by_call[ch["cid"]].append(ch)
     per_call = {}
     for cid, crows in calls.items():
         bench = next((r[idx["benchmark_roman_urdu"]] for r in crows
@@ -90,21 +135,13 @@ def main():
                       and r[idx["benchmark_roman_urdu"]].strip()), None)
         if not bench:
             continue
-        per_call[cid] = {"bench": bench,
-                         "hindi": concat(crows, idx, "model_output_hindi")}
-
-    # IMPORTANT: run each config in its OWN pass. transliterate() reads the module
-    # global _RESOLVER at call time, and importlib.reload mutates the shared module
-    # dict in place — so a function reference captured before a reload would still
-    # see the NEW _RESOLVER. Compute all of one config, reload, then the next.
-    for key, on in (("v0", False), ("v1", True)):
-        tr = transliterate_for(on)
-        for cid, d in per_call.items():
-            d[key] = tr(d["hindi"])
-
-    for cid, d in per_call.items():
-        d["acc"] = {k: diff_words(d["bench"], d[k]) for k in ("v0", "v1")}
-        d["wer"] = {k: wer_acc(d["bench"], d[k]) for k in ("v0", "v1")}
+        chunks = sorted(by_call[cid], key=lambda c: c["ci"] if c["ci"] is not None else 0)
+        d = {"bench": bench}
+        for k in KEYS:
+            d[k] = " ".join(ch[k] for ch in chunks if ch.get(k)).strip()
+        d["acc"] = {k: diff_words(d["bench"], d[k]) for k in KEYS}
+        d["wer"] = {k: wer_acc(d["bench"], d[k]) for k in KEYS}
+        per_call[cid] = d
 
     # ---- aggregate ----
     def agg(cfg):
@@ -116,53 +153,75 @@ def main():
         return dict(corpus=100 * m / t, mean=mean, matched=m, total=t,
                     wer=100 * max(0.0, 1 - we / wt))
 
-    A = {c: agg(c) for c in ("v0", "v1")}
-    labels = {"v0": "C0      (v2, resolver OFF)",
-              "v1": "C0+res  (v2, resolver ON)"}
+    A = {c: agg(c) for c in KEYS}
+    labels = {"prev":  "prev    (vendor roman, no fix)",
+              "v2":    "v2      (exact lexicon only)",
+              "v22ph": "v22ph   (v2.2 + phonetic @0.90) *"}
 
-    print("=" * 78)
-    print(f"  BASELINE BENCHMARK — 80-call set, call-level   ({len(per_call)} calls)")
-    print("=" * 78)
+    print("=" * 80)
+    print(f"  BENCHMARK — 80-call set, call-level, on model_output_hindi   ({len(per_call)} calls)")
+    print("=" * 80)
     print(f"  metric: diff_words (fuzzy word recall >=0.70)  +  edit-distance WER acc")
+    print(f"  * = production config (.env: {PROD})")
     print()
-    print(f"  {'config':<28} {'diff_words':>11} {'mean/call':>10} {'WER acc':>9} {'vs C0':>7}")
-    print(f"  {'-'*28} {'-'*11} {'-'*10} {'-'*9} {'-'*7}")
-    for c in ("v0", "v1"):
+    print(f"  {'config':<34} {'diff_words':>11} {'mean/call':>10} {'WER acc':>9} {'vs prev':>8}")
+    print(f"  {'-'*34} {'-'*11} {'-'*10} {'-'*9} {'-'*8}")
+    for c in KEYS:
         d = A[c]
-        vs = d["corpus"] - A["v0"]["corpus"]
-        print(f"  {labels[c]:<28} {d['corpus']:>10.2f}% {d['mean']:>9.2f}% "
-              f"{d['wer']:>8.2f}% {vs:>+6.2f}")
+        vs = d["corpus"] - A["prev"]["corpus"]
+        print(f"  {labels[c]:<34} {d['corpus']:>10.2f}% {d['mean']:>9.2f}% "
+              f"{d['wer']:>8.2f}% {vs:>+7.2f}")
     print()
-    print(f"  resolver effect (C0+res - C0): {A['v1']['corpus']-A['v0']['corpus']:+.2f} "
-          f"pts diff_words, {A['v1']['wer']-A['v0']['wer']:+.2f} pts WER")
+    print(f"  production gain (v22ph - v2): {A['v22ph']['corpus']-A['v2']['corpus']:+.2f} "
+          f"pts diff_words, {A['v22ph']['wer']-A['v2']['wer']:+.2f} pts WER")
     print()
 
-    # ---- write copy ----
-    new_cols = ["our_roman_v2_res0", "our_roman_v2_res1",
-                "acc_v2_res0", "acc_v2_res1",
-                "wer_v2_res0", "wer_v2_res1"]
-    base = len(rows[0])
-    for j, name in enumerate(new_cols):
-        ws.cell(row=1, column=base + 1 + j, value=name)
-    # map call_id -> the chunk_index==0 excel row number
-    header = base
-    for ri, r in enumerate(ws.iter_rows(values_only=True), start=1):
-        if ri == 1:
-            continue
-        cid = r[idx["call_id"]]
-        ci = r[idx["chunk_index"]]
-        if cid in per_call and ci == 0:
-            d = per_call[cid]
-            def werp(k):
-                e, n = d["wer"][k]
-                return round(100 * max(0.0, 1 - e / n), 2) if n else None
-            vals = [d["v0"], d["v1"],
-                    d["acc"]["v0"].accuracy, d["acc"]["v1"].accuracy,
-                    werp("v0"), werp("v1")]
-            for j, v in enumerate(vals):
-                ws.cell(row=ri, column=base + 1 + j, value=v)
+    # ---- write copy: SHEET 2 = per-chunk production model output ----
+    if "model_v22_phonetic" in wb.sheetnames:
+        del wb["model_v22_phonetic"]
+    s2 = wb.create_sheet("model_v22_phonetic")
+    s2.append(["audio_name", "call_id", "chunk_index",
+               "actual_urdu_transcript", "benchmark_roman_urdu",
+               "model_output_hindi", "model_output_roman_urdu",
+               "model_output_v22_phonetic"])
+    # one row per Sheet1 data row, SAME order — aligns 1:1 with model_output_hindi
+    for ch in all_chunks:
+        s2.append([ch["audio"], ch["cid"], ch["ci"],
+                   ch["actual_urdu"], ch["bench_roman"],
+                   ch["hindi"], ch["prev"], ch.get("v22ph", "")])
+
+    # ---- SHEET 3 = per-call summary for every config ----
+    if "benchmark_summary" in wb.sheetnames:
+        del wb["benchmark_summary"]
+    s3 = wb.create_sheet("benchmark_summary")
+    s3.append(["call_id", "benchmark_roman_urdu",
+               "out_prev", "out_v2", "out_v22ph",
+               "acc_prev", "acc_v2", "acc_v22ph",
+               "wer_prev", "wer_v2", "wer_v22ph"])
+
+    def werp(e, n):
+        return round(100 * max(0.0, 1 - e / n), 2) if n else None
+
+    for cid, d in per_call.items():
+        s3.append([cid, d["bench"], d["prev"], d["v2"], d["v22ph"],
+                   round(d["acc"]["prev"].accuracy, 4),
+                   round(d["acc"]["v2"].accuracy, 4),
+                   round(d["acc"]["v22ph"].accuracy, 4),
+                   werp(*d["wer"]["prev"]), werp(*d["wer"]["v2"]), werp(*d["wer"]["v22ph"])])
+    # corpus totals row
+    s3.append([])
+    s3.append(["CORPUS (diff_words %)", "", round(A["prev"]["corpus"], 2),
+               round(A["v2"]["corpus"], 2), round(A["v22ph"]["corpus"], 2),
+               "", "", "", "", "", ""])
+    s3.append(["CORPUS (WER acc %)", "", round(A["prev"]["wer"], 2),
+               round(A["v2"]["wer"], 2), round(A["v22ph"]["wer"], 2),
+               "", "", "", "", "", ""])
+
     wb.save(str(OUT))
     print(f"  written: {OUT.name}")
+    print(f"    - Sheet1               (original, unchanged)")
+    print(f"    - model_v22_phonetic   (per-chunk production output beside model_output_hindi)")
+    print(f"    - benchmark_summary    (per-call scores, all configs)")
     print()
 
 
