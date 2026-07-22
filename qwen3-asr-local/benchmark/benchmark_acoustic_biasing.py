@@ -43,14 +43,38 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(HERE))
 
+import signal
 import openpyxl
 from test_accuracy import diff_words
 
 XLSX = HERE / "lab_test_80_calls_urdu_roman_urdu.xlsx"
 AUDIO = HERE / "lab_test_80_audios_chunks_25s"
 CACHE = HERE / "transcription_cache_acoustic_biasing.jsonl"
+PIDFILE = HERE / ".benchmark_acoustic_biasing.pid"
 MODEL_ID = "Qwen/Qwen3-ASR-1.7B"
 CAP = re.compile(r"\b[A-Z][a-z]{2,}\b")
+
+
+def _kill_previous():
+    """Kill any previous benchmark process and take over."""
+    if PIDFILE.exists():
+        try:
+            old_pid = int(PIDFILE.read_text().strip())
+            if old_pid != os.getpid():
+                os.kill(old_pid, signal.SIGTERM)
+                print(f"Killed previous benchmark (PID {old_pid})", flush=True)
+        except (ProcessLookupError, ValueError, PermissionError):
+            pass  # already dead or invalid
+    PIDFILE.write_text(str(os.getpid()))
+
+
+def _cleanup_pid():
+    """Remove PID file on exit."""
+    try:
+        if PIDFILE.exists() and PIDFILE.read_text().strip() == str(os.getpid()):
+            PIDFILE.unlink()
+    except Exception:
+        pass
 
 
 def cache_path_for(backend: str) -> Path:
@@ -164,6 +188,9 @@ def transcribe(args):
     print(f"Retriever loaded ({len(retriever.names)} gazetteer names)", flush=True)
 
     cfile = cache_path_for(args.backend)
+    if args.restart and cfile.exists():
+        cfile.unlink()
+        print(f"Cache cleared: {cfile.name}  (restart mode)", flush=True)
     calls, _ = load_calls()
     cache = read_cache(cfile)
 
@@ -188,13 +215,36 @@ def transcribe(args):
             limited.append((key, cid, ch))
         todo = limited
 
-    print(f"Chunks to transcribe: {len(todo)}  (cache has {len(cache)})", flush=True)
+    # Count calls and chunks for progress
+    todo_calls = sorted(set(cid for _, cid, _ in todo))
+    total_calls = len(todo_calls)
+    print(f"Chunks to transcribe: {len(todo)} across {total_calls} calls  "
+          f"(cache has {len(cache)} chunks)", flush=True)
+
+    current_call = None
+    call_num = 0
+    call_start = None
 
     for n, (key, cid, ch) in enumerate(todo, 1):
+        # Log call-level progress + update sheet when a call completes
+        if cid != current_call:
+            if current_call is not None:
+                call_elapsed = time.time() - call_start
+                print(f"  ── call {call_num}/{total_calls} done in {call_elapsed:.1f}s  "
+                      f"(updating sheet...)", flush=True)
+                report(args)
+                print()
+            current_call = cid
+            call_num += 1
+            call_start = time.time()
+            print(f"[Call {call_num}/{total_calls}] {cid[:50]}", flush=True)
+
         t0 = time.time()
 
         # Pass 1: no context
+        t_p1 = time.time()
         pass1_hindi = asr.transcribe(ch, context="", language="Hindi")
+        elapsed_pass1 = round(time.time() - t_p1, 2)
 
         # Transliterate pass1 to Roman Urdu for retriever (needs Latin text)
         pass1_roman = _H.transliterate(pass1_hindi) if pass1_hindi else ""
@@ -212,7 +262,9 @@ def transcribe(args):
         ctx = ", ".join(names)
 
         # Pass 2: with retrieved names as context
+        t_p2 = time.time()
         pass2_hindi = asr.transcribe(ch, context=ctx, language="Hindi")
+        elapsed_pass2 = round(time.time() - t_p2, 2)
 
         entry = {
             "key": key,
@@ -221,13 +273,25 @@ def transcribe(args):
             "context": ctx,
             "names": names,
             "backend": args.backend,
+            "elapsed_pass1": elapsed_pass1,
+            "elapsed_pass2": elapsed_pass2,
         }
         append_cache(entry, cfile)
         elapsed = time.time() - t0
-        print(f"  [{n}/{len(todo)}] {ch.name} {elapsed:.0f}s  names={names[:4]}",
+        print(f"    {ch.name}  pass1={elapsed_pass1:.1f}s  pass2={elapsed_pass2:.1f}s  "
+              f"total={elapsed:.0f}s  names={names[:4]}",
               flush=True)
 
-    print("Transcription pass complete.", flush=True)
+    # Log final call + update sheet
+    if current_call is not None:
+        call_elapsed = time.time() - call_start
+        print(f"  ── call {call_num}/{total_calls} done in {call_elapsed:.1f}s  "
+              f"(updating sheet...)", flush=True)
+
+    # Final sheet update
+    print(f"\nTranscription complete. {len(todo)} chunks across {total_calls} calls.",
+          flush=True)
+    report(args)
 
 
 # ── scoring helpers ──────────────────────────────────────────────────────────
@@ -321,10 +385,12 @@ def report(args):
                 "model_output_roman_urdu": prev_roman,
                 "pass1_hindi": c["pass1"],
                 "pass1_roman_urdu": H.transliterate(c["pass1"]) if c["pass1"] else "",
-                "retrieved_names": c.get("context", ""),
+                "elapsed_pass1": c.get("elapsed_pass1", ""),
+                "context_biasing_list": c.get("context", ""),
                 "pass2_hindi": c["pass2"],
                 "model_output_acoustic_biasing": (
                     H.transliterate(c["pass2"]) if c["pass2"] else ""),
+                "elapsed_pass2": c.get("elapsed_pass2", ""),
             }
             all_chunk_rows.append(row)
 
@@ -370,6 +436,15 @@ def report(args):
     OUT = HERE / "lab_test_80_calls_urdu_roman_urdu_benchmarked.xlsx"
     wb_out = openpyxl.load_workbook(str(OUT))
 
+    # --- on restart, delete all old sheets for this backend ---
+    if args.restart:
+        for old_sheet in [f"acoustic_biasing_per_chunk_{backend_tag}",
+                          f"acoustic_biasing_per_call_{backend_tag}",
+                          f"acoustic_biasing_summary_{backend_tag}"]:
+            if old_sheet in wb_out.sheetnames:
+                del wb_out[old_sheet]
+        print(f"  Old sheets for '{backend_tag}' deleted (restart mode)", flush=True)
+
     # --- per-chunk sheet ---
     chunk_sheet = f"acoustic_biasing_per_chunk_{backend_tag}"
     if chunk_sheet in wb_out.sheetnames:
@@ -378,9 +453,9 @@ def report(args):
     headers = ["audio_name", "call_id", "chunk_index",
                "actual_urdu_transcript", "benchmark_roman_urdu",
                "model_output_hindi", "model_output_roman_urdu",
-               "pass1_hindi", "pass1_roman_urdu",
-               "retrieved_names",
-               "pass2_hindi", "model_output_acoustic_biasing"]
+               "pass1_hindi", "pass1_roman_urdu", "elapsed_pass1",
+               "context_biasing_list",
+               "pass2_hindi", "model_output_acoustic_biasing", "elapsed_pass2"]
     s2.append(headers)
     for row in all_chunk_rows:
         s2.append([row.get(h, "") for h in headers])
@@ -435,6 +510,7 @@ def report(args):
 
     s4.append([])
     s4.append(["backend", backend_tag])
+    s4.append(["run mode", "restart (fresh)" if args.restart else "resume"])
     s4.append(["calls scored", n_full])
     s4.append(["total calls", n_calls])
     s4.append(["names in gazetteer", nm["prev"][1]])
@@ -457,26 +533,50 @@ def report(args):
 def main():
     ap = argparse.ArgumentParser(
         description="Two-pass acoustic contextual biasing benchmark")
-    ap.add_argument("--transcribe", action="store_true",
-                    help="Run transcription (two-pass)")
-    ap.add_argument("--report", action="store_true",
-                    help="Generate report + write to Excel")
-    ap.add_argument("--backend", default="local",
-                    choices=["local", "remote", "gpu-remote"],
-                    help="local = CPU; remote = /en WebSocket; gpu-remote = gpu_remote_asr.py GPU")
-    ap.add_argument("--calls", type=int, default=0,
-                    help="Limit to N calls (0 = all)")
-    ap.add_argument("--k", type=int, default=15,
-                    help="Top-k retrieved names for pass 2 biasing")
-    ap.add_argument("--device", default="cpu", choices=["cpu", "mps", "cuda"],
-                    help="Device for local backend (cpu/mps/cuda)")
-    ap.add_argument("--gpu-url", default="ws://192.168.99.117:8910",
-                    help="URL of gpu_remote_asr.py WebSocket server (for gpu-remote backend)")
-    args = ap.parse_args()
+    sub = ap.add_subparsers(dest="command", required=True)
 
-    if args.transcribe:
+    # Shared args for both subcommands
+    def add_common(p):
+        p.add_argument("--backend", default="local",
+                        choices=["local", "remote", "gpu-remote"],
+                        help="local = CPU; remote = /en WebSocket; gpu-remote = gpu_remote_asr.py GPU")
+        p.add_argument("--calls", type=int, default=0,
+                        help="Limit to N calls (0 = all)")
+        p.add_argument("--k", type=int, default=15,
+                        help="Top-k retrieved names for pass 2 biasing")
+        p.add_argument("--device", default="cpu", choices=["cpu", "mps", "cuda"],
+                        help="Device for local backend (cpu/mps/cuda)")
+        p.add_argument("--gpu-url", default="ws://192.168.99.117:8910",
+                        help="URL of gpu_remote_asr.py WebSocket server (for gpu-remote backend)")
+
+    # resume — continue from cache
+    p_resume = sub.add_parser("resume",
+        help="Resume benchmarking from where you left off (cached chunks are skipped)")
+    add_common(p_resume)
+
+    # redo — clear cache + delete old sheets, start from scratch
+    p_redo = sub.add_parser("redo",
+        help="Redo all benchmarking from scratch (clears cache, deletes old sheets)")
+    add_common(p_redo)
+
+    # report — just generate report from existing cache
+    p_report = sub.add_parser("report",
+        help="Generate report + Excel sheets from existing cache (no transcription)")
+    add_common(p_report)
+
+    args = ap.parse_args()
+    args.restart = (args.command == "redo")
+
+    # Kill any previous benchmark, register this PID, clean up on exit
+    import atexit
+    _kill_previous()
+    atexit.register(_cleanup_pid)
+
+    if args.command in ("resume", "redo"):
+        args.transcribe = True
         transcribe(args)
-    if args.report or not args.transcribe:
+    elif args.command == "report":
+        args.transcribe = False
         report(args)
 
 
