@@ -49,6 +49,9 @@ DEFAULT_MT5_MODEL  = "google/mt5-small"
 CONF_THRESHOLD = float(os.getenv("CONF_THRESHOLD", "0.65"))
 GEO_THRESHOLD  = float(os.getenv("GEO_THRESHOLD",  "0.90"))
 
+# Default GPU server URL (env-overridable)
+GPU_ASR_URL = os.getenv("GPU_ASR_URL", "ws://192.168.99.117:8910")
+
 log = logging.getLogger("roman-urdu-asr")
 
 
@@ -253,6 +256,8 @@ class RomanUrduASR:
         conf_threshold:  min_conf below which word is flagged (default 0.65)
         geo_threshold:   geo_conf below which word is flagged (default 0.90)
         language:        ASR language hint passed to Qwen3-ASR (default 'Urdu')
+        asr_backend:     'local' | 'gpu-remote' — ASR source (default 'local')
+        gpu_url:         WebSocket URL for gpu-remote backend
     """
 
     def __init__(
@@ -262,12 +267,17 @@ class RomanUrduASR:
         conf_threshold: float         = CONF_THRESHOLD,
         geo_threshold:  float         = GEO_THRESHOLD,
         language:       str           = "Urdu",
+        asr_backend:    str           = "local",
+        gpu_url:        Optional[str] = None,
     ):
         self.conf_threshold = conf_threshold
         self.geo_threshold  = geo_threshold
         self.language       = language
         self.corrector_type = corrector
+        self.asr_backend    = asr_backend
+        self.gpu_url        = gpu_url or GPU_ASR_URL
         self._asr_fn        = None   # lazy-loaded on first call
+        self._gpu_asr       = None   # lazy-loaded for gpu-remote
 
         if corrector == "qwen":
             mp = Path(model_path) if model_path else DEFAULT_QWEN_MODEL
@@ -286,6 +296,30 @@ class RomanUrduASR:
             self._asr_fn = hf_asr_with_confidence
         return self._asr_fn
 
+    def _load_gpu_asr(self):
+        if self._gpu_asr is None:
+            from acoustic_contextual_biasing.gpu_remote_asr import GpuRemoteASR
+            self._gpu_asr = GpuRemoteASR(url=self.gpu_url)
+        return self._gpu_asr
+
+    def _gpu_asr_with_confidence(self, audio_path, language):
+        """GPU remote ASR — returns (text, elapsed, word_confs).
+        The GPU server returns plain text without per-token logprobs,
+        so we assign uniform high confidence to all words (no flagging).
+        """
+        from asr_transcribe_and_transliterate import WordConf
+        gpu = self._load_gpu_asr()
+        t0 = time.time()
+        text = gpu.transcribe(audio_path, context="", language=language)
+        elapsed = time.time() - t0
+        # Build word-level records with uniform confidence (no logprobs available)
+        word_confs = []
+        for w in text.split():
+            word_confs.append(WordConf(
+                text=w, min_conf=1.0, geo_conf=1.0, n_tokens=1,
+            ))
+        return text, elapsed, word_confs
+
     def _flagged(self, min_conf: float, geo_conf: float) -> bool:
         return min_conf < self.conf_threshold or geo_conf < self.geo_threshold
 
@@ -300,8 +334,12 @@ class RomanUrduASR:
         from hindi_to_roman_urdu import transliterate
 
         # ── 1. ASR → Hindi + per-word confidence ─────────────────────────────
-        asr_fn = self._load_asr()
-        hindi, elapsed_asr, word_confs = asr_fn(audio_path, language=self.language)
+        if self.asr_backend == "gpu-remote":
+            hindi, elapsed_asr, word_confs = self._gpu_asr_with_confidence(
+                audio_path, language=self.language)
+        else:
+            asr_fn = self._load_asr()
+            hindi, elapsed_asr, word_confs = asr_fn(audio_path, language=self.language)
 
         if not hindi:
             return ASRResult(
@@ -421,6 +459,14 @@ if __name__ == "__main__":
     )
     parser.add_argument("--language", default="Urdu")
     parser.add_argument(
+        "--asr-backend", choices=["local", "gpu-remote"], default="local",
+        help="ASR source: local model or GPU server (default: local)"
+    )
+    parser.add_argument(
+        "--gpu-url", default=None,
+        help=f"GPU ASR WebSocket URL (default: {GPU_ASR_URL})"
+    )
+    parser.add_argument(
         "--conf", type=float, default=CONF_THRESHOLD,
         help=f"min_conf flag threshold (default {CONF_THRESHOLD})"
     )
@@ -436,6 +482,8 @@ if __name__ == "__main__":
         conf_threshold=args.conf,
         geo_threshold=args.geo,
         language=args.language,
+        asr_backend=args.asr_backend,
+        gpu_url=args.gpu_url,
     )
     result = pipe.transcribe(args.audio)
     pipe.print_result(result)
