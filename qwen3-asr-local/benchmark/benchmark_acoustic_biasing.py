@@ -321,15 +321,31 @@ def wer_acc(benchmark: str, hypothesis: str) -> tuple:
 # ── report + Excel ───────────────────────────────────────────────────────────
 
 def report(args):
+    # Load transliterator WITHOUT phonetic correction (plain)
     os.environ["LEXICON"] = "v22"; os.environ["RESOLVER"] = "0"
-    os.environ["PHONETIC"] = "1"; os.environ["PHONETIC_THRESHOLD"] = "0.9"
+    os.environ["PHONETIC"] = "0"
     import hindi_to_roman_urdu as H
     importlib.reload(H)
+
+    # Load phonetic corrector separately for +pc variants
+    from phonetic_contrastive_model.corrector import PhoneticContrastiveCorrector
+    pc = PhoneticContrastiveCorrector.load(threshold=0.90)
+
+    def translit(hindi: str) -> str:
+        """Plain transliteration (no phonetic correction)."""
+        return H.transliterate(hindi) if hindi else ""
+
+    def translit_pc(hindi: str) -> str:
+        """Transliteration + phonetic contrastive correction."""
+        plain = H.transliterate(hindi) if hindi else ""
+        return pc.resolve_text(plain) if plain else ""
 
     cfile = cache_path_for(args.backend)
     calls, idx = load_calls()
     cache = read_cache(cfile)
-    cfgs = ["prev", "pass1", "pass2"]
+
+    # 6 scoring configs: 3 base × {plain, +phonetic_correction}
+    cfgs = ["prev", "prev_pc", "pass1", "pass1_pc", "pass2", "pass2_pc"]
     agg = {c: [0, 0] for c in cfgs}
     nm = {c: [0, 0] for c in cfgs}
     n_calls = n_full = 0
@@ -357,7 +373,8 @@ def report(args):
         n_full += 1
         gnames = sorted(set(CAP.findall(bench)))
 
-        texts = {
+        # Hindi texts for the 3 base configs
+        hindi_texts = {
             "prev": " ".join(
                 str(x[idx["model_output_hindi"]]).strip() for x in cr
                 if isinstance(x[idx["model_output_hindi"]], str)
@@ -375,6 +392,8 @@ def report(args):
                           if isinstance(cr_row[idx["model_output_roman_urdu"]], str)
                           else "")
             c = cache[key]
+            p1_plain = translit(c["pass1"])
+            p2_plain = translit(c["pass2"])
             row = {
                 "audio_name": ch.name,
                 "call_id": cid,
@@ -384,46 +403,75 @@ def report(args):
                 "model_output_hindi": hindi_prev,
                 "model_output_roman_urdu": prev_roman,
                 "pass1_hindi": c["pass1"],
-                "pass1_roman_urdu": H.transliterate(c["pass1"]) if c["pass1"] else "",
+                "pass1_roman_urdu": p1_plain,
+                "pass1_roman_urdu_pc": pc.resolve_text(p1_plain) if p1_plain else "",
                 "elapsed_pass1": c.get("elapsed_pass1", ""),
                 "context_biasing_list": c.get("context", ""),
                 "pass2_hindi": c["pass2"],
-                "model_output_acoustic_biasing": (
-                    H.transliterate(c["pass2"]) if c["pass2"] else ""),
+                "model_output_acoustic_biasing": p2_plain,
+                "model_output_acoustic_biasing_pc": pc.resolve_text(p2_plain) if p2_plain else "",
                 "elapsed_pass2": c.get("elapsed_pass2", ""),
             }
             all_chunk_rows.append(row)
 
+        # Score all 6 configs
         d_call = {"bench": bench}
-        for c in cfgs:
-            roman = H.transliterate(texts[c])
+        for base in ["prev", "pass1", "pass2"]:
+            # Plain (no phonetic correction)
+            roman = translit(hindi_texts[base])
             d = diff_words(bench, roman)
-            agg[c][0] += d.matched; agg[c][1] += d.total
+            agg[base][0] += d.matched; agg[base][1] += d.total
             words = roman.lower().split()
-            nm[c][0] += sum(1 for n in gnames if fuzzy_in(n, words))
-            nm[c][1] += len(gnames)
-            d_call[c] = {"roman": roman, "acc": d, "wer": wer_acc(bench, roman)}
+            nm[base][0] += sum(1 for n in gnames if fuzzy_in(n, words))
+            nm[base][1] += len(gnames)
+            d_call[base] = {"roman": roman, "acc": d, "wer": wer_acc(bench, roman)}
+
+            # +phonetic correction
+            pc_key = f"{base}_pc"
+            roman_pc = pc.resolve_text(roman) if roman else ""
+            d_pc = diff_words(bench, roman_pc)
+            agg[pc_key][0] += d_pc.matched; agg[pc_key][1] += d_pc.total
+            words_pc = roman_pc.lower().split()
+            nm[pc_key][0] += sum(1 for n in gnames if fuzzy_in(n, words_pc))
+            nm[pc_key][1] += len(gnames)
+            d_call[pc_key] = {"roman": roman_pc, "acc": d_pc, "wer": wer_acc(bench, roman_pc)}
+
         per_call_results[cid] = d_call
 
-    label = {"prev": "previous model (vendor hindi)",
-             "pass1": "pass 1 — no context (baseline)",
-             "pass2": "pass 2 — acoustic biasing (context)"}
-    print("=" * 76)
-    print(f"  ACOUSTIC CONTEXTUAL BIASING — two-pass — {n_full}/{n_calls} calls")
-    print("=" * 76)
-    print(f"  {'config':<42}{'diff_words':>11}{'name recovery':>16}")
-    print("  " + "-" * 68)
+    label = {
+        "prev":     "vendor hindi",
+        "prev_pc":  "vendor hindi + phonetic correction",
+        "pass1":    "pass 1 — no context",
+        "pass1_pc": "pass 1 — no context + phonetic correction",
+        "pass2":    "pass 2 — acoustic biasing",
+        "pass2_pc": "pass 2 — acoustic biasing + phonetic correction",
+    }
+    print("=" * 80)
+    print(f"  ACOUSTIC BIASING + PHONETIC CORRECTION — {n_full}/{n_calls} calls")
+    print("=" * 80)
+    print(f"  {'config':<52}{'diff_words':>11}{'name recovery':>16}")
+    print("  " + "-" * 78)
     for c in cfgs:
         if agg[c][1] == 0:
             continue
         dw = 100 * agg[c][0] / agg[c][1]
         nr = 100 * nm[c][0] / max(nm[c][1], 1)
-        print(f"  {label[c]:<42}{dw:>10.2f}%{nr:>13.1f}%  "
+        print(f"  {label[c]:<52}{dw:>10.2f}%{nr:>13.1f}%  "
               f"({nm[c][0]}/{nm[c][1]})")
+    print()
+    # Gains summary
     if agg["pass1"][1] and agg["pass2"][1]:
-        gain = (100 * agg["pass2"][0] / agg["pass2"][1]
+        g_bias = (100 * agg["pass2"][0] / agg["pass2"][1]
+                  - 100 * agg["pass1"][0] / agg["pass1"][1])
+        print(f"  biasing gain (pass2 - pass1):           {g_bias:+.2f} pts")
+    if agg["pass1"][1] and agg["pass1_pc"][1]:
+        g_pc = (100 * agg["pass1_pc"][0] / agg["pass1_pc"][1]
                 - 100 * agg["pass1"][0] / agg["pass1"][1])
-        print(f"\n  biasing gain (pass2 - pass1): {gain:+.2f} pts diff_words")
+        print(f"  phonetic gain (pass1_pc - pass1):       {g_pc:+.2f} pts")
+    if agg["pass1"][1] and agg["pass2_pc"][1]:
+        g_both = (100 * agg["pass2_pc"][0] / agg["pass2_pc"][1]
+                  - 100 * agg["pass1"][0] / agg["pass1"][1])
+        print(f"  combined gain (pass2_pc - pass1):       {g_both:+.2f} pts")
     print()
 
     if not per_call_results:
@@ -453,9 +501,11 @@ def report(args):
     headers = ["audio_name", "call_id", "chunk_index",
                "actual_urdu_transcript", "benchmark_roman_urdu",
                "model_output_hindi", "model_output_roman_urdu",
-               "pass1_hindi", "pass1_roman_urdu", "elapsed_pass1",
+               "pass1_hindi", "pass1_roman_urdu", "pass1_roman_urdu_pc",
+               "elapsed_pass1",
                "context_biasing_list",
-               "pass2_hindi", "model_output_acoustic_biasing", "elapsed_pass2"]
+               "pass2_hindi", "model_output_acoustic_biasing",
+               "model_output_acoustic_biasing_pc", "elapsed_pass2"]
     s2.append(headers)
     for row in all_chunk_rows:
         s2.append([row.get(h, "") for h in headers])
@@ -467,8 +517,11 @@ def report(args):
     s3 = wb_out.create_sheet(call_sheet)
     s3.append(["call_id", "benchmark_roman_urdu",
                "out_prev", "acc_prev", "wer_prev",
+               "out_prev_pc", "acc_prev_pc", "wer_prev_pc",
                "out_pass1", "acc_pass1", "wer_pass1",
-               "out_pass2", "acc_pass2", "wer_pass2"])
+               "out_pass1_pc", "acc_pass1_pc", "wer_pass1_pc",
+               "out_pass2", "acc_pass2", "wer_pass2",
+               "out_pass2_pc", "acc_pass2_pc", "wer_pass2_pc"])
 
     def werp(e, n):
         return round(100 * max(0.0, 1 - e / n), 2) if n else None
@@ -478,6 +531,7 @@ def report(args):
         for c in cfgs:
             row.append(d[c]["roman"])
             row.append(round(d[c]["acc"].accuracy, 4))
+            row.append(werp(*d[c]["wer"]))
             row.append(werp(*d[c]["wer"]))
         s3.append(row)
 
@@ -493,20 +547,35 @@ def report(args):
     if summary_sheet in wb_out.sheetnames:
         del wb_out[summary_sheet]
     s4 = wb_out.create_sheet(summary_sheet)
-    s4.append(["metric", "prev (vendor)", "pass1 (no context)",
-               "pass2 (acoustic biasing)", "biasing gain (pass2-pass1)"])
+    s4.append(["metric",
+               "vendor", "vendor+pc",
+               "pass1", "pass1+pc",
+               "pass2 (biasing)", "pass2+pc",
+               "biasing gain", "phonetic gain", "combined gain"])
 
-    dw_prev = 100 * agg["prev"][0] / agg["prev"][1] if agg["prev"][1] else 0
-    dw_p1 = 100 * agg["pass1"][0] / agg["pass1"][1] if agg["pass1"][1] else 0
-    dw_p2 = 100 * agg["pass2"][0] / agg["pass2"][1] if agg["pass2"][1] else 0
-    s4.append(["diff_words %", round(dw_prev, 2), round(dw_p1, 2),
-               round(dw_p2, 2), round(dw_p2 - dw_p1, 2)])
+    def pct(c):
+        return round(100 * agg[c][0] / agg[c][1], 2) if agg[c][1] else 0
 
-    nr_prev = 100 * nm["prev"][0] / max(nm["prev"][1], 1)
-    nr_p1 = 100 * nm["pass1"][0] / max(nm["pass1"][1], 1)
-    nr_p2 = 100 * nm["pass2"][0] / max(nm["pass2"][1], 1)
-    s4.append(["name recovery %", round(nr_prev, 2), round(nr_p1, 2),
-               round(nr_p2, 2), round(nr_p2 - nr_p1, 2)])
+    dw = {c: pct(c) for c in cfgs}
+    s4.append(["diff_words %",
+               dw["prev"], dw["prev_pc"],
+               dw["pass1"], dw["pass1_pc"],
+               dw["pass2"], dw["pass2_pc"],
+               round(dw["pass2"] - dw["pass1"], 2),
+               round(dw["pass1_pc"] - dw["pass1"], 2),
+               round(dw["pass2_pc"] - dw["pass1"], 2)])
+
+    def nr_pct(c):
+        return round(100 * nm[c][0] / max(nm[c][1], 1), 2)
+
+    nr = {c: nr_pct(c) for c in cfgs}
+    s4.append(["name recovery %",
+               nr["prev"], nr["prev_pc"],
+               nr["pass1"], nr["pass1_pc"],
+               nr["pass2"], nr["pass2_pc"],
+               round(nr["pass2"] - nr["pass1"], 2),
+               round(nr["pass1_pc"] - nr["pass1"], 2),
+               round(nr["pass2_pc"] - nr["pass1"], 2)])
 
     s4.append([])
     s4.append(["backend", backend_tag])
