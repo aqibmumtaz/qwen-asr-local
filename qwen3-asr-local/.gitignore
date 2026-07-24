@@ -1,7 +1,6 @@
 __pycache__/
 *.pyc
 phonetic_contrastive_model/train.log
-benchmark/lab_test_80_audios_chunks_25s/
 benchmark/audio_bias.log
 acoustic_contextual_biasing/*.log
 acoustic_contextual_biasing/transcription_cache.jsonl
