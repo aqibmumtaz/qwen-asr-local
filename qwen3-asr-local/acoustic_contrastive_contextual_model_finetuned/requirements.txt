@@ -1,0 +1,7 @@
+# Beyond what the repo's existing environment already provides
+# (torch, transformers, openpyxl, websockets, requests, qwen_asr)
+peft>=0.11
+accelerate>=0.30
+bitsandbytes>=0.43   # only needed for --qlora (4-bit) training
+soundfile>=0.12
+audiomentations>=0.35

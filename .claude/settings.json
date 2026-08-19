@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(python3 -)",
-      "Bash(python3 -m pip install markdown weasyprint)"
+      "Bash(python3 -m pip install markdown weasyprint)",
+      "Bash(python3 -c \"import qwen_asr, inspect, os; print\\(os.path.dirname\\(qwen_asr.__file__\\)\\)\")",
+      "Bash(pip3 show *)"
     ]
   }
 }

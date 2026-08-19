@@ -1,0 +1,3349 @@
+{
+ "aamer": {
+  "devanagari": "आमेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abbad": {
+  "devanagari": "अब्बद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abdal": {
+  "devanagari": "अब्दल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abdul": {
+  "devanagari": "अब्दुल",
+  "source": "corpus",
+  "similarity": 1.0,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "abdullah": {
+  "devanagari": "अब्दुल्लह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abdurrahman": {
+  "devanagari": "अब्दुर्रह्मन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abeed": {
+  "devanagari": "अबीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abeer": {
+  "devanagari": "अबीर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abida": {
+  "devanagari": "अबिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "adil": {
+  "devanagari": "आदिल",
+  "source": "corpus",
+  "similarity": 0.889,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "adnan": {
+  "devanagari": "अद्नन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "afaq": {
+  "devanagari": "अफ़क़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "afsheen": {
+  "devanagari": "अफ़्शीन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "afzal": {
+  "devanagari": "अफ़्ज़ल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ahmad": {
+  "devanagari": "अह्मद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ahmed": {
+  "devanagari": "अह्मेद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ahmer": {
+  "devanagari": "अह्मेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ahsan": {
+  "devanagari": "अह्सन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aisha": {
+  "devanagari": "ऐश",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ajeet": {
+  "devanagari": "अजीत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "akbar": {
+  "devanagari": "अक्बर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "akhtar": {
+  "devanagari": "अख्तर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "akram": {
+  "devanagari": "अकरम",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "ali": {
+  "devanagari": "अली",
+  "source": "corpus",
+  "similarity": 1.0,
+  "corpus_freq": 13,
+  "gold_confirmed": true
+ },
+ "ameem": {
+  "devanagari": "अमीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "amer": {
+  "devanagari": "अमेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "amir": {
+  "devanagari": "अमिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "amjad": {
+  "devanagari": "अमजद",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "ammar": {
+  "devanagari": "अमार",
+  "source": "corpus",
+  "similarity": 0.8,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "ammara": {
+  "devanagari": "अम्मर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "amna": {
+  "devanagari": "अम्न",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "anand": {
+  "devanagari": "अनन्द",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aneel": {
+  "devanagari": "अनील",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aniqa": {
+  "devanagari": "अनिक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "anjum": {
+  "devanagari": "अन्जुम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ansari": {
+  "devanagari": "अन्सरि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "anwar": {
+  "devanagari": "अनवार",
+  "source": "corpus",
+  "similarity": 0.833,
+  "corpus_freq": 6,
+  "gold_confirmed": true
+ },
+ "anwer": {
+  "devanagari": "अन्वेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aqib": {
+  "devanagari": "अक़िब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aqsa": {
+  "devanagari": "अक़्स",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "arif": {
+  "devanagari": "अरिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "arishma": {
+  "devanagari": "अरिश्म",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "arooba": {
+  "devanagari": "अरूब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aroosa": {
+  "devanagari": "अरूस",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "arsalan": {
+  "devanagari": "अर्सलन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "arshad": {
+  "devanagari": "अर्शद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "arslan": {
+  "devanagari": "अर्स्लन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "asad": {
+  "devanagari": "असद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "asghar": {
+  "devanagari": "अस्घर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ashfaq": {
+  "devanagari": "अश्फ़क़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "asif": {
+  "devanagari": "असिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "asim": {
+  "devanagari": "आसिम",
+  "source": "corpus",
+  "similarity": 0.889,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "aslam": {
+  "devanagari": "अस्लम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "asma": {
+  "devanagari": "अस्म",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "atif": {
+  "devanagari": "अतिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "atiq": {
+  "devanagari": "अतिक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "awaan": {
+  "devanagari": "अवान",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "awais": {
+  "devanagari": "अवैस",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ayaz": {
+  "devanagari": "अयज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ayesha": {
+  "devanagari": "आयशा",
+  "source": "corpus",
+  "similarity": 0.833,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "ayub": {
+  "devanagari": "अयुब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "azeem": {
+  "devanagari": "अज़ीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "azhar": {
+  "devanagari": "अऴर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aziz": {
+  "devanagari": "अज़िज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "azra": {
+  "devanagari": "अज़्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "babar": {
+  "devanagari": "बबर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "baig": {
+  "devanagari": "बैग",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "baiza": {
+  "devanagari": "बैज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bashir": {
+  "devanagari": "बशिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "basit": {
+  "devanagari": "बसित",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "batool": {
+  "devanagari": "बतूल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "beenish": {
+  "devanagari": "बीनिश",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "benazir": {
+  "devanagari": "बेनज़िर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bhutto": {
+  "devanagari": "भुत्तो",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bilal": {
+  "devanagari": "बिलाल",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 4,
+  "gold_confirmed": true
+ },
+ "bukhari": {
+  "devanagari": "बुखरि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "burney": {
+  "devanagari": "बुर्नेय",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bushra": {
+  "devanagari": "बुश्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chandra": {
+  "devanagari": "चन्द्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chaudhri": {
+  "devanagari": "चौध्रि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "danish": {
+  "devanagari": "दानिश",
+  "source": "corpus",
+  "similarity": 0.923,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "deepak": {
+  "devanagari": "दीपक",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ehtisham": {
+  "devanagari": "एह्तिशम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "eima": {
+  "devanagari": "एइम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ejaz": {
+  "devanagari": "एजज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faheem": {
+  "devanagari": "फ़हीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fahim": {
+  "devanagari": "फ़हिम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faisal": {
+  "devanagari": "फ़ैसल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faiyaz": {
+  "devanagari": "फ़ैयज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faiz": {
+  "devanagari": "फ़ैज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faiza": {
+  "devanagari": "फ़ैज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "farah": {
+  "devanagari": "फ़रह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fareeda": {
+  "devanagari": "फ़रीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fareeha": {
+  "devanagari": "फ़रीह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "farhan": {
+  "devanagari": "फ़र्हन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "farhana": {
+  "devanagari": "फ़र्हन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "farooq": {
+  "devanagari": "फ़रूक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "farooqi": {
+  "devanagari": "फ़रूक़ि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "farrukh": {
+  "devanagari": "फ़र्रुख",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fatima": {
+  "devanagari": "फ़तिम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faud": {
+  "devanagari": "फ़ौद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fawad": {
+  "devanagari": "फ़वद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fayaz": {
+  "devanagari": "फ़यज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fayyaz": {
+  "devanagari": "फ़य्यज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fehmeda": {
+  "devanagari": "फ़ेह्मेद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fouzia": {
+  "devanagari": "फ़ोउज़िअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fozia": {
+  "devanagari": "फ़ोज़िअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "furqan": {
+  "devanagari": "फ़ुर्क़न",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ghazala": {
+  "devanagari": "घज़ल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ghulam": {
+  "devanagari": "घुलम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gillani": {
+  "devanagari": "गिल्लनि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gondal": {
+  "devanagari": "गोन्दल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "habib": {
+  "devanagari": "हबिब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hafeez": {
+  "devanagari": "हफ़ीज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hafiz": {
+  "devanagari": "हफ़िज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hafsa": {
+  "devanagari": "हफ़्स",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "haider": {
+  "devanagari": "हैदेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hajra": {
+  "devanagari": "हाजरा",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "hamza": {
+  "devanagari": "हम्ज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hanif": {
+  "devanagari": "हनिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "haroon": {
+  "devanagari": "हरून",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hasan": {
+  "devanagari": "हसन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hassan": {
+  "devanagari": "हस्सन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "humaira": {
+  "devanagari": "हुमैर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "humayun": {
+  "devanagari": "हुमयुन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "husnain": {
+  "devanagari": "हुस्नैन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hussain": {
+  "devanagari": "हुस्सैन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "iftikhar": {
+  "devanagari": "इफ़्तिखर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "imran": {
+  "devanagari": "इमरान",
+  "source": "corpus",
+  "similarity": 0.833,
+  "corpus_freq": 4,
+  "gold_confirmed": true
+ },
+ "iqbal": {
+  "devanagari": "इक़्बल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "irfan": {
+  "devanagari": "इर्फ़न",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ishaq": {
+  "devanagari": "इशक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ishfaq": {
+  "devanagari": "इश्फ़क़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jamshaid": {
+  "devanagari": "जम्शैद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jamshed": {
+  "devanagari": "जमशेद",
+  "source": "corpus",
+  "similarity": 0.933,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "jamsheed": {
+  "devanagari": "जम्शीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "janjua": {
+  "devanagari": "जन्जुअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "javaid": {
+  "devanagari": "जवैद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "javed": {
+  "devanagari": "जवेद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "javeed": {
+  "devanagari": "जवीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jawad": {
+  "devanagari": "जवद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jilani": {
+  "devanagari": "जिलनि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "junaid": {
+  "devanagari": "जुनैद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kamran": {
+  "devanagari": "कामरान",
+  "source": "corpus",
+  "similarity": 0.8,
+  "corpus_freq": 4,
+  "gold_confirmed": true
+ },
+ "kashif": {
+  "devanagari": "कशिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khalid": {
+  "devanagari": "खलिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khattak": {
+  "devanagari": "खत्तक",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khawaja": {
+  "devanagari": "खवज",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khayyam": {
+  "devanagari": "खय्यम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khurram": {
+  "devanagari": "खुर्रम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khursheed": {
+  "devanagari": "खुर्शीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khurshid": {
+  "devanagari": "खुर्शिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khuwaja": {
+  "devanagari": "खुवज",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kumar": {
+  "devanagari": "कुमर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kumari": {
+  "devanagari": "कुमरि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "langrial": {
+  "devanagari": "लन्ग्रिअल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "latif": {
+  "devanagari": "लतिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "liaquat": {
+  "devanagari": "लिअक़ुअत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "madeeha": {
+  "devanagari": "मदीह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "madiha": {
+  "devanagari": "मदिह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "maham": {
+  "devanagari": "महम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mahmood": {
+  "devanagari": "मह्मूद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "majeed": {
+  "devanagari": "मजीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mansoor": {
+  "devanagari": "मन्सूर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "maqsood": {
+  "devanagari": "मक़्सूद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mariam": {
+  "devanagari": "मरिअम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "marium": {
+  "devanagari": "मरिउम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "maryam": {
+  "devanagari": "मर्यम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "masood": {
+  "devanagari": "मसूद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mavra": {
+  "devanagari": "मव्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mawra": {
+  "devanagari": "मव्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mazhar": {
+  "devanagari": "मऴर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mehmood": {
+  "devanagari": "मेह्मूद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mehrin": {
+  "devanagari": "मेह्रिन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mehwish": {
+  "devanagari": "मेह्विश",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "memoona": {
+  "devanagari": "मेमून",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mirrat": {
+  "devanagari": "मिर्रत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "moazzam": {
+  "devanagari": "मोअज़्ज़म",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "muaaz": {
+  "devanagari": "मुआज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mubashir": {
+  "devanagari": "मुबशिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mueen": {
+  "devanagari": "मुईन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mughal": {
+  "devanagari": "मुघल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "muhammad": {
+  "devanagari": "मोहम्मद",
+  "source": "corpus",
+  "similarity": 0.875,
+  "corpus_freq": 17,
+  "gold_confirmed": true
+ },
+ "mujahid": {
+  "devanagari": "मुजहिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mujtaba": {
+  "devanagari": "मुज्तब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mumtaz": {
+  "devanagari": "मुमताज़",
+  "source": "corpus",
+  "similarity": 0.857,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "muneeb": {
+  "devanagari": "मुनीब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "munir": {
+  "devanagari": "मुनिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "muqeet": {
+  "devanagari": "मुक़ीत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "murtaza": {
+  "devanagari": "मुर्तज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "musa": {
+  "devanagari": "मुस",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mushtaq": {
+  "devanagari": "मुश्तक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mustafa": {
+  "devanagari": "मुस्तफा",
+  "source": "corpus",
+  "similarity": 0.8,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "mutahir": {
+  "devanagari": "मुतहिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "muzaffar": {
+  "devanagari": "मुज़फ़्फ़र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nabeela": {
+  "devanagari": "नबील",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nabila": {
+  "devanagari": "नबिल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nadeem": {
+  "devanagari": "नदीम",
+  "source": "corpus",
+  "similarity": 1.0,
+  "corpus_freq": 4,
+  "gold_confirmed": true
+ },
+ "naeem": {
+  "devanagari": "नईम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "naila": {
+  "devanagari": "नैल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "naqvi": {
+  "devanagari": "नक़्वि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "naseer": {
+  "devanagari": "नसीर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nasir": {
+  "devanagari": "नसिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nasrullah": {
+  "devanagari": "नस्रुल्लह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "naureen": {
+  "devanagari": "नौरीन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nausheen": {
+  "devanagari": "नौशीन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "naveed": {
+  "devanagari": "नवीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nawaz": {
+  "devanagari": "नवज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nazir": {
+  "devanagari": "नज़िर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "neelofar": {
+  "devanagari": "नीलोफ़र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "niazi": {
+  "devanagari": "निअज़ि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nida": {
+  "devanagari": "निद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nimrah": {
+  "devanagari": "निम्रह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nisar": {
+  "devanagari": "निसर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "noman": {
+  "devanagari": "नोमन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "noushina": {
+  "devanagari": "नोउशिन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nuzhat": {
+  "devanagari": "नुऴत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "obaid": {
+  "devanagari": "ओबैद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "omair": {
+  "devanagari": "ओमैर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "omerson": {
+  "devanagari": "ओमेर्सोन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "parkash": {
+  "devanagari": "पर्कश",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "pervaiz": {
+  "devanagari": "पेर्वैज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "qadir": {
+  "devanagari": "क़दिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "qasim": {
+  "devanagari": "क़सिम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "qayum": {
+  "devanagari": "क़युम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "qayyum": {
+  "devanagari": "क़य्युम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "qurat": {
+  "devanagari": "क़ुरत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "raana": {
+  "devanagari": "रान",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rabieh": {
+  "devanagari": "रबिएह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rafique": {
+  "devanagari": "रफ़िक़ुए",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "raheem": {
+  "devanagari": "रहीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rahila": {
+  "devanagari": "रहिल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rahim": {
+  "devanagari": "रहिम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rahman": {
+  "devanagari": "रह्मन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ramla": {
+  "devanagari": "रम्ल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ramlah": {
+  "devanagari": "रम्लह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rashid": {
+  "devanagari": "रशिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rasool": {
+  "devanagari": "रसूल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rathore": {
+  "devanagari": "रथोरे",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rauf": {
+  "devanagari": "रौफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "razzaq": {
+  "devanagari": "रज़्ज़क़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "reena": {
+  "devanagari": "रीन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rehan": {
+  "devanagari": "रेहन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rehman": {
+  "devanagari": "रेह्मन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "riaz": {
+  "devanagari": "रिअज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "riffat": {
+  "devanagari": "रिफ़्फ़त",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rizwan": {
+  "devanagari": "रिज़्वन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rubina": {
+  "devanagari": "रुबिन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sachal": {
+  "devanagari": "सचल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sadia": {
+  "devanagari": "सदिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sadiq": {
+  "devanagari": "सदिक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saeed": {
+  "devanagari": "सईद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "safdar": {
+  "devanagari": "सफ़्दर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saigol": {
+  "devanagari": "सैगोल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saima": {
+  "devanagari": "साइमा",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "saira": {
+  "devanagari": "सैर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sajid": {
+  "devanagari": "सजिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sajida": {
+  "devanagari": "सजिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sajjad": {
+  "devanagari": "सज्जद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sajjida": {
+  "devanagari": "सज्जिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saleem": {
+  "devanagari": "सलीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saleemi": {
+  "devanagari": "सलीमि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "salman": {
+  "devanagari": "सल्मन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "samia": {
+  "devanagari": "समिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "samina": {
+  "devanagari": "समिन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saqib": {
+  "devanagari": "सक़िब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saqlain": {
+  "devanagari": "सक़्लैन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sara": {
+  "devanagari": "सारा",
+  "source": "corpus",
+  "similarity": 1.0,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "sarah": {
+  "devanagari": "सरह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sarfaraz": {
+  "devanagari": "सर्फ़रज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sarfraz": {
+  "devanagari": "सर्फ़्रज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sarwar": {
+  "devanagari": "सर्वर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sayma": {
+  "devanagari": "सय्म",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sehrish": {
+  "devanagari": "सेह्रिश",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shabbir": {
+  "devanagari": "शब्बिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shabir": {
+  "devanagari": "शबिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shabnum": {
+  "devanagari": "शब्नुम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shaffique": {
+  "devanagari": "शफ़्फ़िक़ुए",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shafiq": {
+  "devanagari": "शफ़िक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shafqat": {
+  "devanagari": "शफ़्क़त",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shahbaz": {
+  "devanagari": "शह्बज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shaherzad": {
+  "devanagari": "शहेर्ज़द",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shahid": {
+  "devanagari": "शहिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shahzad": {
+  "devanagari": "शह्ज़द",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shahzia": {
+  "devanagari": "शह्ज़िअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shaima": {
+  "devanagari": "शैम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shaiqa": {
+  "devanagari": "शैक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shakeel": {
+  "devanagari": "शकील",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shaneela": {
+  "devanagari": "शनील",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sharif": {
+  "devanagari": "शरिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shazia": {
+  "devanagari": "शज़िअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sheeza": {
+  "devanagari": "शीज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shehbaz": {
+  "devanagari": "शेह्बज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shehla": {
+  "devanagari": "शेह्ल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shehzad": {
+  "devanagari": "शेह्ज़द",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sheraz": {
+  "devanagari": "शेरज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shirazi": {
+  "devanagari": "शिरज़ि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shoaib": {
+  "devanagari": "शोऐब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shoukat": {
+  "devanagari": "शोउकत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shua": {
+  "devanagari": "शुअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shuja": {
+  "devanagari": "शुज",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "siddique": {
+  "devanagari": "सिद्दिक़ुए",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "siddiqui": {
+  "devanagari": "सिद्दिक़ुइ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sidra": {
+  "devanagari": "सिद्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sohail": {
+  "devanagari": "सोहैल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "subhani": {
+  "devanagari": "सुभनि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sulehri": {
+  "devanagari": "सुलेह्रि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sulehria": {
+  "devanagari": "सुलेह्रिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sumaira": {
+  "devanagari": "सुमैर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "surjeet": {
+  "devanagari": "सुर्जीत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tahir": {
+  "devanagari": "ताहिर",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "talha": {
+  "devanagari": "तल्ह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tanveer": {
+  "devanagari": "तनवीर",
+  "source": "corpus",
+  "similarity": 0.8,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "tariq": {
+  "devanagari": "तरिक़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tauseef": {
+  "devanagari": "तौसीफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tayyab": {
+  "devanagari": "तय्यब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tayyaba": {
+  "devanagari": "तय्यब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tazeem": {
+  "devanagari": "तज़ीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tehmina": {
+  "devanagari": "तेह्मिन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tehreem": {
+  "devanagari": "तेह्रीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "tehseen": {
+  "devanagari": "तेह्सीन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "toor": {
+  "devanagari": "तूर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "unsa": {
+  "devanagari": "उन्स",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "usama": {
+  "devanagari": "उसम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "usman": {
+  "devanagari": "उस्मन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "uzair": {
+  "devanagari": "उज़ैर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "uzma": {
+  "devanagari": "उज़्म",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "waheed": {
+  "devanagari": "वहीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "wajid": {
+  "devanagari": "वजिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "walayat": {
+  "devanagari": "वलयत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "waleed": {
+  "devanagari": "वलीद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "waqar": {
+  "devanagari": "वक़र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "waqas": {
+  "devanagari": "वक़स",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "waseem": {
+  "devanagari": "वसीम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "wasim": {
+  "devanagari": "वसिम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "yaqoob": {
+  "devanagari": "यकूब",
+  "source": "corpus",
+  "similarity": 0.833,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "yasir": {
+  "devanagari": "यसिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "yasmeen": {
+  "devanagari": "यस्मीन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "younas": {
+  "devanagari": "योउनस",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "yousaf": {
+  "devanagari": "योउसफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zafar": {
+  "devanagari": "ज़फ़र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zaheer": {
+  "devanagari": "ज़हीर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zahid": {
+  "devanagari": "ज़हिद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zaid": {
+  "devanagari": "ज़ैद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zaigham": {
+  "devanagari": "ज़ैघम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zainab": {
+  "devanagari": "ज़ैनब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zaka": {
+  "devanagari": "ज़क",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zakria": {
+  "devanagari": "ज़क्रिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zameer": {
+  "devanagari": "ज़मीर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zayed": {
+  "devanagari": "ज़येद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zeeshan": {
+  "devanagari": "ज़ीशन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zeshan": {
+  "devanagari": "ज़ेशन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zia": {
+  "devanagari": "ज़िअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zobia": {
+  "devanagari": "ज़ोबिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zubaida": {
+  "devanagari": "ज़ुबैद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zubair": {
+  "devanagari": "ज़ुबैर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zunaira": {
+  "devanagari": "ज़ुनैर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "abbottabad": {
+  "devanagari": "अब्बोत्तबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "adayala": {
+  "devanagari": "अदयल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "adyala": {
+  "devanagari": "अद्यल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "america": {
+  "devanagari": "अमेरिच",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "arifwala": {
+  "devanagari": "अरिफ़्वल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "attock": {
+  "devanagari": "अत्तोच्क",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "australia": {
+  "devanagari": "औस्त्रलिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "awaisia": {
+  "devanagari": "अवैसिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "awasia": {
+  "devanagari": "अवसिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bahawalnagar": {
+  "devanagari": "बहवल्नगर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bahawalpur": {
+  "devanagari": "बाहवलपुर",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 3,
+  "gold_confirmed": true
+ },
+ "baldia": {
+  "devanagari": "बल्दिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "barki": {
+  "devanagari": "बर्कि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "batkhela": {
+  "devanagari": "बत्खेल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bhakkar": {
+  "devanagari": "भक्कर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bhattian": {
+  "devanagari": "भत्तिअन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bhimber": {
+  "devanagari": "भिम्बेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "buner": {
+  "devanagari": "बुनेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "burewala": {
+  "devanagari": "बुरेवल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "canada": {
+  "devanagari": "चनद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "cavalry": {
+  "devanagari": "चवल्र्य",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chakwal": {
+  "devanagari": "चक्वल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "charsadda": {
+  "devanagari": "चर्सद्द",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chawinda": {
+  "devanagari": "चविन्द",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chenab": {
+  "devanagari": "चेनब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chennai": {
+  "devanagari": "चेन्नै",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chichawatni": {
+  "devanagari": "चिचवत्नि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chiniot": {
+  "devanagari": "चिनिओत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chuburji": {
+  "devanagari": "चुबुर्जि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "clifton": {
+  "devanagari": "च्लिफ़्तोन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "dabgari": {
+  "devanagari": "दब्गरि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "daska": {
+  "devanagari": "दस्क",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "delhi": {
+  "devanagari": "देल्हि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "depalpur": {
+  "devanagari": "देपल्पुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "dijkot": {
+  "devanagari": "दिज्कोत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "dubai": {
+  "devanagari": "दुबै",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faisalabad": {
+  "devanagari": "फ़ैसलबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faislabad": {
+  "devanagari": "फ़ैस्लबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fatehpur": {
+  "devanagari": "फ़तेह्पुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gajjumata": {
+  "devanagari": "गज्जुमत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gojra": {
+  "devanagari": "गोज्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gujjrat": {
+  "devanagari": "गुज्ज्रत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gujranwala": {
+  "devanagari": "गुर्जरवाला",
+  "source": "corpus",
+  "similarity": 0.857,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "gujrat": {
+  "devanagari": "गुज्रत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gulberg": {
+  "devanagari": "गुल्बेर्ग",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gulistan": {
+  "devanagari": "गुलिस्तन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "guliyana": {
+  "devanagari": "गुलियन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gulshan": {
+  "devanagari": "गुल्शन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hafizabad": {
+  "devanagari": "हफ़िज़बद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "haripur": {
+  "devanagari": "हरिपुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hasanabdal": {
+  "devanagari": "हसनब्दल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hasilpur": {
+  "devanagari": "हसिल्पुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hazro": {
+  "devanagari": "हज़्रो",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "hyderabad": {
+  "devanagari": "ह्य्देरबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "illahbad": {
+  "devanagari": "इल्लह्बद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "india": {
+  "devanagari": "इन्दिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "islamabad": {
+  "devanagari": "इस्लमबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "islampura": {
+  "devanagari": "इस्लम्पुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jahanian": {
+  "devanagari": "जहनिअन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jalalpur": {
+  "devanagari": "जलल्पुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jamrud": {
+  "devanagari": "जम्रुद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "japan": {
+  "devanagari": "जपन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jaranwala": {
+  "devanagari": "जरन्वल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jehlum": {
+  "devanagari": "जेह्लुम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jhang": {
+  "devanagari": "झन्ग",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jhelum": {
+  "devanagari": "झेलुम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "johar": {
+  "devanagari": "जोहार",
+  "source": "corpus",
+  "similarity": 0.909,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "kabirwala": {
+  "devanagari": "कबिर्वल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kamalia": {
+  "devanagari": "कमलिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kamonki": {
+  "devanagari": "कामोकी",
+  "source": "corpus",
+  "similarity": 0.857,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "kandiwal": {
+  "devanagari": "कन्दिवल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "karachi": {
+  "devanagari": "कराची",
+  "source": "corpus",
+  "similarity": 0.933,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "karianwala": {
+  "devanagari": "करिअन्वल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kashmir": {
+  "devanagari": "कश्मिर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kasur": {
+  "devanagari": "कसुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kehror": {
+  "devanagari": "केह्रोर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khanewal": {
+  "devanagari": "खनेवल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khanpur": {
+  "devanagari": "खानपुर",
+  "source": "corpus",
+  "similarity": 0.875,
+  "corpus_freq": 1,
+  "gold_confirmed": true
+ },
+ "kharian": {
+  "devanagari": "खरिअन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "khushab": {
+  "devanagari": "खुशब",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kohat": {
+  "devanagari": "कोहत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kotla": {
+  "devanagari": "कोत्ल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "kunjah": {
+  "devanagari": "कुन्जह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "lahore": {
+  "devanagari": "लहोरे",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "lalak": {
+  "devanagari": "ललक",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "lalamusa": {
+  "devanagari": "ललमुस",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "lalik": {
+  "devanagari": "ललिक",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "lallian": {
+  "devanagari": "लल्लिअन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "malkwal": {
+  "devanagari": "मल्क्वल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "manawala": {
+  "devanagari": "मनवल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "manawan": {
+  "devanagari": "मनवन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mardan": {
+  "devanagari": "मर्दन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mehmoodabad": {
+  "devanagari": "मेह्मूदबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "metrovil": {
+  "devanagari": "मेत्रोविल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mianwali": {
+  "devanagari": "मिअन्वलि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mingora": {
+  "devanagari": "मिन्गोर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mirpur": {
+  "devanagari": "मिर्पुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "multan": {
+  "devanagari": "मुल्तान",
+  "source": "corpus",
+  "similarity": 0.923,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "muridke": {
+  "devanagari": "मुरिद्के",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "murree": {
+  "devanagari": "मुर्री",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "muzaffarabad": {
+  "devanagari": "मुज़फ़्फ़रबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "muzaffargarh": {
+  "devanagari": "मुज़फ़्फ़र्गर्ह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nankana": {
+  "devanagari": "नन्कन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "narangmandi": {
+  "devanagari": "नरन्ग्मन्दि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "narowal": {
+  "devanagari": "नरोवल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nawabshah": {
+  "devanagari": "नवब्शह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nazimabad": {
+  "devanagari": "नज़िमबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nippa": {
+  "devanagari": "निप्प",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nishtabad": {
+  "devanagari": "निश्तबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nowshera": {
+  "devanagari": "नोव्शेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "okara": {
+  "devanagari": "ओकर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "orangi": {
+  "devanagari": "ओरन्गि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "pakistan": {
+  "devanagari": "पाकिस्तान",
+  "source": "corpus",
+  "similarity": 0.889,
+  "corpus_freq": 8,
+  "gold_confirmed": true
+ },
+ "pakpattan": {
+  "devanagari": "पक्पत्तन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "pasrur": {
+  "devanagari": "पस्रुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "pattoki": {
+  "devanagari": "पत्तोकि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "peshawar": {
+  "devanagari": "पेशवर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "phalia": {
+  "devanagari": "फलिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "quetta": {
+  "devanagari": "क़ुएत्त",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rahimyar": {
+  "devanagari": "रहिम्यर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ramtalai": {
+  "devanagari": "रम्तलै",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "rawalpindi": {
+  "devanagari": "रवल्पिन्दि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "renala": {
+  "devanagari": "रेनल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sadiqabad": {
+  "devanagari": "सदिक़बद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "safdarabad": {
+  "devanagari": "सफ़्दरबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "safoora": {
+  "devanagari": "सफ़ूर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sahiwal": {
+  "devanagari": "सहिवल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sambrial": {
+  "devanagari": "सम्ब्रिअल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sargodha": {
+  "devanagari": "सर्गोध",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shahdra": {
+  "devanagari": "शह्द्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shaheenabad": {
+  "devanagari": "शहीनबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shakargarh": {
+  "devanagari": "शकर्गर्ह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shalimar": {
+  "devanagari": "शलिमर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sheikhupura": {
+  "devanagari": "शेइखुपुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shujaabad": {
+  "devanagari": "शुजाबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sialkot": {
+  "devanagari": "सियालकोट",
+  "source": "corpus",
+  "similarity": 0.824,
+  "corpus_freq": 3,
+  "gold_confirmed": true
+ },
+ "sukkar": {
+  "devanagari": "सुक्कर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sukkur": {
+  "devanagari": "सुक्कुर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "swabi": {
+  "devanagari": "स्वबि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "swat": {
+  "devanagari": "स्वत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "sydney": {
+  "devanagari": "स्य्द्नेय",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "taxila": {
+  "devanagari": "तक्षिल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "timergara": {
+  "devanagari": "तिमेर्गर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "vehari": {
+  "devanagari": "वेहरि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "walton": {
+  "devanagari": "वल्तोन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "warburton": {
+  "devanagari": "वर्बुर्तोन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "wazirabad": {
+  "devanagari": "वज़िरबद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zarghoon": {
+  "devanagari": "ज़र्घून",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "aga": {
+  "devanagari": "अग",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "agha": {
+  "devanagari": "अघ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "alfatah": {
+  "devanagari": "अल्फ़तह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "alkhidmat": {
+  "devanagari": "अल्खिद्मत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "alnawaz": {
+  "devanagari": "अल्नवज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "android": {
+  "devanagari": "अन्द्रोइद",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "apple": {
+  "devanagari": "अप्प्ले",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "avicenna": {
+  "devanagari": "अविचेन्न",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bahria": {
+  "devanagari": "बह्रिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "bing": {
+  "devanagari": "बिन्ग",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "chughtai": {
+  "devanagari": "चुघ्तै",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "easypaisa": {
+  "devanagari": "एअस्य्पैस",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "essa": {
+  "devanagari": "एस्स",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "excel": {
+  "devanagari": "एक्ष्चेल",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "faqeerni": {
+  "devanagari": "फ़क़ीर्नि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "fatimiyah": {
+  "devanagari": "फ़तिमियह",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gangaram": {
+  "devanagari": "गन्गरम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ghurki": {
+  "devanagari": "घुर्कि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "google": {
+  "devanagari": "गूग्ले",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "gurki": {
+  "devanagari": "गुर्कि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "indus": {
+  "devanagari": "इन्दुस",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ittefaq": {
+  "devanagari": "इत्तेफ़क़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jazz": {
+  "devanagari": "जज़्ज़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jazzcash": {
+  "devanagari": "जज़्ज़्चश",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "jinnah": {
+  "devanagari": "जिना",
+  "source": "corpus",
+  "similarity": 0.8,
+  "corpus_freq": 2,
+  "gold_confirmed": true
+ },
+ "khanum": {
+  "devanagari": "खनुम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mayo": {
+  "devanagari": "मयो",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "mobilink": {
+  "devanagari": "मोबिलिन्क",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nadra": {
+  "devanagari": "नद्र",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nayapay": {
+  "devanagari": "नयपय",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "nishtar": {
+  "devanagari": "निश्तर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "oppo": {
+  "devanagari": "ओप्पो",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "outlook": {
+  "devanagari": "ओउत्लूक",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "pkli": {
+  "devanagari": "प्क्लि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "saylani": {
+  "devanagari": "सय्लनि",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shaukat": {
+  "devanagari": "शौकत",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "shifa": {
+  "devanagari": "शिफ़",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "silvercenter": {
+  "devanagari": "सिल्वेर्चेन्तेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "telegram": {
+  "devanagari": "तेलेग्रम",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "telenor": {
+  "devanagari": "तेलेनोर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "twitter": {
+  "devanagari": "त्वित्तेर",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "ufone": {
+  "devanagari": "उफ़ोने",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "victoria": {
+  "devanagari": "विच्तोरिअ",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "whatsapp": {
+  "devanagari": "व्हाट्सएप",
+  "source": "corpus",
+  "similarity": 0.824,
+  "corpus_freq": 4,
+  "gold_confirmed": true
+ },
+ "willingdon": {
+  "devanagari": "विल्लिन्ग्दोन",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "yahoo": {
+  "devanagari": "यहू",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ },
+ "zong": {
+  "devanagari": "ज़ोन्ग",
+  "source": "itrans_fallback",
+  "similarity": null,
+  "corpus_freq": 0
+ }
+}

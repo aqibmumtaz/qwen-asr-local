@@ -21,4 +21,4 @@ llama.cpp/build/
 # Python bytecode
 __pycache__/
 *.pyc
-*.pyo
+*.pyoqwen3-asr-local/acoustic_contrastive_contextual_model_finetuned/data/augmented_audio/
