@@ -22,6 +22,3 @@ llama.cpp/build/
 __pycache__/
 *.pyc
 *.pyo
-
-# Regeneratable augmented training audio (acoustic_contrastive_contextual_model_finetuned)
-qwen3-asr-local/acoustic_contrastive_contextual_model_finetuned/data/augmented_audio/
