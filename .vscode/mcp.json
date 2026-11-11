@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "id": "jira-email",
+      "type": "promptString",
+      "description": "Jira account email"
+    },
+    {
+      "id": "jira-api-token",
+      "type": "promptString",
+      "description": "Jira API token (create at https://id.atlassian.com/manage-profile/security/api-tokens)",
+      "password": true
+    },
+    {
+      "id": "slack-bot-token",
+      "type": "promptString",
+      "description": "Slack Bot Token (xoxb-...) from your Slack App",
+      "password": true
+    },
+    {
+      "id": "slack-team-id",
+      "type": "promptString",
+      "description": "Slack Team/Workspace ID (e.g., T01234567)"
+    }
+  ],
+  "servers": {
+    "jira": {
+      "type": "stdio",
+      "command": "/Users/AqibMumtaz/.local/bin/uvx",
+      "args": ["mcp-atlassian", "--jira-url", "https://bitlogix.atlassian.net", "--jira-username", "${input:jira-email}", "--jira-token", "${input:jira-api-token}"],
+      "env": {}
+    },
+    "slack": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${input:slack-bot-token}",
+        "SLACK_TEAM_ID": "${input:slack-team-id}"
+      }
+    }
+  }
+}
