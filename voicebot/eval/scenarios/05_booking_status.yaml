@@ -1,0 +1,87 @@
+- id: bs_status
+  title: Check booking status
+  tags: [booking_status, smoke]
+  steps:
+    - say: "meri booking ka status batao"
+      expect: {router: switch, workflow: booking_status, step: ref}
+    - say: "hs 1000"
+      expect: {step: phone}
+    - say: "0300 1234567"
+      expect: {pending: confirm_slot}
+    - say: "haan"
+      expect: {step: action}
+    - say: "status batao"
+      expect: {bot_contains: [confirm hai, Complete Blood Count]}
+
+- id: bs_wrong_phone_twice
+  title: Wrong phone twice leads to human
+  tags: [booking_status, safety]
+  steps:
+    - say: "meri booking ka status batao"
+    - say: "hs 1000"
+    - say: "0300 0000000"
+    - say: "haan"
+      expect: {step: ref, bot_contains: [match nahi]}
+    - say: "hs 1000"
+    - say: "0311 1111111"
+    - say: "haan"
+      expect: {transfer: verification_failed, ended: true}
+
+- id: bs_cancel
+  title: Cancel a booking with confirmation
+  tags: [booking_status]
+  steps:
+    - say: "booking cancel karni hai"
+      expect: {workflow: booking_status}
+    - say: "hs 1000"
+    - say: "0300 1234567"
+    - say: "haan"
+    - say: "cancel"
+      expect: {pending: confirm_step, bot_contains: [cancel karna chahte hain]}
+    - say: "haan"
+      expect: {bot_contains: [cancel kar di gayi]}
+  final:
+    booking_status: {HS-1000: cancelled}
+
+- id: bs_cancel_declined
+  title: Cancel declined leaves the booking
+  tags: [booking_status, safety]
+  steps:
+    - say: "booking cancel karni hai"
+    - say: "hs 1000"
+    - say: "0300 1234567"
+    - say: "haan"
+    - say: "cancel"
+    - say: "nahi"
+  final:
+    booking_status: {HS-1000: confirmed}
+
+- id: bs_reschedule
+  title: Reschedule to a new slot
+  tags: [booking_status]
+  steps:
+    - say: "booking ka waqt badalna hai"
+    - say: "hs 1000"
+    - say: "0300 1234567"
+    - say: "haan"
+    - say: "waqt badalna hai"
+      expect: {step: new_date}
+    - say: "parson shaam"
+      expect: {pending: confirm_step, bot_contains: [parson shaam]}
+    - say: "haan"
+      expect: {bot_contains: [kar diya gaya]}
+  final:
+    booking_fields: {HS-1000: {date: "2026-10-23", part: evening}}
+
+- id: bs_reschedule_slot_full
+  title: New slot is full, bot asks again
+  tags: [booking_status]
+  setup: {blocked_slots: [["2026-10-23", "evening"]]}
+  steps:
+    - say: "booking ka waqt badalna hai"
+    - say: "hs 1000"
+    - say: "0300 1234567"
+    - say: "haan"
+    - say: "waqt badalna hai"
+    - say: "parson shaam"
+      expect: {step: new_date, bot_contains: [khali nahi]}

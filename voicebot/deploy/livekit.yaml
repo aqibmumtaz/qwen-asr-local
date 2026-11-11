@@ -1,0 +1,14 @@
+# Pilot server config (self-hosted). Replace keys and set the public IP / domain before use.
+port: 7880
+rtc:
+  tcp_port: 7881
+  port_range_start: 50000
+  port_range_end: 60000
+  use_external_ip: true
+redis:
+  address: localhost:6379
+keys:
+  CHANGE_ME_API_KEY: CHANGE_ME_LONG_RANDOM_SECRET_AT_LEAST_32_CHARS
+logging:
+  level: info
+# TLS: terminate with a reverse proxy (Caddy/nginx) on your domain, or configure `turn:` for clients behind NAT.

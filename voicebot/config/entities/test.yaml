@@ -1,0 +1,14 @@
+# Searchable list of lab tests. SEED DATA ONLY until the real list is provided.
+name: test
+source: {type: csv, path: tests.csv}
+id_field: test_id
+display_field: name
+alias_fields: [aliases, abbreviations]
+list_separator: "|"
+facts: [price, fasting, fasting_hours, sample_type, department, prep_note, home_collection]
+disambiguate_by: [sample_type, department]
+stopwords: [test, tests, ka, ki, ke, ko, ho, hai, hain, wala, wali, wale, karwana, karwani, karna, karni, karen, karo,
+            chahiye, chahiyen, mujhe, price, qeemat, kimat, keemat, rate, charges, charge, fees, cost, paise, rupay, rupee, batao, bata, batayen, dein, status, kya, kitna, dena, lena, dene, lene, book, booking, nayi, naya, karwa, karwani, hamein, humein, please, bhi, aur, ek, ki, ka, lab, ghar, pe, par, se, sample, report]
+thresholds: {accept: 0.90, gap: 0.15, confirm: 0.75, max_choices: 3, max_rounds: 2}
+confirm_before_use: false
+spell_fallback: true

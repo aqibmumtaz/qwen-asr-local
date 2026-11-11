@@ -1,0 +1,130 @@
+test_id,name,aliases,abbreviations,sample_type,department,fasting,fasting_hours,price,prep_note,home_collection,source
+T001,Complete Blood Count,blood complete|blood count|complete blood|blood cp|seebeesee|sibisee|ebeesi,cbc|c b c,blood,haematology,no,,800,,yes,seed
+T002,ESR,erythrocyte sedimentation rate|esr test|edisepi,esr,blood,haematology,no,,300,,yes,seed
+T003,Haemoglobin,hemoglobin|hb test|khoon ki kami|khoon ki kami ka test,hb|hgb,blood,haematology,no,,300,,yes,seed
+T004,Platelet Count,platelets|platelet test|plateletes|platelet,plt,blood,haematology,no,,400,,yes,seed
+T005,PT INR,prothrombin time|pt test|inr,pt|inr|pt inr,blood,haematology,no,,800,,yes,seed
+T006,APTT,activated partial thromboplastin time|aptt test,aptt,blood,haematology,no,,900,,yes,seed
+T007,Blood Group,blood group test|blood type|khoon ka group,abo rh|abo,blood,haematology,no,,400,,yes,seed
+T008,Peripheral Blood Film,blood film|peripheral film|pbf,,blood,haematology,no,,600,,yes,seed
+T009,Reticulocyte Count,retic count|reticulocytes,,blood,haematology,no,,700,,yes,seed
+T010,Malaria Parasite,malaria test|malaria mp|malaria parasite film,mp|mp test,blood,haematology,no,,600,,yes,seed
+T011,G6PD,g6pd test|g six pd,g6pd,blood,haematology,no,,1800,,yes,seed
+T012,Haemoglobin Electrophoresis,hb electrophoresis|thalassemia test|thalassaemia test,hb electro,blood,haematology,no,,3500,,yes,seed
+T013,Blood Glucose Fasting,fasting sugar|sugar fasting|blood sugar fasting|fasting glucose|sugar khali pet,fbs|fbg,blood,chemistry,yes,8,250,"8 se 10 ghante kuch na khayen, pani pee sakte hain",yes,seed
+T014,Blood Glucose Random,random sugar|sugar random|blood sugar random|random glucose,rbs,blood,chemistry,no,,250,,yes,seed
+T015,Blood Glucose PP,pp sugar|sugar pp|post prandial sugar|khane ke baad sugar|2 hour sugar,ppbs|2hpp,blood,chemistry,no,,250,khane ke do ghante baad sample,yes,seed
+T016,Glucose Tolerance Test,glucose tolerance|sugar load test|ogtt,ogtt|gtt,blood,chemistry,yes,8,1500,"8 ghante fasting, test mein kai sample lagte hain",yes,seed
+T017,HbA1c,glycosylated haemoglobin|sugar 3 mahine|3 month sugar|glycated hemoglobin|echabeee1si|echbi a one si|hba one c|hbaonec,hba1c|a1c|hb a1c,blood,chemistry,no,,1500,,yes,seed
+T018,Lipid Profile,lipid|cholesterol profile|fats test|lipid prophaail,lipids,blood,chemistry,yes,12,1800,12 ghante kuch na khayen,yes,seed
+T019,Total Cholesterol,cholesterol|cholestrol|choleterol|koleestrol|kolestrol,,blood,chemistry,yes,12,500,12 ghante kuch na khayen,yes,seed
+T020,HDL Cholesterol,hdl|good cholesterol,hdl,blood,chemistry,yes,12,600,12 ghante kuch na khayen,yes,seed
+T021,LDL Cholesterol,ldl|bad cholesterol,ldl,blood,chemistry,yes,12,600,12 ghante kuch na khayen,yes,seed
+T022,Triglycerides,triglyceride|tg test,tg,blood,chemistry,yes,12,600,12 ghante kuch na khayen,yes,seed
+T023,Liver Function Test,liver test|liver profile|jigar ka test|elaephti|elaphti,lft|lfts,blood,chemistry,no,,1600,,yes,seed
+T024,Serum Bilirubin Total,bilirubin|bilirubin test|jaundice test|yarqan ka test,bili,blood,chemistry,no,,500,,yes,seed
+T025,SGPT ALT,sgpt|alt test|alt,sgpt|alt,blood,chemistry,no,,500,,yes,seed
+T026,SGOT AST,sgot|ast test|ast,sgot|ast,blood,chemistry,no,,500,,yes,seed
+T027,Alkaline Phosphatase,alkaline phosphatase|alp test,alp,blood,chemistry,no,,500,,yes,seed
+T028,GGT,gamma gt|ggt test,ggt,blood,chemistry,no,,700,,yes,seed
+T029,Serum Albumin,albumin|albumin test,,blood,chemistry,no,,450,,yes,seed
+T030,Renal Function Test,kidney test|kidney profile|gurde ka test|renal profile,rft|rfts|kft,blood,chemistry,no,,1500,,yes,seed
+T031,Blood Urea,urea|urea test,bun,blood,chemistry,no,,400,,yes,seed
+T032,Serum Creatinine,creatinine|creatine|kreetanaain|kritinen,,blood,chemistry,no,,400,,yes,seed
+T033,Uric Acid,uric|uric acid test,ua,blood,chemistry,no,,450,,yes,seed
+T034,Serum Calcium,calcium|calcium test|kailshiyam,ca,blood,chemistry,no,,500,,yes,seed
+T035,Serum Phosphorus,phosphorus|phosphate,,blood,chemistry,no,,500,,yes,seed
+T036,Serum Magnesium,magnesium|magnesium test,mg,blood,chemistry,no,,600,,yes,seed
+T037,Serum Electrolytes,electrolytes|sodium potassium|salts test,na k|electrolytes,blood,chemistry,no,,900,,yes,seed
+T038,Serum Amylase,amylase|amylase test,,blood,chemistry,no,,900,,yes,seed
+T039,Serum Lipase,lipase|lipase test,,blood,chemistry,no,,1000,,yes,seed
+T040,CPK,creatine phosphokinase|cpk test|cpk,,blood,chemistry,no,,900,,yes,seed
+T041,LDH,lactate dehydrogenase|ldh test,ldh,blood,chemistry,no,,900,,yes,seed
+T042,Troponin I,troponin|heart attack test|troponin test,trop i,blood,chemistry,no,,2200,,yes,seed
+T043,CK-MB,ck mb|ckmb,ck mb|ckmb,blood,chemistry,no,,1300,,yes,seed
+T044,Serum Iron,iron|iron test|iron level,,blood,chemistry,yes,8,900,8 ghante kuch na khayen,yes,seed
+T045,TIBC,total iron binding capacity|tibc test,tibc,blood,chemistry,no,,1000,,yes,seed
+T046,Serum Ferritin,ferritin|iron storage,,blood,chemistry,no,,1800,,yes,seed
+T047,Vitamin B12,b12|vitamin b 12|vit b12|vitamin bi 12,b12,blood,chemistry,no,,2500,,yes,seed
+T048,Serum Folate,folate|folic acid test|folic acid,,blood,chemistry,no,,2200,,yes,seed
+T049,Vitamin D Total,vitamin d total|vit d total|vitamin d3 total|vitamin di total,,blood,chemistry,no,,4500,,yes,seed
+T050,Vitamin D 25 Hydroxy,vitamin d 25 hydroxy|vitamin d 25 oh|25 hydroxy vitamin d|vitamin di 25,25 oh vit d,blood,chemistry,no,,5000,,yes,seed
+T051,CRP,c reactive protein|crp test|seeaarpi,crp,blood,chemistry,no,,900,,yes,seed
+T052,hs-CRP,high sensitivity crp|hs crp|cardiac crp,hscrp,blood,chemistry,no,,1800,,yes,seed
+T053,Homocysteine,homocysteine test|homocystine,,blood,chemistry,no,,3000,,yes,seed
+T054,TSH,thyroid stimulating hormone,tsh,blood,endocrinology,no,,1100,,yes,seed
+T055,Thyroid Profile,thyroid prophaail|tsh t3 t4|complete thyroid,tft,blood,endocrinology,no,,3200,,yes,seed
+T056,Free T3,ft3|free t3 test,ft3,blood,endocrinology,no,,1300,,yes,seed
+T057,Free T4,ft4|free t4 test,ft4,blood,endocrinology,no,,1300,,yes,seed
+T058,Total T3,t3 test|triiodothyronine,t3,blood,endocrinology,no,,1200,,yes,seed
+T059,Total T4,t4 test|thyroxine,t4,blood,endocrinology,no,,1200,,yes,seed
+T060,Prolactin,prolactin test,prl,blood,endocrinology,no,,1800,,yes,seed
+T061,FSH,follicle stimulating hormone|fsh test,fsh,blood,endocrinology,no,,1700,,yes,seed
+T062,LH,luteinizing hormone|lh test,lh,blood,endocrinology,no,,1700,,yes,seed
+T063,Estradiol,estradiol test|oestradiol,e2,blood,endocrinology,no,,2000,,yes,seed
+T064,Progesterone,progesterone test,prog,blood,endocrinology,no,,2000,,yes,seed
+T065,Testosterone Total,testosterone|testosterone test,,blood,endocrinology,no,,2500,,yes,seed
+T066,Serum Cortisol,cortisol|cortisol test,,blood,endocrinology,no,,2200,,yes,seed
+T067,Beta HCG,pregnancy test blood|hcg|pregnancy blood test,beta hcg|b hcg,blood,endocrinology,no,,1500,,yes,seed
+T068,AMH,anti mullerian hormone|amh test,amh,blood,endocrinology,no,,6000,,yes,seed
+T069,Parathyroid Hormone,pth test|parathyroid,pth,blood,endocrinology,no,,3500,,yes,seed
+T070,Fasting Insulin,insulin test|insulin level|insulin,,blood,endocrinology,yes,8,2000,8 ghante kuch na khayen,yes,seed
+T071,Dengue NS1 Antigen,dengue ns1,ns1,blood,serology,no,,2000,,yes,seed
+T072,Dengue IgG IgM,dengue antibodies|dengue igg|dengue igm|dengue antibody,,blood,serology,no,,2200,,yes,seed
+T073,Typhidot,typhoid igm,,blood,serology,no,,1200,,yes,seed
+T074,Widal Test,widal|widal typhoid,,blood,serology,no,,700,,yes,seed
+T075,Hepatitis B Surface Antigen,hepatitis b|hep b|hbsag|hepatitis b test|hepatitis bi,hbsag|hbs ag,blood,serology,no,,900,,yes,seed
+T076,Anti HCV,hepatitis c|hep c|hepatitis c test|anti hcv|hepatitis si,hcv|anti hcv,blood,serology,no,,1100,,yes,seed
+T077,Hepatitis A IgM,hepatitis a|hep a,,blood,serology,no,,1400,,yes,seed
+T078,HIV Screening,hiv|hiv test|aids test,hiv,blood,serology,no,,1500,,yes,seed
+T079,VDRL,syphilis test|vdrl test,vdrl,blood,serology,no,,700,,yes,seed
+T080,Brucella Antibodies,brucella|brucella test,,blood,serology,no,,1600,,yes,seed
+T081,H Pylori Antigen,h pylori|helicobacter|pylori stool test|pylori,hp antigen,stool,serology,no,,2200,,yes,seed
+T082,COVID PCR,covid test|covid pcr|corona test|kowid peeseeaar|kowid test,pcr|peeseeaar,swab,molecular,no,,6000,,yes,seed
+T083,Chikungunya IgM,chikungunya test|chikungunya,,blood,serology,no,,3500,,yes,seed
+T084,ANA,antinuclear antibody|ana test|eenae,ana,blood,immunology,no,,2500,,yes,seed
+T085,Anti dsDNA,dsdna|anti ds dna,,blood,immunology,no,,3500,,yes,seed
+T086,RA Factor,rheumatoid factor|ra test|arthritis test|ra factor,ra|rf,blood,immunology,no,,900,,yes,seed
+T087,Anti CCP,ccp test|anti ccp,,blood,immunology,no,,4000,,yes,seed
+T088,ASO Titre,aso titer|aso test,aso,blood,immunology,no,,900,,yes,seed
+T089,IgE Total,ige test|allergy test|allergy ka test,ige,blood,immunology,no,,2000,,yes,seed
+T090,PSA Total,prostate test|prostate specific antigen,psa,blood,tumor markers,no,,2200,,yes,seed
+T091,PSA Free,free psa|psa free,,blood,tumor markers,no,,2600,,yes,seed
+T092,CA-125,ca 125|ovarian marker,ca125,blood,tumor markers,no,,3000,,yes,seed
+T093,CA 19-9,ca 19 9|pancreas marker,ca199,blood,tumor markers,no,,3200,,yes,seed
+T094,CEA,carcinoembryonic antigen|cea test,cea,blood,tumor markers,no,,2800,,yes,seed
+T095,AFP,alpha fetoprotein|afp test,afp,blood,tumor markers,no,,2400,,yes,seed
+T096,Urine Routine Examination,urine test|urine routine|peshab ka test|urine dr|urine re|urine rooteen,urine dr|urine re,urine,pathology,no,,400,subah ka pehla peshab behtar hai,yes,seed
+T097,Urine Culture,urine culture sensitivity|peshab culture|urine kalchar,urine c/s,urine,microbiology,no,,1500,saaf container mein midstream sample,yes,seed
+T098,Stool Routine Examination,stool test|stool routine|pakhana test|stool dr,stool dr,stool,pathology,no,,450,,yes,seed
+T099,Stool Culture,stool culture sensitivity|stool kalchar,,stool,microbiology,no,,1800,,yes,seed
+T100,Blood Culture,blood culture sensitivity|blood kalchar,blood c/s,blood,microbiology,no,,2500,,yes,seed
+T101,Throat Swab Culture,throat culture|gale ka culture,,swab,microbiology,no,,1500,,yes,seed
+T102,Pus Culture,pus culture sensitivity|wound culture,,swab,microbiology,no,,1600,,yes,seed
+T103,Sputum AFB,sputum test|tb test balgham|sputum afb,,sputum,microbiology,no,,800,,yes,seed
+T104,Semen Analysis,semen test|semen report|sperm test,sa,semen,pathology,no,,1200,"3 se 5 din parhez, lab mein sample dena hota hai",no,seed
+T105,Histopathology Biopsy,biopsy|baayopsi|baiopasi|tissue test,,tissue,histopathology,no,,3500,,no,seed
+T106,FNAC,fine needle aspiration|ephaenaesi|fnac test,fnac,tissue,histopathology,no,,3000,,no,seed
+T107,Pap Smear,pap test|cervical smear,,swab,histopathology,no,,2500,,no,seed
+T108,ECG,electrocardiogram|heart ecg|eeseeji|eesheejee|ecg test,ecg|ekg,none,cardiology,no,,800,,no,seed
+T109,Echocardiography,echo|iko kaardiyograaphi|heart echo|echo test,echo,none,cardiology,no,,5000,,no,seed
+T110,Treadmill Test,tmt|stress test|exercise test,tmt,none,cardiology,no,,6000,,no,seed
+T111,MRI Brain,brain mri|mri head|dimagh ka mri|eemaaraaee brain,mri brain,none,radiology,no,,24000,,no,seed
+T112,MRI Spine,spine mri|mri lumbar|mri cervical|reerh ka mri,mri spine,none,radiology,no,,26000,,no,seed
+T113,MRI Knee,knee mri|ghutne ka mri,mri knee,none,radiology,no,,22000,,no,seed
+T114,CT Scan Head,ct head|ct brain|head ct|seetee skain head,ct head,none,radiology,no,,14000,,no,seed
+T115,CT Scan Chest,ct chest|chest ct|seeti scan chest,ct chest,none,radiology,no,,16000,,no,seed
+T116,CT Scan Abdomen,ct abdomen|abdomen ct|pet ka ct|seeti scan abdomen,ct abdomen,none,radiology,no,,18000,,no,seed
+T117,Ultrasound Abdomen,abdomen ultrasound|pet ka ultrasound|usg abdomen,usg abdomen,none,radiology,no,,3000,"6 ghante kuch na khayen, mithana full rakhen",no,seed
+T118,Ultrasound Pelvis,pelvis ultrasound|pelvic scan|usg pelvis,usg pelvis,none,radiology,no,,3000,mithana full rakhen,no,seed
+T119,Ultrasound Obstetric,pregnancy ultrasound|baby ultrasound|obstetric scan|usg obs,usg obs,none,radiology,no,,3500,,no,seed
+T120,Ultrasound Thyroid,thyroid ultrasound|neck ultrasound|usg thyroid,usg thyroid,none,radiology,no,,3000,,no,seed
+T121,X-Ray Chest,chest xray|chest x ray|seene ka xray,cxr,none,radiology,no,,1500,,no,seed
+T122,Mammography,mammogram|maimograam|breast screening,mammo,none,radiology,no,,7000,,no,seed
+T123,Bone Density DEXA,dexa scan|bone density|bon densiti|haddi ka test,dexa|bmd,none,radiology,no,,6000,,no,seed
+T124,Doppler Ultrasound,doppler|doppler scan|color doppler,,none,radiology,no,,6000,,no,seed
+T125,Basic Health Check Package,basic health package|health checkup|full body checkup|body checkup,basic package,blood,packages,yes,10,6000,10 ghante kuch na khayen,yes,seed
+T126,Diabetic Profile Package,diabetes package|sugar package|diabetic profile|diabetic checkup,diabetic profile,blood,packages,yes,8,5500,8 ghante kuch na khayen,yes,seed
+T127,Cardiac Risk Package,cardiac profile|heart package|kaardiyak profile|heart checkup,cardiac profile,blood,packages,yes,12,7500,12 ghante kuch na khayen,yes,seed
+T128,Women Health Package,women package|ladies checkup|female health package|hormone profile,,blood,packages,yes,8,9000,8 ghante kuch na khayen,yes,seed
+T129,Fertility Profile,fertility package|phartiliti profile|bachon ke liye test,,blood,packages,no,,12000,,yes,seed

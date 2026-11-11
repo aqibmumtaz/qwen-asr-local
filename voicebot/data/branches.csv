@@ -1,0 +1,13 @@
+branch_id,name,aliases,city,address,timings,phone,source
+B01,Lahore Head Office,head office|head office lahore|main branch lahore|lahore main,Lahore,"Sample address: Gulberg III, Lahore",subah 8 baje se raat 10 baje,042-0000-0001,seed
+B02,Johar Town Branch,johar town branch,Lahore,"Sample address: Johar Town, Lahore",subah 8 baje se raat 10 baje,042-0000-0002,seed
+B03,DHA Lahore Branch,dha branch lahore|dha lahore branch,Lahore,"Sample address: DHA Phase 5, Lahore",subah 8 baje se raat 10 baje,042-0000-0003,seed
+B04,Model Town Branch,model town branch,Lahore,"Sample address: Model Town, Lahore",subah 8 baje se raat 10 baje,042-0000-0004,seed
+B05,Gulshan Branch Karachi,gulshan branch|karachi gulshan branch,Karachi,"Sample address: Block 13-D Gulshan-e-Iqbal, Karachi",subah 8 baje se raat 10 baje,021-0000-0005,seed
+B06,Clifton Branch Karachi,clifton branch,Karachi,"Sample address: Clifton Block 5, Karachi",subah 8 baje se raat 10 baje,021-0000-0006,seed
+B07,Islamabad Branch,islamabad branch,Islamabad,"Sample address: F-7 Markaz, Islamabad",subah 9 baje se raat 9 baje,051-0000-0007,seed
+B08,Rawalpindi Branch,rawalpindi branch|pindi branch,Rawalpindi,"Sample address: Satellite Town, Rawalpindi",subah 9 baje se raat 9 baje,051-0000-0008,seed
+B09,Faisalabad Branch,faisalabad branch,Faisalabad,"Sample address: Peoples Colony, Faisalabad",subah 9 baje se raat 9 baje,041-0000-0009,seed
+B10,Multan Branch,multan branch,Multan,"Sample address: Gulgasht, Multan",subah 9 baje se raat 9 baje,061-0000-0010,seed
+B11,Sialkot Branch,sialkot branch,Sialkot,"Sample address: Cantt, Sialkot",subah 9 baje se raat 9 baje,052-0000-0011,seed
+B12,Gujranwala Branch,gujranwala branch,Gujranwala,"Sample address: Satellite Town, Gujranwala",subah 9 baje se raat 9 baje,055-0000-0012,seed

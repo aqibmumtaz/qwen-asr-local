@@ -1,0 +1,11 @@
+# LiveKit SIP service (Phase 4). Needs a public IP with SIP (5060) and RTP port ranges open to your telephony provider.
+api_key: CHANGE_ME_API_KEY
+api_secret: CHANGE_ME_LONG_RANDOM_SECRET_AT_LEAST_32_CHARS
+ws_url: ws://localhost:7880
+redis:
+  address: localhost:6379
+sip_port: 5060
+rtp_port: 10000-20000
+use_external_ip: true
+logging:
+  level: info

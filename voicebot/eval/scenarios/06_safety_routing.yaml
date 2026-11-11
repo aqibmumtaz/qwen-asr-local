@@ -1,0 +1,76 @@
+- id: sf_human_request
+  title: Caller asks for a person
+  tags: [safety, routing]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "insaan se baat karwao"
+      expect: {router: human, transfer: caller_requested, ended: true}
+
+- id: sf_goodbye_midflow
+  title: Goodbye in the middle of a booking asks first
+  tags: [safety, routing]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "khuda hafiz"
+      expect: {router: end, pending: end_confirm, ended: false}
+    - say: "haan"
+      expect: {ended: true}
+
+- id: sf_goodbye_idle
+  title: Goodbye with no active task
+  tags: [routing]
+  steps:
+    - say: "allah hafiz"
+      expect: {router: end, ended: true}
+
+- id: sf_unclear_three_times
+  title: Nonsense three times leads to human
+  tags: [safety, routing]
+  steps:
+    - say: "xyzzy"
+      expect: {router: unclear}
+    - say: "qwerty"
+      expect: {router: unclear}
+    - say: "asdf"
+      expect: {transfer: unclear, ended: true}
+
+- id: sf_slot_fails_three_times
+  title: Age never understood, bot hands over
+  tags: [safety, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+      expect: {step: age}
+    - say: "pata nahi"
+    - say: "kuch aur"
+    - say: "phir bhi nahi"
+      expect: {transfer: slot_failed_age, ended: true}
+
+- id: sf_backend_down_on_submit
+  title: Booking API fails at submit, callback offered
+  tags: [failures, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha karachi house 12"
+    - say: "kal subah"
+    - say: "0300 1234567"
+    - say: "haan"
+    - say: "haan"
+      fail_backend: "simulated outage"
+      expect: {transfer: backend_error, ended: true}
+  final:
+    no_booking: true
+
+- id: sf_greeting_then_start
+  title: Greeting first, then a request
+  tags: [routing]
+  greet: true
+  steps:
+    - say: "assalam o alaikum"
+      expect: {router: unclear, bot_contains: [Walaikum assalam]}
+    - say: "mujhe ghar par sample dena hai"
+      expect: {router: switch, workflow: home_sampling}

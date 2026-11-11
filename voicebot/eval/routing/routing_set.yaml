@@ -1,0 +1,576 @@
+- ctx: none
+  utt: mujhe ghar par sample dena hai
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: home sampling karwani hai
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: ghar se blood sample lena hai
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: nayi booking karni hai
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: mujhe cbc ka test ghar par karwana hai
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: sugar test ghar pe chahiye
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: mujhe ek test karwana hai ghar par
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: home collection book karo
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: meri booking ka status batao
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: booking cancel karni hai
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: booking ka waqt badalna hai
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: meri booking kahan hai
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: mera sample lene kab aayenge
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: appointment change karna hai
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: kal wali booking cancel kar do
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: booking reschedule karni hai
+  label: switch
+  workflow: booking_status
+- ctx: none
+  utt: lab kitne baje khulti hai
+  label: faq
+- ctx: none
+  utt: home sampling ka charge kitna hai
+  label: faq
+- ctx: none
+  utt: report kitne din mein milti hai
+  label: faq
+- ctx: none
+  utt: helpline number kya hai
+  label: faq
+- ctx: none
+  utt: payment kaise karni hai
+  label: faq
+- ctx: none
+  utt: sample kaun lene aayega
+  label: faq
+- ctx: none
+  utt: lab ki timing kya hai
+  label: faq
+- ctx: none
+  utt: ghar se sample dene ki fees kya hai
+  label: faq
+- ctx: none
+  utt: cbc ki price kya hai
+  label: lookup
+- ctx: none
+  utt: vitamin d ki qeemat kya hai
+  label: lookup
+- ctx: none
+  utt: sugar test kitne ka hai
+  label: lookup
+- ctx: none
+  utt: lipid profile ka rate batao
+  label: lookup
+- ctx: none
+  utt: tsh ke kitne paise hain
+  label: lookup
+- ctx: none
+  utt: insaan se baat karwao
+  label: human
+- ctx: none
+  utt: mujhe kisi se baat karni hai agent se
+  label: human
+- ctx: none
+  utt: operator se baat karwa dein
+  label: human
+- ctx: none
+  utt: manager se baat karni hai
+  label: human
+- ctx: none
+  utt: allah hafiz
+  label: end
+- ctx: none
+  utt: khuda hafiz
+  label: end
+- ctx: none
+  utt: bas shukriya
+  label: end
+- ctx: none
+  utt: shukriya bas itna hi
+  label: end
+- ctx: none
+  utt: assalam o alaikum
+  label: unclear
+- ctx: none
+  utt: hello
+  label: unclear
+- ctx: none
+  utt: kuch samajh nahi aa raha
+  label: unclear
+- ctx: none
+  utt: woh wala masla
+  label: unclear
+- ctx: none
+  utt: xyzzy
+  label: unclear
+- ctx: A_tests
+  utt: cbc aur lipid profile
+  label: continue
+- ctx: A_tests
+  utt: sugar
+  label: continue
+- ctx: A_tests
+  utt: vitamin d
+  label: continue
+- ctx: A_tests
+  utt: thyroid ka test
+  label: continue
+- ctx: A_tests
+  utt: urine test aur stool test
+  label: continue
+- ctx: A_tests
+  utt: sivi si
+  label: continue
+- ctx: A_tests
+  utt: c b c
+  label: continue
+- ctx: A_tests
+  utt: parchi mein likha hai
+  label: continue
+- ctx: A_name
+  utt: muhammad ali
+  label: continue
+- ctx: A_name
+  utt: ali raza
+  label: continue
+- ctx: A_name
+  utt: mera naam sana tariq hai
+  label: continue
+- ctx: A_name
+  utt: fatima bibi
+  label: continue
+- ctx: A_name
+  utt: ahmed khan umar painteesh saal
+  label: continue
+- ctx: A_name
+  utt: status ali
+  label: continue
+- ctx: A_age
+  utt: painteesh saal
+  label: continue
+- ctx: A_age
+  utt: '42'
+  label: continue
+- ctx: A_age
+  utt: umar chaalees hai
+  label: continue
+- ctx: A_age
+  utt: bees saal
+  label: continue
+- ctx: A_age
+  utt: mere walid ki umar saath saal hai
+  label: continue
+- ctx: A_age
+  utt: pachaas
+  label: continue
+- ctx: A_gender
+  utt: mard
+  label: continue
+- ctx: A_gender
+  utt: aurat
+  label: continue
+- ctx: A_gender
+  utt: female
+  label: continue
+- ctx: A_gender
+  utt: larki hai
+  label: continue
+- ctx: A_gender
+  utt: male hain
+  label: continue
+- ctx: A_address
+  utt: gulshan e iqbal block 13 d ghar number 45
+  label: continue
+- ctx: A_address
+  utt: dha phase 5 house 12
+  label: continue
+- ctx: A_address
+  utt: north nazimabad block h
+  label: continue
+- ctx: A_address
+  utt: clifton block 5 flat 3
+  label: continue
+- ctx: A_address
+  utt: gulberg lahore
+  label: continue
+- ctx: A_address
+  utt: f 7 islamabad house 9
+  label: continue
+- ctx: A_address
+  utt: meri gali mein masjid ke saath wala ghar
+  label: continue
+- ctx: A_date
+  utt: kal subah
+  label: continue
+- ctx: A_date
+  utt: parson shaam
+  label: continue
+- ctx: A_date
+  utt: aaj dopahar
+  label: continue
+- ctx: A_date
+  utt: agle somwar subah 10 baje
+  label: continue
+- ctx: A_date
+  utt: 15 november subah
+  label: continue
+- ctx: A_date
+  utt: subah
+  label: continue
+- ctx: A_date
+  utt: kal
+  label: continue
+- ctx: A_date
+  utt: kal cancel subah
+  label: continue
+- ctx: A_phone
+  utt: 0300 1234567
+  label: continue
+- ctx: A_phone
+  utt: zero teen zero zero ek do teen char paanch chay saat
+  label: continue
+- ctx: A_phone
+  utt: '03111234567'
+  label: continue
+- ctx: A_phone
+  utt: '0300'
+  label: continue
+- ctx: A_phone
+  utt: '1234567'
+  label: continue
+- ctx: A_phone
+  utt: isi number par
+  label: continue
+- ctx: A_confirm
+  utt: haan
+  label: continue
+- ctx: A_confirm
+  utt: ji theek hai
+  label: continue
+- ctx: A_confirm
+  utt: nahi
+  label: continue
+- ctx: A_confirm
+  utt: nahi galat hai
+  label: continue
+- ctx: A_confirm
+  utt: nahi kal nahi parson shaam
+  label: continue
+- ctx: A_confirm
+  utt: haan kar do
+  label: continue
+- ctx: A_confirm
+  utt: address galat hai
+  label: continue
+- ctx: A_name
+  utt: lab kitne baje khulti hai
+  label: faq
+- ctx: A_name
+  utt: home sampling ka charge kitna hai
+  label: faq
+- ctx: A_name
+  utt: report kab milegi
+  label: faq
+- ctx: A_name
+  utt: payment kaise hogi
+  label: faq
+- ctx: A_age
+  utt: helpline number kya hai
+  label: faq
+- ctx: A_age
+  utt: sample kaun lene aayega
+  label: faq
+- ctx: A_name
+  utt: vitamin d ki price kya hai
+  label: lookup
+- ctx: A_name
+  utt: cbc ki qeemat batao
+  label: lookup
+- ctx: A_name
+  utt: sugar test kitne ka hai
+  label: lookup
+- ctx: A_address
+  utt: lipid profile ka rate kya hai
+  label: lookup
+- ctx: A_address
+  utt: tsh ki price
+  label: lookup
+- ctx: A_name
+  utt: pehle meri booking ka status batao
+  label: switch
+  workflow: booking_status
+- ctx: A_name
+  utt: meri booking cancel karni hai
+  label: switch
+  workflow: booking_status
+- ctx: A_name
+  utt: pehle booking ka waqt badalna hai
+  label: switch
+  workflow: booking_status
+- ctx: A_name
+  utt: purani booking ka pata karna hai
+  label: switch
+  workflow: booking_status
+- ctx: A_address
+  utt: ruko meri booking cancel karni hai
+  label: switch
+  workflow: booking_status
+- ctx: A_address
+  utt: mujhe booking ka status dekhna hai
+  label: switch
+  workflow: booking_status
+- ctx: A_name
+  utt: insaan se baat karwao
+  label: human
+- ctx: A_name
+  utt: mujhe kisi agent se baat karni hai
+  label: human
+- ctx: A_name
+  utt: operator ko do
+  label: human
+- ctx: A_age
+  utt: khuda hafiz
+  label: end
+- ctx: A_age
+  utt: bas shukriya
+  label: end
+- ctx: A_age
+  utt: allah hafiz
+  label: end
+- ctx: A_confirm
+  utt: meri booking ka status batao
+  label: switch
+  workflow: booking_status
+- ctx: A_confirm
+  utt: mujhe insaan se baat karni hai
+  label: human
+- ctx: B_ref
+  utt: hs 1000
+  label: continue
+- ctx: B_ref
+  utt: h s ek zero zero zero
+  label: continue
+- ctx: B_ref
+  utt: mera reference number hs 1000 hai
+  label: continue
+- ctx: B_ref
+  utt: '1000'
+  label: continue
+- ctx: B_ref
+  utt: pata nahi yaad nahi
+  label: continue
+- ctx: B_action
+  utt: status batao
+  label: continue
+- ctx: B_action
+  utt: cancel karna hai
+  label: continue
+- ctx: B_action
+  utt: waqt badalna hai
+  label: continue
+- ctx: B_action
+  utt: reschedule
+  label: continue
+- ctx: B_action
+  utt: booking cancel kar do
+  label: continue
+- ctx: B_action
+  utt: pehle wali tarikh se aage karna hai
+  label: continue
+- ctx: B_ref
+  utt: nayi booking karni hai
+  label: switch
+  workflow: home_sampling
+- ctx: B_ref
+  utt: mujhe ghar par test karwana hai
+  label: switch
+  workflow: home_sampling
+- ctx: B_ref
+  utt: cbc ka test ghar par chahiye
+  label: switch
+  workflow: home_sampling
+- ctx: B_action
+  utt: lab kitne baje khulti hai
+  label: faq
+- ctx: B_action
+  utt: report kitne din mein milti hai
+  label: faq
+- ctx: B_ref
+  utt: cbc ki price kya hai
+  label: lookup
+- ctx: B_ref
+  utt: vitamin d ka rate batao
+  label: lookup
+- ctx: B_ref
+  utt: insaan se baat karwao
+  label: human
+- ctx: B_ref
+  utt: agent se baat karni hai
+  label: human
+- ctx: B_ref
+  utt: allah hafiz
+  label: end
+- ctx: B_ref
+  utt: khuda hafiz
+  label: end
+- ctx: paused
+  utt: wapas booking pe aate hain
+  label: resume
+- ctx: paused
+  utt: wahin se jari rakhein
+  label: resume
+- ctx: paused
+  utt: pehle wali booking dobara shuru karo
+  label: resume
+- ctx: paused
+  utt: jahan chhodi thi wahin se
+  label: resume
+- ctx: paused
+  utt: nayi booking karni hai
+  label: switch
+  workflow: home_sampling
+- ctx: paused
+  utt: bas shukriya
+  label: end
+- ctx: paused
+  utt: allah hafiz
+  label: end
+- ctx: none
+  utt: online report kaise milegi
+  label: faq
+- ctx: none
+  utt: report whatsapp par chahiye
+  label: faq
+- ctx: none
+  utt: mri par discount milta hai
+  label: faq
+- ctx: none
+  utt: doctor sahab se baat karni hai
+  label: faq
+- ctx: none
+  utt: meri report abhi tak nahi aayi
+  label: faq
+- ctx: none
+  utt: sialkot mein home sampling hoti hai
+  label: faq
+- ctx: none
+  utt: slip number yaad nahi report chahiye
+  label: faq
+- ctx: none
+  utt: koi discount milta hai
+  label: faq
+- ctx: none
+  utt: mri ki appointment leni hai
+  label: faq
+- ctx: none
+  utt: ct scan ki price kya hai
+  label: lookup
+- ctx: none
+  utt: mri brain ka rate batao
+  label: lookup
+- ctx: none
+  utt: ultrasound kitne ka hai
+  label: lookup
+- ctx: none
+  utt: hba1c ki price kya hai
+  label: lookup
+- ctx: none
+  utt: seebeesee ki qeemat kya hai
+  label: lookup
+- ctx: A_name
+  utt: online report kaise milegi
+  label: faq
+- ctx: A_name
+  utt: report whatsapp par chahiye
+  label: faq
+- ctx: A_name
+  utt: mri par discount milta hai
+  label: faq
+- ctx: A_name
+  utt: doctor sahab se baat karni hai
+  label: faq
+- ctx: A_name
+  utt: meri report abhi tak nahi aayi
+  label: faq
+- ctx: A_name
+  utt: sialkot mein home sampling hoti hai
+  label: faq
+- ctx: A_name
+  utt: slip number yaad nahi report chahiye
+  label: faq
+- ctx: A_name
+  utt: koi discount milta hai
+  label: faq
+- ctx: A_name
+  utt: mri ki appointment leni hai
+  label: faq
+- ctx: A_name
+  utt: ct scan ki price kya hai
+  label: lookup
+- ctx: A_name
+  utt: mri brain ka rate batao
+  label: lookup
+- ctx: A_name
+  utt: ultrasound kitne ka hai
+  label: lookup
+- ctx: A_name
+  utt: hba1c ki price kya hai
+  label: lookup
+- ctx: A_name
+  utt: seebeesee ki qeemat kya hai
+  label: lookup
+- ctx: none
+  utt: mujhe ghar par seebeesee ka test karwana hai
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: elaephti ghar par karwana hai
+  label: switch
+  workflow: home_sampling
+- ctx: none
+  utt: hba1c ka test ghar se karwana hai
+  label: switch
+  workflow: home_sampling
+- ctx: B_ref
+  utt: online report kaise milegi
+  label: faq
+- ctx: B_ref
+  utt: report whatsapp par mil sakti hai
+  label: faq

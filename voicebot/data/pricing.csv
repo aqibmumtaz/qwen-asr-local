@@ -1,0 +1,11 @@
+key,value,note,source
+home_sampling_fee,300,default home sampling charge in rupay (area table can override),seed
+free_home_sampling_above,5000,home sampling free above this bill (sample value),seed
+report_turnaround,"zyada tar blood tests ki report usi din ya agle din mil jati hai, kuch tests mein zyada waqt lagta hai",typical report time (sample wording),seed
+opening_hours,"subah 8 baje se raat 10 baje tak, hafte ke saatho din",lab timings (sample),seed
+helpline,042 111 000 000,"helpline number (placeholder, NOT real)",seed
+whatsapp_number,0300 0000000,"WhatsApp number (placeholder, NOT real)",seed
+report_portal,Chughtai Lab ki website par Reports ka section,where online reports are (sample),seed
+home_sampling_hours,subah saat baje se dopahar do baje tak,home sampling window (sample),seed
+head_office,"Gulberg, Lahore",head office location (sample),seed
+email_address,info@example.com,"email (placeholder, NOT real)",seed

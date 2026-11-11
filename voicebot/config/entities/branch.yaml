@@ -1,0 +1,11 @@
+name: branch
+source: {type: csv, path: branches.csv}
+id_field: branch_id
+display_field: name
+alias_fields: [aliases]
+list_separator: "|"
+facts: [city, address, timings, phone]
+disambiguate_by: [city]
+stopwords: [branch, ki, ka, ke, wali, wala, lab]
+thresholds: {accept: 0.90, gap: 0.15, confirm: 0.70, max_choices: 3, max_rounds: 2}
+confirm_before_use: false

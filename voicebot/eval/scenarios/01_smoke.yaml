@@ -1,0 +1,90 @@
+- id: hs_happy_path
+  title: Home sampling, everything clear
+  tags: [smoke, home_sampling]
+  greet: true
+  steps:
+    - say: "mujhe ghar par cbc aur lipid profile ka test karwana hai"
+      expect: {router: switch, workflow: home_sampling, step: patient_name, slots: {tests: [Complete Blood Count, Lipid Profile]}}
+    - say: "muhammad ali"
+      expect: {step: age, slots: {patient_name: Muhammad Ali}}
+    - say: "painteesh saal"
+      expect: {step: gender, slots: {age: 35}}
+    - say: "mard"
+      expect: {step: address}
+    - say: "gulshan e iqbal block 13 d ghar number 45"
+      expect: {step: date, bot_contains: [Gulshan-e-Iqbal]}
+    - say: "kal subah"
+      expect: {step: phone}
+    - say: "0300 1234567"
+      expect: {pending: confirm_slot, bot_contains: [zero teen zero zero]}
+    - say: "haan"
+      expect: {pending: confirm_step, bot_contains: [12 ghante]}
+    - say: "haan"
+      expect: {pending: confirm_step, bot_contains: [Confirm kar leti hoon]}
+    - say: "haan"
+      expect: {bot_contains: [H S ek zero zero ek], tool: create_home_sampling_request}
+  final:
+    booking: {patient_name: Muhammad Ali, age: 35, phone: "03001234567", date: {day: "2026-10-22", part: morning}}
+
+- id: hs_one_sentence
+  title: Test named in the first sentence is not asked again
+  tags: [smoke, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+      expect: {router: switch, workflow: home_sampling, step: patient_name, slots: {tests: [Complete Blood Count]}, bot_not_contains: [Kaun se tests]}
+
+- id: hs_correction_at_readback
+  title: Caller corrects the date at the read-back
+  tags: [smoke, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha karachi house 12"
+    - say: "kal subah"
+    - say: "0300 1234567"
+    - say: "haan"
+      expect: {pending: confirm_step, bot_contains: [Confirm kar leti hoon]}
+    - say: "nahi, kal nahi parson shaam"
+      expect: {bot_contains: [parson shaam], pending: confirm_step}
+    - say: "haan"
+      expect: {tool: create_home_sampling_request}
+  final:
+    booking: {date: {day: "2026-10-23", part: evening}}
+
+- id: hs_phone_in_pieces
+  title: Phone number given in two pieces
+  tags: [smoke, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha karachi house 12"
+    - say: "kal subah"
+    - say: "0300"
+      expect: {step: phone, pending: null}
+    - say: "1234567"
+      expect: {pending: confirm_slot, bot_contains: [zero teen zero zero ek do teen]}
+    - say: "haan"
+    - say: "haan"
+      expect: {tool: create_home_sampling_request}
+
+- id: hs_caller_id_phone
+  title: Bot offers the caller-ID number
+  tags: [smoke, home_sampling]
+  caller_phone: "03111234567"
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha karachi house 12"
+    - say: "kal subah"
+      expect: {pending: confirm_slot, bot_contains: [isi number]}
+    - say: "haan"
+    - say: "haan"
+      expect: {tool: create_home_sampling_request}
+  final:
+    booking: {phone: "03111234567"}

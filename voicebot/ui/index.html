@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice bot console</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="brand">Chughtai voice bot <span class="muted">test console</span></div>
+  <div class="bar">
+    <label class="inline">Caller phone <input id="callerPhone" placeholder="optional, e.g. 03111234567" size="18"></label>
+    <div class="seg" role="group" aria-label="Input mode">
+      <button id="modeChat" class="on" type="button">Chat</button>
+      <button id="modeVoice" type="button" title="Needs a LiveKit server and the agent worker running (see README)">Voice</button>
+    </div>
+    <button id="newCall" class="primary" type="button">New call</button>
+    <button id="endCall" type="button">End</button>
+  </div>
+  <div id="cfg" class="muted small"></div>
+</header>
+
+<main>
+  <aside id="scenarios">
+    <h2>Scenarios</h2>
+    <div class="row"><select id="tagSel"></select><button id="runTag" type="button">Run all</button></div>
+    <div id="runSummary" class="small"></div>
+    <ul id="scList"></ul>
+  </aside>
+
+  <section id="chat">
+    <div id="guided" class="guided hidden">
+      <div class="small muted" id="guidedTitle"></div>
+      <div class="row">
+        <input id="guidedLine" aria-label="Next scripted line">
+        <button id="guidedSend" class="primary" type="button">Send scripted line</button>
+      </div>
+      <div id="guidedChecks" class="small"></div>
+    </div>
+    <div id="voiceBar" class="small muted hidden"></div>
+    <div id="log" aria-live="polite"></div>
+    <form id="form" autocomplete="off">
+      <input id="msg" placeholder="Type Roman Urdu as the caller (or paste a noisy STT line)" aria-label="Caller message" autofocus>
+      <button class="primary" type="submit">Send</button>
+    </form>
+  </section>
+
+  <aside id="inspect">
+    <div class="card"><h2>Flow</h2><div id="flow" class="kv"></div></div>
+    <div class="card"><h2>Slots</h2><div id="slots" class="kv"></div></div>
+    <div class="card"><h2>Router (this turn)</h2><div id="router" class="small"></div></div>
+    <div class="card"><h2>Tool calls</h2><div id="tools" class="small"></div></div>
+    <div class="card"><h2>Timings</h2><div id="timings" class="small"></div></div>
+    <div class="card"><h2>Backend (mock)</h2>
+      <div class="row wrap">
+        <button id="failNext" type="button">Fail next call</button>
+        <button id="blockSlot" type="button">Block kal subah</button>
+        <button id="showBookings" type="button">Bookings</button>
+      </div>
+      <pre id="bookings" class="small mono hidden"></pre>
+    </div>
+    <details class="card"><summary>Raw turn JSON</summary><pre id="raw" class="small mono"></pre></details>
+  </aside>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/livekit-client@2.22.4/dist/livekit-client.umd.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

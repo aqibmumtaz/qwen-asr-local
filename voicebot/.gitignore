@@ -1,0 +1,12 @@
+# Secrets: never commit real values (use .env.example as the template)
+.env
+.env.*
+!.env.example
+
+# Per-call logs and recordings (contain patient data)
+logs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/

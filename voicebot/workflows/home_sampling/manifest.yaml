@@ -1,0 +1,33 @@
+name: home_sampling
+description: Book a new home sampling request (tests, patient, address, date and time,
+  phone).
+verification: none
+keywords:
+- sample
+- booking
+- book
+- collection
+- ghar
+- home
+- appointment
+- test
+- karwana
+- karwani
+examples:
+- mujhe ghar par sample dena hai
+- home sampling karwani hai
+- ghar se blood sample lena hai
+- sugar test ghar par karwana hai
+- nayi booking karni hai
+- home collection book karo
+- ghar aakar sample le jayen
+- cbc ka test ghar par chahiye
+- mujhe test karwana hai
+strong_keywords:
+- karwana
+- karwani
+- nayi
+- naya
+- book
+- collection
+- dena

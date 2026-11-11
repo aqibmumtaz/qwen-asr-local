@@ -1,0 +1,28 @@
+[project]
+name = "voicebot"
+version = "0.1.0"
+description = "Roman Urdu voice bot for Chughtai Lab (home sampling and booking status)"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "httpx",
+  "openai",
+  "pyyaml",
+  "rapidfuzz",
+  "python-dotenv",
+  "python-multipart",
+  "websockets",
+  "openpyxl",
+  "pydantic>=2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio"]
+voice = ["livekit-agents==1.8.8", "livekit-plugins-silero==1.8.8", "livekit-api==1.2.2"]
+router = ["laya"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]

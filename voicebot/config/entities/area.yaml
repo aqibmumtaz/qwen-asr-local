@@ -1,0 +1,14 @@
+# Service areas. SEED DATA ONLY until the real list is provided.
+name: area
+source: {type: csv, path: areas.csv}
+id_field: area_id
+display_field: name
+alias_fields: [aliases, abbreviations]
+list_separator: "|"
+facts: [city, covered, branch_id, home_fee, notes]
+disambiguate_by: [city]
+stopwords: [block, phase, sector, society, ghar, number, no, house, street, gali, road, ka, ki, ke, mein, me, hai, par, pe,
+            se, ke, qareeb, near, ke, paas, flat, apartment, plot]
+thresholds: {accept: 0.88, gap: 0.12, confirm: 0.68, max_choices: 3, max_rounds: 2}
+confirm_before_use: true
+spell_fallback: true

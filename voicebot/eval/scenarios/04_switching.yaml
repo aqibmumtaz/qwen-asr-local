@@ -1,0 +1,105 @@
+- id: sw_a_to_b_and_resume
+  title: Booking interrupted by a status request, then resumed
+  tags: [switching]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+      expect: {step: age}
+    - say: "pehle meri booking ka status batao"
+      expect: {router: switch, pending: switch, bot_contains: [chhod kar]}
+    - say: "haan"
+      expect: {workflow: booking_status, step: ref, suspended: 1}
+    - say: "hs 1000"
+    - say: "0300 1234567"
+    - say: "haan"
+      expect: {step: action}
+    - say: "status"
+      expect: {bot_contains: [confirm hai, wahin se jari rakhein], pending: resume}
+    - say: "haan"
+      expect: {workflow: home_sampling, step: age, slots: {patient_name: Ali Raza}, suspended: 0, bot_contains: [umar]}
+
+- id: sw_declined
+  title: Switch declined, caller stays in the booking
+  tags: [switching]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "meri booking cancel karni hai"
+      expect: {pending: switch}
+    - say: "nahi"
+      expect: {workflow: home_sampling, step: age, suspended: 0}
+
+- id: sw_during_readback_blocked
+  title: Switch attempt during the final read-back must wait
+  tags: [switching, safety]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha karachi house 12"
+    - say: "kal subah"
+    - say: "0300 1234567"
+    - say: "haan"
+      expect: {pending: confirm_step}
+    - say: "meri booking ka status batao"
+      expect: {workflow: home_sampling, pending: confirm_step, bot_contains: [mukammal], suspended: 0}
+
+- id: sw_b_to_a
+  title: From status check to a new booking
+  tags: [switching]
+  steps:
+    - say: "meri booking ka status batao"
+      expect: {router: switch, workflow: booking_status}
+    - say: "hs 1000"
+    - say: "nayi booking karni hai"
+      expect: {pending: switch}
+    - say: "haan"
+      expect: {workflow: home_sampling, suspended: 1}
+
+- id: sw_no_progress_replaces
+  title: Switching before anything was collected needs no confirmation
+  tags: [switching]
+  steps:
+    - say: "mujhe ghar par test karwana hai"
+      expect: {workflow: home_sampling}
+    - say: "meri booking ka status batao"
+      expect: {router: switch, workflow: booking_status, suspended: 0}
+
+- id: sw_resume_declined
+  title: After the second task, caller does not want to resume
+  tags: [switching]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "meri booking ka status batao"
+    - say: "haan"
+    - say: "hs 1000"
+    - say: "0300 1234567"
+    - say: "haan"
+    - say: "status"
+      expect: {pending: resume}
+    - say: "nahi"
+      expect: {suspended: 0, bot_contains: [aur kisi cheez]}
+
+- id: sw_false_switch_stays
+  title: A keyword inside a real answer must not switch
+  tags: [switching, safety]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha karachi house 12"
+    - say: "cancel subah"
+      expect: {workflow: home_sampling, step: date, router: continue, bot_contains: [Kis din]}
+
+- id: sw_keyword_in_name_asks_first
+  title: A name that looks like a keyword gets a confirmation instead of a silent switch
+  tags: [switching, safety]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "status ali"
+      expect: {pending: switch}
+    - say: "nahi"
+      expect: {workflow: home_sampling, step: patient_name, suspended: 0}

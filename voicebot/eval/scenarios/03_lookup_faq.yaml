@@ -1,0 +1,106 @@
+- id: lk_price_ambiguous
+  title: Price of an ambiguous test, then answer
+  tags: [lookup]
+  steps:
+    - say: "vitamin d ki price kya hai"
+      expect: {router: lookup, pending: lookup_choose, bot_contains: [options]}
+    - say: "total wala"
+      expect: {bot_contains: [Vitamin D Total, char hazaar paanch sau]}
+
+- id: lk_price_single
+  title: Price of a clear test
+  tags: [lookup]
+  steps:
+    - say: "cbc ki price kya hai"
+      expect: {router: lookup, bot_contains: [aath sau]}
+
+- id: lk_price_midflow
+  title: Price question in the middle of a booking, bot returns to the question
+  tags: [lookup, routing, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+      expect: {step: patient_name}
+    - say: "lipid profile ki price kya hai"
+      expect: {router: lookup, workflow: home_sampling, step: patient_name, bot_contains: [Lipid Profile, ghante, Mareez ka naam]}
+    - say: "ali raza"
+      expect: {step: age}
+
+- id: lk_fasting_in_price
+  title: Test that needs fasting mentions it in the price answer
+  tags: [lookup]
+  steps:
+    - say: "lipid profile ki qeemat kya hai"
+      expect: {bot_contains: [12 ghante]}
+
+- id: faq_hours_midflow
+  title: FAQ in the middle of a booking and return
+  tags: [routing, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "lab kitne baje khulti hai"
+      expect: {router: faq, workflow: home_sampling, step: patient_name, bot_contains: [khuli, Mareez ka naam]}
+
+- id: faq_home_fee_standalone
+  title: Home sampling charge FAQ with no active task
+  tags: [routing]
+  steps:
+    - say: "home sampling ka charge kitna hai"
+      expect: {router: faq, bot_contains: ["300"]}
+
+- id: faq_report_online
+  title: How to get an online report (sample FAQ)
+  tags: [routing, faq]
+  steps:
+    - say: "online report kaise milegi"
+      expect: {router: faq, bot_contains: [slip number]}
+
+- id: faq_report_whatsapp
+  title: Report on WhatsApp
+  tags: [routing, faq]
+  steps:
+    - say: "report whatsapp par mil sakti hai"
+      expect: {router: faq, bot_contains: [WhatsApp]}
+
+- id: faq_handoff_discount
+  title: Discount question is answered and handed to a person
+  tags: [routing, faq, safety]
+  steps:
+    - say: "mri par discount milta hai"
+      expect: {router: faq, transfer: faq_imaging_discount, ended: true}
+
+- id: faq_handoff_doctor
+  title: Doctor consultation request goes to a person
+  tags: [routing, faq, safety]
+  steps:
+    - say: "doctor sahab se baat karni hai"
+      expect: {transfer: faq_doctor_consult, ended: true}
+
+- id: faq_handoff_report_delay
+  title: Missing report goes to a person
+  tags: [routing, faq, safety]
+  steps:
+    - say: "meri report abhi tak nahi aayi"
+      expect: {router: faq, transfer: faq_report_delay, ended: true}
+
+- id: faq_home_imaging
+  title: Imaging cannot be done at home
+  tags: [routing, faq]
+  steps:
+    - say: "mri ghar par ho sakta hai"
+      expect: {router: faq, bot_contains: [branch aana]}
+
+- id: lk_ct_scan_ambiguous
+  title: CT scan price asks which scan
+  tags: [lookup, entities]
+  steps:
+    - say: "ct scan ki price kya hai"
+      expect: {router: lookup, pending: lookup_choose, bot_contains: [CT Scan Head, CT Scan Chest]}
+    - say: "chest wala"
+      expect: {bot_contains: [CT Scan Chest, ki price]}
+
+- id: lk_mri_price
+  title: MRI brain price
+  tags: [lookup]
+  steps:
+    - say: "mri brain ki price batao"
+      expect: {router: lookup, bot_contains: [MRI Brain, hazaar]}

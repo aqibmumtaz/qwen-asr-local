@@ -1,0 +1,47 @@
+# Workflow B: check, reschedule or cancel an existing home sampling booking.
+# Light verification: booking reference + the phone number on the booking must match.
+name: booking_status
+spoken: "booking ka status"   # how the bot refers to this task out loud
+title: Booking status, reschedule or cancel
+intro: "Ji, aap ki booking dekhte hain."
+slots:
+  booking_ref: {type: booking_ref}
+  phone: {type: phone}
+  action: {type: action}
+  date: {type: datetime}
+steps:
+  - id: ref
+    slot: booking_ref
+    ask: "Booking ka reference number bata dein, jaise H S ek zero zero ek."
+    retry: "Reference number dobara bata dein. Yeh H S ke baad chaar number hota hai."
+  - id: phone
+    slot: phone
+    ask: "Booking par jo phone number hai wo bata dein."
+    retry: "Poora number dobara bata dein, ek ek hindsa karke."
+  - id: verify
+    type: action
+    hook: verify
+  - id: action
+    slot: action
+    ask: "Aap booking ka status dekhna chahte hain, waqt badalna chahte hain, ya cancel karna chahte hain?"
+    retry: "Bata dein: status, waqt badalna, ya cancel."
+  - id: status
+    type: action
+    hook: report_status
+    when: {slot: action, eq: status}
+  - id: new_date
+    slot: date
+    when: {slot: action, eq: reschedule}
+    ask: "Naya din aur waqt bata dein. Jaise parson shaam."
+    ask_part: "{day_label} kis waqt? Subah, dopahar, shaam ya raat?"
+    ask_day: "Kis din aana theek rahega?"
+    retry: "Din aur waqt bata dein, jaise kal subah."
+  - id: confirm
+    type: confirm
+    non_interruptible: true
+    when: {slot: action, in: [reschedule, cancel]}
+    summary: "{confirm_text}"
+  - id: execute
+    type: action
+    hook: execute
+    when: {slot: action, in: [reschedule, cancel]}

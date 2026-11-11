@@ -1,0 +1,33 @@
+# Dedicated environment for the voice bot (separate from the ASR env `ai-clinical-triage`).
+#   conda env create -f environment.yml && conda activate voicebot
+#   python -m app.server            # http://localhost:7860
+# Pins match what the project was developed and tested with (Intel Mac, Python 3.12, CPU torch 2.2.2).
+name: voicebot
+channels: [conda-forge, defaults]
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - fastapi==0.158.0
+      - uvicorn[standard]==0.54.0
+      - httpx==0.28.1
+      - openai==3.36.0
+      - pyyaml==6.0.3
+      - rapidfuzz==3.14.6
+      - python-dotenv==1.2.4
+      - python-multipart==0.0.32
+      - websockets==17.3
+      - openpyxl==3.1.5
+      - pydantic==2.14.1
+      - pytest==9.1.1
+      - pytest-asyncio==1.4.0
+      # voice: LiveKit agent worker + Silero VAD + token minting
+      - livekit-agents==1.8.8
+      - livekit-plugins-silero==1.8.8
+      - livekit-api==1.2.2
+      # router model (Laya) - needs these exact torch/numpy/transformers on Intel Mac + Python 3.12
+      - laya==0.4.13
+      - torch==2.2.2
+      - numpy==1.26.4
+      - transformers==4.49.0
+      - tokenizers==0.21.4

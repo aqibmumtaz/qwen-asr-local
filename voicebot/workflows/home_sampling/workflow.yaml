@@ -1,0 +1,61 @@
+# Workflow A: book a home sampling request. Templates are spoken Roman Urdu.
+# {sakti}, {leti} etc. come from the persona (gender of the bot voice); other {vars} from slots.
+name: home_sampling
+spoken: "home sampling booking"   # how the bot refers to this task out loud
+title: Home sampling booking
+intro: "Theek hai, home sampling booking shuru karte hain."
+veto_note: "{names} ghar par nahi ho sakta, is ke liye branch aana hota hai."
+slots:
+  tests: {type: tests}
+  patient_name: {type: name}
+  age: {type: age}
+  gender: {type: gender}
+  address: {type: address}
+  date: {type: datetime}
+  phone: {type: phone}
+steps:
+  - id: tests
+    slot: tests
+    ask: "Kaun se tests karwane hain?"
+    retry: "Test ka naam samajh nahi aaya. Dobara bata dein, ya spelling bata dein."
+    ack: "Ji, {tests_spoken}."
+  - id: patient_name
+    slot: patient_name
+    ask: "Mareez ka naam kya hai?"
+    retry: "Naam dobara bata dein."
+  - id: age
+    slot: age
+    ask: "Mareez ki umar kya hai?"
+    retry: "Umar number mein bata dein, jaise paintees saal."
+  - id: gender
+    slot: gender
+    ask: "Mareez mard hain ya aurat?"
+    retry: "Bas itna bata dein, mard ya aurat."
+  - id: address
+    slot: address
+    ask: "Sample kis address par lena hai? Area ka naam aur ghar ka number bata dein."
+    retry: "Area ka naam dobara bata dein, jaise Gulshan e Iqbal ya DHA."
+    ack: "{area}, theek hai. Home sampling charge {home_fee} rupay hoga."
+  - id: date
+    slot: date
+    ask: "Kis din aur kis waqt aana theek rahega? Jaise kal subah."
+    ask_part: "{day_label} kis waqt? Subah, dopahar, shaam ya raat?"
+    ask_day: "Kis din aana theek rahega?"
+    retry: "Din aur waqt bata dein, jaise kal subah ya parson shaam."
+  - id: phone
+    slot: phone
+    use_caller_id: true
+    prefill: true
+    ask: "Rabta number bata dein."
+    retry: "Poora number dobara bata dein, ek ek hindsa karke."
+  - id: fasting
+    type: hook_confirm
+    hook: fasting_notice
+    on_no: reask_date
+  - id: confirm
+    type: confirm
+    non_interruptible: true
+    summary: "Confirm kar {leti} hoon: {patient_name}, {age_spoken}, {tests_spoken}, {address_spoken}, {when_spoken}, rabta number {phone_spoken}. Sab theek hai?"
+  - id: submit
+    type: action
+    hook: submit

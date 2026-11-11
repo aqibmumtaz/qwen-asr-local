@@ -1,0 +1,67 @@
+area_id,name,aliases,abbreviations,city,covered,branch_id,home_fee,notes,source
+A001,Gulberg Lahore,gulberg|gulberg lahore|gulberg 3|gulberg iii,,Lahore,yes,B01,300,,seed
+A002,DHA Lahore,dha lahore|defence lahore,,Lahore,yes,B03,300,,seed
+A003,Model Town Lahore,model town|model town lahore,,Lahore,yes,B04,300,,seed
+A004,Johar Town Lahore,johar town|johar town lahore,,Lahore,yes,B02,300,,seed
+A005,Wapda Town Lahore,wapda town|wapda town lahore,,Lahore,yes,B02,300,,seed
+A006,Allama Iqbal Town Lahore,iqbal town|allama iqbal town|iqbal town lahore,,Lahore,yes,B04,300,,seed
+A007,Samanabad Lahore,samanabad|samanabad lahore,,Lahore,yes,B04,300,,seed
+A008,Garden Town Lahore,garden town|garden town lahore,,Lahore,yes,B01,300,,seed
+A009,Lahore Cantt,lahore cantt|cantt lahore|cantonment lahore,cantt,Lahore,yes,B01,300,,seed
+A010,Township Lahore,township|township lahore,,Lahore,yes,B02,300,,seed
+A011,Faisal Town Lahore,faisal town|faisal town lahore,,Lahore,yes,B02,300,,seed
+A012,Valencia Town Lahore,valencia|valencia town,,Lahore,yes,B02,300,,seed
+A013,Askari Lahore,askari|askari lahore|askari 10,,Lahore,yes,B03,300,,seed
+A014,Shadman Lahore,shadman|shadman lahore,,Lahore,yes,B01,300,,seed
+A015,Mughalpura Lahore,mughalpura|mughalpura lahore,,Lahore,yes,B04,300,,seed
+A016,Raiwind Road Lahore,raiwind road|raiwind road lahore,,Lahore,yes,B02,300,,seed
+A017,Thokar Niaz Baig,thokar|thokar niaz baig,,Lahore,yes,B02,300,,seed
+A018,Ichra Lahore,ichra|ichra lahore,,Lahore,yes,B01,300,,seed
+A019,Mozang Lahore,mozang|mozang chungi,,Lahore,yes,B01,300,,seed
+A020,Defence Road Lahore,defence road|defence road lahore,,Lahore,yes,B03,300,,seed
+A021,Sabzazar Lahore,sabzazar|sabzazar lahore,,Lahore,yes,B04,300,,seed
+A022,Shalimar Lahore,shalimar|shalimar lahore|shalamar,,Lahore,yes,B04,300,,seed
+A023,Muslim Town Lahore,muslim town|muslim town lahore,,Lahore,yes,B01,300,,seed
+A024,Canal View Lahore,canal view|canal view lahore,,Lahore,yes,B02,300,,seed
+A025,EME Society Lahore,eme|eme society,eme,Lahore,yes,B03,300,,seed
+A026,Lake City Lahore,lake city|lake city lahore,,Lahore,yes,B03,300,,seed
+A027,Bahria Town Lahore,bahria town lahore|bahria lahore|bahria town,,Lahore,yes,B03,300,,seed
+A028,Kot Lakhpat Lahore,kot lakhpat|kotlakhpat,,Lahore,yes,B04,300,,seed
+A029,Harbanspura Lahore,harbanspura|harbanspura lahore,,Lahore,yes,B04,300,,seed
+A030,Walton Lahore,walton|walton road|walton lahore,,Lahore,yes,B03,300,,seed
+A031,Raiwind,raiwind|raiwind lahore,,Lahore,no,,0,abhi service nahi hai,seed
+A032,Muridke,muridke|mureed ke|mridke,,Muridke,no,,0,abhi service nahi hai,seed
+A033,Kharian,kharian|kareean|khaariya,,Kharian,no,,0,abhi service nahi hai,seed
+A034,Gulshan-e-Iqbal,gulshan e iqbal|gulshan iqbal|gulshan e iqbal karachi,,Karachi,yes,B05,300,,seed
+A035,Gulshan-e-Maymar,gulshan e maymar|gulshan maymar|maymar,,Karachi,yes,B05,300,,seed
+A036,Gulistan-e-Jauhar,gulistan e jauhar|gulistan jauhar|jauhar|johar karachi,,Karachi,yes,B05,300,,seed
+A037,DHA Karachi,dha karachi|defence karachi,,Karachi,yes,B06,300,,seed
+A038,Clifton,clifton|clifton karachi|seaview|kliphatan,,Karachi,yes,B06,300,,seed
+A039,North Nazimabad,north nazimabad|nazimabad north|n nazimabad,,Karachi,yes,B05,300,,seed
+A040,Nazimabad,nazimabad|nazimabad karachi,,Karachi,yes,B05,300,,seed
+A041,PECHS,pechs|pecchs|tariq road|bahadurabad|bahadur abad,,Karachi,yes,B06,300,,seed
+A042,Saddar Karachi,saddar|saddar karachi,,Karachi,yes,B06,300,,seed
+A043,Korangi,korangi|korangi karachi,,Karachi,no,,0,abhi service nahi hai,seed
+A044,Malir,malir|malir cantt|malir city,,Karachi,no,,0,abhi service nahi hai,seed
+A045,Orangi Town,orangi|orangi town|aurangi,,Karachi,no,,0,abhi service nahi hai,seed
+A046,F-7 Islamabad,f 7|f7|f seven,,Islamabad,yes,B07,350,,seed
+A047,F-10 Islamabad,f 10|f10,,Islamabad,yes,B07,350,,seed
+A048,G-11 Islamabad,g 11|g11,,Islamabad,yes,B07,350,,seed
+A049,I-8 Islamabad,i 8|i8,,Islamabad,yes,B07,350,,seed
+A050,E-11 Islamabad,e 11|e11,,Islamabad,yes,B07,350,,seed
+A051,Bahria Town Islamabad,bahria town islamabad|bahria phase,,Islamabad,yes,B07,350,,seed
+A052,Satellite Town Rawalpindi,satellite town|satellite town rawalpindi,,Rawalpindi,yes,B08,350,,seed
+A053,Saddar Rawalpindi,saddar rawalpindi|pindi saddar,,Rawalpindi,yes,B08,350,,seed
+A054,Chaklala Rawalpindi,chaklala|chaklala scheme 3,,Rawalpindi,yes,B08,350,,seed
+A055,Bahria Town Rawalpindi,bahria town rawalpindi|bahria pindi,,Rawalpindi,yes,B08,350,,seed
+A056,Peoples Colony Faisalabad,peoples colony|peoples colony faisalabad,,Faisalabad,yes,B09,400,,seed
+A057,D Ground Faisalabad,d ground|d ground faisalabad,,Faisalabad,yes,B09,400,,seed
+A058,Gulgasht Multan,gulgasht|gulgasht colony|gulgasht multan,,Multan,yes,B10,400,,seed
+A059,Multan Cantt,multan cantt|cantt multan,,Multan,yes,B10,400,,seed
+A060,Sialkot Cantt,sialkot cantt|cantt sialkot|sialkot,,Sialkot,yes,B11,400,,seed
+A061,Paris Road Sialkot,paris road|paris road sialkot,,Sialkot,yes,B11,400,,seed
+A062,Satellite Town Gujranwala,satellite town gujranwala|gujranwala,,Gujranwala,yes,B12,400,,seed
+A063,Model Town Gujranwala,model town gujranwala,,Gujranwala,yes,B12,400,,seed
+A064,Hayatabad Peshawar,hayatabad|hayatabad peshawar,,Peshawar,no,,0,abhi service nahi hai,seed
+A065,Jahanian,jahanian|jahaaniya,,Jahanian,no,,0,abhi service nahi hai,seed
+A066,Hasanabdal,hasanabdal|hassan abdal,,Hasanabdal,no,,0,abhi service nahi hai,seed

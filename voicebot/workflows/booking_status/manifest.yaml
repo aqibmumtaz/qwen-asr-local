@@ -1,0 +1,37 @@
+name: booking_status
+description: Check the status of an existing home sampling booking, reschedule it,
+  or cancel it.
+verification: booking_ref_and_phone
+keywords:
+- status
+- cancel
+- reschedule
+- booking
+- badalna
+- badlo
+- kahan
+- pata
+examples:
+- meri booking ka status batao
+- booking cancel karni hai
+- booking ka waqt badalna hai
+- meri home sampling kab aayegi
+- pehle wali booking ka pata karna hai
+- appointment change karna hai
+- booking reference number ka status
+- mera sample lene kab aayenge
+- kal wali booking cancel kar do
+strong_keywords:
+- status
+- cancel
+- reschedule
+- badalna
+- badalni
+- badlo
+- aayegi
+- aayenge
+- kahan
+- change
+- purani
+- puraani
+- pichli

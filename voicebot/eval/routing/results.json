@@ -1,0 +1,17 @@
+{
+ "rules": {
+  "accuracy": 0.989,
+  "false_switch": 1,
+  "ms": 0.1,
+  "per_label": {
+   "continue": "63/64",
+   "end": "11/11",
+   "faq": "35/36",
+   "human": "10/10",
+   "lookup": "22/22",
+   "resume": "4/4",
+   "switch": "30/30",
+   "unclear": "5/5"
+  }
+ }
+}

@@ -1,0 +1,151 @@
+- id: ent_ambiguous_ordinal
+  title: Ambiguous test name, caller says "pehla wala"
+  tags: [entities, home_sampling]
+  steps:
+    - say: "mujhe vitamin d ka test ghar par karwana hai"
+      expect: {workflow: home_sampling, pending: choose, bot_contains: [options, Vitamin D Total]}
+    - say: "pehla wala"
+      expect: {step: patient_name, slots: {tests: [Vitamin D Total]}}
+
+- id: ent_ambiguous_by_name
+  title: Ambiguous test name, caller says a distinguishing word
+  tags: [entities, home_sampling]
+  steps:
+    - say: "vitamin d ka test ghar par chahiye"
+    - say: "25 hydroxy wala"
+      expect: {slots: {tests: [Vitamin D 25 Hydroxy]}}
+
+- id: ent_sugar_three_options
+  title: '"sugar" has three tests, caller picks the last'
+  tags: [entities, home_sampling]
+  steps:
+    - say: "sugar ka test ghar par karwana hai"
+      expect: {pending: choose, bot_contains: [Fasting, Random]}
+    - say: "akhri wala"
+      expect: {slots: {tests: [Blood Glucose Random]}}
+
+- id: ent_both_options
+  title: Caller wants both options
+  tags: [entities, home_sampling]
+  steps:
+    - say: "vitamin d karwana hai ghar par"
+    - say: "dono"
+      expect: {slots: {tests: [Vitamin D Total, Vitamin D 25 Hydroxy]}}
+
+- id: ent_unknown_then_spelled
+  title: Unknown test name, caller spells it
+  tags: [entities, home_sampling]
+  steps:
+    - say: "mujhe ghar par test karwana hai"
+      expect: {workflow: home_sampling, step: tests}
+    - say: "sivi si"
+      expect: {pending: spell}
+    - say: "c b c"
+      expect: {slots: {tests: [Complete Blood Count]}, step: patient_name}
+
+- id: ent_not_found_twice_human
+  title: Test never understood, bot hands over
+  tags: [entities, safety]
+  steps:
+    - say: "mujhe ghar par test karwana hai"
+    - say: "xyzzy plugh"
+      expect: {pending: spell}
+    - say: "qwerty uiop"
+      expect: {pending: spell}
+    - say: "asdfgh jkl"
+      expect: {transfer: could_not_resolve_test, ended: true}
+
+- id: ent_area_not_covered
+  title: Area without service
+  tags: [entities, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "korangi mein ghar number 5"
+      expect: {step: address, bot_contains: [service maujood nahi]}
+    - say: "dha karachi house 12"
+      expect: {step: date}
+
+- id: ent_gulshan_ambiguous_area
+  title: '"gulshan" alone is ambiguous between two areas'
+  tags: [entities, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "gulshan mein ghar number 12"
+      expect: {pending: choose_area, bot_contains: [Gulshan-e-Iqbal, Gulshan-e-Maymar]}
+    - say: "iqbal wala"
+      expect: {step: date, slots: {address: {area: Gulshan-e-Iqbal}}}
+
+- id: ent_slot_unavailable
+  title: Requested slot is full, bot asks again
+  tags: [entities, home_sampling]
+  setup: {blocked_slots: [["2026-10-22", "morning"]]}
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha karachi house 12"
+    - say: "kal subah"
+      expect: {step: date, bot_contains: [khali nahi]}
+    - say: "kal shaam"
+      expect: {step: phone}
+
+- id: ent_imaging_not_at_home
+  title: An MRI cannot be booked for home collection, the blood test can
+  tags: [entities, home_sampling]
+  steps:
+    - say: "mujhe ghar par cbc aur mri karwana hai"
+      expect: {workflow: home_sampling, step: patient_name, slots: {tests: [Complete Blood Count]}, bot_contains: [MRI, branch aana]}
+
+- id: ent_only_imaging_asks_again
+  title: Only an MRI was named, bot asks for a home-collectable test
+  tags: [entities, home_sampling]
+  steps:
+    - say: "mujhe ghar par mri brain karwana hai"
+      expect: {workflow: home_sampling, step: tests, bot_contains: [branch aana, Kaun se tests]}
+
+- id: ent_recognizer_garbles
+  title: Test names as the speech recogniser really writes them (seebeesee, elaephti)
+  tags: [entities, noisy]
+  steps:
+    - say: "seebeesee aur elaephti karwana hai ghar par"
+      expect: {workflow: home_sampling, slots: {tests: [Complete Blood Count, Liver Function Test]}}
+
+- id: ent_typhoid_ambiguous
+  title: Typhoid has two tests
+  tags: [entities, home_sampling]
+  steps:
+    - say: "typhoid ka test ghar par karwana hai"
+      expect: {pending: choose, bot_contains: [Typhidot, Widal Test]}
+    - say: "widal"
+      expect: {slots: {tests: [Widal Test]}}
+
+- id: ent_lahore_area
+  title: Lahore area with house details
+  tags: [entities, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "johar town block c ghar number 25"
+      expect: {step: date, slots: {address: {area: Johar Town Lahore}}}
+
+- id: ent_dha_two_cities
+  title: '"dha" alone could be Lahore or Karachi'
+  tags: [entities, home_sampling]
+  steps:
+    - say: "cbc ka test ghar par karwana hai"
+    - say: "ali raza"
+    - say: "painteesh saal"
+    - say: "mard"
+    - say: "dha phase 5 house 12"
+      expect: {pending: choose_area, bot_contains: [DHA Lahore, DHA Karachi]}
+    - say: "lahore wala"
+      expect: {step: date, slots: {address: {area: DHA Lahore}}}

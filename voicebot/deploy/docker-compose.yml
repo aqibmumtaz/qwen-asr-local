@@ -1,0 +1,38 @@
+# Self-hosted LiveKit for the voice bot.
+#   dev   (laptop):   docker compose -f deploy/docker-compose.yml up livekit
+#   pilot (public IP): docker compose -f deploy/docker-compose.yml --profile sip up -d   (after editing deploy/livekit.yaml, deploy/sip.yaml)
+# The agent worker and the console run from the project environment (python -m app.agent start / python -m app.server)
+# or can be added here as services once the pilot host is decided.
+services:
+  livekit:
+    image: livekit/livekit-server:latest
+    command: ["--dev", "--bind", "0.0.0.0"]      # dev keys devkey/secret; replace with --config deploy/livekit.yaml for the pilot
+    ports:
+      - "7880:7880"         # signalling / HTTP
+      - "7881:7881"         # RTC over TCP
+      - "7882:7882/udp"     # RTC over UDP
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    profiles: ["sip"]
+    restart: unless-stopped
+
+  livekit-pilot:
+    image: livekit/livekit-server:latest
+    profiles: ["sip"]
+    command: ["--config", "/etc/livekit.yaml"]
+    volumes: ["./livekit.yaml:/etc/livekit.yaml:ro"]
+    network_mode: host
+    depends_on: [redis]
+    restart: unless-stopped
+
+  sip:
+    image: livekit/sip:latest
+    profiles: ["sip"]
+    volumes: ["./sip.yaml:/etc/sip.yaml:ro"]
+    environment:
+      SIP_CONFIG_FILE: /etc/sip.yaml
+    network_mode: host
+    depends_on: [redis, livekit-pilot]
+    restart: unless-stopped

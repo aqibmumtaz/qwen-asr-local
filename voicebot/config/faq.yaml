@@ -1,0 +1,411 @@
+# SAMPLE FAQ CONTENT. Topics come from what callers ask in the recorded Chughtai Lab calls (reports, home sampling, MRI/CT,
+# discounts, doctor transfers). Wording, availability claims and values are placeholders: replace every entry with approved
+# answers before real use (entries marked `sample: true`). Spoken length: max 2 short sentences. {placeholders} come from data/pricing.csv.
+# `handoff: true` = the bot speaks the answer and then transfers the call to a person.
+- id: faq_hours
+  category: general
+  questions:
+  - lab kitne baje khulti hai
+  - lab ki timing kya hai
+  - lab kab tak khuli hoti hai
+  - aap ki timings kya hain
+  - opening hours kya hain
+  - lab band kitne baje hoti hai
+  answer: Hamari lab {opening_hours} khuli rehti hai.
+  data:
+    opening_hours: pricing.opening_hours
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_helpline
+  category: general
+  questions:
+  - helpline number kya hai
+  - aap ka phone number kya hai
+  - rabta number bata dein
+  - contact number
+  - customer care ka number
+  answer: Hamari helpline {helpline} hai.
+  data:
+    helpline: pricing.helpline
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_whatsapp
+  category: general
+  questions:
+  - whatsapp number kya hai
+  - whatsapp par rabta kaise karein
+  - whatsapp number bata dein
+  answer: Aap hamein WhatsApp par {whatsapp_number} par message kar sakte hain.
+  data:
+    whatsapp_number: pricing.whatsapp_number
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_email
+  category: general
+  questions:
+  - email address kya hai
+  - email id bata dein
+  - email par rabta kaise karein
+  answer: Aap hamein {email_address} par email kar sakte hain.
+  data:
+    email_address: pricing.email_address
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_head_office
+  category: general
+  questions:
+  - head office kahan hai
+  - main branch kahan hai
+  - head office ka address kya hai
+  - lahore head office kahan hai
+  answer: Hamara head office {head_office} mein hai.
+  data:
+    head_office: pricing.head_office
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_branches
+  category: general
+  questions:
+  - aap ki branches kahan kahan hain
+  - kis kis shehar mein branch hai
+  - mere shehar mein branch hai
+  - nazdeeki branch kahan hai
+  answer: Hamari branches Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan, Sialkot aur Gujranwala mein hain. Aap shehar bata dein to
+    main nazdeeki branch bata doon.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_online
+  category: reports
+  questions:
+  - online report kaise milegi
+  - report online kaise dekhein
+  - website se report kaise nikalein
+  - report ka portal kahan hai
+  - online report chahiye
+  answer: Aap {report_portal} se apni report dekh sakte hain. Is ke liye slip number ya registered phone number chahiye hoga.
+  data:
+    report_portal: pricing.report_portal
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_whatsapp
+  category: reports
+  questions:
+  - report whatsapp par mil sakti hai
+  - whatsapp par report bhej dein
+  - report whatsapp pe chahiye
+  - report whatsapp number par aa jayegi
+  answer: Report aap ke registered phone number par WhatsApp par bhi bheji ja sakti hai, agar aap ne number register karwaya ho.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_lost_slip
+  category: reports
+  questions:
+  - slip kho gayi hai report kaise milegi
+  - slip number yaad nahi report chahiye
+  - slip nahi hai report kaise lein
+  - slip number nahi hai
+  answer: Slip na ho to registered phone number aur mareez ka naam bata kar report mil sakti hai. Main aap ko hamare saathi se mila deti hoon
+    jo report nikalne mein madad karenge.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_time
+  category: reports
+  questions:
+  - report kitne din mein milti hai
+  - report kab tak aati hai
+  - report kitni der mein ready hoti hai
+  - result kab milega
+  - report kab milegi
+  answer: '{report_turnaround}.'
+  data:
+    report_turnaround: pricing.report_turnaround
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_branch
+  category: reports
+  questions:
+  - report branch se kaise lein
+  - report lene branch aana hoga
+  - report collect kaise karein
+  - report kahan se milegi
+  answer: Report kisi bhi branch se slip dikha kar li ja sakti hai, ya online dekhi ja sakti hai.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_delay
+  category: reports
+  questions:
+  - meri report abhi tak nahi aayi
+  - report late ho gayi hai
+  - report ka intezar hai abhi tak nahi mili
+  - report mein der kyun ho rahi hai
+  answer: Maaf kijiye, main aap ki report ki halat dekhne ke liye aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_correction
+  category: reports
+  questions:
+  - report mein naam galat hai
+  - report mein ghalti hai
+  - report theek karwani hai
+  - report mein age galat likhi hai
+  answer: Report mein tabdeeli ke liye main aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_report_email
+  category: reports
+  questions:
+  - report email par mil sakti hai
+  - report email kar dein
+  - email par report chahiye
+  answer: Report email par bhi bheji ja sakti hai agar aap ka email register ho. Main aap ko hamare saathi se mila deti hoon taake wo aap ka email
+    check kar lein.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_home_fee
+  category: home_sampling
+  questions:
+  - home sampling ka charge kitna hai
+  - ghar se sample dene ki fees kya hai
+  - ghar par sample lene ka kharcha
+  - home collection charges
+  - sample lene ke paise alag se lagte hain
+  answer: Home sampling ka charge {home_sampling_fee} rupay hai. {free_above} rupay se zyada ke bill par charge nahi hota.
+  data:
+    home_sampling_fee: pricing.home_sampling_fee
+    free_above: pricing.free_home_sampling_above
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_home_who
+  category: home_sampling
+  questions:
+  - sample kaun lene aayega
+  - phlebotomist aata hai
+  - ghar par kaun aata hai
+  - sample lene wala kaise aayega
+  answer: Hamara training yafta phlebotomist ghar aakar sample leta hai.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_home_hours
+  category: home_sampling
+  questions:
+  - sample lene ka waqt kya hai
+  - ghar par sample kis waqt lete hain
+  - home sampling kis time hoti hai
+  - raat ko sample le sakte hain
+  answer: Home sampling {home_sampling_hours} hoti hai.
+  data:
+    home_sampling_hours: pricing.home_sampling_hours
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_home_cities
+  category: home_sampling
+  questions:
+  - kin shehron mein home sampling hoti hai
+  - sialkot mein home sampling hoti hai
+  - mere shehar mein home sampling ki service hai
+  - kis area mein ghar par sample lete hain
+  answer: Home sampling Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan, Sialkot aur Gujranwala ke kai ilaqon mein hoti hai. Aap apna
+    area bata dein to main check kar loon.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_home_elderly
+  category: home_sampling
+  questions:
+  - buzurg mareez ka sample ghar par ho jayega
+  - bistar par mareez ka sample
+  - bacchon ka sample ghar par lete hain
+  - bimar walid ka sample ghar se
+  answer: Ji, buzurgon aur bacchon ka sample bhi ghar par liya ja sakta hai.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_home_imaging
+  category: home_sampling
+  questions:
+  - mri ghar par ho sakta hai
+  - ultrasound ghar par karwana hai
+  - xray ghar par ho jayega
+  - ct scan ghar par
+  answer: MRI, CT scan, ultrasound aur X-ray ghar par nahi ho sakte, in ke liye branch aana hota hai. Sirf blood, urine aur stool jaise samples
+    ghar par liye ja sakte hain.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_home_cancel
+  category: home_sampling
+  questions:
+  - booking cancel kaise hogi
+  - home sampling booking cancel karni hai
+  answer: Booking cancel ya tabdeel karne ke liye aap booking ka reference number aur phone number bata dein, main madad karti hoon.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_payment
+  category: payment
+  questions:
+  - payment kaise karni hai
+  - paise kab dene hain
+  - cash de sakta hoon
+  - card se payment ho jati hai
+  - online payment ho sakti hai
+  answer: Payment sample dete waqt phlebotomist ko cash ya online ki ja sakti hai.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_price_list
+  category: prices
+  questions:
+  - price list kahan se milegi
+  - rates ki list chahiye
+  - tamam tests ke rate
+  - test ke rates kahan dekhein
+  answer: Kisi bhi test ki price aap mujh se poochh sakte hain, bas test ka naam bata dein.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_discount
+  category: prices
+  questions:
+  - koi discount milta hai
+  - discount kitna milta hai
+  - kya koi offer chal raha hai
+  - senior citizen discount hai
+  - discount card hota hai
+  answer: Discount ki tafseel mareez ke test aur branch par munhasir hoti hai. Main aap ko hamare saathi se mila deti hoon jo sahi tafseel bata
+    denge.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_insurance
+  category: prices
+  questions:
+  - insurance accept hoti hai
+  - panel company ke saath test
+  - health card se test ho jayega
+  - company ki taraf se test
+  answer: Insurance aur company panel ki tafseel ke liye main aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_prescription
+  category: tests
+  questions:
+  - doctor ki parchi chahiye
+  - prescription zaroori hai
+  - bina parchi ke test ho jata hai
+  - parchi ke baghair test
+  answer: Zyada tar tests ke liye doctor ki parchi zaroori nahi hoti.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_fasting_general
+  category: tests
+  questions:
+  - fasting kitne ghante ki hoti hai
+  - test se pehle kuch khana mana hai
+  - khali pet test karwana hai
+  - fasting mein pani pee sakte hain
+  answer: Kuch tests ke liye aath se barah ghante kuch na khana hota hai, pani pee sakte hain. Aap test ka naam bata dein to main sahi hidayat
+    bata doon.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_ultrasound_prep
+  category: tests
+  questions:
+  - ultrasound se pehle kya karna hai
+  - ultrasound ke liye mithana full rakhna hai
+  - ultrasound ki tayyari
+  answer: Pet ke ultrasound ke liye aam tor par chhe ghante kuch na khayen aur mithana full rakhen. Sahi hidayat ultrasound ki qism par munhasir
+    hain.
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_mri_prep
+  category: tests
+  questions:
+  - mri se pehle kya karna hai
+  - mri mein dhaat ki cheez
+  - mri ki tayyari kya hai
+  - pacemaker ke saath mri
+  answer: MRI se pehle sab dhaat ki cheezein utaar dein. Pacemaker ya implant ho to technician ko zaroor bata dein. Mazeed tafseel ke liye main
+    aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_imaging_appointment
+  category: imaging
+  questions:
+  - mri ki appointment leni hai
+  - ct scan ki appointment
+  - ultrasound ki appointment chahiye
+  - scan ka time lena hai
+  - mri karwana hai
+  answer: MRI, CT scan aur ultrasound ki appointment ke liye main aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_imaging_discount
+  category: imaging
+  questions:
+  - mri par discount milta hai
+  - raat ko mri par discount
+  - ct scan par discount
+  - night mri discount
+  answer: MRI aur CT scan par discount ki tafseel ke liye main aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_doctor_consult
+  category: doctors
+  questions:
+  - doctor sahab se baat karni hai
+  - doctor se appointment chahiye
+  - doctor se mashwara karna hai
+  - report ke baare mein doctor se poochna hai
+  - health se related doctor se baat
+  answer: Doctor se baat ke liye main aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
+- id: faq_complaint
+  category: complaints
+  questions:
+  - shikayat karni hai
+  - complaint karni hai
+  - mujhe feedback dena hai
+  - aap ki service achi nahi thi
+  - complaint number kya hai
+  answer: Aap ki shikayat ya feedback ke liye main aap ko hamare saathi se mila deti hoon.
+  handoff: true
+  owner: ops
+  status: approved
+  sample: true
